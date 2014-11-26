@@ -1,0 +1,139 @@
+/**
+* Utility mixins
+*/
+
+// interface
+@mixin interface {
+  user-select:none;
+}
+
+// Creates an arrow at the bottom
+@mixin arrow-bottom($color: black, $left:50%) {
+
+  &:after {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: transparent;
+    border-top-color: $color;
+    border-width: 5px;
+    left: $left;
+    margin-left: -5px;
+  }
+
+}
+// creates an arrow at top
+@mixin arrow-top($color: #fff, $left:50%) {
+
+  &:after, &:before {
+    bottom: 100%;
+    left: $left;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: rgba($color, 0);
+    border-bottom-color: $color;
+    border-width: 5px;
+    margin-left: -5px;
+  }
+}
+
+// creates a link in a specific color
+@mixin link-color($color:$grayColor) {
+  color:$color;
+  font-weight:normal;
+  cursor:pointer;
+  &:hover {
+    color: lighten($color,10%);
+  }
+
+  &:active {
+    color: darken($color, 10%);
+  }
+}
+
+// keyframes
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// animations
+@mixin animate($name, $duration:.5s, $iterationCount:once, $direction:normal) {
+  animation-name:$name;
+  animation-duration: $duration;
+  animation-fill-mode: both;
+  animation-iteration-count:$iterationCount;
+  animation-direction:$direction;
+}
+
+// Creates an overflow container
+@mixin overflowContainer($color, $height:100%, $width:60px) {
+
+  position: relative;
+  transform: translateZ(0px);
+
+  &:after {
+    content: ' ';
+    background: linear-gradient(to right, rgba($color, 0) 0%, $color 100%);;
+    width: $width;
+    height: $height;
+    position: absolute;
+    right: 0;
+    top: 0;
+    pointer-events: none;
+  }
+}
+// creates a loading animation
+// Shamelessly stolen from bootstrap
+@mixin loadingContainer($color:#fff) {
+  animation:progress-bar-stripes 2s linear infinite;
+  cursor: wait;
+  background-image: linear-gradient(45deg, rgba($color, .15) 25%, transparent 25%,
+          transparent 50%, rgba($color, .15) 50%, rgba($color, .15) 75%,
+          transparent 75%, transparent);
+  background-size:40px 40px;
+}
+
+// Fontello icon mixin
+@mixin icon() {
+  font-family: fontello;
+  font-weight: normal !important;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  &:before {
+    text-decoration: inherit;
+    display: inline-block;
+    speak: none;
+  }
+
+  span {
+    font-family: $baseFontFamily;
+  }
+}

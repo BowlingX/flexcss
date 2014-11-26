@@ -1,0 +1,22 @@
+
+.showcase {
+  background:#f1f1f1;
+  padding:20px;
+  border-radius:$globalRadius;
+  .centered {
+    margin:2rem auto;
+  }
+
+  // fix position for alerts in a showcase box
+  .alert {
+    position: relative;
+  }
+  margin-bottom:1rem;
+  border-bottom:2px solid lighten($grayColor, 20%);
+}
+
+hr {
+  border:0;
+  border-bottom:1px solid $lightGrayColor;
+  margin:2rem 0;
+}

@@ -1,0 +1,113 @@
+// Buttons:
+
+.button {
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  background-color: $btnPrimaryColor;
+  padding: 11px 45px 10px;
+  border-radius: $globalRadius;
+  color: $buttonColor;
+  font-weight: bold;
+  background-image:none;
+  transition: background-color .2s ease, background-image 2s ease;
+  background-size: 40px 40px;
+
+  will-change: background, background-image;
+
+  // repeat, because some browser to not respect this settings on input elements
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:hover {
+    color:$buttonColor;
+    background-color: lighten($btnPrimaryColor, 10%);
+    &.loading {
+      background-color: $btnPrimaryColor;
+    }
+  }
+
+  &:active, &:focus {
+    color:$buttonColor;
+    outline: none;
+  }
+
+  &:active {
+    transition: none;
+    background-color: darken($btnPrimaryColor, 10%);
+  }
+
+  &.disabled, [disabled] {
+    background-color: lighten($btnPrimaryColor, 25%);
+    cursor: not-allowed;
+  }
+
+  &.block {
+    text-align: center;
+    display: block;
+  }
+
+  &.action {
+    padding-right: 11px;
+    padding-left: 11px;
+    text-align: center;
+  }
+
+  &.small {
+    font-size: $smallFontSize;
+    padding: 7px 30px 7px;
+
+    &.action {
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+  }
+
+  // Other colors:
+  &.secondary {
+    background-color: $btnSecondaryColor;
+
+    &:hover {
+      background-color: lighten($btnSecondaryColor, 10%);
+      &.loading {
+        background-color: $btnSecondaryColor;
+      }
+    }
+
+    &:active {
+      background-color: darken($btnSecondaryColor, 10%);
+    }
+
+    &.disabled, [disabled] {
+      background-color: lighten($btnSecondaryColor, 15%);
+    }
+  }
+
+  &.danger {
+    background-color: $btnDangerColor;
+
+    &:hover {
+      background-color: lighten($btnDangerColor, 10%);
+      &.loading {
+        background-color: $btnDangerColor;
+      }
+    }
+
+    &:active {
+      background-color: darken($btnDangerColor, 5%);
+    }
+
+    &.disabled, [disabled] {
+      background-color: lighten($btnDangerColor, 35%);
+    }
+
+
+  }
+
+  &.loading {
+    position: relative;
+    @include loadingContainer();
+  }
+
+  @include interface();
+}

@@ -1,0 +1,62 @@
+// Desktop Version of Forms
+@media #{$mediaDesktop} {
+
+  form:not(.wide) {
+    .control-group {
+      flex-direction: row;
+    }
+
+    label:not(.checkbox) {
+      min-width: 150px;
+      width: $labelWidthDesktop;
+      text-align: right;
+      padding: 5px 10px 0 0;
+      position: relative;
+      top: 5px;
+      margin-bottom: 0;
+    }
+
+    .no-label {
+      margin-left:$labelWidthDesktop;
+    }
+
+    legend {
+      margin-left:$labelWidthDesktop;
+    }
+
+
+    .multi-select-field {
+      margin-top: 7px;
+    }
+
+    .controls {
+      width: 50%;
+      min-width: 320px;
+    }
+
+    fieldset {
+      padding: 0 0 30px 0;
+      margin-bottom: 30px;
+    }
+
+    .form-actions {
+      border-top: 1px solid $inputBackground;
+      padding-top:20px;
+    }
+  }
+  .multi-form {
+    &.break {
+      display:flex;
+      > div:not(:first-of-type) {
+        margin-left: 20px;
+
+      }
+      > div {
+        &:not(:last-of-type) {
+          margin-bottom: 0px;
+        }
+      }
+      flex-direction: row;
+    }
+  }
+}

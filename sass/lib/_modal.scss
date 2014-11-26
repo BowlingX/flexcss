@@ -1,0 +1,102 @@
+/*
+* A Modal Component
+*
+*/
+
+/* Container that contains all Modals of an instance */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(#000, .2);
+  z-index: $indexModalContainer;
+  display:none;
+  &.open {
+    display: flex;
+  }
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  min-height: 100%;
+
+  // always show scrollbars
+  overflow-y: scroll;
+
+  > .loader-container {
+    align-self: center;
+    position: fixed;
+    left:calc(50% - 20px);
+    top:calc(50% - 20px);
+    z-index:101;
+  }
+
+  &.loading {
+    cursor:wait;
+  }
+}
+// The Modal itself
+.modal {
+  width:100%;
+  position:relative;
+  background: #fff;
+  display: none;
+  padding: 25px 12px 35px;
+  align-self: flex-start;
+  will-change:transform, opacity;
+
+  &.current {
+    display: block;
+    z-index:$indexModalCurrent;
+    @include animate(bounceIn);
+  }
+
+  &.current ~ .loader-container {
+    left:calc(50% - 25px);
+    top:calc(50% - 25px);
+    background:#fff;
+    padding:10px;
+    border-radius:$globalRadius;
+    box-shadow:$globalBoxShadow;
+  }
+  box-shadow:$globalBoxShadow;
+}
+
+// Close icon, top right
+.modal-close {
+  position:absolute;
+  right:0px;
+  top:0px;
+  padding:12px 10px;
+  font-size:16px;
+  cursor:pointer;
+  color:lighten($baseColor, 50%);
+
+  &:hover {
+    color: lighten($baseColor, 40%);
+    background:lighten($grayColor, 35%);
+  }
+
+  &:active {
+    color: lighten($baseColor, 10%);
+    background:lighten($grayColor, 30%);
+  }
+
+}
+
+.modal-title {
+  margin:0 0 1rem 0;
+  color:$primaryColor;
+}
+
+// An Alert box is always on the bottom on mobile
+.alert {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  &.current {
+    @include animate(fromBottom, .25s);
+  }
+  box-shadow:none;
+}

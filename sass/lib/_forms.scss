@@ -1,0 +1,326 @@
+/**
+* Forms
+*/
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin-bottom: $labelMargin;
+    font-size:$smallFontSize;
+  }
+
+  .controls {
+    margin-bottom: 20px;
+
+    p {
+      margin: $labelMargin 0 0 0;
+      font-size: $smallFontSize;
+      color: $grayColor;
+
+      a {
+        @include link-color();
+      }
+    }
+  }
+
+  &:last-of-type {
+    .controls {
+      margin-bottom: 0;
+    }
+  }
+}
+
+legend {
+  font-weight:bold;
+  margin-bottom:2rem;
+}
+
+label:not(.checkbox) {
+  font-size: $smallFontSize;
+  color: $grayColor;
+  margin-bottom: $labelMargin;
+  display:block;
+}
+
+fieldset {
+  border: none;
+  padding: 0 0 30px 0;
+  border-bottom: 1px solid $inputBackground;
+  margin-bottom: 22px;
+
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom:0;
+  }
+}
+
+// Basic form and input types
+.input-xlarge, select, textarea, input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
+  background-color: $inputBackground;
+  border: none;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // disable default browser style
+  -webkit-appearance: none;
+  appearance: none;
+  -o-appearance: none;
+  -moz-appearance: none;
+
+  border-radius: $globalRadius;
+  color: $baseColor;
+  display: block;
+  padding: 8px 10px;
+  width: 100%;
+  max-width: 100%;
+  will-change: background-color;
+  text-overflow: ellipsis;
+  &:focus {
+    background-color: $inputFocusColor;
+    outline: none;
+    transition: background .5s ease;
+  }
+
+  &.uneditable-input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.uneditable-input,
+  &.disabled {
+    background: $inputDisabledBg;
+    color: $inputDisabledColor;
+    cursor: not-allowed;
+    @include interface();
+  }
+
+  /**
+  * Placeholder
+  */
+  &::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: $placeholderColor;
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $placeholderColor;
+    font-style: normal;
+    opacity: 1;
+    font-weight: normal;
+  }
+
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $placeholderColor;
+    font-style: normal;
+    opacity: 1;
+    font-weight: normal;
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: $placeholderColor;
+    font-style: normal;
+    font-weight: normal;
+  }
+}
+
+/* Styled Checkbox and Radio Button: */
+
+.multi-select-field {
+  margin-bottom: 10px;
+  margin-top: 2px;
+  .checkbox {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+
+.checkbox {
+  padding: 1px 0 0 25px;
+  position: relative;
+  @include interface();
+  cursor: pointer;
+  input {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+  }
+  .checkbox-container {
+    line-height: $baseLineHeight;
+    display: inline-block;
+    > span {
+      color: $checkRadioColor;
+    }
+  }
+  .checkbox-container::before {
+    content: ' ';
+    width: $checkboxAndOptionHeight;
+    height: $checkboxAndOptionHeight;
+    position: absolute;
+    left: 0;
+    border-radius: $globalRadius;
+    font-size: 12px;
+    line-height: $checkboxAndOptionHeight;
+    top: 1px;
+    background: $inputBackground;
+    text-align: center;
+    color: $checkRadioColor !important;
+
+    @include icon();
+  }
+
+  &:active {
+    .checkbox-container::before {
+      background: darken($inputBackground, 5%);
+    }
+  }
+
+  input[type="checkbox"]:checked + .checkbox-container::before {
+    @extend .icon-ok:before;
+  }
+  input[type="radio"]:checked + .checkbox-container::before {
+    @extend .icon-circle:before;
+    font-size: 10px;
+  }
+
+  input[disabled] + .checkbox-container {
+    cursor: not-allowed;
+  }
+
+  input[disabled] + .checkbox-container::before {
+    background: $inputDisabledBg;
+    color: $inputDisabledColor !important;
+    cursor: not-allowed;
+  }
+}
+
+// Styled select:
+/* Arrows for Select's*/
+
+select {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+textarea {
+  min-height:12rem;
+}
+
+.select-element:after {
+  @include icon;
+  @extend .icon-down-open:before;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  font-size: 70%;
+  line-height: 35px;
+  padding: 0 11px 0 11px;
+  background: $inputBackground;
+  color: $selectPickerColor;
+  height: 100%;
+  pointer-events: none;
+
+  -webkit-border-radius: 0 $globalRadius $globalRadius 0;
+  -moz-border-radius: 0 $globalRadius $globalRadius 0;
+  border-radius: 0 $globalRadius $globalRadius 0;
+
+  &:focus, &:active {
+    background: $inputFocusColor;
+  }
+  will-change: background;
+
+  transition: background .5s ease;
+}
+
+.select-element {
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    &:after {
+      background: $inputFocusColor;
+    }
+  }
+}
+
+.list-form {
+  width: 100%;
+}
+
+.multi-form {
+  display: flex;
+
+  > div {
+    margin-left: 10px;
+    // all all equal size
+    flex:1;
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+
+  &.break {
+    display:block;
+    > div {
+      margin-left:0px;
+      &:not(:last-of-type) {
+        margin-bottom:10px;
+      }
+    }
+    flex-direction: column;
+  }
+}
+
+
+// A Date selector:
+.select-day {
+  flex: 1;
+  max-width: 75px;
+}
+
+.select-month {
+  flex: 3;
+}
+
+.select-year {
+  flex: 2;
+  max-width: 100px;
+}
+
+.form-actions {
+  text-align: left;
+  margin-top:2rem;
+  display:flex;
+
+  > div {
+    flex:1;
+  }
+
+  .right {
+    flex: 0 1 auto;
+  }
+}
+
+.toolbar-form {
+  padding:0 4px;
+  display:flex;
+  align-items: center;
+  line-height:$topbarHeight;
+  position: absolute;
+  top:0;
+  min-width:200px;
+  input {
+    padding-left:2px !important;
+    background: transparent !important;
+  }
+}

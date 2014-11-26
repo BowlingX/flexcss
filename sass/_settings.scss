@@ -1,0 +1,105 @@
+/**
+* Base Settings
+*/
+
+// Navigation and Sidebar when in mobile state (left + right)
+$MainNavigationWidth: 250px !default;
+$MainNavigationBg: #4a4a4a !default;
+$subnavColor: #616161 !default;
+
+// height of topbar
+$topbarHeight: 43px !default;
+$topbarBg:#333333 !default;
+$topbarColor:#fff !default;
+$topBarFontSize:18px !default;
+
+// Minimal footer height:
+$footerHeight:100px !default;
+
+// maximum site width (before staying centered layout)
+$overallMaxWidth:1250px !default;
+
+// a base padding, used by various components
+$overallPadding:10px !default;
+
+// padding when in desktop state
+$paddingRightLeftDesktop:20px !default;
+
+// some layout globals:
+$baseFontFamily: 'Open Sans', Arial, sans-serif !default;
+$baseFontSize: 14px !default;
+$baseColor: #262626 !default;
+$baseLineHeight: 1.3 !default;
+
+// A Base gray color where other gray tones are inhered from
+$grayColor:#999 !default;
+
+// A base light gray color for surfaces
+$lightGrayColor:#f1f1f1 !default;
+
+
+$smallFontSize:12px !default;
+
+$primaryColor:#258db8 !default;
+$secondaryColor:#e6007e !default;
+$actionColor:#83ba5e !default;
+
+$globalRadius:3px !default;
+
+// breakpoints
+
+$breakpointLarge: 900px !default;
+$breakpointDesktop:768px !default;
+
+$mediaDesktop: "all and (min-width: #{$breakpointDesktop})";
+$mediaLarge: "all and (min-width: #{$breakpointLarge})";
+
+$sidebarWidthLarge: 273px !default;
+$sidebarWidthDesktop: 225px !default;
+
+// z-indexes:
+$indexModalContainer:20 !default;
+$indexDarkener: 21 !default;
+$indexDropdown:30 !default;
+$indexTooltip:31 !default;
+$indexMainNavigation: $indexDarkener + 1 !default;
+$indexSidebar: $indexDarkener + 1 !default;
+$indexModalCurrent:10 !default;
+// Box Shadows:
+
+$globalBoxShadow: 0px 0px 3px rgba(#000,.7) !default;
+
+// Modal Settings:
+$alertWidthDesktop:320px !default;
+$minWidthModalDesktop:640px !default;
+
+//forms
+$inputBackground: $lightGrayColor !default;
+$inputColor: #616161 !default;
+$inputDisabledBg: #fafafa !default;
+$inputDisabledColor: #bababa !default;
+$inputFocusColor: darken($inputBackground, 5%) !default;
+$labelWidthDesktop:30% !default;
+
+$placeholderColor: lighten($grayColor, 10%) !default;
+$selectPickerColor:#a6a6a6 !default;
+$labelMargin:3px !default;
+$checkboxAndOptionHeight:18px !default;
+$checkRadioColor:$primaryColor !default;
+
+// buttons
+$buttonColor: #fff !default;
+$btnPrimaryColor: $actionColor !default;
+$btnSecondaryColor: #c3c3c3 !default;
+$btnDangerColor: #f08201 !default;
+
+// tabs
+$tabBottomLineHeight:2px !default;
+$tabsSmallPadding: 5px !default;
+$tabsSmallLineHeight:1px !default;
+
+// loader
+
+$loaderSize: 40px !default;
+$loaderColor: lighten(#ccc, 5%) !default;
+$loaderBorder: 4px !default;

@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+/**
+* Global Animations
+*/
+
+@include keyframes(progress-bar-stripes) {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/**
+* Creates a small bounce effect
+*/
+@include keyframes(bounceIn) {
+  0%, 40%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  40% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/**
+* FadeIn Effect
+*/
+@include keyframes(fadeIn) {
+  0%, 100% {
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+  }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/**
+* Endless spinner, used for loaders
+*/
+@include keyframes(spin) {
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+/**
+* used by alert modals
+*/
+@include keyframes(fromBottom) {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+    -webkit-transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+@include keyframes(tabWobbleLine) {
+  0% {
+   opacity: 0;
+    left: calc(50% - (#{$overallPadding}));
+    width: 0%;
+
+  }
+
+  100% {
+    opacity: 1;
+    left: 0;
+    width: calc(100% - (#{$overallPadding*2}));
+  }
+}
+
+@include keyframes(tabWobbleLineSmall) {
+  0% {
+    opacity: 0;
+    left: calc(50% - (#{$overallPadding}));
+    width: 0%;
+  }
+
+  100% {
+    opacity: 1;
+    left: 0;
+    width: calc(100% - (#{$tabsSmallPadding*2}));
+  }
+}
+
+
+.loader {
+  display: block;
+  margin: 0 auto;
+  width: $loaderSize;
+  height: $loaderSize;
+  border-radius: 50%;
+  border: $loaderBorder solid transparent;
+  position: relative;
+  animation: spin 1s infinite linear;
+
+  &:before {
+    content: '';
+    width: $loaderSize;
+    height: $loaderSize;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    left: $loaderBorder*-1;
+    top: $loaderBorder*-1;
+    border-right: $loaderBorder solid $loaderColor;
+    border-top: $loaderBorder solid $loaderColor;
+    border-left: $loaderBorder solid #fff;
+    border-bottom: $loaderBorder solid $loaderColor;
+  }
+}

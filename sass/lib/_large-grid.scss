@@ -1,0 +1,12 @@
+@media #{$mediaLarge} {
+
+  .sidebar {
+    max-width: $sidebarWidthLarge;
+  }
+
+  .navbar-main > ul {
+    left: $sidebarWidthLarge + 10px;
+    width:calc(100% - #{$sidebarWidthLarge + 10px});
+
+  }
+}

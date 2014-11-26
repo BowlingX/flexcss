@@ -1,0 +1,128 @@
+
+.wrapper {
+  display: flex;
+  flex: 1 0 auto;
+  flex-flow: row wrap;
+
+  > * {
+    flex: 1 100%;
+  }
+  max-width: $overallMaxWidth;
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100vh - #{$topbarHeight});
+}
+
+// Wrapper where all Content goes
+.content-wrapper {
+  display: flex;
+  min-height: calc(100% - #{$topbarHeight});
+  flex-direction: column;
+  position: absolute;
+  top: $topbarHeight;
+  -webkit-overflow-scrolling: touch;
+  height: calc(100% - #{$topbarHeight});
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+.page-content {
+  padding:$overallPadding;
+}
+
+.header {
+  height: $topbarHeight;
+  background: $topbarBg;
+  font-size: $topBarFontSize;
+  overflow:hidden;
+}
+
+.topbar {
+  padding: 0 $overallPadding 0 $overallPadding - 5px;
+  color: $topbarColor;
+  line-height: $topbarHeight;
+}
+
+.navigation-toggler {
+
+  &:before {
+    margin-right: 10px;
+  }
+
+  span {
+    font-size:$baseFontSize;
+    vertical-align: 1px;
+  }
+}
+
+.footer {
+  max-height: $footerHeight;
+  min-height: $footerHeight;
+  text-align:center;
+}
+
+.main {
+  text-align: left;
+}
+
+.site {
+
+  &.toggled-canvas {
+    #AllContentWrapper {
+      -webkit-overflow-scrolling: auto;
+    }
+  }
+}
+
+.sidebar {
+  will-change:transform;
+  padding: 20px;
+  background: #fafafa;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: $MainNavigationWidth;
+  z-index: $indexSidebar;
+  transform: translate3d(100%, 0, 0);
+  transition: transform .25s ease;
+  top: 0;
+  right: 0px;
+  &.open {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.main {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+// A Darkener that spans the complete screen
+.darkener {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  will-change:opacity;
+  opacity: 0;
+  background: #000;
+  z-index: $indexDarkener;
+  &.init {
+    opacity: .15;
+    pointer-events: auto;
+  }
+}
+
+// FIXME: Eliminates firefox strange behaviour with subnavs when very long (prevents wrapping)
+@-moz-document url-prefix() {
+  .main {
+    overflow: hidden;
+  }
+}

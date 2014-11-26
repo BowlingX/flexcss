@@ -1,0 +1,111 @@
+@media #{$mediaDesktop} {
+
+  body {
+    overflow-y: scroll;
+    // FIXME: There is a bug in firefox that causes flickering animations:
+    // TODO: Check if this is a performance overhead
+    // http://stackoverflow.com/questions/13626412/firefox-transitions-breaking-when-parent-overflow-is-changed
+    &.modal-open {
+      overflow-y: hidden;
+      // Default scrollbar width, this will be set with javascript as well
+      padding-right: 15px;
+    }
+  }
+
+  .aside {
+    flex: 1 auto;
+  }
+
+  .sidebar {
+    position: static;
+    max-width: $sidebarWidthDesktop;
+  }
+
+  .main {
+    flex: 2 0px;
+  }
+
+  .sidebar {
+    order: 1;
+  }
+
+  .main {
+    order: 2;
+  }
+
+  .content-wrapper {
+    overflow: visible;
+    padding: 0;
+    position: static;
+
+  }
+
+
+  .subnav-content {
+    margin: 20px $paddingRightLeftDesktop;
+  }
+
+  .page-content {
+    padding:10px $paddingRightLeftDesktop;
+  }
+
+  .subnav {
+    padding-left:7px;
+    background: $lightGrayColor;
+  }
+  .sidebar {
+    position: static;
+    height: auto;
+    transform: none;
+    transition: none;
+    z-index: 0;
+  }
+
+  // Hide Navigation Topbar:
+  .topbar {
+    display: none;
+  }
+
+  .navbar-main {
+    padding: 0 11px;
+    position: relative;
+    transform: none;
+    margin: 0 auto;
+    max-width: $overallMaxWidth;
+    z-index: 1;
+    width: 100%;
+    background: transparent;
+
+    > ul {
+      position: absolute;
+      top: 0;
+      left: $sidebarWidthDesktop + 10px;
+      width:calc(100% - #{$sidebarWidthDesktop + 10px});
+      flex-direction: row;
+      li {
+        a:active:not(.logo),
+        &.active a {
+          background: none !important;
+        }
+        margin-right: 10px;
+        &.home + li {
+          margin-left: 153px;
+        }
+        a {
+          line-height: $topbarHeight;
+          padding: 0 10px;
+
+          .badge {
+            position: static;
+          }
+        }
+      }
+    }
+  }
+
+  .subnav, .tabs {
+    li a {
+      padding: 0px 10px;
+    }
+  }
+}

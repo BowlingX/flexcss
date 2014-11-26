@@ -1,0 +1,26 @@
+
+@media #{$mediaDesktop} {
+
+  .dropdown {
+    transform:none;
+    left:auto;
+    bottom:auto;
+    width:auto;
+    position: absolute;
+    border-radius:$globalRadius;
+    box-shadow:$globalBoxShadow;
+    max-width:320px;
+    transition: none;
+
+    // reset positioning
+    &:not(.open) {
+      top:auto !important;
+      left:auto !important;
+      bottom:auto !important;
+    }
+    ul a {
+      padding:12px 15px;
+    }
+  }
+
+}

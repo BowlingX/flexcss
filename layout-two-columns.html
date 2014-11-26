@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,400' rel='stylesheet'
+          type='text/css'>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+</head>
+<body id="SiteBody" class="site">
+<header class="header" id="Header">
+    <div class="topbar" id="TopBar">
+        <a id="ToggleMainNavigation" class="icon-menu topbar-action navigation-toggler"><span
+                id="TitleText">Community</span></a>
+        <a id="ToggleSidebar" class="float-right icon-user topbar-action"></a>
+        <a data-tooltip title="20 Neue Nachrichten" class="float-right icon-mail-alt topbar-action"> <span
+                class="badge">20</span></a>
+
+    </div>
+    <nav class="navbar-main" id="MainNavigation" role="navigation">
+        <div class="home">
+            <a class="logo" href="/">hellofellow.com</a>
+        </div>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Community</a></li>
+            <li><a href="">Leute</a></li>
+            <li class="active"><a href="">Fotos</a></li>
+            <li><a href="">Nachrichten <span class="badge">5</span></a></li>
+        </ul>
+    </nav>
+</header>
+<div class="darkener" id="Darkener"></div>
+<div class="content-wrapper" id="AllContentWrapper">
+    <section class="wrapper" role="document">
+        <section id="MainContent" class="main">
+            <section class="upper-content" id="UpperContent" role="main">
+                <section class="subnav-content" id="SuvNavContent" role="region">
+                    <ul id="Subnav" class="subnav">
+                        <li><a href="#">Suche</a></li>
+                        <li class="active"><a href="#">Freunde</a></li>
+                        <li><a href="#">Anfragen</a></li>
+                        <li><a href="#">Blockliste <span class="badge">20</span></a></li>
+                        <li>
+                            <div data-toggle-on-focus class="toolbar-form"><i class="icon-search color-gray"></i> <input
+                                    placeholder="Suche"></div>
+                        </li>
+                    </ul>
+
+                </section>
+                <div class="page-content">
+                    <p>This is the main content column</p>
+                </div>
+            </section>
+
+
+            <footer class="footer" id="Footer">Footer</footer>
+        </section>
+        <aside id="Sidebar" class="aside sidebar">
+            <div class="aside-content">
+                <p>Sidebar column</p>
+            </div>
+        </aside>
+    </section>
+
+</div>
+<script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="application/javascript" src="styles/scripts/min/off-canvas-min.js"></script>
+<script type="application/javascript">
+    (function (document) {
+        // Setup Handler for Navigation bars:
+        HFLayout.init(document);
+        HFLayout.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+        HFLayout.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+    })(document);
+
+</script>
+
+</body>
+</html>
