@@ -1,0 +1,8 @@
+$bodyBackground:#F5E7C3;
+
+$overallMaxWidth: 920px;
+$sidebarBackground: darken($bodyBackground, 10%);
+
+
+@import '../sass/layout';
+@import 'landingpage/layout';

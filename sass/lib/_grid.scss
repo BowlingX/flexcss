@@ -79,7 +79,7 @@
 .sidebar {
   will-change:transform;
   padding: 20px;
-  background: #fafafa;
+  background: $sidebarBackground;
   position: fixed;
   height: 100%;
   overflow-y: auto;

@@ -82,7 +82,7 @@
 }
 
 // animations
-@mixin animate($name, $duration:.5s, $iterationCount:once, $direction:normal) {
+@mixin animate($name, $duration:.5s, $iterationCount:1, $direction:normal) {
   animation-name:$name;
   animation-duration: $duration;
   animation-fill-mode: both;
