@@ -1,6 +1,5 @@
 /**
-* Contains the basis layout for hellofellow
-* Sidebars, Navigations and stuff
+* Basis layout file
 */
 /**
 * Base Settings
@@ -2226,20 +2225,4 @@ img {
       -webkit-animation-direction: normal;
               animation-direction: normal; }
  }
-
-.showcase {
-  background: #f1f1f1;
-  padding: 20px;
-  border-radius: 3px;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #cccccc; }
-  .showcase .centered {
-    margin: 2rem auto; }
-  .showcase .alert {
-    position: relative; }
-
-hr {
-  border: 0;
-  border-bottom: 1px solid #f1f1f1;
-  margin: 2rem 0; }
 /*# sourceMappingURL=layout.css.map */

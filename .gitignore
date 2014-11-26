@@ -1,1 +1,7 @@
 .sass-cache
+*.iml
+.idea
+bower-components
+css/*.css
+css/*.map
+scripts/min

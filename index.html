@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Demo</title>
-    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="css/doc.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,400' rel='stylesheet'
           type='text/css'>
     <meta name="viewport"
@@ -1078,24 +1078,23 @@
 </section>
 
 </div>
-<script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="application/javascript" src="styles/scripts/min/off-canvas-min.js"></script>
+<script type="application/javascript" src="scripts/min/flexcss-min.js"></script>
 <script type="application/javascript">
 
     (function (document) {
         // Setup Handler for Navigation bars:
-        HFLayout.init(document);
-        HFLayout.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
-        HFLayout.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+        FlexCss.init(document);
+        FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+        FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
 
         // Setup Dropdown and Tooltip
-        HFLayout.CreateDropdown('SiteBody', 'Darkener');
-        HFLayout.CreateTooltip('SiteBody');
-        HFLayout.Toggleable('SiteBody');
-        new HFLayout.Modal('SiteBody').registerEvents();
+        FlexCss.CreateDropdown('SiteBody', 'Darkener');
+        FlexCss.CreateTooltip('SiteBody');
+        FlexCss.Toggleable('SiteBody');
+        new FlexCss.Modal('SiteBody').registerEvents();
 
         // Register some selects as Async
-        HFLayout.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
+        FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
             var def = $.Deferred();
             setTimeout(function () {
                 def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
@@ -1103,7 +1102,7 @@
             return def;
         });
 
-        HFLayout.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
+        FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
             var def = $.Deferred();
             setTimeout(function () {
                 def.resolve(document.getElementById('test-dropdown'));
@@ -1111,7 +1110,7 @@
             return def;
         });
 
-        HFLayout.CreateWidget('SecondModal').registerAsyncContent(function () {
+        FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
             var def = $.Deferred();
             setTimeout(function () {
                 def.resolve(document.getElementById('second-modal'));
@@ -1119,7 +1118,7 @@
             return def;
         });
 
-        HFLayout.CreateWidget('AsyncModal').registerAsyncContent(function () {
+        FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
             var def = $.Deferred();
             setTimeout(function () {
                 def.resolve('<p>This content was fetched from a future :)</p>');
@@ -1129,22 +1128,22 @@
             this.destroy();
         });
 
-        HFLayout.CreateWidget('toggle-photo').registerAsyncContent(function () {
+        FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
             var def = $.Deferred();
             setTimeout(function () {
                 def.resolve(document.getElementById('async-tab'));
             }, 2000);
             return def;
         });
-        /*var modal = new HFLayout.Modal('SiteBody', {closeOnEscape: false});
+        /*var modal = new FlexCss.Modal('SiteBody', {closeOnEscape: false});
          modal.setDestroyOnFinish(true);
-         modal.fromWidget(new HFLayout.Widget().registerAsyncContent(function () {
+         modal.fromWidget(new FlexCss.Widget().registerAsyncContent(function () {
          return $.Deferred().resolve('<p>Ein Alert <a data-close-modal>Schließen</a> </p>');
          }).onClose(function () {
          this.destroy();
          }));*/
 
-        //var t = new HFLayout.Scrollable("Subnav", 'SuvNavContent');
+        //var t = new FlexCss.Scrollable("Subnav", 'SuvNavContent');
         /* setTimeout(function(){
          t.scrollToElement(document.getElementById('SubnavScrollTo'));
          }, 500);*/

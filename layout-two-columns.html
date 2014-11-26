@@ -67,14 +67,13 @@
     </section>
 
 </div>
-<script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="application/javascript" src="styles/scripts/min/off-canvas-min.js"></script>
+<script type="application/javascript" src="scripts/min/flexcss-min.js"></script>
 <script type="application/javascript">
     (function (document) {
         // Setup Handler for Navigation bars:
-        HFLayout.init(document);
-        HFLayout.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
-        HFLayout.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+        FlexCss.init(document);
+        FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+        FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
     })(document);
 
 </script>
