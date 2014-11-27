@@ -63,22 +63,24 @@
     }
   }
 
-  .home {
-    display: block;
-    text-indent: -99999px;
-    background: $topbarBg;
-    height: $topbarHeight;
-    .logo {
-      background: url(../images/logo.svg) no-repeat 0px 3px;
-      background-size: 100% 100%;
-      height: $topbarHeight;
-      position: relative;
-      width: 130px;
-      margin-left: $overallPadding + 10px;
-      display: block;
-    }
-  }
 
+
+}
+
+.home {
+  display: block;
+  text-indent: -99999px;
+  background: $topbarBg;
+  height: $topbarHeight;
+  .logo {
+    background: url(../images/logo.svg) no-repeat 0px 3px;
+    background-size: 100% 100%;
+    height: $topbarHeight;
+    position: relative;
+    width: 130px;
+    margin-left: $overallPadding + 10px;
+    display: block;
+  }
 }
 
 .topbar-action {

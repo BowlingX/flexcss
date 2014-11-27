@@ -7,10 +7,14 @@
   > * {
     flex: 1 100%;
   }
-  max-width: $overallMaxWidth;
-  margin: 0 auto;
+
   width: 100%;
   min-height: calc(100vh - #{$topbarHeight});
+}
+
+.wrapper-center {
+  max-width: $overallMaxWidth;
+  margin: 0 auto;
 }
 
 // Wrapper where all Content goes
@@ -35,7 +39,6 @@
   height: $topbarHeight;
   background: $topbarBg;
   font-size: $topBarFontSize;
-  overflow: hidden;
 }
 
 .topbar {

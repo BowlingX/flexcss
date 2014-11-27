@@ -23,7 +23,7 @@ var sass = require('gulp-sass');
 
 var paths = {
     scripts: ['scripts/**/*.js'],
-    images: 'assets/images/**/*',
+    images: ['assets/images/**/*', 'themes/images/**/*'],
     fonts: 'assets/fonts/**/*',
     sassThemes: 'themes/**/*.scss',
     sassLib: 'assets/**/*.scss'
@@ -76,6 +76,10 @@ gulp.task('compileScriptsWithDependencies', function(){
 
 // Copy all static images
 gulp.task('images', ['clean'], function () {
+    return gulp.start('imagesReload');
+});
+
+gulp.task('imagesReload', function () {
     return gulp.src(paths.images)
         // Pass in options to the task
         .pipe(imagemin({optimizationLevel: 5}))
@@ -88,11 +92,11 @@ gulp.task('fonts', ['clean'], function(){
 });
 
 gulp.task('sass', ['clean'], function () {
-    gulp.start('compileSass');
+    return gulp.start('compileSass');
 });
 
 gulp.task('compileSass', function(){
-    gulp.src(paths.sassThemes)
+    return gulp.src(paths.sassThemes)
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer({
@@ -113,6 +117,8 @@ gulp.task('watch', function () {
     // sass
     gulp.watch(paths.sassThemes, ['compileSass']);
     gulp.watch(paths.sassLib, ['compileSass']);
+    gulp.watch(paths.images, ['imagesReload']);
+
 });
 
 // webserver

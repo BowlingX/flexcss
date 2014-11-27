@@ -10,6 +10,7 @@
   transition: transform .25s ease, opacity .25s ease;
   // should be over modals
   z-index:$indexDropdown;
+  font-size:$baseFontSize;
 
   &.open {
     visibility: visible;

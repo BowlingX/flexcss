@@ -521,7 +521,8 @@
          * @constructor
          */
         FlexCss.CreateTooltip = function (DelegateContainer) {
-            var doc = document, container = doc.getElementById(DelegateContainer), tooltipContainer = null;
+            var doc = document, container = doc.getElementById(DelegateContainer),
+                tooltipContainer = null;
             container.addEventListener('mouseover', function (e) {
                 var target = e.target, targetRect = target.getBoundingClientRect(),
                     colRect = container.getBoundingClientRect(), title = target.getAttribute('title');
@@ -657,6 +658,7 @@
          * [data-select]
          * @param DelegateContainer
          * @param Darkener
+         * @param CollisionContainer
          * @constructor
          */
         FlexCss.CreateDropdown = function (DelegateContainer, Darkener) {
@@ -735,13 +737,18 @@
                         target.dropdownContent = dropdownContent;
                         var isAbsolute = window.getComputedStyle(dropdownContent).position === 'absolute';
 
+                        if(!target.flexCollisionContainer) {
+                            var collisionC = target.getAttribute('data-collision-container');
+                            target.flexCollisionContainer = collisionC ? doc.getElementById(collisionC) || document.body : document.body;
+                        }
+
                         dropdownContent.classList.toggle('open');
                         if (dropdownContent.classList.contains('open')) {
                             currentOpen = dropdownContent;
                         }
                         if (isAbsolute) {
                             // Check collision:
-                            FlexCss.SetupPositionNearby(target, dropdownContent, document.body);
+                            FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
                         } else {
                             container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
                             darkener.classList.toggle('init');

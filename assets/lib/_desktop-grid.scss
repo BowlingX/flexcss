@@ -84,13 +84,7 @@
     flex-direction: row;
     justify-content: space-between;
 
-    .home {
-      width:$sidebarWidthDesktop;
 
-      .logo {
-        margin-left: $overallPadding;
-      }
-    }
 
     .main-nav {
       flex:1 1 auto;
@@ -134,6 +128,14 @@
   .subnav, .tabs {
     li a {
       padding: 0px 10px;
+    }
+  }
+
+  .home {
+    width:$sidebarWidthDesktop;
+    background: none;
+    .logo {
+      margin-left: $overallPadding;
     }
   }
 }

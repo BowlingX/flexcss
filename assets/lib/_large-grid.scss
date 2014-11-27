@@ -17,10 +17,8 @@
     max-width: $sidebarWidthLarge;
   }
 
-  .navbar-main {
-    .home {
-      width: $sidebarWidthLarge;
-    }
-  }
 
+  .home {
+    width: $sidebarWidthLarge;
+  }
 }
