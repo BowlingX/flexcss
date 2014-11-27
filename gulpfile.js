@@ -1,3 +1,8 @@
+/*
+ * Build file for flexcss
+ * @author David Heidrich (me@bowlingx.com)
+ */
+
 var gulp = require('gulp');
 
 // Libraries
@@ -35,7 +40,6 @@ gulp.task('scripts', ['clean'], function () {
         .pipe(sourcemaps.init())
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
-        .pipe(uglify())
         .pipe(concat('app.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('build/js'));
@@ -123,4 +127,4 @@ gulp.task('webserver', function() {
 gulp.task('default', ['watch', 'fonts', 'images', 'sass', 'scriptsWithDependencies', 'webserver']);
 
 // distribution task
-gulp.task('dist', ['scripts', 'images', 'sass']);
+gulp.task('dist', ['scripts', 'fonts', 'images', 'sass']);

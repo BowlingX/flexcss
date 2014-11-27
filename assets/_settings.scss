@@ -48,11 +48,12 @@ $globalRadius:3px !default;
 
 // breakpoints
 
-$breakpointLarge: 900px !default;
+$breakpointLarge: 1000px !default;
 $breakpointDesktop:768px !default;
 
 $mediaDesktop: "all and (min-width: #{$breakpointDesktop})";
 $mediaLarge: "all and (min-width: #{$breakpointLarge})";
+$mediaSmall: "all and (max-width:  #{$breakpointDesktop - 1px})";
 
 $sidebarWidthLarge: 273px !default;
 $sidebarWidthDesktop: 225px !default;
@@ -93,6 +94,7 @@ $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;
 $btnSecondaryColor: #c3c3c3 !default;
 $btnDangerColor: #f08201 !default;
+$btnAlternativeColor: $primaryColor !default;
 
 // tabs
 $tabBottomLineHeight:2px !default;

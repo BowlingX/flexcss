@@ -27,16 +27,15 @@
   overflow-x: hidden;
 }
 
-
 .page-content {
-  padding:$overallPadding;
+  padding: $overallPadding;
 }
 
 .header {
   height: $topbarHeight;
   background: $topbarBg;
   font-size: $topBarFontSize;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .topbar {
@@ -52,7 +51,7 @@
   }
 
   span {
-    font-size:$baseFontSize;
+    font-size: $baseFontSize;
     vertical-align: 1px;
   }
 }
@@ -60,7 +59,7 @@
 .footer {
   max-height: $footerHeight;
   min-height: $footerHeight;
-  text-align:center;
+  text-align: center;
 }
 
 .main {
@@ -77,7 +76,7 @@
 }
 
 .sidebar {
-  will-change:transform;
+  will-change: transform;
   padding: 20px;
   background: $sidebarBackground;
   position: fixed;
@@ -96,8 +95,8 @@
 }
 
 .main {
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -110,7 +109,7 @@
   height: 100%;
   pointer-events: none;
   transition: opacity .4s ease;
-  will-change:opacity;
+  will-change: opacity;
   opacity: 0;
   background: #000;
   z-index: $indexDarkener;
@@ -124,5 +123,36 @@
 @-moz-document url-prefix() {
   .main {
     overflow: hidden;
+  }
+}
+
+// Some flex utility classes:
+
+.flex-align-center {
+  align-self: center;
+}
+
+
+// visibility classes
+.visible-large {
+  display: none;
+}
+
+.visible-small {
+  display: none;
+}
+
+@media #{$mediaSmall} {
+
+  .visible-small {
+    display: block;
+  }
+
+  span.visible-small {
+    display: inline;
+  }
+
+  .hide-small {
+    display:none;
   }
 }

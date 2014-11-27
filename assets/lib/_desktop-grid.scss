@@ -1,4 +1,9 @@
 @media #{$mediaDesktop} {
+  // utilities:
+
+  .hide-desktop {
+    display:none;
+  }
 
   body {
     overflow-y: scroll;
@@ -40,17 +45,16 @@
 
   }
 
-
   .subnav-content {
     margin: 20px $paddingRightLeftDesktop;
   }
 
   .page-content {
-    padding:10px $paddingRightLeftDesktop;
+    padding: 10px $paddingRightLeftDesktop;
   }
 
   .subnav {
-    padding-left:7px;
+    padding-left: 7px;
     background: $lightGrayColor;
   }
   .sidebar {
@@ -75,15 +79,27 @@
     z-index: 1;
     width: 100%;
     background: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    > ul {
-      position: absolute;
-      top: 0;
-      left: $sidebarWidthDesktop + 10px;
-      width:calc(100% - #{$sidebarWidthDesktop + 10px});
+    .home {
+      width:$sidebarWidthDesktop;
+    }
+
+    .main-nav {
+      flex:1 1 auto;
+    }
+
+    .more-space {
+      margin-top:0;
+    }
+
+    ul {
       flex-direction: row;
       li {
-        a:active:not(.logo),
+        overflow:hidden;
+        a:active:not(.logo):not(.button),
         &.active a {
           background: none !important;
         }
@@ -91,7 +107,7 @@
         &.home + li {
           margin-left: 153px;
         }
-        a {
+        a:not(.button) {
           line-height: $topbarHeight;
           padding: 0 10px;
 
@@ -100,6 +116,7 @@
           }
         }
       }
+
     }
   }
 

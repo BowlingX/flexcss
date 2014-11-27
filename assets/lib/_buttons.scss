@@ -63,6 +63,11 @@
     }
   }
 
+  &.mini {
+    font-size: $smallFontSize;
+    padding: 5px 10px;
+  }
+
   // Other colors:
   &.secondary {
     background-color: $btnSecondaryColor;
@@ -100,8 +105,25 @@
     &.disabled, [disabled] {
       background-color: lighten($btnDangerColor, 35%);
     }
+  }
 
+  &.alternative {
+    background-color: $btnAlternativeColor;
 
+    &:hover {
+      background-color: lighten($btnAlternativeColor, 10%);
+      &.loading {
+        background-color: $btnAlternativeColor;
+      }
+    }
+
+    &:active {
+      background-color: darken($btnAlternativeColor, 10%);
+    }
+
+    &.disabled, [disabled] {
+      background-color: lighten($btnAlternativeColor, 15%);
+    }
   }
 
   &.loading {

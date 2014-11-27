@@ -33,7 +33,11 @@
     list-style: none;
   }
 
-  > ul {
+  .more-space {
+    margin-top:1rem;
+  }
+
+  ul {
     display: flex;
     flex-direction: column;
 
@@ -65,7 +69,7 @@
     background: $topbarBg;
     height: $topbarHeight;
     .logo {
-      background: url(img/logo.svg) no-repeat 0px 3px;
+      background: url(../images/logo.svg) no-repeat 0px 3px;
       background-size: 100% 100%;
       height: $topbarHeight;
       position: relative;

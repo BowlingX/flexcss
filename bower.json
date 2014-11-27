@@ -3,5 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "jquery":"2.1.1"
-  }
+  },
+  "main": ["build/js/app.js", "build/css/base.css", "assets/_layout.scss"]
 }

@@ -1,12 +1,26 @@
 @media #{$mediaLarge} {
 
+  // visibility classes
+  .hide-large {
+    display: none;
+  }
+
+  .visible-large {
+    display: block;
+  }
+
+  span.visible-large {
+    display: inline;
+  }
+
   .sidebar {
     max-width: $sidebarWidthLarge;
   }
 
-  .navbar-main > ul {
-    left: $sidebarWidthLarge + 10px;
-    width:calc(100% - #{$sidebarWidthLarge + 10px});
-
+  .navbar-main {
+    .home {
+      width: $sidebarWidthLarge;
+    }
   }
+
 }
