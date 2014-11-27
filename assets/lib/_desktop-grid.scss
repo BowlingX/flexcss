@@ -71,6 +71,7 @@
   }
 
   .navbar-main {
+    overflow: hidden;
     padding: 0 11px;
     position: relative;
     transform: none;
@@ -98,7 +99,6 @@
     ul {
       flex-direction: row;
       li {
-        overflow:hidden;
         a:active:not(.logo):not(.button),
         &.active a {
           background: none !important;
@@ -111,12 +111,18 @@
           line-height: $topbarHeight;
           padding: 0 10px;
 
+          // only works in chrome:
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
           .badge {
             position: static;
           }
         }
       }
-
+      .button {
+        margin-left:10px;
+      }
     }
   }
 
