@@ -86,6 +86,10 @@
 
     .home {
       width:$sidebarWidthDesktop;
+
+      .logo {
+        margin-left: $overallPadding;
+      }
     }
 
     .main-nav {
@@ -95,6 +99,7 @@
     .more-space {
       margin-top:0;
     }
+
 
     ul {
       flex-direction: row;
