@@ -2,8 +2,8 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="styles/layout.css">
+    <title>Demo</title>
+    <link rel="stylesheet" href="build/css/doc.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,400' rel='stylesheet'
           type='text/css'>
     <meta name="viewport"
@@ -18,26 +18,41 @@
         <a id="ToggleSidebar" class="float-right icon-user topbar-action"></a>
         <a data-tooltip title="20 Neue Nachrichten" class="float-right icon-mail-alt topbar-action"> <span
                 class="badge">20</span></a>
-
     </div>
     <nav class="navbar-main" id="MainNavigation" role="navigation">
         <div class="home">
             <a class="logo" href="/">hellofellow.com</a>
         </div>
-        <ul>
+        <ul class="main-nav">
             <li><a href="">Home</a></li>
             <li><a href="">Community</a></li>
             <li><a href="">Leute</a></li>
             <li class="active"><a href="">Fotos</a></li>
-            <li><a href="">Nachrichten <span class="badge">5</span></a></li>
+            <li><a href=""><i class="icon-mail-alt hide-large hide-small"></i> <span
+                    class="visible-large visible-small">Nachrichten</span> <span class="badge">5</span></a></li>
+        </ul>
+        <ul>
+            <li><a href=""><i class="icon-user hide-large"></i> <span
+                    class="visible-large visible-small">Profil</span></a></li>
+            <li><a href=""><i class="icon-cog hide-large"></i> <span
+                    class="visible-large visible-small">Account</span></a></li>
+
+            <li class="visible-small"><a href=""><i class="icon-off"></i> Logout</a></li>
+            <li class="flex-align-center hide-small">
+                <form>
+                    <button class="button mini alternative"><i class="icon-off hide-large"></i> <span
+                            class="visible-large">Logout</span>
+                    </button>
+                </form>
+            </li>
         </ul>
     </nav>
 </header>
 <div class="darkener" id="Darkener"></div>
 <div class="content-wrapper" id="AllContentWrapper">
-    <section class="wrapper" role="document">
+    <section class="wrapper" id="main" role="document">
         <section id="MainContent" class="main">
-            <section class="upper-content" id="UpperContent" role="main">
+            <section>
                 <section class="subnav-content" id="SuvNavContent" role="region">
                     <ul id="Subnav" class="subnav">
                         <li><a href="#">Suche</a></li>
@@ -49,31 +64,84 @@
                                     placeholder="Suche"></div>
                         </li>
                     </ul>
-
                 </section>
-                <div class="page-content">
-                    <p>This is the main content column</p>
-                </div>
+
             </section>
-
-
             <footer class="footer" id="Footer">Footer</footer>
         </section>
         <aside id="Sidebar" class="aside sidebar">
             <div class="aside-content">
-                <p>Sidebar column</p>
+                <ul class="tabs small-font tabs-small" data-toggle-list>
+                    <li class="active"><a data-toggle="tab-content-all" href="">all people</a></li>
+                    <li><a data-toggle="tab-content-countrymen" href="#">countrymen</a></li>
+                </ul>
+                <div class="toggle-content toggle-content-small active" id="tab-content-all">
+                    <img alt="alt" style="max-width:none;" src="build/images/Onlineliste.png">
+                </div>
+                <div class="toggle-content toggle-content-small" id="tab-content-countrymen">Countrymen</div>
+
             </div>
         </aside>
     </section>
 
 </div>
-<script type="application/javascript" src="scripts/min/flexcss-min.js"></script>
+<script type="application/javascript" src="build/js/app.js"></script>
 <script type="application/javascript">
+
     (function (document) {
         // Setup Handler for Navigation bars:
         FlexCss.init(document);
         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+
+        // Setup Dropdown and Tooltip
+        FlexCss.CreateDropdown('SiteBody', 'Darkener');
+        FlexCss.CreateTooltip('SiteBody');
+        FlexCss.Toggleable('SiteBody');
+        new FlexCss.Modal('SiteBody').registerEvents();
+
+        // Register some selects as Async
+        FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
+            var def = $.Deferred();
+            setTimeout(function () {
+                def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
+            }, 500);
+            return def;
+        });
+
+        FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
+            var def = $.Deferred();
+            setTimeout(function () {
+                def.resolve(document.getElementById('test-dropdown'));
+            }, 500);
+            return def;
+        });
+
+        FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
+            var def = $.Deferred();
+            setTimeout(function () {
+                def.resolve(document.getElementById('second-modal'));
+            }, 500);
+            return def;
+        });
+
+        FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
+            var def = $.Deferred();
+            setTimeout(function () {
+                def.resolve('<p>This content was fetched from a future :)</p>');
+            }, 500);
+            return def;
+        }).onClose(function () {
+            this.destroy();
+        });
+
+        FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
+            var def = $.Deferred();
+            setTimeout(function () {
+                def.resolve(document.getElementById('async-tab'));
+            }, 2000);
+            return def;
+        });
     })(document);
 
 </script>
