@@ -132,27 +132,3 @@
   align-self: center;
 }
 
-
-// visibility classes
-.visible-large {
-  display: none;
-}
-
-.visible-small {
-  display: none;
-}
-
-@media #{$mediaSmall} {
-
-  .visible-small {
-    display: block;
-  }
-
-  span.visible-small {
-    display: inline;
-  }
-
-  .hide-small {
-    display:none;
-  }
-}

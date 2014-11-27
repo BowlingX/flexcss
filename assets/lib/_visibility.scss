@@ -1,0 +1,45 @@
+/**
+* General visibility classes
+*/
+.visible-large {
+  display: none;
+}
+
+.visible-small {
+  display: none;
+}
+
+@media #{$mediaSmall} {
+  .visible-small {
+    display: block;
+  }
+
+  span.visible-small {
+    display: inline;
+  }
+
+  .hide-small {
+    display:none;
+  }
+}
+
+@media #{$mediaDesktop} {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+@media #{$mediaLarge} {
+
+  .hide-large {
+    display: none;
+  }
+
+  .visible-large {
+    display: block;
+  }
+
+  span.visible-large {
+    display: inline;
+  }
+}
