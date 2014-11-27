@@ -1,11 +1,15 @@
-/*!
- * Some useful UI Widgets for daily use :)
- * Copyright (c) 2014 David Heidrich (bowlingx.com)
- * Depends on jQuery futures and events
- * FIXME: Replace jQuery dependencies
- */
+/* jshint strict: true */
 
-(function (window) {
+(function (window, $) {
+    "use strict";
+
+    /*!
+     * Some useful UI Widgets for daily use :)
+     * Copyright (c) 2014 David Heidrich (bowlingx.com)
+     * Depends on jQuery futures and events
+     * FIXME: Replace jQuery dependencies
+     */
+
     if (!window.FlexCss) {
         window.FlexCss = {};
     }
@@ -468,7 +472,7 @@
     /**
      * A Dropdown
      */
-    (function (FlexCss, window, $) {
+    (function (FlexCss, window) {
 
         /**
          * Will position an element directly at given target
@@ -1138,5 +1142,5 @@
 
             return self;
         };
-    })(FlexCss, window, jQuery);
-})(window);
+    })(FlexCss, window);
+})(window, jQuery);

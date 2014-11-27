@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Demo</title>
-    <link rel="stylesheet" href="css/doc.css">
+    <link rel="stylesheet" href="build/css/doc.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,400' rel='stylesheet'
           type='text/css'>
     <meta name="viewport"
@@ -1078,7 +1078,7 @@
 </section>
 
 </div>
-<script type="application/javascript" src="scripts/min/flexcss-min.js"></script>
+<script type="application/javascript" src="build/js/app.js"></script>
 <script type="application/javascript">
 
     (function (document) {
@@ -1135,18 +1135,6 @@
             }, 2000);
             return def;
         });
-        /*var modal = new FlexCss.Modal('SiteBody', {closeOnEscape: false});
-         modal.setDestroyOnFinish(true);
-         modal.fromWidget(new FlexCss.Widget().registerAsyncContent(function () {
-         return $.Deferred().resolve('<p>Ein Alert <a data-close-modal>Schließen</a> </p>');
-         }).onClose(function () {
-         this.destroy();
-         }));*/
-
-        //var t = new FlexCss.Scrollable("Subnav", 'SuvNavContent');
-        /* setTimeout(function(){
-         t.scrollToElement(document.getElementById('SubnavScrollTo'));
-         }, 500);*/
     })(document);
 
 </script>
