@@ -23,7 +23,7 @@ var sass = require('gulp-sass');
 
 var paths = {
     scripts: ['scripts/**/*.js'],
-    images: ['assets/images/**/*', 'themes/images/**/*'],
+    images: ['assets/img/**/*', 'themes/img/**/*'],
     fonts: 'assets/fonts/**/*',
     sassThemes: 'themes/**/*.scss',
     sassLib: 'assets/**/*.scss'
@@ -83,7 +83,7 @@ gulp.task('imagesReload', function () {
     return gulp.src(paths.images)
         // Pass in options to the task
         .pipe(imagemin({optimizationLevel: 5}))
-        .pipe(gulp.dest('build/images'));
+        .pipe(gulp.dest('build/img'));
 });
 
 gulp.task('fonts', ['clean'], function(){
