@@ -676,7 +676,6 @@
          * [data-select]
          * @param DelegateContainer
          * @param Darkener
-         * @param CollisionContainer
          * @constructor
          */
         FlexCss.CreateDropdown = function (DelegateContainer, Darkener) {
