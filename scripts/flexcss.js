@@ -1127,8 +1127,7 @@
              * @returns {*}
              */
             this.fromWidget = function (widget) {
-                createWidget(widget);
-                return widget;
+                return createWidget(widget);
             };
 
             /**
