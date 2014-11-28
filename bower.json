@@ -12,5 +12,9 @@
     "build/fonts/fontello/fontello.svg",
     "build/fonts/fontello/fontello.ttf",
     "build/fonts/fontello/fontello.woff"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.html"
   ]
 }
