@@ -2,9 +2,12 @@
     "use strict";
 
     /*!
-     * Some useful UI Widgets for daily use :)
+     * FlexCSS, Some useful UI Widgets for daily use :)
      * Copyright (c) 2014 David Heidrich (bowlingx.com)
      * Depends on jQuery futures and events
+     */
+
+    /**
      * FIXME: Replace jQuery dependencies
      */
 
