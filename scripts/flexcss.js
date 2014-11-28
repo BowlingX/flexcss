@@ -367,7 +367,7 @@
          */
         FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor) {
 
-            var doc = document, touched = 0, body = doc.getElementById('SiteBody'),
+            var doc = document, touched = 0, body = doc.body,
                 navigationContainer = doc.getElementById(NavigationId),
                 toggler = doc.getElementById(ToggleNavigationId), darkener = doc.getElementById(Darkener),
                 resetStyles = function (s) {
