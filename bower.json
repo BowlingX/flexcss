@@ -5,13 +5,12 @@
     "jquery": "2.1.1"
   },
   "main": [
-    "build/js/app.js",
-    "build/css/base.css",
+    "scripts/flexcss.js",
     "assets/_layout.scss",
-    "build/fonts/fontello/fontello.eot",
-    "build/fonts/fontello/fontello.svg",
-    "build/fonts/fontello/fontello.ttf",
-    "build/fonts/fontello/fontello.woff"
+    "assets/fonts/fontello/fontello.eot",
+    "assets/fonts/fontello/fontello.svg",
+    "assets/fonts/fontello/fontello.ttf",
+    "assets/fonts/fontello/fontello.woff"
   ],
   "ignore": [
     "**/.*",
