@@ -1,0 +1,17 @@
+{
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "predef": [
+    "window",
+    "jQuery",
+    "document",
+    "setTimeout",
+    "requestAnimationFrame",
+    "HTMLElement",
+    "KeyboardEvent",
+    "MouseEvent",
+    "MutationObserver",
+    "TouchEvent"
+  ]
+}

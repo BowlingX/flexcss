@@ -1,5 +1,3 @@
-/* jshint strict: true */
-
 (function (window, $) {
     "use strict";
 
@@ -341,6 +339,9 @@
                     if (parentClassList) {
                         parentClassList.remove(LOADING_CLASS);
                     }
+                    if (target.hfWidgetInstance) {
+                        target.hfWidgetInstance.runOnOpen(r);
+                    }
                     r.classList.toggle(ACTIVE_CLASS);
                     loading = false;
                 });
@@ -363,7 +364,8 @@
          */
         FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor) {
 
-            var doc = document, touched = 0, body = doc.getElementById('SiteBody'), navigationContainer = doc.getElementById(NavigationId),
+            var doc = document, touched = 0, body = doc.getElementById('SiteBody'),
+                navigationContainer = doc.getElementById(NavigationId),
                 toggler = doc.getElementById(ToggleNavigationId), darkener = doc.getElementById(Darkener),
                 resetStyles = function (s) {
                     s.transform = '';
@@ -398,7 +400,8 @@
                     bounds = target.getBoundingClientRect(),
                     compare = factor > 0 ? calc <= 0 : calc >= 0;
                 if (compare) {
-                    target.mustHide = factor > 0 ? calc * -1 > bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
+                    target.mustHide = factor > 0 ? calc * -1 >
+                    bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
                     style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
                     style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
                 }
@@ -538,7 +541,8 @@
                     target.oldTitle = title;
                     target.removeAttribute('title');
                     var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
-                        isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height), classList = tooltipContainer.classList;
+                        isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height),
+                        classList = tooltipContainer.classList;
                     if (isCollisionTop) {
                         tooltipContainer.style.top = (targetRect.bottom) - colRect.top + 'px';
                         classList.remove('arrow-bottom');
@@ -549,7 +553,8 @@
                         classList.add('arrow-bottom');
                         tooltipContainer.style.top = (targetTop - containerRect.height) - colRect.top + 'px';
                     }
-                    tooltipContainer.style.left = ((targetRect.left + targetRect.width / 2) - (containerRect.width / 2) || 0) + 'px';
+                    tooltipContainer.style.left = ((targetRect.left + targetRect.width / 2) -
+                    (containerRect.width / 2) || 0) + 'px';
                     classList.add('open');
 
                 }
@@ -575,6 +580,7 @@
             var self = this;
             self.async = null;
             self.onCloseFunction = null;
+            self.onOpenFunction = null;
             // A Binding to an DOM Element is optional
             self.widget = WidgetId ? (WidgetId instanceof HTMLElement ?
                 WidgetId : document.getElementById(WidgetId)) : null;
@@ -590,6 +596,11 @@
 
             this.onClose = function (onCloseFunc) {
                 self.onCloseFunction = onCloseFunc;
+                return self;
+            };
+
+            this.onOpen = function (onOpenFunc) {
+                self.onOpenFunction = onOpenFunc;
                 return self;
             };
             /**
@@ -627,6 +638,10 @@
 
             this.runOnBeforeClose = function (e) {
                 return self.onBeforeCloseFunction ? self.onBeforeCloseFunction.apply(self, e) : true;
+            };
+
+            this.runOnOpen = function (e) {
+                return self.onOpenFunction ? self.onOpenFunction.apply(self, e) : false;
             };
 
             // Register widget to element if given
@@ -737,9 +752,10 @@
                         target.dropdownContent = dropdownContent;
                         var isAbsolute = window.getComputedStyle(dropdownContent).position === 'absolute';
 
-                        if(!target.flexCollisionContainer) {
+                        if (!target.flexCollisionContainer) {
                             var collisionC = target.getAttribute('data-collision-container');
-                            target.flexCollisionContainer = collisionC ? doc.getElementById(collisionC) || document.body : document.body;
+                            target.flexCollisionContainer = collisionC ?
+                            doc.getElementById(collisionC) || document.body : document.body;
                         }
 
                         dropdownContent.classList.toggle('open');
@@ -1072,6 +1088,10 @@
                     modalContainerClasses.remove('loading');
                     loading = false;
                     toggleLoader(false);
+
+                    if (el.hfWidgetInstance) {
+                        el.hfWidgetInstance.runOnOpen(el);
+                    }
 
                     $(el).trigger('hf.modal.opened');
                     return $.Deferred().resolve(el);
