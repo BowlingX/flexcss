@@ -811,10 +811,10 @@
 
         /**
          * A Modal
-         * @param DelegateContainer
-         * @param options
+         * @param {String} DelegateContainer id of container
+         * @param {Object} [options]
          * @returns {FlexCss.Modal}
-         * @constructor
+         * @constructor creates a Modal
          */
         FlexCss.Modal = function (DelegateContainer, options) {
             var doc = document, ATTR_NAME = 'data-modal',
@@ -1123,8 +1123,8 @@
 
             /**
              * Creates a new Dialog Instance either directly from HTML Element or a Widget instance
-             * @param {HTMLElement|FlexCss.Widget} widget
-             * @returns {*}
+             * @param {HTMLElement|FlexCss.Widget} widget instance or html element
+             * @returns {$.Deferred}
              */
             this.fromWidget = function (widget) {
                 return createWidget(widget);
@@ -1133,6 +1133,7 @@
             /**
              * Creates a Widget from event
              * @param t
+             * @returns {$.Deferred}
              */
             this.fromEvent = function (t) {
                 return createWidget(t);
