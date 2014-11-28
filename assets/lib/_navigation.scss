@@ -170,27 +170,7 @@
       }
     }
 
-    &:hover, &.active {
-      &:after {
-        left: 0;
-        width: calc(100% - (#{$overallPadding*2}));
-        opacity: 1;
-      }
-    }
-
-    &:after {
-      will-change: width, left, opacity;
-      content: '';
-      position: absolute;
-      width: 0%;
-      background: $primaryColor;
-      opacity: 0;
-      height: $tabBottomLineHeight;
-      bottom: 0;
-      left: calc(50% - (#{$overallPadding}));
-      margin: 0 $overallPadding;
-      transition: width .2s ease, left .2s ease, opacity .2s ease;
-    }
+    @include borderWobble();
 
     &.disabled {
       a {

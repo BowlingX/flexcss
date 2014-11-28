@@ -17,7 +17,7 @@ var concat = require('gulp-concat'),
     minifyCSS = require('gulp-minify-css'),
     es = require("event-stream"), gulpFilter = require('gulp-filter'),
     order = require('gulp-order'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'), plumber = require('gulp-plumber'), gutil = require('gulp-util');
 
 var sass = require('gulp-sass');
 
@@ -29,6 +29,13 @@ var paths = {
     sassLib: 'assets/**/*.scss'
 };
 
+var onError = function (err) {
+    gutil.beep();
+    console.log(err);
+    // continue:
+    this.emit('end');
+};
+
 // cleans build directory
 gulp.task('clean', function (cb) {
     del(['build'], cb);
@@ -37,6 +44,9 @@ gulp.task('clean', function (cb) {
 gulp.task('scripts', ['clean'], function () {
     // Minify and copy all JavaScript (except vendor scripts)
     return gulp.src(paths.scripts)
+        .pipe(plumber({
+            errorHandler: onError
+        }))
         .pipe(sourcemaps.init())
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -57,6 +67,9 @@ gulp.task('compileScriptsWithDependencies', function(){
         .pipe(concat('vendor.js'));
 
     var appFiles = gulp.src(paths.scripts)
+        .pipe(plumber({
+            errorHandler: onError
+        }))
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(concat('app.js'));
@@ -97,6 +110,9 @@ gulp.task('sass', ['clean'], function () {
 
 gulp.task('compileSass', function(){
     return gulp.src(paths.sassThemes)
+        .pipe(plumber({
+            errorHandler: onError
+        }))
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer({

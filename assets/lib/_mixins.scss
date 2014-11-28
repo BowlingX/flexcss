@@ -118,9 +118,12 @@
   background-size:40px 40px;
 }
 
-// Fontello icon mixin
-@mixin icon() {
-  font-family: fontello;
+/**
+* Creates an icon, by default uses fontello
+* Nested spans are no icons anymore
+*/
+@mixin icon($font:fontello) {
+  font-family: $font;
   font-weight: normal !important;
   font-style: normal;
   text-decoration: inherit;
@@ -132,8 +135,36 @@
     display: inline-block;
     speak: none;
   }
-
   span {
     font-family: $baseFontFamily;
+  }
+}
+
+/**
+* A Mixin that creates a bottom border for a specific element and animates it on hover
+* On active state this border is always active
+* Don't forget to set position:relative to element
+*/
+@mixin borderWobble($color:$primaryColor, $height:$tabBottomLineHeight, $padding:$overallPadding) {
+  &:hover, &.active {
+    &:after {
+      left: 0;
+      width: calc(100% - (#{$padding*2}));
+      opacity: 1;
+    }
+  }
+
+  &:after {
+    will-change: width, left, opacity;
+    content: '';
+    position: absolute;
+    width: 0;
+    background: $color;
+    opacity: 0;
+    height: $height;
+    bottom: 0;
+    left: calc(50% - (#{$padding}));
+    margin: 0 $padding;
+    transition: width .2s ease, left .2s ease, opacity .2s ease;
   }
 }
