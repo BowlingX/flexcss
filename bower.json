@@ -2,7 +2,15 @@
   "name": "flexcss",
   "version": "0.0.1",
   "dependencies": {
-    "jquery":"2.1.1"
+    "jquery": "2.1.1"
   },
-  "main": ["build/js/app.js", "build/css/base.css", "assets/_layout.scss"]
+  "main": [
+    "build/js/app.js",
+    "build/css/base.css",
+    "assets/_layout.scss",
+    "build/fonts/fontello/fontello.eot",
+    "build/fonts/fontello/fontello.svg",
+    "build/fonts/fontello/fontello.ttf",
+    "build/fonts/fontello/fontello.woff"
+  ]
 }
