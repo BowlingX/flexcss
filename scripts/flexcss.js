@@ -965,6 +965,7 @@
                         widget = e.hfWidgetInstance;
                     } else {
                         widget = e;
+                        targetContent = widget.widget;
                     }
                 } else {
                     if (FlexCss.TOUCHMOVE) {
@@ -1074,7 +1075,7 @@
                         return f;
                     });
                 } else {
-                    var el = doc.getElementById(targetContent);
+                    var el = targetContent instanceof HTMLElement? targetContent : doc.getElementById(targetContent);
                     if (el) {
                         future = $.Deferred().resolve(el);
                     } else {
@@ -1116,7 +1117,11 @@
                 return self;
             };
 
-            // Creates a dialog directly from a widget
+            /**
+             * Creates a new Dialog Instance either directly from HTML Element or a Widget instance
+             * @param {HTMLElement|FlexCss.Widget} widget
+             * @returns {*}
+             */
             this.fromWidget = function (widget) {
                 createWidget(widget);
                 return widget;
