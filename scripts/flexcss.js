@@ -823,6 +823,10 @@
                 loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal';
             // Instance vars:
 
+            if(!container) {
+                throw 'Could not found container element by given ID: '+ DelegateContainer;
+            }
+
             /**
              * Default Options
              */
