@@ -5,3 +5,4 @@ bower_components
 css/*.css
 css/*.map
 scripts/min
+node_modules
