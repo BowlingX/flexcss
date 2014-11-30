@@ -640,11 +640,11 @@
             };
 
             this.runOnBeforeClose = function (e) {
-                return self.onBeforeCloseFunction ? self.onBeforeCloseFunction.apply(self, e) : true;
+                return self.onBeforeCloseFunction ? self.onBeforeCloseFunction.apply(self, [e]) : true;
             };
 
             this.runOnOpen = function (e) {
-                return self.onOpenFunction ? self.onOpenFunction.apply(self, e) : false;
+                return self.onOpenFunction ? self.onOpenFunction.apply(self, [e]) : false;
             };
 
             // Register widget to element if given
