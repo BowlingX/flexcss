@@ -1107,7 +1107,7 @@
 
             /**
              * Setup events on either default delegate container or given delegate
-             * @param delegate (optional)
+             * @param {HTMLElement} [delegate] optionally register another container
              * @returns {FlexCss.Modal}
              */
             this.registerEvents = function (delegate) {
