@@ -259,7 +259,7 @@ textarea {
 
 .append-form {
   display:flex;
-
+  align-items: center;
   > :first-child {
     flex:1;
   }
@@ -315,6 +315,7 @@ textarea {
   text-align: left;
   margin-top:2rem;
   display:flex;
+  align-items: center;
 
   > div {
     flex:1;
@@ -322,6 +323,10 @@ textarea {
 
   .right {
     flex: 0 1 auto;
+  }
+
+  label {
+    margin-left: 1rem;
   }
 }
 
