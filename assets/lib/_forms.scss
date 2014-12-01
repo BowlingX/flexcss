@@ -259,10 +259,12 @@ textarea {
 
 .append-form {
   display:flex;
-  :first-child {
+
+  > :first-child {
     flex:1;
   }
-  :last-child {
+
+  > :last-child {
     margin-left:10px;
   }
 }
