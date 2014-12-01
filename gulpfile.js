@@ -25,7 +25,7 @@ var paths = {
     scripts: ['scripts/**/*.js'],
     images: ['assets/img/**/*', 'themes/img/**/*'],
     fonts: 'assets/fonts/**/*',
-    sassThemes: 'themes/**/*.scss',
+    sassThemes: 'examples/**/*.scss',
     sassLib: 'assets/**/*.scss'
 };
 

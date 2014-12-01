@@ -95,3 +95,30 @@
     @include arrow-top($topbarBg);
   }
 }
+
+// Desktop version of dropdowns
+@media #{$mediaDesktop} {
+
+  .dropdown {
+    transform:none;
+    left:auto;
+    bottom:auto;
+    width:auto;
+    position: absolute;
+    border-radius:$globalRadius;
+    box-shadow:$globalBoxShadow;
+    max-width:320px;
+    transition: none;
+
+    // reset positioning
+    &:not(.open) {
+      top:0 !important;
+      left:0 !important;
+      bottom:auto !important;
+    }
+    ul a {
+      padding:12px 15px;
+    }
+  }
+
+}

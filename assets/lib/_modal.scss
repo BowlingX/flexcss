@@ -100,3 +100,35 @@
   }
   box-shadow:none;
 }
+
+// desktop version
+
+@media #{$mediaDesktop} {
+
+  .modal-container {
+    padding: 20px 20px 0 20px;
+    top: 0;
+  }
+
+  .modal {
+    width:auto;
+    min-width:$minWidthModalDesktop;
+    max-width:$minWidthModalDesktop;
+    margin-bottom: 20px;
+    padding: 25px 30px 35px;
+
+    &.center {
+      align-self: center;
+    }
+  }
+
+  .modal.alert {
+    min-width:0;
+    box-shadow:$globalBoxShadow;
+    position:relative;
+    width:$alertWidthDesktop;
+    &.current {
+      @include animate(bounceIn);
+    }
+  }
+}
