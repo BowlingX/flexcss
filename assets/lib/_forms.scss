@@ -257,6 +257,18 @@ textarea {
   width: 100%;
 }
 
+.append-form {
+  display:flex;
+  :first-child {
+    flex:1;
+  }
+  :last-child {
+    margin-left:10px;
+  }
+}
+
+
+// Multiple elements in one row
 .multi-form {
   display: flex;
 
