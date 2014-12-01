@@ -264,7 +264,7 @@ textarea {
     flex:1;
   }
 
-  > :last-child {
+  > :last-child:not(:first-child) {
     margin-left:10px;
   }
 }
