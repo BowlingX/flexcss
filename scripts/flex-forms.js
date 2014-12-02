@@ -12,6 +12,11 @@
 
     var FlexCss = window.FlexCss;
 
+    /**
+     * Enhanced flexcss forms
+     * @param formElement
+     * @constructor
+     */
     FlexCss.Form = function (formElement) {
 
         var self = this;
