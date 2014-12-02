@@ -226,6 +226,14 @@
                                 </div>
                             </div>
                             <div class="control-group">
+                                <label for="mail_id">E-Mail-Adresse</label>
+
+                                <div class="controls">
+                                    <input required id="mail_id" name="hometown" type="email" maxLength="50"
+                                           value=""/>
+                                </div>
+                            </div>
+                            <div class="control-group">
                                 <label>Interessen</label>
 
                                 <div id="interests_id" class="controls multi-select-field">
@@ -298,7 +306,7 @@
 
                                 <div class="controls">
                                     <div class="area">
-                                        <textarea id="aboutMe_id" rows="5" name="aboutMe"></textarea>
+                                        <textarea required id="aboutMe_id" rows="5" name="aboutMe"></textarea>
                                     </div>
                                     <p class="help-block">
                                         <span class="text-box-counter" title="1000">1000</span>
@@ -1163,9 +1171,9 @@
         });
     })(document);
 
-    new FlexCss.Modal('SiteBody').fromWidget(
+    /*new FlexCss.Modal('SiteBody').fromWidget(
             new FlexCss.Widget(document.getElementById('second-modal')));
-
+*/
 </script>
 
 </body>

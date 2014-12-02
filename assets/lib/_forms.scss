@@ -130,7 +130,21 @@ fieldset {
     font-style: normal;
     font-weight: normal;
   }
+
+
+  // validation
+
+  &.invalid {
+    background: lighten($alertColor, 30%);
+  }
+
 }
+
+.form-error {
+  color:$alertColor;
+  font-size:$smallFontSize;
+}
+
 
 /* Styled Checkbox and Radio Button: */
 
