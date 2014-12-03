@@ -14,10 +14,10 @@ var concat = require('gulp-concat'),
     del = require('del'),
     mainBowerFiles = require('main-bower-files'),
     autoprefixer = require('gulp-autoprefixer'),
-    minifyCSS = require('gulp-minify-css'),
     es = require("event-stream"), gulpFilter = require('gulp-filter'),
     order = require('gulp-order'),
-    connect = require('gulp-connect'), plumber = require('gulp-plumber'), gutil = require('gulp-util');
+    connect = require('gulp-connect'), plumber = require('gulp-plumber'),
+    gutil = require('gulp-util'), postcss  = require('gulp-postcss');
 
 var sass = require('gulp-sass');
 
@@ -109,21 +109,26 @@ gulp.task('sass', ['clean'], function () {
     return gulp.start('compileSass');
 });
 
-gulp.task('compileSass', function(){
+gulp.task('compileSass', function () {
+    var processors = [
+        require('csswring')
+    ];
+
     return gulp.src(paths.sassThemes)
         .pipe(plumber({
             errorHandler: onError
         }))
         .pipe(sourcemaps.init())
         .pipe(sass())
+        .pipe(sourcemaps.write({includeContent: false}))
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(minifyCSS({keepBreaks: false}))
+        .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('build/css'))
-        .pipe(connect.reload());
+        .pipe(gulp.dest('build/css'));
 });
 
 // Rerun the task when a file changes
