@@ -198,8 +198,15 @@ fieldset {
     }
   }
 
+  input[type="checkbox"], input[type="radio"] {
+    &.invalid + .checkbox-container::before {
+      background: lighten($alertColor, 30%);
+    }
+  }
+
   input[type="checkbox"]:checked + .checkbox-container::before {
     @extend .icon-ok:before;
+
   }
   input[type="radio"]:checked + .checkbox-container::before {
     @extend .icon-circle:before;
