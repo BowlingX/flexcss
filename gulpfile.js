@@ -62,7 +62,8 @@ gulp.task('scriptsWithDependencies', ['clean'], function () {
 
 gulp.task('compileScriptsWithDependencies', function(){
     var jsFilter = gulpFilter('*.js');
-    var vendorFiles = gulp.src(mainBowerFiles())
+    var vendorFiles =
+        gulp.src(mainBowerFiles())
         .pipe(jsFilter)
         .pipe(concat('vendor.js'));
 
@@ -72,15 +73,15 @@ gulp.task('compileScriptsWithDependencies', function(){
         }))
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(concat('app.js'));
+        .pipe(concat('flexcss.js'));
 
     return es.concat(vendorFiles, appFiles)
         .pipe(order([
             "vendor.js",
-            "app.js"
+            "flexcss.js"
         ]))
-        .pipe(concat('app.js'))
         .pipe(sourcemaps.init())
+        .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('build/js'))
