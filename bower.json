@@ -6,6 +6,7 @@
   },
   "main": [
     "scripts/flexcss.js",
+    "scripts/flex-forms.js",
     "assets/_layout.scss",
     "assets/fonts/fontello/fontello.eot",
     "assets/fonts/fontello/fontello.svg",
