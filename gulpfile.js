@@ -109,6 +109,7 @@ gulp.task('sass', ['clean'], function () {
     return gulp.start('compileSass');
 });
 
+// we got a bug here with the sourcemaps: https://github.com/floridoo/gulp-sourcemaps/issues/60
 gulp.task('compileSass', function () {
     var processors = [
         require('csswring')
