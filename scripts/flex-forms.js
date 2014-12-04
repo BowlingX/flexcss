@@ -239,7 +239,6 @@
                 if(self.tooltips && e.target.validity.valid) {
                     self.tooltips.removeTooltip(e.target);
                 }
-
                 var target = e.target;
                 if (target instanceof HTMLSelectElement) {
                     return;
@@ -249,6 +248,10 @@
                 });
                 _showAndOrCreateTooltip(e.target, form);
 
+            }, true);
+
+            form.addEventListener("focus", function (e) {
+                _showAndOrCreateTooltip(e.target, form);
             }, true);
 
 
