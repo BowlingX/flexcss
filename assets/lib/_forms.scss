@@ -181,9 +181,9 @@ fieldset {
   input {
     z-index:-1;
     position: absolute;
-    left: 2px;
+    left: 3px;
     top:3px;
-
+    appearance:none;
     -moz-appearance:none;
     outline:none !important;
     box-shadow:none !important;
