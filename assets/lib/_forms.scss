@@ -137,10 +137,15 @@ fieldset {
 
   // validation
   &.invalid {
-    background: lighten($alertColor, 30%);
+    background: lighten($alertColor, 35%);
     // Firefox will render a boxshadow
     box-shadow:none;
     border:none;
+
+    &.loading {
+      @include loadingContainer($alertColor);
+
+    }
   }
 
   // remove default states

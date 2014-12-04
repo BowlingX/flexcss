@@ -31,6 +31,7 @@
 
         self.options = $.extend(self.options, options);
 
+        self.hfWidgetInstance = self;
         /**
          * A List of Validators
          * @type {Object}
@@ -71,7 +72,9 @@
         /**
          * Registers a custom validator
          * @param {String} name
-         * @param {Function} validator
+         * @param {Function} validator a validation function should always return either a Future(true) or Future(false)
+         * even when the field has been invalidated with `setCustomValidity`, because of different browser bugs
+         * we can't rely on that
          * @returns {window.FlexCss.Form}
          */
         self.registerValidator = function (name, validator) {
@@ -145,8 +148,11 @@
             if (removeAllErrors) {
                 _removeElementErrors(form);
             }
+            // We save all validations in an extra property because we need to reset the validity due some
+            // implementation errors in other browsers then chrome
             for (var i = 0; i < fields.length; i++) {
                 var field = fields[i], parent = field.parentNode, validity = field.validity;
+                field.flexFormsSavedValidity = JSON.parse(JSON.stringify(validity));
                 if (validity && !validity.valid) {
                     if (!removeAllErrors) {
                         // Remove current errors:
@@ -160,11 +166,13 @@
                         field.validationMessage +
                         "</div>");
                     }
+                    field.flexFormsSavedValidationMessage = field.validationMessage;
                 } else {
                     field.classList.remove('invalid');
                     _removeElementErrors(parent);
                 }
-                // FIXME: Safari seems to have a bug here and will not reset customError so we reset:
+                // FIXME: We have to reset the custom validity here to allow native validations work again
+
                 field.setCustomValidity('');
             }
         }
@@ -196,19 +204,21 @@
          * Creates a tooltip at given element, will create a new instance if not created
          * @param {HTMLElement} target
          * @param {HTMLElement} form
+         * @param {Boolean} remove
          * @private
          */
         function _showAndOrCreateTooltip(target, form, remove) {
-
             if (!self.tooltips && self.options.createTooltips) {
-                self.tooltips = new FlexCss.Tooltip(form);
+                self.tooltips = new FlexCss.Tooltip(form, {
+                    containerClass: 'error-tooltip'
+                });
             }
 
             setTimeout(function () {
-                if (!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                    self.tooltips.createTooltip(target, target.validationMessage, false);
+                if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
+                    self.tooltips.createTooltip(target, target.flexFormsSavedValidationMessage, false);
                 } else {
-                    if(remove) {
+                    if (remove) {
                         self.tooltips.removeTooltip(target);
                     }
                 }
@@ -246,6 +256,7 @@
                     prepareErrors(form, r.checkedFields, false);
                     currentValidationFuture.resolve(r);
                     invalidFormFired = false;
+
                 });
 
             }, true);
@@ -264,10 +275,10 @@
                 }
                 _customValidationsForElements(form, [e.target]).done(function () {
                     prepareErrors(form, [e.target], false);
+                    if (!hasError) {
+                        _showAndOrCreateTooltip(e.target, form);
+                    }
                 });
-                if (!hasError) {
-                    _showAndOrCreateTooltip(e.target, form);
-                }
 
             }, true);
 
@@ -336,7 +347,6 @@
     FlexCss.Form.globalErrorMessageHandler = function () {
     };
 
-
     /**
      * Registers a global event Handler
      * @param errorFunc
@@ -346,16 +356,17 @@
     };
 
     /**
-     * Initilizes forms for a specific selector
-     * @param selector
+     * Initialize forms for a specific selector
+     * @param {String} selector
+     * @param {Object} options
      */
-    FlexCss.Form.init = function (selector) {
+    FlexCss.Form.init = function (selector, options) {
         var forms = document.querySelectorAll(selector);
         for (var i = 0; i < forms.length; i++) {
-            new FlexCss.Form(forms[i]);
+            new FlexCss.Form(forms[i], options);
         }
     };
 
-    FlexCss.Form.init("form");
+    FlexCss.Form.init("form", {});
 
 })(document, window, jQuery);

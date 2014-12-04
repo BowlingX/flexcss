@@ -1,22 +1,22 @@
 // A Responsive dropdown
 .dropdown {
   position: fixed;
-  bottom:0;
-  left:0;
-  width:100%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   opacity: 0;
   will-change: opacity, transform;
   pointer-events: none;
   transition: transform .25s ease, opacity .25s ease;
   // should be over modals
-  z-index:$indexDropdown;
-  font-size:$baseFontSize;
+  z-index: $indexDropdown;
+  font-size: $baseFontSize;
 
   &.open {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
-    transform:translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
 
   ul {
@@ -25,29 +25,29 @@
     padding: 0;
 
     a {
-      padding:15px 15px;
-      display:block;
-      border-bottom:1px solid lighten($grayColor, 20%);
-      font-weight:normal;
-      color:$baseColor;
+      padding: 15px 15px;
+      display: block;
+      border-bottom: 1px solid lighten($grayColor, 20%);
+      font-weight: normal;
+      color: $baseColor;
       &:hover {
-        background:lighten($grayColor, 35%);
+        background: lighten($grayColor, 35%);
       }
 
       &:active {
-        background:lighten($grayColor, 25%);
+        background: lighten($grayColor, 25%);
       }
 
       i {
-        color:$baseColor;
+        color: $baseColor;
       }
     }
 
     -webkit-overflow-scrolling: touch;
-    max-height:300px;
-    overflow-y:auto;
+    max-height: 300px;
+    overflow-y: auto;
     li:last-of-type a {
-      border-bottom:none;
+      border-bottom: none;
       border-bottom-left-radius: $globalRadius;
       border-bottom-right-radius: $globalRadius;
     }
@@ -59,31 +59,35 @@
   }
 
   background: #fff;
-  transform:translate3d(0,100%,0);
+  transform: translate3d(0, 100%, 0);
 }
 
 // Global Tooltip
-#TooltipContainer {
-  z-index:$indexTooltip;
+.tooltip-container {
+  z-index: $indexTooltip;
   pointer-events: none;
-  display:inline-block;
+  display: inline-block;
   opacity: 0;
-  position:absolute;
-  color:#fff;
-  border-radius:5px;
-  padding:7px 10px 7px;
+  position: absolute;
+  color: #fff;
+  border-radius: 5px;
+  padding: 7px 10px 7px;
   will-change: transform, opacity;
-  transition:opacity .4s ease;
-  font-size:$smallFontSize;
-  font-weight:bold;
-  transform:translate3d(0, -3px,0);
-  background:$topbarBg;
+  transition: opacity .4s ease;
+  font-size: $smallFontSize;
+  font-weight: bold;
+  transform: translate3d(0, -3px, 0);
+  background: $topbarBg;
 
   word-break: break-all;
+
+  &.error-tooltip {
+    word-break: normal;
+  }
   &.open {
     opacity: 1;
   }
-  max-width:250px;
+  max-width: 250px;
   text-align: center;
 
   &.arrow-bottom {
@@ -91,7 +95,7 @@
   }
 
   &.arrow-top {
-    transform:translate3d(0, 4px,0);
+    transform: translate3d(0, 4px, 0);
     @include arrow-top($topbarBg);
   }
 }
@@ -100,24 +104,24 @@
 @media #{$mediaDesktop} {
 
   .dropdown {
-    transform:none;
-    left:auto;
-    bottom:auto;
-    width:auto;
+    transform: none;
+    left: auto;
+    bottom: auto;
+    width: auto;
     position: absolute;
-    border-radius:$globalRadius;
-    box-shadow:$globalBoxShadow;
-    max-width:320px;
+    border-radius: $globalRadius;
+    box-shadow: $globalBoxShadow;
+    max-width: 320px;
     transition: none;
 
     // reset positioning
     &:not(.open) {
-      top:0 !important;
-      left:0 !important;
-      bottom:auto !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: auto !important;
     }
     ul a {
-      padding:12px 15px;
+      padding: 12px 15px;
     }
   }
 

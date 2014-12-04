@@ -522,14 +522,21 @@
         /**
          * Creates a Tooltip for:
          * [data-tooltip]
-         * @param DelegateContainer
+         * @param {String|HTMLElement} DelegateContainer
+         * @param {Object} options
          * @returns {FlexCss.Tooltip}
          * @constructor
          */
-        FlexCss.Tooltip = function (DelegateContainer) {
+        FlexCss.Tooltip = function (DelegateContainer, options) {
             var doc = document, container = DelegateContainer instanceof HTMLElement ?
                     DelegateContainer : doc.getElementById(DelegateContainer),
-                tooltipContainer = null, self = this;
+                tooltipContainer = null, self = this, CLASS_NAMES_TOOLTIP = 'tooltip-container';
+
+            self.options = {
+                containerClass: ''
+            };
+
+            $.extend(self.options, options);
 
             /**
              * Creates a Tooltip on given target
@@ -542,12 +549,13 @@
                     colRect = container.getBoundingClientRect(), title = text;
                 if (!tooltipContainer) {
                     tooltipContainer = doc.createElement('div');
-                    tooltipContainer.id = 'TooltipContainer';
+                    tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
                     container.appendChild(tooltipContainer);
                 }
                 tooltipContainer.style.left = 'auto';
                 tooltipContainer.style.top = 'auto';
                 tooltipContainer.innerHTML = title;
+                tooltipContainer.flexTooltipCurrentTarget = target;
                 if (removeTitle) {
                     target.oldTitle = title;
                     target.removeAttribute('title');
@@ -577,6 +585,9 @@
              */
             self.removeTooltip = function (target) {
                 if(tooltipContainer) {
+                    if(tooltipContainer.flexTooltipCurrentTarget !== target) {
+                        return;
+                    }
                     tooltipContainer.classList.remove('open');
                 }
                 if (target.oldTitle) {
