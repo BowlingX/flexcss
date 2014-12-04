@@ -4,8 +4,8 @@
 (function (document, window, $) {
     "use strict";
 
-    var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading';
-
+    var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading',
+        ARIA_INVALID ='aria-invalid';
     if (!window.FlexCss) {
         window.FlexCss = {};
     }
@@ -161,6 +161,7 @@
                     // setup custom error messages:
                     _setupErrorMessages(field, validity);
                     field.classList.add('invalid');
+                    field.setAttribute(ARIA_INVALID, 'true');
                     if (self.options.appendError) {
                         parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
                         field.validationMessage +
@@ -169,6 +170,8 @@
                     field.flexFormsSavedValidationMessage = field.validationMessage;
                 } else {
                     field.classList.remove('invalid');
+                    field.setAttribute(ARIA_INVALID, 'false');
+
                     _removeElementErrors(parent);
                 }
                 // FIXME: We have to reset the custom validity here to allow native validations work again
