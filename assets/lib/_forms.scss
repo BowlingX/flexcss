@@ -179,9 +179,15 @@ fieldset {
   @include interface();
   cursor: pointer;
   input {
-    visibility: hidden;
+    z-index:-1;
     position: absolute;
-    left: 0;
+    left: 2px;
+    top:3px;
+
+    -moz-appearance:none;
+    outline:none !important;
+    box-shadow:none !important;
+
   }
   .checkbox-container {
     line-height: $baseLineHeight;
