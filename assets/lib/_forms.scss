@@ -230,6 +230,13 @@ fieldset {
     }
   }
 
+  input[type="checkbox"], input[type="radio"] {
+    &:focus {
+      +  .checkbox-container::before {
+        background: darken($inputBackground, 5%);
+      }
+    }
+  }
   input[type="checkbox"]:checked + .checkbox-container::before {
     @extend .icon-ok:before;
 
