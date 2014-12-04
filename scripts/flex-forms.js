@@ -4,7 +4,7 @@
 (function (document, window, $) {
     "use strict";
 
-    var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid';
+    var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading';
 
     if (!window.FlexCss) {
         window.FlexCss = {};
@@ -66,14 +66,25 @@
             return self;
         };
 
-        self.registerValidator('equals', function (field) {
-            var def = $.Deferred();
-            setTimeout(function () {
-                field.setCustomValidity('Die Felder stimmen nicht überein');
-                def.resolve(false);
-            }, 500);
-            return def;
-        });
+        /**
+         * Runs async validation
+         * @param {String} validationRef
+         * @param {HTMLElement} field
+         * @param {HTMLElement} form
+         * @returns {*}
+         * @private
+         */
+        function _runValidation(validationRef, field, form) {
+            if(!self._validators[validationRef]) {
+                throw 'Could not found validator: ' + validationRef;
+            }
+            var cl = field.classList, future = self._validators[validationRef].apply(self, [field, form]);
+            cl.add(LOADING_CLASS);
+            future.done(function () {
+                cl.remove(LOADING_CLASS);
+            });
+            return future;
+        }
 
         /**
          * Run custom validations for elements, validations are done async do support XHR Requests or other stuff
@@ -92,7 +103,7 @@
                     if (!validity.customError && !validity.valid) {
                         continue;
                     }
-                    futures.push(self._validators[validationRef].apply(self, [field, form]));
+                    futures.push(_runValidation(validationRef, field, form));
                 }
             }
             return $.when.apply(self, futures).then(function () {
@@ -105,7 +116,6 @@
                 for (var fI = 0; fI < l; fI++) {
                     if (!allFutures[fI]) {
                         result.foundAnyError = true;
-                        return $.Deferred().resolve(result);
                     }
                 }
                 return $.Deferred().resolve(result);
@@ -144,69 +154,77 @@
             }
         }
 
+        function validateCustomFields(form) {
+            return _customValidationsForElements(
+                form, form.querySelectorAll("[data-validate]"));
+        }
+
+        /**
+         * Creates an array from a node list with invalid items
+         * On Firefox also Fieldset's seems to be invalid, remove them
+         * @param list
+         * @returns {Array}
+         * @private
+         */
+       function _createArrayFromInvalidFieldList(list) {
+           var arr = [];
+           for(var i = 0;i < list.length; ++i) {
+               var  n = list[i];
+               if(! (n instanceof HTMLFieldSetElement)) {
+                   arr.push(n);
+               }
+           }
+           return arr;
+        }
         /**
          * Initializes validation for a given form, registers event handlers
          * @param {HTMLElement} form
          */
         function initFormValidation(form) {
             // Suppress the default bubbles
-            var invalidFormFired = false, timeoutRunning = false,
-                currentValidationFuture = $.Deferred();
+            var invalidFormFired = false,    currentValidationFuture;
             form.addEventListener("invalid", function (e) {
                 e.preventDefault();
-                var invalidFields;
-                // focus the first field:
-                if (!timeoutRunning) {
-                    invalidFields = form.querySelectorAll(":invalid");
-                    if (invalidFields.length > 0) {
-
-                        timeoutRunning = true;
-                        setTimeout(function () {
-                            invalidFields[0].focus();
-                            timeoutRunning = false;
-                        }, 50);
-                    }
+                var invalidFields = form.querySelectorAll(":invalid");
+                var arr = _createArrayFromInvalidFieldList(invalidFields);
+                // Prevent fire this N times:
+                if (arr.indexOf(e.target) > 0) {
+                    return;
                 }
-
+                // focus the first field:
+                if (arr.length > 0) {
+                    setTimeout(function () {
+                        arr[0].focus();
+                    }, 0);
+                }
                 currentValidationFuture = $.Deferred();
 
-                if (invalidFormFired) {
-                    return false;
-                }
-
-                invalidFormFired = true;
-                if (invalidFormFired) {
-                    var validation = _customValidationsForElements(
-                        form, form.querySelectorAll("[data-validate]"));
-                    prepareErrors(form, invalidFields, true);
-                    validation.done(function (r) {
-                        prepareErrors(form, r.checkedFields, false);
-                        currentValidationFuture.resolve(r);
-                    });
-                }
+                var validation = validateCustomFields(form);
+                prepareErrors(form, arr, true);
+                validation.done(function (r) {
+                    prepareErrors(form, r.checkedFields, false);
+                    currentValidationFuture.resolve(r);
+                    invalidFormFired = false;
+                });
 
             }, true);
 
             // handle focus out for text elements
             form.addEventListener("focusout", function (e) {
-                var target = e.target, cl = target.classList;
+                var target = e.target;
                 if (target instanceof HTMLSelectElement) {
                     return;
                 }
-                cl.add('loading');
                 _customValidationsForElements(form, [e.target]).done(function () {
-                    cl.remove('loading');
                     prepareErrors(form, [e.target], false);
                 });
             }, false);
             // Handle change for checkbox, radios and selects
             form.addEventListener("change", function (e) {
-                var name = e.target.getAttribute('name'), cl = e.target.classList;
-                cl.add('loading');
+                var name = e.target.getAttribute('name');
                 if (name) {
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
                     _customValidationsForElements(form, inputs).done(function () {
-                        cl.remove('loading');
                         prepareErrors(form, inputs, false);
                     });
                 }
@@ -215,23 +233,35 @@
             // prevent default if form is invalid
             var submitListener = function (e) {
                 e.preventDefault();
-                this.classList.add('loading');
-                this.removeEventListener("submit", submitListener);
-                var self = this, target = e.target;
+                if(form.classList.contains(LOADING_CLASS)) {
+                    return false;
+                }
+                form.classList.add(LOADING_CLASS);
+                form.removeEventListener("submit", submitListener);
+                _removeElementErrors(form);
                 // reset:
-                invalidFormFired = false;
-                if (self.checkValidity()) {
-                    // submit form
-                    //form.submit();
+                if (form.checkValidity()) {
+                    form.addEventListener("submit", submitListener);
+                    console.log("check");
+                    // Custom validations did never pass
+                    currentValidationFuture = $.Deferred();
+                    var validation = validateCustomFields(form);
+                    validation.done(function (r) {
+                        prepareErrors(form, r.checkedFields, false);
+                        currentValidationFuture.resolve(r);
+                    });
                     currentValidationFuture.done(function (r) {
+                        form.removeEventListener("submit", submitListener);
+                        form.classList.remove(LOADING_CLASS);
                         if (r.foundAnyError) {
-                            self.addEventListener("submit", submitListener);
+                            form.addEventListener("submit", submitListener);
                         } else {
                             form.submit();
                         }
                     });
                 } else {
-                    self.addEventListener("submit", submitListener);
+                    form.classList.remove(LOADING_CLASS);
+                    form.addEventListener("submit", submitListener);
                 }
             };
             form.addEventListener("submit", submitListener);

@@ -13,7 +13,7 @@
 
   .controls {
     margin-bottom: 20px;
-
+    position:relative;
     p {
       margin: $labelMargin 0 0 0;
       font-size: $smallFontSize;
@@ -133,14 +133,22 @@ fieldset {
 
 
   // validation
-
   &.invalid {
     background: lighten($alertColor, 30%);
+    // Firefox will render a boxshadow
+    box-shadow:none;
+    border:none;
+  }
+
+  // remove default states
+  &:invalid {
+    box-shadow:none;
+    border:none;
   }
 
   &.loading {
     position:relative;
-    @include loadingContainer();
+    @include loadingContainer(#ccc);
   }
 }
 

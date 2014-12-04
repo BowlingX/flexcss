@@ -10,6 +10,7 @@
     "requestAnimationFrame",
     "HTMLElement",
     "HTMLSelectElement",
+    "HTMLFieldSetElement",
     "KeyboardEvent",
     "MouseEvent",
     "MutationObserver",
