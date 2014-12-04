@@ -523,52 +523,81 @@
          * Creates a Tooltip for:
          * [data-tooltip]
          * @param DelegateContainer
-         * @returns {FlexCss.CreateTooltip}
+         * @returns {FlexCss.Tooltip}
          * @constructor
          */
-        FlexCss.CreateTooltip = function (DelegateContainer) {
-            var doc = document, container = doc.getElementById(DelegateContainer),
-                tooltipContainer = null;
-            container.addEventListener('mouseover', function (e) {
-                var target = e.target, targetRect = target.getBoundingClientRect(),
-                    colRect = container.getBoundingClientRect(), title = target.getAttribute('title');
-                if (target.hasAttribute('data-tooltip')) {
-                    if (!tooltipContainer) {
-                        tooltipContainer = doc.createElement('div');
-                        tooltipContainer.id = 'TooltipContainer';
-                        container.appendChild(tooltipContainer);
-                    }
-                    tooltipContainer.style.left = 'auto';
-                    tooltipContainer.style.top = 'auto';
-                    tooltipContainer.innerHTML = title;
+        FlexCss.Tooltip = function (DelegateContainer) {
+            var doc = document, container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer),
+                tooltipContainer = null, self = this;
+
+            /**
+             * Creates a Tooltip on given target
+             * @param {HTMLElement} target
+             * @param {String} text
+             * @param {Boolean} removeTitle
+             */
+            self.createTooltip = function (target, text, removeTitle) {
+                var targetRect = target.getBoundingClientRect(),
+                    colRect = container.getBoundingClientRect(), title = text;
+                if (!tooltipContainer) {
+                    tooltipContainer = doc.createElement('div');
+                    tooltipContainer.id = 'TooltipContainer';
+                    container.appendChild(tooltipContainer);
+                }
+                tooltipContainer.style.left = 'auto';
+                tooltipContainer.style.top = 'auto';
+                tooltipContainer.innerHTML = title;
+                if (removeTitle) {
                     target.oldTitle = title;
                     target.removeAttribute('title');
-                    var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
-                        isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height),
-                        classList = tooltipContainer.classList;
-                    if (isCollisionTop) {
-                        tooltipContainer.style.top = (targetRect.bottom) - colRect.top + 'px';
-                        classList.remove('arrow-bottom');
-                        classList.add('arrow-top');
-
-                    } else {
-                        classList.remove('arrow-top');
-                        classList.add('arrow-bottom');
-                        tooltipContainer.style.top = (targetTop - containerRect.height) - colRect.top + 'px';
-                    }
-                    tooltipContainer.style.left = ((targetRect.left + targetRect.width / 2) -
-                    (containerRect.width / 2) || 0) + 'px';
-                    classList.add('open');
-
                 }
-            });
+                var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
+                    isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height),
+                    classList = tooltipContainer.classList;
+                if (isCollisionTop) {
+                    tooltipContainer.style.top = (targetRect.bottom) - colRect.top + 'px';
+                    classList.remove('arrow-bottom');
+                    classList.add('arrow-top');
 
-            container.addEventListener('mouseout', function (e) {
-                if (e.target.hasAttribute('data-tooltip')) {
+                } else {
+                    classList.remove('arrow-top');
+                    classList.add('arrow-bottom');
+                    tooltipContainer.style.top = (targetTop - containerRect.height) - colRect.top + 'px';
+                }
+                tooltipContainer.style.left = ((targetRect.left + targetRect.width / 2) -
+                (containerRect.width / 2) || 0) - colRect.left + 'px';
+                classList.add('open');
+
+            };
+
+            /**
+             * Removes a Tooltip on given target
+             * @param {HTMLElement} target
+             */
+            self.removeTooltip = function (target) {
+                if(tooltipContainer) {
                     tooltipContainer.classList.remove('open');
-                    e.target.setAttribute('title', e.target.oldTitle);
                 }
-            });
+                if (target.oldTitle) {
+                    target.setAttribute('title', target.oldTitle);
+                }
+            };
+
+            // Bind to mouse events if statically created
+            if (!(self instanceof FlexCss.Tooltip)) {
+                container.addEventListener('mouseover', function (e) {
+                    if (e.target.hasAttribute('data-tooltip')) {
+                        self.createTooltip(e.target, e.target.getAttribute('title'), true);
+                    }
+                });
+
+                container.addEventListener('mouseout', function (e) {
+                    if (e.target.hasAttribute('data-tooltip')) {
+                        self.removeTooltip(e.target);
+                    }
+                });
+
+            }
 
             return this;
         };
@@ -823,8 +852,8 @@
                 loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal';
             // Instance vars:
 
-            if(!container) {
-                throw 'Could not found container element by given ID: '+ DelegateContainer;
+            if (!container) {
+                throw 'Could not found container element by given ID: ' + DelegateContainer;
             }
 
             /**
@@ -1079,7 +1108,7 @@
                         return f;
                     });
                 } else {
-                    var el = targetContent instanceof HTMLElement? targetContent : doc.getElementById(targetContent);
+                    var el = targetContent instanceof HTMLElement ? targetContent : doc.getElementById(targetContent);
                     if (el) {
                         future = $.Deferred().resolve(el);
                     } else {

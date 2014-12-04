@@ -15,11 +15,21 @@
     /**
      * Enhanced flexcss forms
      * @param {HTMLElement} formElement
+     * @param {Object} options
      * @constructor
      */
-    FlexCss.Form = function (formElement) {
+    FlexCss.Form = function (formElement, options) {
 
         var self = this;
+
+        self.tooltips = null;
+
+        self.options = {
+            createTooltips:true,
+            appendError:false
+        };
+
+        self.options = $.extend(self.options, options);
 
         /**
          * A List of Validators
@@ -52,6 +62,9 @@
             }
             for (var inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
                 inputsWithErrorClasses[inputErrorIndex].classList.remove(INPUT_ERROR_CLASS);
+                if(self.tooltips) {
+                    self.tooltips.removeTooltip(inputsWithErrorClasses[inputErrorIndex]);
+                }
             }
         }
 
@@ -142,9 +155,11 @@
                     // setup custom error messages:
                     _setupErrorMessages(field, validity);
                     field.classList.add('invalid');
-                    parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
-                    field.validationMessage +
-                    "</div>");
+                    if(self.options.appendError) {
+                        parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
+                        field.validationMessage +
+                        "</div>");
+                    }
                 } else {
                     field.classList.remove('invalid');
                     _removeElementErrors(parent);
@@ -176,6 +191,15 @@
            }
            return arr;
         }
+
+        function _showAndOrCreateTooltip(target, form){
+            if(!self.tooltips && self.options.createTooltips) {
+                self.tooltips = new FlexCss.Tooltip(form);
+            }
+            if(!target.validity.valid) {
+                self.tooltips.createTooltip(target, target.validationMessage, false);
+            }
+        };
         /**
          * Initializes validation for a given form, registers event handlers
          * @param {HTMLElement} form
@@ -195,6 +219,7 @@
                 if (arr.length > 0) {
                     setTimeout(function () {
                         arr[0].focus();
+                        _showAndOrCreateTooltip(arr[0], form);
                     }, 0);
                 }
                 currentValidationFuture = $.Deferred();
@@ -210,7 +235,10 @@
             }, true);
 
             // handle focus out for text elements
-            form.addEventListener("focusout", function (e) {
+            form.addEventListener("blur", function (e) {
+                if(self.tooltips) {
+                    self.tooltips.removeTooltip(e.target);
+                }
                 var target = e.target;
                 if (target instanceof HTMLSelectElement) {
                     return;
@@ -218,7 +246,14 @@
                 _customValidationsForElements(form, [e.target]).done(function () {
                     prepareErrors(form, [e.target], false);
                 });
-            }, false);
+            }, true);
+
+
+
+            form.addEventListener("focus", function(e){
+                _showAndOrCreateTooltip(e.target, form);
+            }, true);
+
             // Handle change for checkbox, radios and selects
             form.addEventListener("change", function (e) {
                 var name = e.target.getAttribute('name');
