@@ -198,7 +198,7 @@
          * @param {HTMLElement} form
          * @private
          */
-        function _showAndOrCreateTooltip(target, form) {
+        function _showAndOrCreateTooltip(target, form, remove) {
 
             if (!self.tooltips && self.options.createTooltips) {
                 self.tooltips = new FlexCss.Tooltip(form);
@@ -208,7 +208,9 @@
                 if (!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
                     self.tooltips.createTooltip(target, target.validationMessage, false);
                 } else {
-                    self.tooltips.removeTooltip(target);
+                    if(remove) {
+                        self.tooltips.removeTooltip(target);
+                    }
                 }
             }, 0);
 
@@ -250,7 +252,7 @@
 
             // handle focus out for text elements
             form.addEventListener("blur", function (e) {
-                if (self.tooltips && e.target.validity.valid) {
+                if (self.tooltips) {
                     self.tooltips.removeTooltip(e.target);
                 }
                 var target = e.target, hasError = false;
@@ -286,7 +288,7 @@
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
                     _customValidationsForElements(form, inputs).done(function () {
                         prepareErrors(form, inputs, false);
-                        _showAndOrCreateTooltip(e.target, form);
+                        _showAndOrCreateTooltip(e.target, form, true);
                     });
                 }
             });
