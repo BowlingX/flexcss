@@ -25,8 +25,8 @@
         self.tooltips = null;
 
         self.options = {
-            createTooltips:true,
-            appendError:false
+            createTooltips: true,
+            appendError: false
         };
 
         self.options = $.extend(self.options, options);
@@ -62,7 +62,7 @@
             }
             for (var inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
                 inputsWithErrorClasses[inputErrorIndex].classList.remove(INPUT_ERROR_CLASS);
-                if(self.tooltips) {
+                if (self.tooltips) {
                     self.tooltips.removeTooltip(inputsWithErrorClasses[inputErrorIndex]);
                 }
             }
@@ -88,7 +88,7 @@
          * @private
          */
         function _runValidation(validationRef, field, form) {
-            if(!self._validators[validationRef]) {
+            if (!self._validators[validationRef]) {
                 throw 'Could not found validator: ' + validationRef;
             }
             var cl = field.classList, future = self._validators[validationRef].apply(self, [field, form]);
@@ -155,7 +155,7 @@
                     // setup custom error messages:
                     _setupErrorMessages(field, validity);
                     field.classList.add('invalid');
-                    if(self.options.appendError) {
+                    if (self.options.appendError) {
                         parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
                         field.validationMessage +
                         "</div>");
@@ -181,32 +181,46 @@
          * @returns {Array}
          * @private
          */
-       function _createArrayFromInvalidFieldList(list) {
-           var arr = [];
-           for(var i = 0;i < list.length; ++i) {
-               var  n = list[i];
-               if(! (n instanceof HTMLFieldSetElement)) {
-                   arr.push(n);
-               }
-           }
-           return arr;
+        function _createArrayFromInvalidFieldList(list) {
+            var arr = [];
+            for (var i = 0; i < list.length; ++i) {
+                var n = list[i];
+                if (!(n instanceof HTMLFieldSetElement)) {
+                    arr.push(n);
+                }
+            }
+            return arr;
         }
 
-        function _showAndOrCreateTooltip(target, form){
-            if(!self.tooltips && self.options.createTooltips) {
+        /**
+         * Creates a tooltip at given element, will create a new instance if not created
+         * @param {HTMLElement} target
+         * @param {HTMLElement} form
+         * @private
+         */
+        function _showAndOrCreateTooltip(target, form) {
+
+            if (!self.tooltips && self.options.createTooltips) {
                 self.tooltips = new FlexCss.Tooltip(form);
             }
-            if(!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                self.tooltips.createTooltip(target, target.validationMessage, false);
-            }
+
+            setTimeout(function () {
+                if (!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
+                    self.tooltips.createTooltip(target, target.validationMessage, false);
+                } else {
+                    self.tooltips.removeTooltip(target);
+                }
+            }, 0);
+
         }
+
         /**
          * Initializes validation for a given form, registers event handlers
          * @param {HTMLElement} form
          */
         function initFormValidation(form) {
             // Suppress the default bubbles
-            var invalidFormFired = false,    currentValidationFuture;
+            var invalidFormFired = false, currentValidationFuture;
             form.addEventListener("invalid", function (e) {
                 e.preventDefault();
                 var invalidFields = form.querySelectorAll(":invalid");
@@ -236,25 +250,34 @@
 
             // handle focus out for text elements
             form.addEventListener("blur", function (e) {
-                if(self.tooltips && e.target.validity.valid) {
+                if (self.tooltips && e.target.validity.valid) {
                     self.tooltips.removeTooltip(e.target);
                 }
-                var target = e.target;
+                var target = e.target, hasError = false;
                 if (target instanceof HTMLSelectElement) {
                     return;
+                }
+                if (target.classList.contains(INPUT_ERROR_CLASS)) {
+                    hasError = true;
                 }
                 _customValidationsForElements(form, [e.target]).done(function () {
                     prepareErrors(form, [e.target], false);
                 });
-                _showAndOrCreateTooltip(e.target, form);
+                if (!hasError) {
+                    _showAndOrCreateTooltip(e.target, form);
+                }
 
             }, true);
 
             form.addEventListener("focus", function (e) {
+                // do not track errors for checkbox and radios on focus:
+                var attr = e.target.getAttribute('type');
+                if (attr === 'checkbox' || attr === 'option' ||
+                    e.target instanceof HTMLSelectElement) {
+                    return;
+                }
                 _showAndOrCreateTooltip(e.target, form);
             }, true);
-
-
 
             // Handle change for checkbox, radios and selects
             form.addEventListener("change", function (e) {
@@ -263,6 +286,7 @@
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
                     _customValidationsForElements(form, inputs).done(function () {
                         prepareErrors(form, inputs, false);
+                        _showAndOrCreateTooltip(e.target, form);
                     });
                 }
             });
@@ -270,7 +294,7 @@
             // prevent default if form is invalid
             var submitListener = function (e) {
                 e.preventDefault();
-                if(form.classList.contains(LOADING_CLASS)) {
+                if (form.classList.contains(LOADING_CLASS)) {
                     return false;
                 }
                 form.classList.add(LOADING_CLASS);

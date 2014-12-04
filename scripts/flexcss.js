@@ -527,7 +527,8 @@
          * @constructor
          */
         FlexCss.Tooltip = function (DelegateContainer) {
-            var doc = document, container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer),
+            var doc = document, container = DelegateContainer instanceof HTMLElement ?
+                    DelegateContainer : doc.getElementById(DelegateContainer),
                 tooltipContainer = null, self = this;
 
             /**
