@@ -196,7 +196,7 @@
             if(!self.tooltips && self.options.createTooltips) {
                 self.tooltips = new FlexCss.Tooltip(form);
             }
-            if(!target.validity.valid) {
+            if(!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
                 self.tooltips.createTooltip(target, target.validationMessage, false);
             }
         };
@@ -236,7 +236,7 @@
 
             // handle focus out for text elements
             form.addEventListener("blur", function (e) {
-                if(self.tooltips) {
+                if(self.tooltips && e.target.validity.valid) {
                     self.tooltips.removeTooltip(e.target);
                 }
                 var target = e.target;
