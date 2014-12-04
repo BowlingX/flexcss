@@ -9,9 +9,11 @@
     "setTimeout",
     "requestAnimationFrame",
     "HTMLElement",
+    "HTMLSelectElement",
     "KeyboardEvent",
     "MouseEvent",
     "MutationObserver",
-    "TouchEvent"
+    "TouchEvent",
+    "console"
   ]
 }

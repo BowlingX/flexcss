@@ -138,6 +138,10 @@ fieldset {
     background: lighten($alertColor, 30%);
   }
 
+  &.loading {
+    position:relative;
+    @include loadingContainer();
+  }
 }
 
 .form-error {

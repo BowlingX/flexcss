@@ -221,7 +221,7 @@
                                 <label for="hometown_id">Heimatstadt (DE)</label>
 
                                 <div class="controls">
-                                    <input required id="hometown_id" name="hometown" type="text" maxLength="50"
+                                    <input data-validate="equals" required id="hometown_id" name="hometown" type="text" maxLength="50"
                                            value="Düsseldorf"/>
                                 </div>
                             </div>
@@ -278,7 +278,7 @@
 
                                 <div class="controls languages-select">
                                     <div class="multi-container">
-                                        <div class="select-element"><select id="languages_id"
+                                        <div class="select-element"><select data-validate="equals" id="languages_id"
                                                                             class="select-field select-field-languages"
                                                                             name="languages[]">
                                             <option value="-1">
