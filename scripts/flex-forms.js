@@ -199,7 +199,7 @@
             if(!target.validity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
                 self.tooltips.createTooltip(target, target.validationMessage, false);
             }
-        };
+        }
         /**
          * Initializes validation for a given form, registers event handlers
          * @param {HTMLElement} form
@@ -239,6 +239,7 @@
                 if(self.tooltips && e.target.validity.valid) {
                     self.tooltips.removeTooltip(e.target);
                 }
+
                 var target = e.target;
                 if (target instanceof HTMLSelectElement) {
                     return;
@@ -246,13 +247,11 @@
                 _customValidationsForElements(form, [e.target]).done(function () {
                     prepareErrors(form, [e.target], false);
                 });
-            }, true);
-
-
-
-            form.addEventListener("focus", function(e){
                 _showAndOrCreateTooltip(e.target, form);
+
             }, true);
+
+
 
             // Handle change for checkbox, radios and selects
             form.addEventListener("change", function (e) {
