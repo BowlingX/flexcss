@@ -12,6 +12,7 @@
 
     var FlexCss = window.FlexCss;
 
+
     /**
      * Enhanced flexcss forms
      * @param {HTMLElement} formElement
@@ -32,12 +33,13 @@
         self.options = $.extend(self.options, options);
 
         self.hfWidgetInstance = self;
+
         /**
          * A List of Validators
          * @type {Object}
          * @private
          */
-        self._validators = [];
+        self._validators = FlexCss.Form.globalValidators;
 
         /**
          * @param {HTMLElement} field
@@ -395,6 +397,20 @@
         }
     };
 
+    FlexCss.Form.globalValidators = [];
+
+    /**
+     * Registers a global validator that is usable on all form instasnces
+     * @param {String} name
+     * @param {Function} validator
+     * @returns {Function}
+     */
+    FlexCss.Form.registerValidator = function (name, validator) {
+        FlexCss.Form.globalValidators[name] = validator;
+        return FlexCss.Form;
+    };
+
+    // initilize forms for all forms
     FlexCss.Form.init("form", {});
 
 })(document, window, jQuery);
