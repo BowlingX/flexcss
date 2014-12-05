@@ -128,7 +128,7 @@
          * @param {Function} func
          * @returns {window.FlexCss.Form}
          */
-        self.registerRemoteValidation = function(func) {
+        self.registerRemoteValidation = function (func) {
             self._remoteValidationFunction = func;
             return self;
         };
@@ -434,6 +434,7 @@
                 form.classList.add(LOADING_CLASS);
                 form.removeEventListener("submit", submitListener);
                 _removeElementErrors(form);
+                e.preventDefault();
                 // reset:
                 if (form.checkValidity()) {
                     form.addEventListener("submit", submitListener);
@@ -454,15 +455,12 @@
                     });
                     currentValidationFuture.done(function (r) {
                         form.classList.remove(LOADING_CLASS);
-                        if (r.foundAnyError) {
-                            e.preventDefault();
-                        } else {
+                        if (!r.foundAnyError) {
                             // Handle submitting the form to server:
                             self._handleSubmit(e);
                         }
                     });
                 } else {
-                    e.preventDefault();
                     form.classList.remove(LOADING_CLASS);
                     form.addEventListener("submit", submitListener);
                 }
@@ -479,9 +477,7 @@
          */
         self._handleSubmit = function (e) {
             $(form).trigger('flexcss.form.beforeSubmit', e, [self, form]);
-            if (!e.defaultPrevented) {
-                self.submitFunction.apply(self, [form, e]);
-            }
+            self.submitFunction.apply(self, [form, e]);
         };
 
     };
@@ -510,7 +506,8 @@
     };
 
     FlexCss.Form.globalValidators = [];
-    FlexCss.Form.globalRemoteValidationFunction = function(){};
+    FlexCss.Form.globalRemoteValidationFunction = function () {
+    };
 
     /**
      * Registers a global validator that is usable on all form instasnces
