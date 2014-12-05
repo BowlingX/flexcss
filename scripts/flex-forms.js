@@ -218,6 +218,9 @@
             }
 
             setTimeout(function () {
+                if(!target.flexFormsSavedValidity) {
+                    return;
+                }
                 if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
                     self.tooltips.createTooltip(target, target.flexFormsSavedValidationMessage, false);
                 } else {
