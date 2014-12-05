@@ -346,11 +346,18 @@
                 // reset:
                 if (form.checkValidity()) {
                     form.addEventListener("submit", submitListener);
-                    console.log("check");
                     // Custom validations did never pass
                     currentValidationFuture = $.Deferred();
                     var validation = validateCustomFields(form);
                     validation.done(function (r) {
+                        // focus first invalid field:
+                        for(var i=0;i< r.checkedFields.length;i++) {
+                            var f = r.checkedFields[i];
+                            if(!f.validity.valid) {
+                                f.focus();
+                                break;
+                            }
+                        }
                         prepareErrors(form, r.checkedFields, false);
                         currentValidationFuture.resolve(r);
                     });
