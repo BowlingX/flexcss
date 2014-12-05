@@ -60,6 +60,12 @@ fieldset {
   }
 }
 
+form.loading {
+  button[type="submit"], input[type="submit"] {
+    @include loadingContainer();
+  }
+}
+
 // Basic form and input types
 .input-xlarge, select, textarea, input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
   background-color: $inputBackground;
