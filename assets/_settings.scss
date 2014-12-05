@@ -83,7 +83,7 @@ $inputDisabledBg: #fafafa !default;
 $inputDisabledColor: #bababa !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
 $labelWidthDesktop:30% !default;
-$inputHeight:35px;
+$inputHeight:35px !default;
 
 $placeholderColor: lighten($grayColor, 10%) !default;
 $selectPickerColor:#a6a6a6 !default;
