@@ -54,8 +54,9 @@
 
         self.options = $.extend(self.options, options);
 
-
-
+        // set form class as widget
+        // Forms are very different to classical widgets,
+        // we will not use our base widget class for this but just self
         self.hfWidgetInstance = self;
 
         /**
