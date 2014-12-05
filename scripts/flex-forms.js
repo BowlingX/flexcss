@@ -332,6 +332,8 @@
 
         }
 
+        self.showAndOrCreateTooltip = _showAndOrCreateTooltip;
+
         /**
          * Initializes validation for a given form, registers event handlers
          */
