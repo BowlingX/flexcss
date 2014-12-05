@@ -15,11 +15,11 @@
 
     /**
      * Enhanced flexcss forms
-     * @param {HTMLElement} formElement
+     * @param {HTMLElement} form
      * @param {Object} options
      * @constructor
      */
-    FlexCss.Form = function (formElement, options) {
+    FlexCss.Form = function (form, options) {
 
         var self = this;
 
@@ -53,7 +53,6 @@
         }
 
         /**
-         *
          * @param {HTMLElement} thisParent
          * @private
          */
@@ -88,11 +87,10 @@
          * Runs async validation
          * @param {String} validationRef
          * @param {HTMLElement} field
-         * @param {HTMLElement} form
          * @returns {*}
          * @private
          */
-        function _runValidation(validationRef, field, form) {
+        function _runValidation(validationRef, field) {
             if (!self._validators[validationRef]) {
                 throw 'Could not found validator: ' + validationRef;
             }
@@ -107,12 +105,11 @@
         /**
          * Run custom validations for elements, validations are done async do support XHR Requests or other stuff
          *
-         * @param {HTMLElement} form
          * @param {Array|NodeList} fields
          * @returns {$.Deferred} contains either true if validations passed or false if something went wrong
          * @private
          */
-        function _customValidationsForElements(form, fields) {
+        function _customValidationsForElements(fields) {
             var futures = [], fieldsLength = fields.length, checkedFields = [];
             for (var iVal = 0; iVal < fieldsLength; iVal++) {
                 var field = fields[iVal], validationRef = field.getAttribute('data-validate'), validity = field.validity;
@@ -122,7 +119,7 @@
                         continue;
                     }
                     checkedFields.push(field);
-                    futures.push(_runValidation(validationRef, field, form));
+                    futures.push(_runValidation(validationRef, field));
                 }
             }
             return $.when.apply(self, futures).then(function () {
@@ -143,11 +140,10 @@
 
         /**
          * Will handle errors for given fields
-         * @param {HTMLElement} form
          * @param {Array|NodeList} fields
          * @param {Boolean} removeAllErrors
          */
-        function prepareErrors(form, fields, removeAllErrors) {
+        self.prepareErrors = function (fields, removeAllErrors) {
             if (removeAllErrors) {
                 _removeElementErrors(form);
             }
@@ -178,14 +174,13 @@
                     _removeElementErrors(parent);
                 }
                 // FIXME: We have to reset the custom validity here to allow native validations work again
-
                 field.setCustomValidity('');
             }
-        }
+        };
 
-        function validateCustomFields(form) {
+        function validateCustomFields() {
             return _customValidationsForElements(
-                form, form.querySelectorAll("[data-validate]"));
+                form.querySelectorAll("[data-validate]"));
         }
 
         /**
@@ -219,11 +214,10 @@
         /**
          * Creates a tooltip at given element, will create a new instance if not created
          * @param {HTMLElement} target
-         * @param {HTMLElement} form
          * @param {Boolean} [remove]
          * @private
          */
-        function _showAndOrCreateTooltip(target, form, remove) {
+        function _showAndOrCreateTooltip(target, remove) {
             if (!self.tooltips && self.options.createTooltips) {
                 self.tooltips = new FlexCss.Tooltip(form, {
                     containerClass: 'error-tooltip'
@@ -248,9 +242,8 @@
 
         /**
          * Initializes validation for a given form, registers event handlers
-         * @param {HTMLElement} form
          */
-        function initFormValidation(form) {
+        function initFormValidation() {
             // Suppress the default bubbles
             var invalidFormFired = false, currentValidationFuture;
             form.addEventListener("invalid", function (e) {
@@ -265,15 +258,15 @@
                 if (arr.length > 0) {
                     setTimeout(function () {
                         arr[0].focus();
-                        _showAndOrCreateTooltip(arr[0], form);
+                        _showAndOrCreateTooltip(arr[0]);
                     }, 0);
                 }
                 currentValidationFuture = $.Deferred();
 
-                var validation = validateCustomFields(form);
-                prepareErrors(form, arr, true);
+                var validation = validateCustomFields();
+                self.prepareErrors(arr, true);
                 validation.done(function (r) {
-                    prepareErrors(form, r.checkedFields, false);
+                    self.prepareErrors(r.checkedFields, false);
                     currentValidationFuture.resolve(r);
                     invalidFormFired = false;
                 });
@@ -294,10 +287,10 @@
                 if (target.classList.contains(INPUT_ERROR_CLASS)) {
                     hasError = true;
                 }
-                _customValidationsForElements(form, [e.target]).done(function () {
-                    prepareErrors(form, [e.target], false);
+                _customValidationsForElements([e.target]).done(function () {
+                    self.prepareErrors([e.target], false);
                     if (!hasError) {
-                        _showAndOrCreateTooltip(e.target, form);
+                        _showAndOrCreateTooltip(e.target);
                     }
                 });
 
@@ -319,7 +312,7 @@
                 if(!_checkIsValidBlurFocusElement(e.target)) {
                     return;
                 }
-                _showAndOrCreateTooltip(e.target, form);
+                _showAndOrCreateTooltip(e.target);
             }, true);
 
             // Handle change for checkbox, radios and selects
@@ -328,8 +321,8 @@
                 if (name) {
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
                     _customValidationsForElements(form, inputs).done(function () {
-                        prepareErrors(form, inputs, false);
-                        _showAndOrCreateTooltip(e.target, form, true);
+                        self.prepareErrors(inputs, false);
+                        _showAndOrCreateTooltip(e.target, true);
                     });
                 }
             });
@@ -348,7 +341,7 @@
                     form.addEventListener("submit", submitListener);
                     // Custom validations did never pass
                     currentValidationFuture = $.Deferred();
-                    var validation = validateCustomFields(form);
+                    var validation = validateCustomFields();
                     validation.done(function (r) {
                         // focus first invalid field:
                         for(var i=0;i< r.checkedFields.length;i++) {
@@ -358,7 +351,7 @@
                                 break;
                             }
                         }
-                        prepareErrors(form, r.checkedFields, false);
+                        self.prepareErrors(r.checkedFields, false);
                         currentValidationFuture.resolve(r);
                     });
                     currentValidationFuture.done(function (r) {
@@ -378,7 +371,7 @@
             form.addEventListener("submit", submitListener);
         }
 
-        initFormValidation(formElement);
+        initFormValidation(form);
     };
 
     FlexCss.Form.globalErrorMessageHandler = function () {
