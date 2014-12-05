@@ -207,7 +207,7 @@
          * Creates a tooltip at given element, will create a new instance if not created
          * @param {HTMLElement} target
          * @param {HTMLElement} form
-         * @param {Boolean} remove
+         * @param {Boolean} [remove]
          * @private
          */
         function _showAndOrCreateTooltip(target, form, remove) {
@@ -273,9 +273,11 @@
                     self.tooltips.removeTooltip(e.target);
                 }
                 var target = e.target, hasError = false;
-                if (target instanceof HTMLSelectElement) {
+
+                if(!_checkIsValidBlurFocusElement(target)) {
                     return;
                 }
+
                 if (target.classList.contains(INPUT_ERROR_CLASS)) {
                     hasError = true;
                 }
@@ -288,11 +290,20 @@
 
             }, true);
 
+            /**
+             * Validates if target is a valid input field to check blur and focus events
+             * @param {HTMLElement} target
+             * @returns {boolean}
+             */
+            function _checkIsValidBlurFocusElement(target) {
+                var attr = target.getAttribute('type');
+                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
+                    target instanceof HTMLSelectElement || !(target instanceof HTMLInputElement ||
+                target instanceof HTMLTextAreaElement)));
+            }
             form.addEventListener("focus", function (e) {
                 // do not track errors for checkbox and radios on focus:
-                var attr = e.target.getAttribute('type');
-                if (attr === 'checkbox' || attr === 'option' ||
-                    e.target instanceof HTMLSelectElement) {
+                if(!_checkIsValidBlurFocusElement(e.target)) {
                     return;
                 }
                 _showAndOrCreateTooltip(e.target, form);
