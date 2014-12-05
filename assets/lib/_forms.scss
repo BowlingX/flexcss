@@ -81,6 +81,7 @@ fieldset {
   max-width: 100%;
   will-change: background-color;
   text-overflow: ellipsis;
+  height:$inputHeight;
   &:focus {
     background-color: $inputFocusColor;
     outline: none;
@@ -277,7 +278,7 @@ textarea {
   right: 0px;
   bottom: 0px;
   font-size: 70%;
-  line-height: 35px;
+  line-height: $inputHeight;
   padding: 0 11px 0 11px;
   background: $inputBackground;
   color: $selectPickerColor;
