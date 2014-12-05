@@ -72,7 +72,7 @@
                 useJson = 'json' === shouldUseAjax;
             thisForm.classList.add(LOADING_CLASS);
 
-            $(form).trigger('flexcss.form.submit', e, [self, thisForm]);
+            $(thisForm).trigger('flexcss.form.submit', e, [self, thisForm]);
 
             if (null === shouldUseAjax) {
                 return thisForm.submit();
@@ -96,7 +96,7 @@
             serverCall.then(function (r) {
                 self._remoteValidationFunction.apply(self, [r]);
             }).always(function (r) {
-                $(form).trigger('flexcss.form.ajaxCompleted', e, [self, thisForm, r]);
+                $(thisForm).trigger('flexcss.form.ajaxCompleted', e, [self, thisForm, r]);
                 // always remove error class
                 thisForm.classList.remove(LOADING_CLASS);
             });
