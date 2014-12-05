@@ -5,13 +5,33 @@
     "use strict";
 
     var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading',
-        ARIA_INVALID = 'aria-invalid';
+        ARIA_INVALID = 'aria-invalid', REMOTE = 'data-remote', REMOTE_ACTION = 'data-remote-action';
     if (!window.FlexCss) {
         window.FlexCss = {};
     }
 
     var FlexCss = window.FlexCss;
 
+    /**
+     * jQuery helper to serialize a form to json
+     * @returns {{}}
+     */
+    $.fn.serializeFormJSON = function () {
+
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
 
     /**
      * Enhanced flexcss forms
@@ -27,26 +47,57 @@
 
         self.options = {
             createTooltips: true,
-            appendError: false
+            appendError: false,
+            ajaxSubmitType: 'POST',
+            ajaxJsonContentType: 'application/json; charset=utf-8'
         };
 
         self.options = $.extend(self.options, options);
 
+
+
         self.hfWidgetInstance = self;
 
-        // overwrite if you want to handle your own submitting
-        self.submitFunction = function (form, e) {
-            var shouldUseAjax = form.getAttribute('data-ajax'), ajaxPostUrl =
-                form.getAttribute('data-ajax-action') || form.getAttribute('action') || window.location.href;
+        /**
+         * Submits this form, either via ajax or just classical (default)
+         * @param {HTMLElement} thisForm
+         * @param {Event} e
+         * @returns {*}
+         */
+        self.submitFunction = function (thisForm, e) {
+            var shouldUseAjax = thisForm.getAttribute(REMOTE), ajaxPostUrl =
+                    thisForm.getAttribute(REMOTE_ACTION) ||
+                    thisForm.getAttribute('action') || window.location.href,
+                useJson = 'json' === shouldUseAjax;
+            thisForm.classList.add(LOADING_CLASS);
+
+            $(form).trigger('flexcss.form.submit', e, [self, thisForm]);
 
             if (null === shouldUseAjax) {
-                return form.submit();
+                return thisForm.submit();
             }
+
             // prevent form from submit normally
             e.preventDefault();
 
-            $.post(ajaxPostUrl, $(form).serialize()).then(function (r) {
-                console.log(r);
+            // support either JSON request payload or normal payload submission
+            var serverCall = useJson ? $.ajax({
+                contentType: self.options.ajaxJsonContentType,
+                type: self.options.ajaxSubmitType,
+                url: ajaxPostUrl,
+                data: JSON.stringify($(thisForm).serializeFormJSON())
+            }) : $.ajax({
+                type: self.options.ajaxSubmitType,
+                url: ajaxPostUrl,
+                data: $(thisForm).serialize()
+            });
+
+            serverCall.then(function (r) {
+                self._remoteValidationFunction.apply(self, [r]);
+            }).always(function (r) {
+                $(form).trigger('flexcss.form.ajaxCompleted', e, [self, thisForm, r]);
+                // always remove error class
+                thisForm.classList.remove(LOADING_CLASS);
             });
         };
 
@@ -64,6 +115,22 @@
          * @private
          */
         self._validators = FlexCss.Form.globalValidators;
+
+        /**
+         * @type {Function}
+         * @private
+         */
+        self._remoteValidationFunction = FlexCss.Form.globalRemoteValidationFunction;
+
+        /**
+         * Registers a function that handles remote validation
+         * @param {Function} func
+         * @returns {window.FlexCss.Form}
+         */
+        self.registerRemoteValidation = function(func) {
+            self._remoteValidationFunction = func;
+            return self;
+        };
 
         /**
          * @param {HTMLElement} field
@@ -357,14 +424,18 @@
 
             // prevent default if form is invalid
             var submitListener = function (e) {
+
                 if (form.classList.contains(LOADING_CLASS)) {
+                    e.preventDefault();
                     return false;
                 }
+
                 form.classList.add(LOADING_CLASS);
                 form.removeEventListener("submit", submitListener);
                 _removeElementErrors(form);
                 // reset:
                 if (form.checkValidity()) {
+                    form.addEventListener("submit", submitListener);
                     // Custom validations did never pass
                     currentValidationFuture = $.Deferred();
                     var validation = validateCustomFields();
@@ -381,11 +452,9 @@
                         currentValidationFuture.resolve(r);
                     });
                     currentValidationFuture.done(function (r) {
-                        form.removeEventListener("submit", submitListener);
                         form.classList.remove(LOADING_CLASS);
                         if (r.foundAnyError) {
                             e.preventDefault();
-                            form.addEventListener("submit", submitListener);
                         } else {
                             // Handle submitting the form to server:
                             self._handleSubmit(e);
@@ -402,12 +471,18 @@
 
         initFormValidation();
 
+        /**
+         * Handles submitting, optionally allows to stop submitting
+         * @param e
+         * @private
+         */
         self._handleSubmit = function (e) {
             $(form).trigger('flexcss.form.beforeSubmit', e, [self, form]);
             if (!e.defaultPrevented) {
                 self.submitFunction.apply(self, [form, e]);
             }
-        }
+        };
+
     };
 
     FlexCss.Form.globalErrorMessageHandler = function () {
@@ -434,6 +509,7 @@
     };
 
     FlexCss.Form.globalValidators = [];
+    FlexCss.Form.globalRemoteValidationFunction = function(){};
 
     /**
      * Registers a global validator that is usable on all form instasnces
@@ -443,6 +519,16 @@
      */
     FlexCss.Form.registerValidator = function (name, validator) {
         FlexCss.Form.globalValidators[name] = validator;
+        return FlexCss.Form;
+    };
+
+    /**
+     * Registers a global function that is called when a form should validate the response of a server
+     * @param {Function} func
+     * @returns {Function}
+     */
+    FlexCss.Form.registerGlobalRemoteValidationFunction = function (func) {
+        FlexCss.Form.globalRemoteValidationFunction = func;
         return FlexCss.Form;
     };
 
