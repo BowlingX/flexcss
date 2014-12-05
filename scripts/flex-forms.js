@@ -404,7 +404,7 @@
 
         self._handleSubmit = function (e) {
             $(form).trigger('flexcss.form.beforeSubmit', e, [self, form]);
-            if (!e.isDefaultPrevented()) {
+            if (!e.defaultPrevented) {
                 self.submitFunction.apply(self, [form, e]);
             }
         }
