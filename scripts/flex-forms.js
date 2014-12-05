@@ -94,7 +94,7 @@
             });
 
             serverCall.then(function (r) {
-                self._remoteValidationFunction.apply(self, [r]);
+                (self._remoteValidationFunction || FlexCss.Form.globalRemoteValidationFunction).apply(self, [r]);
             }).always(function (r) {
                 $(thisForm).trigger('flexcss.form.ajaxCompleted', e, [self, thisForm, r]);
                 // always remove error class
@@ -121,7 +121,7 @@
          * @type {Function}
          * @private
          */
-        self._remoteValidationFunction = FlexCss.Form.globalRemoteValidationFunction;
+        self._remoteValidationFunction = null;
 
         /**
          * Registers a function that handles remote validation
