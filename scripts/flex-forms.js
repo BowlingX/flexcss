@@ -113,7 +113,7 @@
          * @private
          */
         function _customValidationsForElements(form, fields) {
-            var futures = [], fieldsLength = fields.length;
+            var futures = [], fieldsLength = fields.length, checkedFields = [];
             for (var iVal = 0; iVal < fieldsLength; iVal++) {
                 var field = fields[iVal], validationRef = field.getAttribute('data-validate'), validity = field.validity;
                 if (self._validators[validationRef]) {
@@ -121,13 +121,14 @@
                     if (!validity.customError && !validity.valid) {
                         continue;
                     }
+                    checkedFields.push(field);
                     futures.push(_runValidation(validationRef, field, form));
                 }
             }
             return $.when.apply(self, futures).then(function () {
                 var allFutures = arguments, l = allFutures.length;
                 var result = {
-                    checkedFields: fields,
+                    checkedFields: checkedFields,
                     foundAnyError: false
                 };
 
@@ -275,7 +276,6 @@
                     prepareErrors(form, r.checkedFields, false);
                     currentValidationFuture.resolve(r);
                     invalidFormFired = false;
-
                 });
 
             }, true);
