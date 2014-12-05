@@ -5,7 +5,7 @@
     "use strict";
 
     var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading',
-        ARIA_INVALID ='aria-invalid';
+        ARIA_INVALID = 'aria-invalid';
     if (!window.FlexCss) {
         window.FlexCss = {};
     }
@@ -33,6 +33,30 @@
         self.options = $.extend(self.options, options);
 
         self.hfWidgetInstance = self;
+
+        // overwrite if you want to handle your own submitting
+        self.submitFunction = function (form, e) {
+            var shouldUseAjax = form.getAttribute('data-ajax'), ajaxPostUrl =
+                form.getAttribute('data-ajax-action') || form.getAttribute('action') || window.location.href;
+
+            if (null === shouldUseAjax) {
+                return form.submit();
+            }
+            // prevent form from submit normally
+            e.preventDefault();
+
+            $.post(ajaxPostUrl, $(form).serialize()).then(function (r) {
+                console.log(r);
+            });
+        };
+
+        /**
+         * This form
+         * @returns {HTMLElement}
+         */
+        self.getForm = function () {
+            return form;
+        };
 
         /**
          * A List of Validators
@@ -225,12 +249,12 @@
             }
 
             setTimeout(function () {
-                if(!target.flexFormsSavedValidity) {
+                if (!target.flexFormsSavedValidity) {
                     return;
                 }
                 if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
                     self.tooltips.createTooltip(target,
-                       _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+                        _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
                 } else {
                     if (remove) {
                         self.tooltips.removeTooltip(target);
@@ -274,13 +298,14 @@
             }, true);
 
             // handle focus out for text elements
+            // Will show an error if field was invalid the first time
             form.addEventListener("blur", function (e) {
                 if (self.tooltips) {
                     self.tooltips.removeTooltip(e.target);
                 }
                 var target = e.target, hasError = false;
 
-                if(!_checkIsValidBlurFocusElement(target)) {
+                if (!_checkIsValidBlurFocusElement(target)) {
                     return;
                 }
 
@@ -304,12 +329,15 @@
             function _checkIsValidBlurFocusElement(target) {
                 var attr = target.getAttribute('type');
                 return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-                    target instanceof HTMLSelectElement || !(target instanceof HTMLInputElement ||
+                target instanceof HTMLSelectElement || !(target instanceof HTMLInputElement ||
                 target instanceof HTMLTextAreaElement)));
             }
+
+            // handle focus on input elements
+            // will show an error if field is invalid
             form.addEventListener("focus", function (e) {
                 // do not track errors for checkbox and radios on focus:
-                if(!_checkIsValidBlurFocusElement(e.target)) {
+                if (!_checkIsValidBlurFocusElement(e.target)) {
                     return;
                 }
                 _showAndOrCreateTooltip(e.target);
@@ -329,7 +357,6 @@
 
             // prevent default if form is invalid
             var submitListener = function (e) {
-                e.preventDefault();
                 if (form.classList.contains(LOADING_CLASS)) {
                     return false;
                 }
@@ -338,15 +365,14 @@
                 _removeElementErrors(form);
                 // reset:
                 if (form.checkValidity()) {
-                    form.addEventListener("submit", submitListener);
                     // Custom validations did never pass
                     currentValidationFuture = $.Deferred();
                     var validation = validateCustomFields();
                     validation.done(function (r) {
                         // focus first invalid field:
-                        for(var i=0;i< r.checkedFields.length;i++) {
+                        for (var i = 0; i < r.checkedFields.length; i++) {
                             var f = r.checkedFields[i];
-                            if(!f.validity.valid) {
+                            if (!f.validity.valid) {
                                 f.focus();
                                 break;
                             }
@@ -358,12 +384,15 @@
                         form.removeEventListener("submit", submitListener);
                         form.classList.remove(LOADING_CLASS);
                         if (r.foundAnyError) {
+                            e.preventDefault();
                             form.addEventListener("submit", submitListener);
                         } else {
-                            form.submit();
+                            // Handle submitting the form to server:
+                            self._handleSubmit(e);
                         }
                     });
                 } else {
+                    e.preventDefault();
                     form.classList.remove(LOADING_CLASS);
                     form.addEventListener("submit", submitListener);
                 }
@@ -371,7 +400,14 @@
             form.addEventListener("submit", submitListener);
         }
 
-        initFormValidation(form);
+        initFormValidation();
+
+        self._handleSubmit = function (e) {
+            $(form).trigger('flexcss.form.beforeSubmit', e, [self, form]);
+            if (!e.isDefaultPrevented()) {
+                self.submitFunction.apply(self, [form, e]);
+            }
+        }
     };
 
     FlexCss.Form.globalErrorMessageHandler = function () {

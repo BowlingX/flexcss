@@ -324,7 +324,7 @@
                                     var attr = targetRef.getAttribute(ATTR_NAME),
                                         el = attr ? doc.getElementById(attr) : null;
                                     if (el) {
-                                        $(target).trigger('hf.tab.closed', el);
+                                        $(target).trigger('flexcss.tab.closed', el);
                                         el.classList.remove(ACTIVE_CLASS);
                                     }
                                 }
@@ -337,7 +337,7 @@
 
                 loading = true;
                 future.then(function (r) {
-                    $(target).trigger('hf.tab.opened', r);
+                    $(target).trigger('flexcss.tab.opened', r);
                     elClassList.remove(LOADING_CLASS);
                     if (parentClassList) {
                         parentClassList.remove(LOADING_CLASS);
@@ -938,7 +938,7 @@
                             currentOpen.prevModal.prevModal || null);
                     }
                     if (widget) {
-                        $(currentOpen).trigger('hf.modal.closed', e);
+                        $(currentOpen).trigger('flexcss.modal.closed', e);
                         widget.runOnClose();
                     }
                 }
@@ -1142,7 +1142,7 @@
                         el.hfWidgetInstance.runOnOpen(el);
                     }
 
-                    $(el).trigger('hf.modal.opened');
+                    $(el).trigger('flexcss.modal.opened');
                     return $.Deferred().resolve(el);
                 });
             };
