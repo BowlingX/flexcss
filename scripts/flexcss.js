@@ -545,8 +545,6 @@
              * @param {Boolean} removeTitle
              */
             self.createTooltip = function (target, text, removeTitle) {
-                var targetRect = target.getBoundingClientRect(),
-                    colRect = container.getBoundingClientRect(), title = text;
                 if (!tooltipContainer) {
                     tooltipContainer = doc.createElement('div');
                     tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
@@ -554,12 +552,15 @@
                 }
                 tooltipContainer.style.left = 'auto';
                 tooltipContainer.style.top = 'auto';
-                tooltipContainer.innerHTML = title;
+                tooltipContainer.innerHTML = text;
                 tooltipContainer.flexTooltipCurrentTarget = target;
                 if (removeTitle) {
-                    target.oldTitle = title;
+                    target.oldTitle = text;
                     target.removeAttribute('title');
                 }
+                var targetRect = target.getBoundingClientRect(),
+                    colRect = container.getBoundingClientRect();
+
                 var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
                     isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height),
                     classList = tooltipContainer.classList;
