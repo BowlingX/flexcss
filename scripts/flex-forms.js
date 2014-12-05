@@ -418,7 +418,7 @@
                 var name = e.target.getAttribute('name');
                 if (name) {
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
-                    _customValidationsForElements(form, inputs).done(function () {
+                    _customValidationsForElements(inputs).done(function () {
                         self.prepareErrors(inputs, false);
                         _showAndOrCreateTooltip(e.target, true);
                     });
