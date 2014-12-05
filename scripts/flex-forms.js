@@ -204,6 +204,16 @@
         }
 
         /**
+         * Formats the error content for the tooltip
+         * @param {String} error
+         * @returns {String}
+         * @private
+         */
+        function _formatErrorTooltip(error) {
+            return '<i class="icon-attention"></i> ' + error;
+        }
+
+        /**
          * Creates a tooltip at given element, will create a new instance if not created
          * @param {HTMLElement} target
          * @param {HTMLElement} form
@@ -222,7 +232,8 @@
                     return;
                 }
                 if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                    self.tooltips.createTooltip(target, target.flexFormsSavedValidationMessage, false);
+                    self.tooltips.createTooltip(target,
+                       _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
                 } else {
                     if (remove) {
                         self.tooltips.removeTooltip(target);
