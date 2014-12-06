@@ -188,7 +188,7 @@
             }
             var cl = field.classList, future = self._validators[validationRef].apply(self, [field, form]);
             cl.add(LOADING_CLASS);
-            future.done(function () {
+            future.always(function () {
                 cl.remove(LOADING_CLASS);
             });
             return future;
