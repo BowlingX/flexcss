@@ -1121,7 +1121,8 @@
                         return f;
                     });
                 } else {
-                    var el = targetContent instanceof HTMLElement ? targetContent : doc.getElementById(targetContent);
+                    var el = targetContent instanceof HTMLElement ||
+                    targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
                     if (el) {
                         future = $.Deferred().resolve(el);
                     } else {
