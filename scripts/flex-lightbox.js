@@ -20,7 +20,11 @@
     FlexCss.LightBox = function (DelegateContainer, AttributeSelector) {
         var modalContainer = new FlexCss.Modal('SiteBody'), self = this;
 
-
+        /**
+         * Will fetch the next element of a lightBox
+         * @param {HTMLElement} target
+         * @returns {null|HTMLElement}
+         */
         self.getNext = function (target) {
             var next = target.parentNode.nextElementSibling;
             if (next) {
@@ -29,6 +33,11 @@
             return null;
         };
 
+        /**
+         * Will fetch the previous element of a lightBox
+         * @param {HTMLElement} target
+         * @returns {null|HTMLElement}
+         */
         self.getPrev = function (target) {
             var previous = target.parentNode.previousElementSibling;
             if (previous) {
