@@ -13,6 +13,7 @@
     "HTMLFieldSetElement",
     "HTMLTextAreaElement",
     "HTMLInputElement",
+    "DocumentFragment",
     "KeyboardEvent",
     "MouseEvent",
     "MutationObserver",
