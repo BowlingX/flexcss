@@ -30,7 +30,9 @@
             smallBreakpoint: 768,
 
             // Default click events to bind
-            clickEvents: ['touchend', 'click']
+            clickEvents: ['touchend', 'click'],
+
+            scrollbarUpdateNodes:[window.document.body]
         };
 
         /**
@@ -897,7 +899,10 @@
                     FlexCss._modalInstances.splice(t, 1);
                     if (0 === FlexCss._modalInstances.length) {
                         container.classList.remove('modal-open');
-                        container.style.paddingRight = '';
+                        FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function(n){
+                            n.style.paddingRight = '';
+                        });
+
                     }
                 }
             }
@@ -1098,7 +1103,11 @@
 
                 if (0 === FlexCss._modalInstances.length) {
                     containerClasses.add('modal-open');
-                    container.style.paddingRight = FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+
+                    FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function(n){
+                        n.style.paddingRight = FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+                    });
+
                 }
                 modalContainerClasses.add('loading');
                 loading = true;
