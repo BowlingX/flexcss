@@ -61,7 +61,7 @@
         FlexCss.CONST_ANIM_DARKENER = 200;
         FlexCss.CONST_CANVAS_TOGGLE = 'toggled-canvas';
 
-        FlexCss.CONST_IS_IE = !(window.ActiveXObject) && "ActiveXObject" in window;
+        FlexCss.CONST_IS_IE = "ActiveXObject" in window;
 
             /**
          * Check if target is part of parent node
