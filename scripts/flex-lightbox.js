@@ -15,10 +15,11 @@
      *
      * @param DelegateContainer
      * @param AttributeSelector
+     * @param ModalAppend
      * @constructor
      */
-    FlexCss.LightBox = function (DelegateContainer, AttributeSelector) {
-        var modalContainer = new FlexCss.Modal('SiteBody'), self = this;
+    FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend) {
+        var modalContainer = new FlexCss.Modal(ModalAppend), self = this;
 
         /**
          * Will fetch the next element of a lightBox
