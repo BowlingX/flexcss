@@ -78,8 +78,7 @@
   font-weight: bold;
   transform: translate3d(0, -3px, 0);
   background: $topbarBg;
-
-  word-break: break-all;
+  word-wrap: break-word;
 
   &.error-tooltip {
     word-break: normal;
