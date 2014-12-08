@@ -932,14 +932,14 @@
                     return false;
                 }
 
-                var widget = currentOpen.hfWidgetInstance;
-                if (widget && !widget.runOnBeforeClose(e)) {
-                    return false;
-                }
                 if (loading) {
                     return false;
                 }
                 if (currentOpen) {
+                    var widget = currentOpen.hfWidgetInstance;
+                    if (widget && !widget.runOnBeforeClose(e)) {
+                        return false;
+                    }
                     if (currentOpen.prevModal) {
                         return switchModals(currentOpen.prevModal,
                             currentOpen.prevModal.prevModal || null);
