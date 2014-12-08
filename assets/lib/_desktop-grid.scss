@@ -24,6 +24,7 @@
   .sidebar {
     position: static;
     max-width: $sidebarWidthDesktop;
+    min-width: $sidebarWidthDesktop;
   }
 
   .main {
