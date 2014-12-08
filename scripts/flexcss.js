@@ -527,7 +527,7 @@
          * Creates a Tooltip for:
          * [data-tooltip]
          * @param {String|HTMLElement} DelegateContainer
-         * @param {Object} options
+         * @param {Object} [options]
          * @returns {FlexCss.Tooltip}
          * @constructor
          */
