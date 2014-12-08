@@ -382,12 +382,8 @@ textarea {
     flex: 0 1 auto;
   }
 
-  label {
-    margin-top: 1rem;
-  }
-
   p {
-    margin: 1rem 0;
+    margin: 0;
   }
 
   button, input[type="submit"] {
@@ -464,6 +460,9 @@ textarea {
         margin: 0 1rem;
       }
 
+      button, input[type="submit"] {
+        margin-bottom:0;
+      }
     }
   }
   .multi-form {
