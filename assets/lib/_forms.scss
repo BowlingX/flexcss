@@ -372,6 +372,11 @@ textarea {
 
   > div {
     flex: 1;
+
+    > * {
+      width:100%;
+      text-align:center;
+    }
   }
 
   .right {
@@ -383,7 +388,7 @@ textarea {
   }
 
   .button, button, input[type="submit"] {
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
   }
 
 }
@@ -443,7 +448,7 @@ textarea {
     }
 
     .indent-label {
-      margin-left:$labelWidthDesktop;
+      margin-left: $labelWidthDesktop;
     }
 
   }
@@ -468,13 +473,18 @@ textarea {
     padding-top: 20px;
     align-items: center;
 
-    &:not(.plain) {
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
+    flex-direction: row;
+    flex-wrap: nowrap;
 
     label {
       margin-left: 1rem;
+    }
+
+    > div {
+      > * {
+        width:auto;
+        text-align:left;
+      }
     }
 
     p {
@@ -482,12 +492,12 @@ textarea {
     }
 
     .button, button, input[type="submit"] {
-      margin-bottom:0;
+      margin-bottom: 0;
     }
 
     &.plain {
-      border-top:none;
-      padding-top:0;
+      border-top: none;
+      padding-top: 0;
     }
   }
 }
