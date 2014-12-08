@@ -1214,7 +1214,9 @@
                 }
 
                 if (0 === modalContainer.childNodes.length) {
-                    modalContainer.parentNode.removeChild(modalContainer);
+                    if(modalContainer.parentNode) {
+                        modalContainer.parentNode.removeChild(modalContainer);
+                    }
                 }
                 if (window.MutationObserver) {
                     var observer = new MutationObserver(function (mutations) {
