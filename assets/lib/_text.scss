@@ -111,6 +111,5 @@ code {
 .inherit-color {
   a {
     @extend .inherit-link;
-    @extend .inherit-link:hover;
   }
 }
