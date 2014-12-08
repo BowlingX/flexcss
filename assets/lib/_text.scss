@@ -9,6 +9,13 @@ html {
   line-height:$baseLineHeight;
 }
 
+// fix problems with fullscreen (disable hardware acceleration):
+*:-webkit-full-screen-ancestor {
+  animation-name: none !important;
+  will-change: initial;
+}
+
+
 body.loading {
   cursor:wait;
 }
