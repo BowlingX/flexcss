@@ -919,7 +919,7 @@
 
             /**
              * Closes the current open modal of this stack
-             * @params force set true to force closing
+             * @params [e], optional event
              * @returns {*}
              */
             self.close = function (e) {
@@ -955,7 +955,10 @@
                 currentOpen = null;
 
                 modalContainer.classList.remove('open');
-                e.preventDefault();
+
+                if(e) {
+                    e.preventDefault();
+                }
 
                 // Remove all current classes from childnodes
                 for (var i = 0; i < modalContainer.childNodes.length; i++) {
