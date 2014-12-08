@@ -10,8 +10,9 @@ form {
   flex-direction: column;
 
   p {
-    margin-bottom: $labelMargin;
+    margin-bottom: 0;
     font-size: $smallFontSize;
+    line-height:$smallFontSizeLineHeight;
   }
 
   .controls {
