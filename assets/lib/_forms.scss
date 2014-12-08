@@ -451,7 +451,7 @@ textarea {
       padding-top: 20px;
       align-items: center;
       flex-direction: row;
-
+      flex-wrap:nowrap;
       label {
         margin-left: 1rem;
       }
