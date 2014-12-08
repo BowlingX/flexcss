@@ -382,7 +382,7 @@ textarea {
     margin: 0;
   }
 
-  button, input[type="submit"] {
+  .button, button, input[type="submit"] {
     margin-bottom:1rem;
   }
 
@@ -467,8 +467,12 @@ textarea {
     border-top: 1px solid $inputBackground;
     padding-top: 20px;
     align-items: center;
-    flex-direction: row;
-    flex-wrap:nowrap;
+
+    &:not(.plain) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
     label {
       margin-left: 1rem;
     }
@@ -477,7 +481,7 @@ textarea {
       margin: 0 1rem;
     }
 
-    button, input[type="submit"] {
+    .button, button, input[type="submit"] {
       margin-bottom:0;
     }
 
