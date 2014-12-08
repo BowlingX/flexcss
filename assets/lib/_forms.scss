@@ -480,5 +480,10 @@ textarea {
     button, input[type="submit"] {
       margin-bottom:0;
     }
+
+    &.plain {
+      border-top:none;
+      padding-top:0;
+    }
   }
 }
