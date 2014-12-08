@@ -1,12 +1,12 @@
 // Base Settings, font, sizes
 html {
   font-family: $baseFontFamily;
-  font-size:$baseFontSize;
-  -webkit-font-smoothing:antialiased;
+  font-size: $baseFontSize;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
   color: $baseColor;
-  line-height:$baseLineHeight;
+  line-height: $baseLineHeight;
 }
 
 // fix problems with fullscreen (disable hardware acceleration):
@@ -15,9 +15,8 @@ html {
   will-change: initial;
 }
 
-
 body.loading {
-  cursor:wait;
+  cursor: wait;
 }
 
 *, *:before, *:after {
@@ -26,75 +25,87 @@ body.loading {
 
 // basic paragraph:
 p {
-  margin:0 0 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
 .float-right {
-  float:right;
+  float: right;
 }
 
 h1, h2, h3, h4, h5 {
-  margin:0 0 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
 h1 {
-  font-size:24px;
+  font-size: 24px;
 }
 
 h2 {
-  font-size:20px;
+  font-size: 20px;
 }
 
 // basic link:
 a {
   text-decoration: none;
-  color:$primaryColor;
-  transition:color .2s ease;
-  font-weight:600;
+  color: $primaryColor;
+  transition: color .2s ease;
+  font-weight: 600;
   &:hover {
-    color:darken($primaryColor, 20%);
+    color: darken($primaryColor, 20%);
   }
 
   &:active {
-    color:darken($primaryColor, 50%);
+    color: darken($primaryColor, 50%);
   }
 }
 
 code {
   font-family: monospace;
-  background: lighten($grayColor,30%);
+  background: lighten($grayColor, 30%);
 }
 
 .badge {
   display: inline-block;
-  font-size:$smallFontSize;
+  font-size: $smallFontSize;
   background: $secondaryColor;
-  color:#fff;
-  line-height:$baseLineHeight;
-  padding:0 5px;
-  border-radius:3px;
-  font-weight:bold;
+  color: #fff;
+  line-height: $baseLineHeight;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-weight: bold;
 }
 
 // Colors:
 
 .color-gray {
-  color:$grayColor;
+  color: $grayColor;
 }
 
 // Font-Sizes:
 
 .small-font {
-  font-size:$smallFontSize;
+  font-size: $smallFontSize;
 }
 
 .fade-out {
-  color:$grayColor;
+  color: $grayColor;
   a {
-    color:$grayColor;
+    color: $grayColor;
     text-decoration: underline;
+    font-weight: normal;
     &:hover {
-      color:darken($grayColor, 20);
+      color: darken($grayColor, 20);
+    }
+  }
+}
+
+.inherit-color {
+  a {
+    color: $baseColor;
+    text-decoration: underline;
+    font-weight: normal;
+    &:hover {
+      color: $grayColor;
     }
   }
 }
