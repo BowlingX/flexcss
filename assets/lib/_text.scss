@@ -99,13 +99,18 @@ code {
   }
 }
 
+.inherit-link {
+  color: $baseColor;
+  text-decoration: underline;
+  font-weight: normal;
+  &:hover {
+    color: $grayColor;
+  }
+}
+
 .inherit-color {
   a {
-    color: $baseColor;
-    text-decoration: underline;
-    font-weight: normal;
-    &:hover {
-      color: $grayColor;
-    }
+    @extend .inherit-link;
+    @extend .inherit-link:hover;
   }
 }
