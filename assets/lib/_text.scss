@@ -80,3 +80,14 @@ code {
 .small-font {
   font-size:$smallFontSize;
 }
+
+.fade-out {
+  color:$grayColor;
+  a {
+    color:$grayColor;
+    text-decoration: underline;
+    &:hover {
+      color:darken($grayColor, 20);
+    }
+  }
+}

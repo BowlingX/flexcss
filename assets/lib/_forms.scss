@@ -11,12 +11,12 @@ form {
 
   p {
     margin-bottom: $labelMargin;
-    font-size:$smallFontSize;
+    font-size: $smallFontSize;
   }
 
   .controls {
     margin-bottom: 20px;
-    position:relative;
+    position: relative;
     p {
       margin: $labelMargin 0 0 0;
       font-size: $smallFontSize;
@@ -36,15 +36,15 @@ form {
 }
 
 legend {
-  font-weight:bold;
-  margin-bottom:2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
 label:not(.checkbox) {
   font-size: $smallFontSize;
   color: $grayColor;
   margin-bottom: $labelMargin;
-  display:block;
+  display: block;
 }
 
 fieldset {
@@ -56,7 +56,7 @@ fieldset {
   &:last-of-type {
     border-bottom: none;
     margin-bottom: 0;
-    padding-bottom:0;
+    padding-bottom: 0;
   }
 }
 
@@ -87,7 +87,7 @@ form.loading {
   max-width: 100%;
   will-change: background-color;
   text-overflow: ellipsis;
-  height:$inputHeight;
+  height: $inputHeight;
   &:focus {
     background-color: $inputFocusColor;
     outline: none;
@@ -141,13 +141,12 @@ form.loading {
     font-weight: normal;
   }
 
-
   // validation
   &.invalid {
     background: lighten($alertColor, 35%);
     // Firefox will render a boxshadow
-    box-shadow:none;
-    border:none;
+    box-shadow: none;
+    border: none;
 
     &.loading {
       @include loadingContainer($alertColor);
@@ -157,21 +156,20 @@ form.loading {
 
   // remove default states
   &:invalid {
-    box-shadow:none;
-    border:none;
+    box-shadow: none;
+    border: none;
   }
 
   &.loading {
-    position:relative;
+    position: relative;
     @include loadingContainer(#ccc);
   }
 }
 
 .form-error {
-  color:$alertColor;
-  font-size:$smallFontSize;
+  color: $alertColor;
+  font-size: $smallFontSize;
 }
-
 
 /* Styled Checkbox and Radio Button: */
 
@@ -184,21 +182,20 @@ form.loading {
   }
 }
 
-
 .checkbox {
   padding: 1px 0 0 25px;
   position: relative;
   @include interface();
   cursor: pointer;
   input {
-    z-index:-1;
+    z-index: -1;
     position: absolute;
     left: 3px;
-    top:3px;
-    appearance:none;
-    -moz-appearance:none;
-    outline:none !important;
-    box-shadow:none !important;
+    top: 3px;
+    appearance: none;
+    -moz-appearance: none;
+    outline: none !important;
+    box-shadow: none !important;
 
   }
   .checkbox-container {
@@ -239,7 +236,7 @@ form.loading {
 
   input[type="checkbox"], input[type="radio"] {
     &:focus {
-      +  .checkbox-container::before {
+      + .checkbox-container::before {
         background: darken($inputBackground, 5%);
       }
     }
@@ -274,7 +271,7 @@ select {
 }
 
 textarea {
-  min-height:12rem;
+  min-height: 12rem;
 }
 
 .select-element:after {
@@ -319,17 +316,16 @@ textarea {
 }
 
 .append-form {
-  display:flex;
+  display: flex;
   align-items: center;
   > :first-child {
-    flex:1;
+    flex: 1;
   }
 
   > :last-child:not(:first-child) {
-    margin-left:10px;
+    margin-left: 10px;
   }
 }
-
 
 // Multiple elements in one row
 .multi-form {
@@ -338,24 +334,23 @@ textarea {
   > div {
     margin-left: 10px;
     // all all equal size
-    flex:1;
+    flex: 1;
     &:first-of-type {
       margin-left: 0;
     }
   }
 
   &.break {
-    display:block;
+    display: block;
     > div {
-      margin-left:0px;
+      margin-left: 0px;
       &:not(:last-of-type) {
-        margin-bottom:10px;
+        margin-bottom: 10px;
       }
     }
     flex-direction: column;
   }
 }
-
 
 // A Date selector:
 .select-day {
@@ -374,12 +369,12 @@ textarea {
 
 .form-actions {
   text-align: left;
-  margin-top:2rem;
-  display:flex;
+  margin-top: 2rem;
+  display: flex;
   align-items: center;
 
   > div {
-    flex:1;
+    flex: 1;
   }
 
   .right {
@@ -389,22 +384,25 @@ textarea {
   label {
     margin-left: 1rem;
   }
-}
 
-.toolbar-form {
-  padding:0 4px;
-  display:flex;
-  align-items: center;
-  line-height:$topbarHeight;
-  position: absolute;
-  top:0;
-  min-width:200px;
-  input {
-    padding-left:2px !important;
-    background: transparent !important;
+  p {
+    margin: 0 1rem;
   }
 }
 
+.toolbar-form {
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  line-height: $topbarHeight;
+  position: absolute;
+  top: 0;
+  min-width: 200px;
+  input {
+    padding-left: 2px !important;
+    background: transparent !important;
+  }
+}
 
 // Desktop Version of Forms
 @media #{$mediaDesktop} {
@@ -425,13 +423,12 @@ textarea {
     }
 
     .no-label {
-      margin-left:$labelWidthDesktop;
+      margin-left: $labelWidthDesktop;
     }
 
     legend {
-      margin-left:$labelWidthDesktop;
+      margin-left: $labelWidthDesktop;
     }
-
 
     .multi-select-field {
       margin-top: 7px;
@@ -449,12 +446,12 @@ textarea {
 
     .form-actions {
       border-top: 1px solid $inputBackground;
-      padding-top:20px;
+      padding-top: 20px;
     }
   }
   .multi-form {
     &.break {
-      display:flex;
+      display: flex;
       > div:not(:first-of-type) {
         margin-left: 20px;
 
