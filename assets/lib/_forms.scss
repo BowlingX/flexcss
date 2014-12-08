@@ -371,7 +371,8 @@ textarea {
   text-align: left;
   margin-top: 2rem;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 
   > div {
     flex: 1;
@@ -382,12 +383,17 @@ textarea {
   }
 
   label {
-    margin-left: 1rem;
+    margin-top: 1rem;
   }
 
   p {
-    margin: 0 1rem;
+    margin: 1rem 0;
   }
+
+  button, input[type="submit"] {
+    margin-bottom:1rem;
+  }
+
 }
 
 .toolbar-form {
@@ -447,6 +453,17 @@ textarea {
     .form-actions {
       border-top: 1px solid $inputBackground;
       padding-top: 20px;
+      align-items: center;
+      flex-direction: row;
+
+      label {
+        margin-left: 1rem;
+      }
+
+      p {
+        margin: 0 1rem;
+      }
+
     }
   }
   .multi-form {
