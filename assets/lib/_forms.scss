@@ -446,24 +446,6 @@ textarea {
       margin-left:$labelWidthDesktop;
     }
 
-    .form-actions {
-      border-top: 1px solid $inputBackground;
-      padding-top: 20px;
-      align-items: center;
-      flex-direction: row;
-      flex-wrap:nowrap;
-      label {
-        margin-left: 1rem;
-      }
-
-      p {
-        margin: 0 1rem;
-      }
-
-      button, input[type="submit"] {
-        margin-bottom:0;
-      }
-    }
   }
   .multi-form {
     &.break {
@@ -478,6 +460,25 @@ textarea {
         }
       }
       flex-direction: row;
+    }
+  }
+
+  .form-actions {
+    border-top: 1px solid $inputBackground;
+    padding-top: 20px;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    label {
+      margin-left: 1rem;
+    }
+
+    p {
+      margin: 0 1rem;
+    }
+
+    button, input[type="submit"] {
+      margin-bottom:0;
     }
   }
 }
