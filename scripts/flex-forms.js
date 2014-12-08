@@ -399,7 +399,7 @@
             function _checkIsValidBlurFocusElement(target) {
                 var attr = target.getAttribute('type');
                 return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-                target instanceof HTMLSelectElement || !(target instanceof HTMLInputElement ||
+                 !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
                 target instanceof HTMLTextAreaElement)));
             }
 
