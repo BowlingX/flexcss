@@ -57,6 +57,33 @@
   }
 }
 
+@include keyframes(darkenerFadeIn) {
+  0%, 100% {
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+  }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: $darkenerFadeOpacity;
+  }
+}
+
+@include keyframes(darkenerFadeOut) {
+  0%, 100% {
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+  }
+  0% {
+    opacity: $darkenerFadeOpacity;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
 /**
 * Endless spinner, used for loaders
 */

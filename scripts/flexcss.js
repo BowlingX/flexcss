@@ -32,7 +32,7 @@
             // Default click events to bind
             clickEvents: ['touchend', 'click'],
 
-            scrollbarUpdateNodes:[window.document.body]
+            scrollbarUpdateNodes: [window.document.body]
         };
 
         /**
@@ -53,17 +53,57 @@
             });
             // Measure scrollbar width
             FlexCss.CONST_SCROLLBAR_WIDTH = FlexCss.getScrollBarWidth();
+            // detect right transition end event
+            FlexCss.CONST_TRANSITION_EVENT = FlexCss._whichTransitionEvent();
+        };
 
+
+        /**
+         * Get correct transition event
+         * @returns {*}
+         * @private
+         */
+        FlexCss._whichTransitionEvent = function () {
+            var t;
+            var el = document.createElement('fakeelement');
+
+            var transitions = {
+                'transition': 'transitionend',
+                'OTransition': 'oTransitionEnd',
+                'MozTransition': 'transitionend',
+                'WebkitTransition': 'webkitTransitionEnd'
+            };
+
+            for (t in transitions) {
+                if (el.style[t] !== undefined) {
+                    return transitions[t];
+                }
+            }
+        };
+
+        /**
+         * Run an event once
+         * @param {String} ev
+         * @param {HTMLElement} target
+         * @param {Function} func
+         */
+        FlexCss.addEventOnce = function (ev, target, func) {
+            var thisFunction = function (event) {
+                func(event);
+                target.removeEventListener(ev, thisFunction);
+            };
+            return target.addEventListener(ev, thisFunction)
         };
 
         // Some constants:
+        FlexCss.CONST_TRANSITION_EVENT = 'transitionend';
         FlexCss.CONST_SCROLLBAR_WIDTH = 15;
         FlexCss.CONST_ANIM_DARKENER = 200;
         FlexCss.CONST_CANVAS_TOGGLE = 'toggled-canvas';
 
         FlexCss.CONST_IS_IE = "ActiveXObject" in window;
 
-            /**
+        /**
          * Check if target is part of parent node
          * @param target
          * @param parent
@@ -236,10 +276,11 @@
                     }
                     scrollContainer.style.transform = 'translate3d(' + (last * -1) + 'px,0,0)';
                     scrollContainer.style.webkitTransform = 'translate3d(' + (last * -1) + 'px,0,0)';
-                    setTimeout(function () {
+
+                    FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, scrollContainer, function(){
                         scrollContainer.style.transition = 'none';
                         scrollContainer.style.webkitTransition = 'none';
-                    }, 250);
+                    });
                 });
             });
         };
@@ -429,24 +470,27 @@
                         style.transform = 'translate3d(' + width + 'px,0,0)';
                         style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
 
-                        setTimeout(function () {
+                        target.classList.remove(OPEN_CLASS);
+                        darkener.classList.remove(INIT_CLASS);
+
+                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
                             resetStyles(style);
-                            target.classList.remove(OPEN_CLASS);
-                            darkener.classList.remove(INIT_CLASS);
                             body.classList.remove(TOGGLE_CLASS);
-                        }, ANIM_DELAY);
+                        });
+
                     } else {
                         resetStyles(style);
                     }
                 });
             });
 
+
             var togglerF = function (e) {
                 e.preventDefault();
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                    setTimeout(function () {
-                        body.classList.toggle(TOGGLE_CLASS);
-                    }, ANIM_DELAY);
+                    FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, navigationContainer, function () {
+                        body.classList.remove(TOGGLE_CLASS);
+                    });
                 } else {
                     body.classList.toggle(TOGGLE_CLASS);
                 }
@@ -589,8 +633,8 @@
              * @param {HTMLElement} target
              */
             self.removeTooltip = function (target) {
-                if(tooltipContainer) {
-                    if(tooltipContainer.flexTooltipCurrentTarget !== target) {
+                if (tooltipContainer) {
+                    if (tooltipContainer.flexTooltipCurrentTarget !== target) {
                         return;
                     }
                     tooltipContainer.classList.remove('open');
@@ -729,9 +773,9 @@
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
                 currentOpen = null, darkener = document.getElementById(Darkener), close = function () {
                     if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                        setTimeout(function () {
+                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function(){
                             container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
-                        }, FlexCss.CONST_ANIM_DARKENER);
+                        });
                     }
                     currentOpen.classList.remove('open');
                     darkener.classList.remove('init');
@@ -901,7 +945,7 @@
                     FlexCss._modalInstances.splice(t, 1);
                     if (0 === FlexCss._modalInstances.length) {
                         container.classList.remove('modal-open');
-                        FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function(n){
+                        FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
                             n.style.paddingRight = '';
                         });
 
@@ -956,7 +1000,7 @@
 
                 modalContainer.classList.remove('open');
 
-                if(e) {
+                if (e) {
                     e.preventDefault();
                 }
 
@@ -1109,7 +1153,7 @@
                 if (0 === FlexCss._modalInstances.length) {
                     containerClasses.add('modal-open');
 
-                    FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function(n){
+                    FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
                         n.style.paddingRight = FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
                     });
 
@@ -1214,7 +1258,7 @@
                 }
 
                 if (0 === modalContainer.childNodes.length) {
-                    if(modalContainer.parentNode) {
+                    if (modalContainer.parentNode) {
                         modalContainer.parentNode.removeChild(modalContainer);
                     }
                 }
