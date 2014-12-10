@@ -796,6 +796,7 @@
 
                 if (targetHas || parentHas && !currentOpen) {
                     e.preventDefault();
+                    e.stopImmediatePropagation();
 
                     if (target.isLoading) {
                         return;
