@@ -775,9 +775,9 @@
          * @constructor
          */
         FlexCss.Dropdown = function (DelegateContainer, Darkener) {
-            var doc = document, container = doc.getElementById(DelegateContainer),
+            var doc = document, container = DelegateContainer instanceof HTMLElement? DelegateContainer : doc.getElementById(DelegateContainer),
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
-                currentOpen = null, darkener = document.getElementById(Darkener);
+                currentOpen = null, darkener = Darkener instanceof HTMLElement? Darkener : document.getElementById(Darkener);
             var self = this;
 
             function delegateFunction(e) {
