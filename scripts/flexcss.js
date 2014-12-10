@@ -415,6 +415,7 @@
             var doc = document, touched = 0, body = doc.body,
                 navigationContainer = doc.getElementById(NavigationId),
                 toggler = doc.getElementById(ToggleNavigationId), darkener = doc.getElementById(Darkener),
+                DARKENER_CLASS_TOGGLE = 'toggle-'+Darkener,
                 resetStyles = function (s) {
                     s.transform = '';
                     s.transition = '';
@@ -476,6 +477,7 @@
                         FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
                             resetStyles(style);
                             body.classList.remove(TOGGLE_CLASS);
+                            body.classList.remove(DARKENER_CLASS_TOGGLE);
                         });
 
                     } else {
@@ -490,9 +492,11 @@
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, navigationContainer, function () {
                         body.classList.remove(TOGGLE_CLASS);
+                        body.classList.remove(DARKENER_CLASS_TOGGLE);
                     });
                 } else {
                     body.classList.toggle(TOGGLE_CLASS);
+                    body.classList.toggle(DARKENER_CLASS_TOGGLE);
                 }
                 darkener.classList.toggle(INIT_CLASS);
                 navigationContainer.classList.toggle(OPEN_CLASS);
@@ -770,11 +774,13 @@
          */
         FlexCss.CreateDropdown = function (DelegateContainer, Darkener) {
             var doc = document, container = doc.getElementById(DelegateContainer),
-                STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
+                STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-'+Darkener,
                 currentOpen = null, darkener = document.getElementById(Darkener), close = function () {
                     if (window.getComputedStyle(currentOpen).position === 'fixed') {
                         FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function(){
                             container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
+                            container.classList.remove(DARKENER_CLASS_TOGGLE);
+
                         });
                     }
                     currentOpen.classList.remove('open');
@@ -859,6 +865,7 @@
                             FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
                         } else {
                             container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
+                            container.classList.add(DARKENER_CLASS_TOGGLE);
                             darkener.classList.toggle('init');
                             dropdownContent.style.left = '0';
                             dropdownContent.style.top = 'auto';
