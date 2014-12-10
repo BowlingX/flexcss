@@ -485,23 +485,21 @@
                     }
                 });
             });
-
-
             var togglerF = function (e) {
                 e.preventDefault();
+                var bodyClass = body.classList, darkenerClass = darkener.classList;
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, navigationContainer, function () {
-                        body.classList.remove(TOGGLE_CLASS);
-                        body.classList.remove(DARKENER_CLASS_TOGGLE);
+                        bodyClass.remove(TOGGLE_CLASS);
+                        bodyClass.remove(DARKENER_CLASS_TOGGLE);
                     });
-
                     navigationContainer.classList.remove(OPEN_CLASS);
                     darkener.classList.remove(INIT_CLASS);
 
                 } else {
-                    body.classList.add(TOGGLE_CLASS);
-                    body.classList.add(DARKENER_CLASS_TOGGLE);
-                    darkener.classList.add(INIT_CLASS);
+                    bodyClass.add(TOGGLE_CLASS);
+                    bodyClass.add(DARKENER_CLASS_TOGGLE);
+                    darkenerClass.add(INIT_CLASS);
                     navigationContainer.classList.add(OPEN_CLASS);
                 }
             };
