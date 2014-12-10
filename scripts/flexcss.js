@@ -845,7 +845,7 @@
                         container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
                         container.classList.remove(DARKENER_CLASS_TOGGLE);
                         $(currentOpen).trigger('flexcss.dropdown.closed');
-                        if (currentOpen.hfWidgetInstance) {
+                        if (currentOpen && currentOpen.hfWidgetInstance) {
                             currentOpen.hfWidgetInstance.runOnClose();
                         }
                         future.resolve(true)
