@@ -164,4 +164,14 @@
     border-left: $loaderBorder solid #fff;
     border-bottom: $loaderBorder solid $loaderColor;
   }
+
+  &.small {
+    width:$smallLoaderSize;
+    height:$smallLoaderSize;
+
+    &:before {
+      width: $smallLoaderSize;
+      height: $smallLoaderSize;
+    }
+  }
 }
