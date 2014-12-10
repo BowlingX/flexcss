@@ -92,7 +92,7 @@
                 func(event);
                 target.removeEventListener(ev, thisFunction);
             };
-            return target.addEventListener(ev, thisFunction)
+            return target.addEventListener(ev, thisFunction);
         };
 
         // Some constants:
@@ -277,7 +277,7 @@
                     scrollContainer.style.transform = 'translate3d(' + (last * -1) + 'px,0,0)';
                     scrollContainer.style.webkitTransform = 'translate3d(' + (last * -1) + 'px,0,0)';
 
-                    FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, scrollContainer, function(){
+                    FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, scrollContainer, function () {
                         scrollContainer.style.transition = 'none';
                         scrollContainer.style.webkitTransition = 'none';
                     });
@@ -415,7 +415,7 @@
             var doc = document, touched = 0, body = doc.body,
                 navigationContainer = doc.getElementById(NavigationId),
                 toggler = doc.getElementById(ToggleNavigationId), darkener = doc.getElementById(Darkener),
-                DARKENER_CLASS_TOGGLE = 'toggle-'+Darkener,
+                DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
                 resetStyles = function (s) {
                     s.transform = '';
                     s.transition = '';
@@ -423,7 +423,7 @@
                     s.webkitTransition = '';
                 }, HIDE_FACTOR = 7,
                 OPEN_CLASS = 'open', INIT_CLASS = 'init', TOGGLE_CLASS = FlexCss.CONST_CANVAS_TOGGLE,
-                ANIM_DELAY = FlexCss.CONST_ANIM_DARKENER, shouldNotTouch = function () {
+                shouldNotTouch = function () {
                     return window.innerWidth >= FlexCss.SETTINGS.smallBreakpoint;
                 };
 
@@ -774,29 +774,20 @@
          * @param Darkener
          * @constructor
          */
-        FlexCss.CreateDropdown = function (DelegateContainer, Darkener) {
+        FlexCss.Dropdown = function (DelegateContainer, Darkener) {
             var doc = document, container = doc.getElementById(DelegateContainer),
-                STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-'+Darkener,
-                currentOpen = null, darkener = document.getElementById(Darkener), close = function () {
-                    if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function(){
-                            container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
-                            container.classList.remove(DARKENER_CLASS_TOGGLE);
+                STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
+                currentOpen = null, darkener = document.getElementById(Darkener);
+            var self = this;
 
-                        });
-                    }
-                    currentOpen.classList.remove('open');
-                    darkener.classList.remove('init');
-                    currentOpen = null;
-                };
-            var func = function (e) {
+            function delegateFunction (e) {
 
                 if (FlexCss.TOUCHMOVE) {
                     return;
                 }
                 if (currentOpen && !FlexCss.isPartOfNode(e.target, currentOpen)) {
-                    close();
-                    return func(e);
+                    self.close();
+                    return delegateFunction(e);
                 }
                 var targetHas = e.target.hasAttribute(ATTR_NAME),
                     parentHas = e.target.parentNode ?
@@ -804,95 +795,136 @@
                     target = targetHas ? e.target : e.target.parentNode;
 
                 if (targetHas || parentHas) {
+                    e.preventDefault();
+
                     if (target.isLoading) {
-                        e.preventDefault();
                         return;
                     }
-                    var widget = target.hfWidgetInstance, future = new $.Deferred(),
-                        data = target.getAttribute(ATTR_NAME), dropdownContainerElement = doc.getElementById(data);
-                    if (!dropdownContainerElement && widget instanceof FlexCss.Widget && widget.getAsync()) {
-                        target.classList.add(STATE_LOADING);
-                        target.isLoading = true;
-                        future = widget.runAsync().then(function (r) {
-                            // It's possible to either
-                            var f;
-                            if (r instanceof HTMLElement) {
-                                target.setAttribute(ATTR_NAME, r.id);
-                                f = $.Deferred().resolve(r);
-                            } else {
-                                // Create container Element:
-                                var element = doc.createElement('div');
-                                element.className = 'dropdown';
-                                element.innerHTML = r;
-                                element.id = FlexCss.guid();
-                                // Cache target for later use:
-                                target.setAttribute(ATTR_NAME, element.id);
-                                container.appendChild(element);
-                                f = $.Deferred();
-                                // Wait a little bit till append child did process
-                                setTimeout(function () {
-                                    f.resolve(element);
-                                }, 16);
-                            }
-                            target.isLoading = false;
-                            target.classList.remove(STATE_LOADING);
-                            return f;
-                        });
-                    } else {
-                        if (!dropdownContainerElement) {
-                            throw 'Could not found Dropdown container with ID "' + data + '"';
-                        }
-                        future = $.Deferred().resolve(dropdownContainerElement);
-                    }
-
-                    future.then(function (dropdownContent) {
-                        if (currentOpen) {
-                            close();
-                        }
-                        // Skip one frame to show animation
-                        target.dropdownContent = dropdownContent;
-                        var isAbsolute = window.getComputedStyle(dropdownContent).position === 'absolute';
-
-                        if (!target.flexCollisionContainer) {
-                            var collisionC = target.getAttribute('data-collision-container');
-                            target.flexCollisionContainer = collisionC ?
-                            doc.getElementById(collisionC) || document.body : document.body;
-                        }
-
-                        dropdownContent.classList.toggle('open');
-                        if (dropdownContent.classList.contains('open')) {
-                            currentOpen = dropdownContent;
-                        }
-                        if (isAbsolute) {
-                            // Check collision:
-                            FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
-                        } else {
-                            container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
-                            container.classList.add(DARKENER_CLASS_TOGGLE);
-                            darkener.classList.toggle('init');
-                            dropdownContent.style.left = '0';
-                            dropdownContent.style.top = 'auto';
-                        }
-                    });
-                    e.preventDefault();
+                    self.createDropdown(target);
                 } else {
                     if (currentOpen) {
                         if (e.target.hasAttribute('data-close-dropdown')) {
-                            return close();
+                            return self.close();
                         }
                         if (!FlexCss.isPartOfNode(e.target, currentOpen)) {
-                            return close();
+                            return self.close();
                         }
                     }
                 }
+            }
+
+            // Bind events if not dropdown instance
+            if(!(self instanceof FlexCss.Dropdown)) {
+                FlexCss.SETTINGS.clickEvents.forEach(function (e) {
+                    container.addEventListener(e, delegateFunction);
+                });
+            }
+
+            /**
+             * Closes Dropdown on current instance
+             * @return {Boolean|FlexCss.Dropdown}
+             */
+            self.close = function () {
+                if (!currentOpen) {
+                    return false;
+                }
+                if (window.getComputedStyle(currentOpen).position === 'fixed') {
+                    FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
+                        container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
+                        container.classList.remove(DARKENER_CLASS_TOGGLE);
+
+                    });
+                }
+                currentOpen.classList.remove('open');
+                darkener.classList.remove('init');
+                currentOpen = null;
+                return self;
             };
 
-            FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                container.addEventListener(e, func);
-            });
+            /**
+             * Creates a dropdown on given target and opens it
+             * @param {HTMLElement} target target where this dropdown is placed
+             * @param {FlexCss.Widget} [thisWidget] if given will use widget instead of widget instance
+             * @return {FlexCss.Dropdown}
+             */
+            self.createDropdown = function (target, thisWidget) {
 
-            return this;
+                if(!target) {
+                    throw 'Dropdown target not found';
+                }
+
+                var widget = thisWidget || target.hfWidgetInstance, future = new $.Deferred(),
+                    data = target.getAttribute(ATTR_NAME), dropdownContainerElement = doc.getElementById(data);
+
+                if (!dropdownContainerElement && widget instanceof FlexCss.Widget && widget.getAsync()) {
+                    target.classList.add(STATE_LOADING);
+                    target.isLoading = true;
+                    future = widget.runAsync().then(function (r) {
+                        // It's possible to either
+                        var f;
+                        if (r instanceof HTMLElement) {
+                            target.setAttribute(ATTR_NAME, r.id);
+                            f = $.Deferred().resolve(r);
+                        } else {
+                            // Create container Element:
+                            var element = doc.createElement('div');
+                            element.className = 'dropdown';
+                            element.innerHTML = r;
+                            element.id = FlexCss.guid();
+                            // Cache target for later use:
+                            target.setAttribute(ATTR_NAME, element.id);
+                            container.appendChild(element);
+                            f = $.Deferred();
+                            // Wait a little bit till append child did process
+                            setTimeout(function () {
+                                f.resolve(element);
+                            }, 16);
+                        }
+                        target.isLoading = false;
+                        target.classList.remove(STATE_LOADING);
+                        return f;
+                    });
+                } else {
+                    if (!dropdownContainerElement) {
+                        throw 'Could not found Dropdown container with ID "' + data + '"';
+                    }
+                    future = $.Deferred().resolve(dropdownContainerElement);
+                }
+
+                future.then(function (dropdownContent) {
+                    if (currentOpen) {
+                        self.close();
+                    }
+                    // Skip one frame to show animation
+                    target.dropdownContent = dropdownContent;
+                    var isAbsolute = window.getComputedStyle(dropdownContent).position === 'absolute';
+
+                    if (!target.flexCollisionContainer) {
+                        var collisionC = target.getAttribute('data-collision-container');
+                        target.flexCollisionContainer = collisionC ?
+                        doc.getElementById(collisionC) || document.body : document.body;
+                    }
+
+                    dropdownContent.classList.toggle('open');
+                    if (dropdownContent.classList.contains('open')) {
+                        currentOpen = dropdownContent;
+                    }
+                    if (isAbsolute) {
+                        // Check collision:
+                        FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
+                    } else {
+                        container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
+                        container.classList.add(DARKENER_CLASS_TOGGLE);
+                        darkener.classList.toggle('init');
+                        dropdownContent.style.left = '0';
+                        dropdownContent.style.top = 'auto';
+                    }
+                });
+            };
+
+            return self;
         };
+
 
         // Static variable that keeps track of all open modals
         FlexCss._modalInstances = [];
