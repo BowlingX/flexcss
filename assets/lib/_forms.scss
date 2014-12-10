@@ -96,9 +96,11 @@ form.loading {
   }
 
   &.uneditable-input {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-wrap:break-word;
+    height:auto;
+    min-height:$inputHeight;
   }
 
   &.uneditable-input,
