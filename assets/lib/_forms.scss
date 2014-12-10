@@ -106,7 +106,14 @@ form.loading {
     background: $inputDisabledBg;
     color: $inputDisabledColor;
     cursor: not-allowed;
-    @include interface();
+
+    &:not(.copyable) {
+      @include interface();
+    }
+
+    &.copyable {
+      cursor:copy;
+    }
   }
 
   /**
