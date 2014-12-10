@@ -780,7 +780,7 @@
                 currentOpen = null, darkener = document.getElementById(Darkener);
             var self = this;
 
-            function delegateFunction (e) {
+            function delegateFunction(e) {
 
                 if (FlexCss.TOUCHMOVE) {
                     return;
@@ -814,7 +814,7 @@
             }
 
             // Bind events if not dropdown instance
-            if(!(self instanceof FlexCss.Dropdown)) {
+            if (!(self instanceof FlexCss.Dropdown)) {
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
                     container.addEventListener(e, delegateFunction);
                 });
@@ -849,7 +849,7 @@
              */
             self.createDropdown = function (target, thisWidget) {
 
-                if(!target) {
+                if (!target) {
                     throw 'Dropdown target not found';
                 }
 
@@ -880,9 +880,10 @@
                                 f.resolve(element);
                             }, 16);
                         }
+                        return f;
+                    }).always(function () {
                         target.isLoading = false;
                         target.classList.remove(STATE_LOADING);
-                        return f;
                     });
                 } else {
                     if (!dropdownContainerElement) {
