@@ -783,11 +783,19 @@
          * @constructor
          */
         FlexCss.Dropdown = function (DelegateContainer, Darkener) {
-            var doc = document, container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer),
-                STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
-                currentOpen = null, darkener = Darkener instanceof HTMLElement ? Darkener : document.getElementById(Darkener);
+            var doc = document, container = DelegateContainer instanceof HTMLElement ?
+                    DelegateContainer : doc.getElementById(DelegateContainer),
+                STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
+                currentOpen = null, darkener = Darkener instanceof HTMLElement ?
+                    Darkener : document.getElementById(Darkener);
 
             var self = this;
+
+            if(!darkener || ! container) {
+                throw 'required elements not found (darkener and container element)';
+            }
+
+            var DARKENER_CLASS_TOGGLE = 'toggle-' + (darkener.id || 'darkener-dropdown');
 
             // check for correct instance mode
             if (!(self instanceof FlexCss.Dropdown)) {
