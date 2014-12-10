@@ -1,24 +1,4 @@
-// A Responsive dropdown
-.dropdown {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  will-change: opacity, transform;
-  pointer-events: none;
-  transition: transform .25s ease, opacity .25s ease;
-  // should be over modals
-  z-index: $indexDropdown;
-  font-size: $baseFontSize;
-
-  &.open {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: all;
-    transform: translate3d(0, 0, 0);
-  }
-
+@mixin dropdown-content() {
   ul {
     list-style: none;
     margin: 0;
@@ -57,10 +37,36 @@
       border-top-right-radius: $globalRadius;
     }
   }
+}
+
+// A Responsive dropdown
+.dropdown {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  will-change: opacity, transform;
+  pointer-events: none;
+  transition: transform .25s ease, opacity .25s ease;
+  // should be over modals
+  z-index: $indexDropdown;
+  font-size: $baseFontSize;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @include dropdown-content();
 
   background: #fff;
   transform: translate3d(0, 100%, 0);
 }
+
+
 
 // Global Tooltip
 .tooltip-container {
