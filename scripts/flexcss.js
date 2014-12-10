@@ -38,7 +38,7 @@
         /**
          * Some initial stuff
          * @param document
-         * @param options optional, overwrite default options
+         * @param [options] optional, overwrite default options
          */
         FlexCss.init = function (document, options) {
 
