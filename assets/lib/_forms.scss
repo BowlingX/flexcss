@@ -111,9 +111,10 @@ form.loading {
       @include interface();
     }
 
-    &.copyable {
-      cursor:copy;
-    }
+  }
+
+  &.copyable {
+    cursor:copy;
   }
 
   /**
