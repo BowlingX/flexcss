@@ -847,6 +847,12 @@
                 }
                 currentOpen.classList.remove('open');
                 darkener.classList.remove('init');
+
+                $(currentOpen).trigger('flexcss.dropdown.closed');
+                if(currentOpen.hfWidgetInstance) {
+                    currentOpen.hfWidgetInstance.runOnClose();
+                }
+
                 currentOpen = null;
                 return self;
             };
