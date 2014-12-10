@@ -494,12 +494,16 @@
                         body.classList.remove(TOGGLE_CLASS);
                         body.classList.remove(DARKENER_CLASS_TOGGLE);
                     });
+
+                    navigationContainer.classList.remove(OPEN_CLASS);
+                    darkener.classList.remove(INIT_CLASS);
+
                 } else {
-                    body.classList.toggle(TOGGLE_CLASS);
-                    body.classList.toggle(DARKENER_CLASS_TOGGLE);
+                    body.classList.add(TOGGLE_CLASS);
+                    body.classList.add(DARKENER_CLASS_TOGGLE);
+                    darkener.classList.add(INIT_CLASS);
+                    navigationContainer.classList.add(OPEN_CLASS);
                 }
-                darkener.classList.toggle(INIT_CLASS);
-                navigationContainer.classList.toggle(OPEN_CLASS);
             };
             toggler.addEventListener('touchstart', togglerF);
             toggler.addEventListener('touchstart', function (e) {
