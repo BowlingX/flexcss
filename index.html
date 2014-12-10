@@ -1122,8 +1122,8 @@
         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
 
         // Setup Dropdown and Tooltip
-        FlexCss.Dropdown('SiteBody', 'Darkener');
-        FlexCss.Tooltip('SiteBody');
+        new FlexCss.Dropdown('SiteBody', 'Darkener').registerEvents();
+        new FlexCss.Tooltip('SiteBody').registerEvents();
         FlexCss.Toggleable('SiteBody');
         new FlexCss.Modal('SiteBody').registerEvents();
 

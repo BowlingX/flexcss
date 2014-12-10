@@ -590,6 +590,10 @@
                 containerClass: ''
             };
 
+            if (!(self instanceof FlexCss.Tooltip)) {
+                throw 'no static instances allowed'
+            }
+
             $.extend(self.options, options);
 
             /**
@@ -650,8 +654,10 @@
                 }
             };
 
-            // Bind to mouse events if statically created
-            if (!(self instanceof FlexCss.Tooltip)) {
+            /**
+             * Initilizes events on container element
+             */
+            self.registerEvents = function(){
                 container.addEventListener('mouseover', function (e) {
                     if (e.target.hasAttribute('data-tooltip')) {
                         self.createTooltip(e.target, e.target.getAttribute('title'), true);
@@ -664,7 +670,9 @@
                     }
                 });
 
-            }
+                return self;
+            };
+
 
             return this;
         };
@@ -778,7 +786,14 @@
             var doc = document, container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer),
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select', DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
                 currentOpen = null, darkener = Darkener instanceof HTMLElement ? Darkener : document.getElementById(Darkener);
+
             var self = this;
+
+            // check for correct instance mode
+            if (!(self instanceof FlexCss.Dropdown)) {
+                throw 'no static instances allowed'
+            }
+
 
             function delegateFunction(e) {
 
@@ -824,12 +839,6 @@
                 });
                 return self;
             };
-
-
-            // Bind events if not dropdown instance
-            if (!(self instanceof FlexCss.Dropdown)) {
-                self.registerEvents();
-            }
 
             /**
              * Closes Dropdown on current instance
