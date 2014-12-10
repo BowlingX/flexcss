@@ -813,11 +813,6 @@
                 }
             }
 
-            // Bind events if not dropdown instance
-            if (!(self instanceof FlexCss.Dropdown)) {
-                self.registerEvents();
-            }
-
             /**
              * Register Events for this dropdown container
              * @returns {FlexCss.Dropdown}
@@ -828,6 +823,12 @@
                 });
                 return self;
             };
+
+
+            // Bind events if not dropdown instance
+            if (!(self instanceof FlexCss.Dropdown)) {
+                self.registerEvents();
+            }
 
             /**
              * Closes Dropdown on current instance
