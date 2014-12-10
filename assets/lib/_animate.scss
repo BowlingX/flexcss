@@ -168,7 +168,7 @@
   &.small {
     width:$smallLoaderSize;
     height:$smallLoaderSize;
-
+    border-width:$smallLoaderBorder;
     &:before {
       width: $smallLoaderSize;
       height: $smallLoaderSize;
