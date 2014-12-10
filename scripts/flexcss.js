@@ -805,6 +805,7 @@
 
                 if (targetHas || parentHas) {
                     if (target.isLoading) {
+                        e.preventDefault();
                         return;
                     }
                     var widget = target.hfWidgetInstance, future = new $.Deferred(),
