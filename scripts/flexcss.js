@@ -815,10 +815,19 @@
 
             // Bind events if not dropdown instance
             if (!(self instanceof FlexCss.Dropdown)) {
+                self.registerEvents();
+            }
+
+            /**
+             * Register Events for this dropdown container
+             * @returns {FlexCss.Dropdown}
+             */
+            self.registerEvents = function(){
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
                     container.addEventListener(e, delegateFunction);
                 });
-            }
+                return self;
+            };
 
             /**
              * Closes Dropdown on current instance
