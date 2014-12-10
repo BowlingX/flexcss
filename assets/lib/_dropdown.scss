@@ -1,5 +1,4 @@
 @mixin dropdown-content() {
-  ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -36,7 +35,6 @@
       border-top-left-radius: $globalRadius;
       border-top-right-radius: $globalRadius;
     }
-  }
 }
 
 // A Responsive dropdown
@@ -60,8 +58,9 @@
     transform: translate3d(0, 0, 0);
   }
 
-  @include dropdown-content();
-
+  ul {
+    @include dropdown-content();
+  }
   background: #fff;
   transform: translate3d(0, 100%, 0);
 }
