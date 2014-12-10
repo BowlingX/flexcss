@@ -794,7 +794,7 @@
                         e.target.parentNode.hasAttribute(ATTR_NAME) : false,
                     target = targetHas ? e.target : e.target.parentNode;
 
-                if (targetHas || parentHas) {
+                if (targetHas || parentHas && !currentOpen) {
                     e.preventDefault();
 
                     if (target.isLoading) {
@@ -819,7 +819,7 @@
              */
             self.registerEvents = function () {
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                    container.addEventListener(e, delegateFunction);
+                    container.addEventListener(e, delegateFunction, false);
                 });
                 return self;
             };
@@ -832,29 +832,30 @@
 
             /**
              * Closes Dropdown on current instance
-             * @return {Boolean|FlexCss.Dropdown}
+             * @return {Boolean|$.Deferred}
              */
             self.close = function () {
+
                 if (!currentOpen) {
                     return false;
                 }
+                var future = $.Deferred();
                 if (window.getComputedStyle(currentOpen).position === 'fixed') {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
                         container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
                         container.classList.remove(DARKENER_CLASS_TOGGLE);
-
+                        $(currentOpen).trigger('flexcss.dropdown.closed');
+                        if (currentOpen.hfWidgetInstance) {
+                            currentOpen.hfWidgetInstance.runOnClose();
+                        }
+                        future.resolve(true)
                     });
                 }
                 currentOpen.classList.remove('open');
                 darkener.classList.remove('init');
 
-                $(currentOpen).trigger('flexcss.dropdown.closed');
-                if(currentOpen.hfWidgetInstance) {
-                    currentOpen.hfWidgetInstance.runOnClose();
-                }
-
                 currentOpen = null;
-                return self;
+                return future;
             };
 
             /**
