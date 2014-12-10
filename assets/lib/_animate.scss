@@ -172,6 +172,12 @@
     &:before {
       width: $smallLoaderSize;
       height: $smallLoaderSize;
+      left: $smallLoaderBorder*-1;
+      top: $smallLoaderBorder*-1;
+      border-right-width: $smallLoaderBorder;
+      border-top-width: $smallLoaderBorder;
+      border-left-width: $smallLoaderBorder;
+      border-bottom-width: $smallLoaderBorder;
     }
   }
 }
