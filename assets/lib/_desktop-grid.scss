@@ -41,9 +41,8 @@
 
   .content-wrapper {
     overflow: visible;
-    padding: 0;
+    padding:0;
     position: static;
-
   }
 
   .subnav-content {
@@ -73,7 +72,7 @@
 
   .navbar-main {
     overflow: hidden;
-    padding: 0 11px;
+    padding: 0 $overallPadding;
     position: relative;
     transform: none;
     margin: 0 auto;
@@ -84,8 +83,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-
 
     .main-nav {
       flex:1 1 auto;

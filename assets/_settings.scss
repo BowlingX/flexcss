@@ -17,11 +17,11 @@ $topBarFontSize:18px !default;
 $footerHeight:100px !default;
 
 // maximum site width (before staying centered layout)
-$overallMaxWidth:1250px !default;
+$overallMaxWidth:1200px !default;
 
 // a base padding, used by various components
 $overallPadding:10px !default;
-
+$overallPaddingLarge: 50px !default;
 // padding when in desktop state
 $paddingRightLeftDesktop:20px !default;
 

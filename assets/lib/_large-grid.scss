@@ -22,4 +22,14 @@
   .home {
     width: $sidebarWidthLarge;
   }
+
+
+  .header {
+    padding:0 $overallPaddingLarge - $overallPadding 0 $overallPaddingLarge;
+  }
+
+  .content-wrapper {
+    padding:0 $overallPaddingLarge - $overallPadding 0 $overallPaddingLarge;
+  }
+
 }
