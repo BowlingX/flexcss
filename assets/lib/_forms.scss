@@ -386,6 +386,13 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  border-top: 1px solid $inputBackground;
+  padding-top: 2rem;
+
+  &.plain {
+    border-top: none;
+    padding-top: 0;
+  }
 
   > div {
     flex: 1;
@@ -487,8 +494,6 @@ textarea {
   }
 
   .form-actions {
-    border-top: 1px solid $inputBackground;
-    padding-top: 2rem;
     align-items: center;
 
     flex-direction: row;
@@ -513,9 +518,6 @@ textarea {
       margin-bottom: 0;
     }
 
-    &.plain {
-      border-top: none;
-      padding-top: 0;
-    }
+
   }
 }
