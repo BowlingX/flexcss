@@ -114,3 +114,7 @@ code {
     @extend .inherit-link;
   }
 }
+
+ul {
+  padding-left:$baseLineHeight * 1rem;
+}
