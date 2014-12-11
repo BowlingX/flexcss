@@ -85,6 +85,7 @@ $inputDisabledColor: #bababa !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
 $labelWidthDesktop:25% !default;
 $labelMinWidth:0 !default;
+$labelColor: $baseColor !default;
 $inputHeight:35px !default;
 $formMinWidthControls:380px !default;
 
