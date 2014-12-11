@@ -657,7 +657,7 @@
             /**
              * Initilizes events on container element
              */
-            self.registerEvents = function(){
+            self.registerEvents = function () {
                 container.addEventListener('mouseover', function (e) {
                     if (e.target.hasAttribute('data-tooltip')) {
                         self.createTooltip(e.target, e.target.getAttribute('title'), true);
@@ -791,7 +791,7 @@
 
             var self = this;
 
-            if(!darkener || ! container) {
+            if (!darkener || !container) {
                 throw 'required elements not found (darkener and container element)';
             }
 
@@ -857,22 +857,30 @@
                 if (!currentOpen) {
                     return false;
                 }
-                var future = $.Deferred();
+                var future = $.Deferred(), widget = currentOpen.hfWidgetInstance;
+
                 if (window.getComputedStyle(currentOpen).position === 'fixed') {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
                         container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
                         container.classList.remove(DARKENER_CLASS_TOGGLE);
                         $(currentOpen).trigger('flexcss.dropdown.closed');
-                        if (currentOpen && currentOpen.hfWidgetInstance) {
-                            currentOpen.hfWidgetInstance.runOnClose();
+                        if (widget) {
+                            widget.runOnClose();
                         }
                         future.resolve(true)
                     });
+                } else {
+                    $(currentOpen).trigger('flexcss.dropdown.closed');
+                    if (widget) {
+                        currentOpen.hfWidgetInstance.runOnClose();
+                    }
                 }
+
                 currentOpen.classList.remove('open');
                 darkener.classList.remove('init');
 
                 currentOpen = null;
+
                 return future;
             };
 
