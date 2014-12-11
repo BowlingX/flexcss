@@ -189,7 +189,11 @@ form.loading {
   margin-top: 2px;
   .checkbox {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }
 
