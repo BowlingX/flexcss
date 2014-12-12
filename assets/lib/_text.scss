@@ -46,6 +46,7 @@ h2 {
 
 // basic link:
 a {
+  cursor:pointer;
   text-decoration: none;
   color: $primaryColor;
   transition: color .2s ease;

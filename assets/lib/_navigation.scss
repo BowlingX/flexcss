@@ -34,7 +34,7 @@
   }
 
   .more-space {
-    margin-top:1rem;
+    margin-top: 1rem;
   }
 
   ul {
@@ -130,13 +130,13 @@
     display: inline-block;
 
     margin-right: 6px;
-    a {
+    a, .tab-item {
       padding: 0 $overallPadding;
       color: $subnavColor;
       font-weight: normal;
       line-height: $topbarHeight;
       display: block;
-      &:hover {
+      &:not(span):hover {
         color: lighten($subnavColor, 20%);
       }
     }
@@ -170,7 +170,10 @@
       }
     }
 
-    @include borderWobble();
+    &:not(.no-hover) {
+
+      @include borderWobble();
+    }
 
     &.disabled {
       a {
@@ -200,22 +203,24 @@
 .tabs-small {
   li {
 
-
-    a {
+    a, .tab-item {
       line-height: inherit !important;
       padding-bottom: $tabsSmallPadding !important;
       padding-left: 0 !important;
     }
 
-    &:hover, &.active {
-      &:after {
-        width: calc(100% - (#{$tabsSmallPadding*2}));
+    &:not(.no-hover) {
+
+      &:hover, &.active {
+        &:after {
+          width: calc(100% - (#{$tabsSmallPadding*2}));
+        }
       }
-    }
-    &:after {
-      left: calc(50% - #{$overallPadding});
-      margin: 0 $overallPadding 0 0;
-      height:$tabsSmallLineHeight;
+      &:after {
+        left: calc(50% - #{$overallPadding});
+        margin: 0 $overallPadding 0 0;
+        height: $tabsSmallLineHeight;
+      }
     }
 
     &.loading {

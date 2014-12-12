@@ -4,11 +4,11 @@
 
 // interface
 @mixin interface {
-  user-select:none;
+  user-select: none;
 }
 
 // Creates an arrow at the bottom
-@mixin arrow-bottom($color: black, $left:50%) {
+@mixin arrow-bottom($color: black, $left: 50%) {
 
   &:after {
     top: 100%;
@@ -29,8 +29,9 @@
   }
 
 }
+
 // creates an arrow at top
-@mixin arrow-top($color: #fff, $left:50%) {
+@mixin arrow-top($color: #fff, $left: 50%) {
 
   &:after, &:before {
     bottom: 100%;
@@ -52,12 +53,12 @@
 }
 
 // creates a link in a specific color
-@mixin link-color($color:$grayColor) {
-  color:$color;
-  font-weight:normal;
-  cursor:pointer;
+@mixin link-color($color: $grayColor) {
+  color: $color;
+  font-weight: normal;
+  cursor: pointer;
   &:hover {
-    color: lighten($color,10%);
+    color: lighten($color, 10%);
   }
 
   &:active {
@@ -82,16 +83,16 @@
 }
 
 // animations
-@mixin animate($name, $duration:.5s, $iterationCount:1, $direction:normal) {
-  animation-name:$name;
+@mixin animate($name, $duration: .5s, $iterationCount: 1, $direction: normal) {
+  animation-name: $name;
   animation-duration: $duration;
   animation-fill-mode: both;
-  animation-iteration-count:$iterationCount;
-  animation-direction:$direction;
+  animation-iteration-count: $iterationCount;
+  animation-direction: $direction;
 }
 
 // Creates an overflow container
-@mixin overflowContainer($color, $height:100%, $width:60px) {
+@mixin overflowContainer($color, $height: 100%, $width: 60px) {
 
   position: relative;
   transform: translateZ(0px);
@@ -107,27 +108,28 @@
     pointer-events: none;
   }
 }
+
 // creates a loading animation
 // Shamelessly stolen from bootstrap
-@mixin loadingContainer($color:#fff) {
-  animation:progress-bar-stripes 2s linear infinite;
+@mixin loadingContainer($color: #fff) {
+  animation: progress-bar-stripes 2s linear infinite;
   cursor: wait;
   background-image: linear-gradient(45deg, rgba($color, .15) 25%, transparent 25%,
           transparent 50%, rgba($color, .15) 50%, rgba($color, .15) 75%,
           transparent 75%, transparent);
-  background-size:40px 40px;
+  background-size: 40px 40px;
 }
 
 /**
 * Creates an icon, by default uses fontello
 * Nested spans are no icons anymore
 */
-@mixin icon($font:fontello) {
+@mixin icon($font: fontello) {
   font-family: $font;
   font-weight: normal !important;
   font-style: normal;
   text-decoration: inherit;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-block;
   &:before {
@@ -145,7 +147,8 @@
 * On active state this border is always active
 * Don't forget to set position:relative to element
 */
-@mixin borderWobble($color:$primaryColor, $height:$tabBottomLineHeight, $padding:$overallPadding) {
+@mixin borderWobble($color: $primaryColor, $height: $tabBottomLineHeight, $padding: $overallPadding) {
+
   &:hover, &.active {
     &:after {
       left: 0;
@@ -172,13 +175,12 @@
 /**
 * Mixin to support a specific retina display
 */
-@mixin retinaDisplay($ratio:1.3) {
-  @media
-  only screen and (-webkit-min-device-pixel-ratio: $ratio),
-  only screen and (   min--moz-device-pixel-ratio: $ratio),
-  only screen and (     -o-min-device-pixel-ratio: #{$ratio}/1),
-  only screen and (        min-device-pixel-ratio: $ratio),
-  only screen and (                min-resolution: #{$ratio}dppx) {
+@mixin retinaDisplay($ratio: 1.3) {
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+  only screen and (min--moz-device-pixel-ratio: $ratio),
+  only screen and (-o-min-device-pixel-ratio: #{$ratio}/1),
+  only screen and (min-device-pixel-ratio: $ratio),
+  only screen and (min-resolution: #{$ratio}dppx) {
     @content;
   }
 }
