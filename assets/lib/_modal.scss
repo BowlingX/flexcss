@@ -41,7 +41,7 @@
   position:relative;
   background: #fff;
   display: none;
-  padding: 25px 12px 35px;
+  padding: 43px 12px 35px;
   align-self: flex-start;
   will-change:transform, opacity;
 
@@ -67,7 +67,7 @@
   position:absolute;
   right:0px;
   top:0px;
-  padding:12px 10px;
+  padding:11px 10px 10px;
   font-size:16px;
   cursor:pointer;
   color:lighten($baseColor, 50%);
