@@ -477,8 +477,11 @@
          * @private
          */
         self._handleSubmit = function (e) {
+            var obj = {
+                abort: false
+            };
             $(form).trigger('flexcss.form.beforeSubmit', e, [self, form, obj]);
-            if (obj && obj.abort === true) {
+            if (obj.abort === true) {
                 return false;
             }
             self.submitFunction.apply(self, [form, e]);
