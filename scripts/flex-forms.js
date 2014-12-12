@@ -485,7 +485,6 @@
                 return false;
             }
             self.submitFunction.apply(self, [form, e]);
-
         };
 
     };

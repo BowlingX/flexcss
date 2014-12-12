@@ -87,6 +87,7 @@ form.loading {
   width: 100%;
   max-width: 100%;
   will-change: background-color;
+  transform:translateZ(0);
   text-overflow: ellipsis;
   height: $inputHeight;
   &:focus {
