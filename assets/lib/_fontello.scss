@@ -42,7 +42,7 @@
     line-height: 1em;
 
     &.left-align {
-      margin-left:0;
+      margin-left: 0;
     }
   }
 
@@ -461,6 +461,11 @@
   .icon-block:before {
     content: '🚫';
   }
+
+  .icon-upload-cloud:before {
+    content: '\e83f';
+  }
+  /* '' */
   /* '\1f6ab' */
 }
 
