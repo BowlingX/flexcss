@@ -398,8 +398,7 @@
              */
             function _checkIsValidBlurFocusElement(target) {
                 var attr = target.getAttribute('type');
-                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-                 !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
                 target instanceof HTMLTextAreaElement)));
             }
 
@@ -478,10 +477,12 @@
          * @private
          */
         self._handleSubmit = function (e) {
-           var shouldAbort = $(form).triggerHandler('flexcss.form.beforeSubmit', e, [self, form]);
-            if(shouldAbort !== false) {
-                self.submitFunction.apply(self, [form, e]);
+            $(form).trigger('flexcss.form.beforeSubmit', e, [self, form, obj]);
+            if (obj && obj.abort === true) {
+                return false;
             }
+            self.submitFunction.apply(self, [form, e]);
+
         };
 
     };
