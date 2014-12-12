@@ -292,7 +292,8 @@
          * @constructor
          */
         FlexCss.Toggleable = function (ContainerId) {
-            var doc = document, container = doc.getElementById(ContainerId),
+            var doc = document, container = ContainerId instanceof HTMLElement? ContainerId :
+                    doc.getElementById(ContainerId),
                 ATTR_NAME = 'data-toggle', ATTR_TOGGLE_LIST = 'data-toggle-list',
                 ACTIVE_CLASS = 'active', LOADING_CLASS = 'loading', loading = false;
             if (!container) {
