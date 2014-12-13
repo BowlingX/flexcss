@@ -12,8 +12,6 @@
     // http://stackoverflow.com/questions/13626412/firefox-transitions-breaking-when-parent-overflow-is-changed
     &.modal-open {
       overflow-y: hidden;
-      // Default scrollbar width, this will be set with javascript as well
-      padding-right: 15px;
     }
   }
 

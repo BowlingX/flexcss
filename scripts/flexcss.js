@@ -1243,7 +1243,7 @@
                     containerClasses.add('modal-open');
 
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
-                        n.style.paddingRight = FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['padding-right']) +  FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
                     });
 
                 }

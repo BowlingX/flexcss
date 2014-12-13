@@ -1122,7 +1122,8 @@
 
     (function (document) {
         // Setup Handler for Navigation bars:
-        FlexCss.init(document);
+        FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
+
         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
 

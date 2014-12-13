@@ -37,6 +37,7 @@
 }
 // The Modal itself
 .modal {
+  backface-visibility: hidden;
   width:100%;
   position:relative;
   background: #fff;
