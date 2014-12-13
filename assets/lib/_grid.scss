@@ -10,25 +10,24 @@
 
   width: 100%;
   min-height: calc(100vh - #{$topbarHeight});
+  margin-top: $topbarHeight;
 }
 
 .wrapper-center {
   max-width: $overallMaxWidth;
-  margin: 0 auto;
+  margin: $topbarHeight auto 0 auto;
 }
+
 
 // Wrapper where all Content goes
 .content-wrapper {
   display: flex;
-  min-height: calc(100% - #{$topbarHeight});
   flex-direction: column;
   position: absolute;
-  top: $topbarHeight;
-  -webkit-overflow-scrolling: touch;
-  height: calc(100% - #{$topbarHeight});
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  top:0;
 }
 
 .page-content {
@@ -39,6 +38,10 @@
   height: $topbarHeight;
   background: $topbarBg;
   font-size: $topBarFontSize;
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  width:100%;
 }
 
 .topbar {
@@ -104,7 +107,7 @@
 
 // A Darkener that spans the complete screen
 .darkener {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
