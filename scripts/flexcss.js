@@ -1,4 +1,4 @@
-(function (window, $) {
+void function (window, $) {
     "use strict";
 
     /*!
@@ -292,7 +292,7 @@
          * @constructor
          */
         FlexCss.Toggleable = function (ContainerId) {
-            var doc = document, container = ContainerId instanceof HTMLElement? ContainerId :
+            var doc = document, container = ContainerId instanceof HTMLElement ? ContainerId :
                     doc.getElementById(ContainerId),
                 ATTR_NAME = 'data-toggle', ATTR_TOGGLE_LIST = 'data-toggle-list',
                 ACTIVE_CLASS = 'active', LOADING_CLASS = 'loading', loading = false;
@@ -516,6 +516,9 @@
             toggler.addEventListener('click', togglerF);
 
             var closer = function (e) {
+                if (FlexCss.TOUCHMOVE) {
+                    return;
+                }
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
                     if (!FlexCss.isPartOfNode(e.target, toggler) && !FlexCss.isPartOfNode(e.target, navigationContainer)) {
                         togglerF(e);
@@ -1243,7 +1246,7 @@
                     containerClasses.add('modal-open');
 
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
-                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['padding-right']) +  FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['padding-right']) + FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
                     });
 
                 }
@@ -1373,4 +1376,4 @@
             return self;
         };
     })(FlexCss, window);
-})(window, jQuery);
+}(window, jQuery);

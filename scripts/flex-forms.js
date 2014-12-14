@@ -1,7 +1,7 @@
 /**
  * A HTML5 Validation replacement
  */
-(function (document, window, $) {
+void function (document, window, $) {
     "use strict";
 
     var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading',
@@ -540,4 +540,4 @@
     // initilize forms for all forms
     FlexCss.Form.init("form", {});
 
-})(document, window, jQuery);
+}(document, window, jQuery);

@@ -3,7 +3,7 @@
 /**
  * A Simple LightBox
  */
-(function (document, window, $) {
+void function (document, window, $) {
     "use strict";
     if (!window.FlexCss) {
         window.FlexCss = {};
@@ -190,4 +190,4 @@
 
     };
 
-})(document, window, jQuery);
+}(document, window, jQuery);
