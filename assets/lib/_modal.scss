@@ -49,7 +49,6 @@
 
   &.current {
     display: block;
-    z-index:$indexModalCurrent;
     @include animate(bounceIn);
   }
 
@@ -62,6 +61,13 @@
     box-shadow:$globalBoxShadow;
   }
   box-shadow:$globalBoxShadow;
+}
+
+// setup z-index just when in container
+.modal-container {
+  .modal.current {
+    z-index:$indexModalCurrent;
+  }
 }
 
 // Close icon, top right
