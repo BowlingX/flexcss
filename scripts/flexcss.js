@@ -592,7 +592,7 @@
             };
 
             if (!(self instanceof FlexCss.Tooltip)) {
-                throw 'no static instances allowed'
+                throw 'no static instances allowed';
             }
 
             $.extend(self.options, options);
@@ -800,7 +800,7 @@
 
             // check for correct instance mode
             if (!(self instanceof FlexCss.Dropdown)) {
-                throw 'no static instances allowed'
+                throw 'no static instances allowed';
             }
 
 
@@ -868,7 +868,7 @@
                         if (widget) {
                             widget.runOnClose();
                         }
-                        future.resolve(true)
+                        future.resolve(true);
                     });
                 } else {
                     $(currentOpen).trigger('flexcss.dropdown.closed');

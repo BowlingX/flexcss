@@ -71,15 +71,6 @@
   text-align: left;
 }
 
-.site {
-
-  &.toggled-canvas {
-    #AllContentWrapper {
-      -webkit-overflow-scrolling: auto;
-    }
-  }
-}
-
 .sidebar {
   will-change: transform;
   padding: 20px;
