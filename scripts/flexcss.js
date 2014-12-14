@@ -30,7 +30,7 @@ void function (window, $) {
             smallBreakpoint: 768,
 
             // Default click events to bind
-            clickEvents: ['touchend', 'click'],
+            clickEvents: ['tab'],
 
             scrollbarUpdateNodes: [window.document.body]
         };
@@ -301,27 +301,18 @@ void function (window, $) {
             }
 
             var listener = function (e) {
-                if (FlexCss.TOUCHMOVE) {
-                    return;
-                }
-
                 var target = e.target, parent = target.parentNode;
 
                 // support target child element to clicked
                 if (!target.hasAttribute(ATTR_NAME)) {
-                    if (parent.hasAttribute(ATTR_NAME)) {
-                        target = parent;
-                        parent = target.parentNode;
-                    } else {
-                        return;
-                    }
+                    return;
                 }
                 var refId = target.getAttribute(ATTR_NAME),
                     ref = doc.getElementById(refId), maybeToggleNode, future = $.Deferred(),
                     elClassList = target.classList, parentClassList;
 
                 e.preventDefault();
-
+                e.detail.originalEvent.preventDefault();
                 if (loading) {
                     return;
                 }
@@ -397,7 +388,7 @@ void function (window, $) {
             };
 
             FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                container.addEventListener(e, listener, false);
+                container.addEventListener(e, listener, true);
             });
 
             return this;
@@ -513,12 +504,9 @@ void function (window, $) {
             toggler.addEventListener('touchend', function (e) {
                 e.target.className = e.target.oldClassNames;
             });
-            toggler.addEventListener('click', togglerF);
+            toggler.addEventListener('tab', togglerF, true);
 
             var closer = function (e) {
-                if (FlexCss.TOUCHMOVE) {
-                    return;
-                }
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
                     if (!FlexCss.isPartOfNode(e.target, toggler) && !FlexCss.isPartOfNode(e.target, navigationContainer)) {
                         togglerF(e);
@@ -527,7 +515,7 @@ void function (window, $) {
             };
 
             FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                body.addEventListener(e, closer);
+                body.addEventListener(e, closer, true);
             });
 
         };
@@ -808,10 +796,6 @@ void function (window, $) {
 
 
             function delegateFunction(e) {
-
-                if (FlexCss.TOUCHMOVE) {
-                    return;
-                }
                 if (currentOpen && !FlexCss.isPartOfNode(e.target, currentOpen)) {
                     self.close();
                     return delegateFunction(e);
@@ -847,7 +831,7 @@ void function (window, $) {
              */
             self.registerEvents = function () {
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                    container.addEventListener(e, delegateFunction, false);
+                    container.addEventListener(e, delegateFunction, true);
                 });
                 return self;
             };
@@ -1160,10 +1144,6 @@ void function (window, $) {
                         targetContent = widget.widget;
                     }
                 } else {
-                    if (FlexCss.TOUCHMOVE) {
-                        return;
-                    }
-
                     target = e.target;
                     hasTarget = target.hasAttribute(ATTR_NAME);
                     targetContent = target.getAttribute(ATTR_NAME);
@@ -1207,9 +1187,6 @@ void function (window, $) {
                         if (loading || FlexCss.MODAL_JUST_OPENED) {
                             return;
                         }
-                        if (FlexCss.TOUCHMOVE) {
-                            return;
-                        }
                         if (FlexCss.isPartOfNode(e.target, currentOpen)) {
                             if (!e.target.hasAttribute(ATTR_CLOSE)) {
                                 return;
@@ -1219,7 +1196,7 @@ void function (window, $) {
                     };
 
                     FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                        modalContainer.addEventListener(e, closeModalFunction, false);
+                        modalContainer.addEventListener(e, closeModalFunction, true);
                     });
 
                     modalContainerClasses = modalContainer.classList;
@@ -1307,7 +1284,7 @@ void function (window, $) {
                 var delegateContainer = delegate || container;
 
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                    delegateContainer.addEventListener(e, createWidget, false);
+                    delegateContainer.addEventListener(e, createWidget, true);
                 });
 
                 self.eventContainer = delegateContainer;
@@ -1345,7 +1322,7 @@ void function (window, $) {
                 // Remove event listener on destroy, do not remove DOM node
                 if (self.eventContainer) {
                     FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                        self.eventContainer.removeEventListener(e, createWidget, false);
+                        self.eventContainer.removeEventListener(e, createWidget, true);
                     });
                 }
 
