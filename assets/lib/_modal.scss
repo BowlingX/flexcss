@@ -13,6 +13,10 @@
   background: rgba(#000, .2);
   z-index: $indexModalContainer;
   display:none;
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform-style:preserve-3d;
+
   &.open {
     display: flex;
   }
