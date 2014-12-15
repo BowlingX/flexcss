@@ -477,14 +477,18 @@ void function (window, $) {
                         style.transform = 'translate3d(' + width + 'px,0,0)';
                         style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
 
+                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
+                            // add timeout because transition event fires a little to early
+                            setTimeout(function () {
+                                resetStyles(style);
+                                body.classList.remove(TOGGLE_CLASS);
+                                body.classList.remove(DARKENER_CLASS_TOGGLE);
+                            }, 50);
+                        });
+
                         target.classList.remove(OPEN_CLASS);
                         darkener.classList.remove(INIT_CLASS);
 
-                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
-                            resetStyles(style);
-                            body.classList.remove(TOGGLE_CLASS);
-                            body.classList.remove(DARKENER_CLASS_TOGGLE);
-                        });
 
                     } else {
                         resetStyles(style);
@@ -496,8 +500,11 @@ void function (window, $) {
                 var bodyClass = body.classList, darkenerClass = darkener.classList;
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, navigationContainer, function () {
-                        bodyClass.remove(TOGGLE_CLASS);
-                        bodyClass.remove(DARKENER_CLASS_TOGGLE);
+                        // add timeout because transition event fires a little to early
+                        setTimeout(function () {
+                            bodyClass.remove(TOGGLE_CLASS);
+                            bodyClass.remove(DARKENER_CLASS_TOGGLE);
+                        }, 50);
                     });
                     navigationContainer.classList.remove(OPEN_CLASS);
                     darkener.classList.remove(INIT_CLASS);
