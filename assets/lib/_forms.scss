@@ -22,7 +22,6 @@ form {
       margin: $labelMargin 0 0 0;
       font-size: $smallFontSize;
       color: $grayColor;
-
       a {
         @include link-color();
       }

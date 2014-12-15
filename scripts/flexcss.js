@@ -305,14 +305,23 @@ void function (window, $) {
 
                 // support target child element to clicked
                 if (!target.hasAttribute(ATTR_NAME)) {
+                    if (parent.hasAttribute(ATTR_NAME)) {
+                        target = parent;
+                        parent = target.parentNode;
+                    } else {
+                        return;
+                    }
+                }
+
+                if (!target.hasAttribute(ATTR_NAME)) {
                     return;
                 }
+
                 var refId = target.getAttribute(ATTR_NAME),
                     ref = doc.getElementById(refId), maybeToggleNode, future = $.Deferred(),
                     elClassList = target.classList, parentClassList;
 
                 e.preventDefault();
-                e.detail.originalEvent.preventDefault();
                 if (loading) {
                     return;
                 }
@@ -495,15 +504,16 @@ void function (window, $) {
                     navigationContainer.classList.add(OPEN_CLASS);
                 }
             };
-            toggler.addEventListener('touchstart', togglerF);
             toggler.addEventListener('touchstart', function (e) {
 
                 e.target.oldClassNames = e.target.className;
                 e.target.className = 'active ' + e.target.oldClassNames;
             });
+
             toggler.addEventListener('touchend', function (e) {
                 e.target.className = e.target.oldClassNames;
             });
+
             toggler.addEventListener('tab', togglerF, true);
 
             var closer = function (e) {
