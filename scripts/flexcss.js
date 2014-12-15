@@ -44,6 +44,9 @@ void function (window, $) {
 
             $.extend(FlexCss.SETTINGS, options);
 
+            // setup Tab events
+            FlexCss.TabEvent(document);
+
             // Prevent accidental touches
             document.body.addEventListener('touchmove', function () {
                 FlexCss.TOUCHMOVE = true;
@@ -55,6 +58,8 @@ void function (window, $) {
             FlexCss.CONST_SCROLLBAR_WIDTH = FlexCss.getScrollBarWidth();
             // detect right transition end event
             FlexCss.CONST_TRANSITION_EVENT = FlexCss._whichTransitionEvent();
+
+
         };
 
 

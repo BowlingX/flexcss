@@ -5,6 +5,7 @@
     "jquery": "2.1.1"
   },
   "main": [
+    "scripts/flex-events.js",
     "scripts/flexcss.js",
     "scripts/flex-forms.js",
     "scripts/flex-lightbox.js",
