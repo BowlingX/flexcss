@@ -46,7 +46,7 @@
   padding: 43px 12px 35px;
   align-self: flex-start;
   will-change:transform, opacity;
-
+  transform-style:preserve-3d;
   &.current {
     display: block;
     @include animate(bounceIn);
