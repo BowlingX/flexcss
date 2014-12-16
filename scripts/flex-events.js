@@ -5,6 +5,7 @@
  */
 void function (document, window, $) {
     "use strict";
+
     /**
      * Polyfill CustomEvent for Browser who are not supported
      */
