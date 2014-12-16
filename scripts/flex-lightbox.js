@@ -136,11 +136,13 @@ void function (document, window, $) {
                             };
 
                             // prev or next on touch/click
-                            imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (ev) {
+                            imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
                                 if ('resolved' !== nextFuture.state()) {
                                     return;
                                 }
-                                ev.preventDefault();
+                                e.preventDefault();
+
+                                var ev = e.detail.originalEvent;
 
                                 var pageX = window.TouchEvent && ev instanceof TouchEvent ?
                                     ev.changedTouches[0].pageX : ev.pageX;
