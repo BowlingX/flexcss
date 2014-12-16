@@ -137,7 +137,7 @@ void function (document, window, $) {
 
                             // prev or next on touch/click
                             imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (ev) {
-                                if (FlexCss.TOUCHMOVE || 'resolved' !== nextFuture.state()) {
+                                if ('resolved' !== nextFuture.state()) {
                                     return;
                                 }
                                 ev.preventDefault();
@@ -150,7 +150,7 @@ void function (document, window, $) {
                                     posX = pageX - imgX;
 
                                 nextFuture = self.switchImage(wrapperWidth / 2 > posX);
-                            });
+                            }, true);
 
                             function highRes(thisThumbnail, thisImgHighResolution) {
                                 var future = $.Deferred();
