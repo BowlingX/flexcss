@@ -30,7 +30,7 @@ void function (window, $) {
             smallBreakpoint: 768,
 
             // Default click events to bind
-            clickEvents: ['tab'],
+            clickEvents: [FlexCss.CONST_FLEX_EVENT_TAB],
 
             scrollbarUpdateNodes: [window.document.body]
         };
@@ -526,7 +526,7 @@ void function (window, $) {
                 e.target.className = e.target.oldClassNames;
             });
 
-            toggler.addEventListener('tab', togglerF, true);
+            toggler.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, togglerF, true);
 
             var closer = function (e) {
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {

@@ -29,6 +29,12 @@ void function (document, window, $) {
     void function (FlexCss) {
 
         /**
+         * Tab Event
+         * @type {string}
+         */
+        FlexCss.CONST_FLEX_EVENT_TAB = 'tab';
+
+        /**
          * A Custom Tab Event
          * @param {HTMLElement} container
          * @param [options]
@@ -36,7 +42,7 @@ void function (document, window, $) {
          */
         FlexCss.TabEvent = function (container, options) {
 
-            var MOVE = false, TAB_EVENT = 'tab', tabDelay = new Date().getTime(), _options = {
+            var MOVE = false, TAB_EVENT = FlexCss.CONST_FLEX_EVENT_TAB, tabDelay = new Date().getTime(), _options = {
                 tabDelay: 10
             };
 

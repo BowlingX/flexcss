@@ -136,22 +136,20 @@ void function (document, window, $) {
                             };
 
                             // prev or next on touch/click
-                            ['click', 'touchend'].forEach(function (imageEvents) {
-                                imageContainer.addEventListener(imageEvents, function (ev) {
-                                    if (FlexCss.TOUCHMOVE || 'resolved' !== nextFuture.state()) {
-                                        return;
-                                    }
-                                    ev.preventDefault();
+                            imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (ev) {
+                                if (FlexCss.TOUCHMOVE || 'resolved' !== nextFuture.state()) {
+                                    return;
+                                }
+                                ev.preventDefault();
 
-                                    var pageX = window.TouchEvent && ev instanceof TouchEvent ?
-                                        ev.changedTouches[0].pageX : ev.pageX;
+                                var pageX = window.TouchEvent && ev instanceof TouchEvent ?
+                                    ev.changedTouches[0].pageX : ev.pageX;
 
-                                    var rect = imageContainer.getBoundingClientRect(), imgX = rect.left,
-                                        wrapperWidth = rect.width,
-                                        posX = pageX - imgX;
+                                var rect = imageContainer.getBoundingClientRect(), imgX = rect.left,
+                                    wrapperWidth = rect.width,
+                                    posX = pageX - imgX;
 
-                                    nextFuture = self.switchImage(wrapperWidth / 2 > posX);
-                                });
+                                nextFuture = self.switchImage(wrapperWidth / 2 > posX);
                             });
 
                             function highRes(thisThumbnail, thisImgHighResolution) {
