@@ -410,17 +410,20 @@ void function (window, $) {
 
         /**
          * Creates an off-canvas navigation
-         * @param NavigationId
-         * @param ToggleNavigationId
-         * @param Darkener
-         * @param factor
+         * @param {HTMLElement|String} NavigationId
+         * @param {HTMLElement|String} ToggleNavigationId
+         * @param {HTMLElement|String} Darkener
+         * @param {int} factor
          * @constructor
          */
         FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor) {
 
             var doc = document, touched = 0, body = doc.body,
-                navigationContainer = doc.getElementById(NavigationId),
-                toggler = doc.getElementById(ToggleNavigationId), darkener = doc.getElementById(Darkener),
+                navigationContainer = NavigationId instanceof HTMLElement ?
+                    NavigationId : doc.getElementById(NavigationId),
+                toggler = ToggleNavigationId instanceof HTMLElement ?
+                    ToggleNavigationId : doc.getElementById(ToggleNavigationId),
+                darkener = Darkener instanceof HTMLElement? Darkener : doc.getElementById(Darkener),
                 DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
                 resetStyles = function (s) {
                     s.transform = '';
