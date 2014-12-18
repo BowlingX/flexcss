@@ -120,6 +120,14 @@
   background-size: 40px 40px;
 }
 
+// small helper for ellipsis
+@mixin ellipsis($max-width:300px){
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width:$max-width;
+}
+
 /**
 * Creates an icon, by default uses fontello
 * Nested spans are no icons anymore
