@@ -1009,7 +1009,8 @@ void function (window, $) {
          */
         FlexCss.Modal = function (DelegateContainer, options) {
             var doc = document, ATTR_NAME = 'data-modal',
-                container = doc.getElementById(DelegateContainer),
+                container = DelegateContainer instanceof HTMLElement ?
+                    DelegateContainer : doc.getElementById(DelegateContainer),
                 modalContainer = null, currentOpen, loader, self = this,
                 loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal';
             // Instance vars:
