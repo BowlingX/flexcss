@@ -99,6 +99,9 @@ void function (document, window, $) {
          * @returns {$.Deferred|*}
          */
         self.open = function (target) {
+            if (!target) {
+                return false;
+            }
             // if lightbox is open, we just switch to the new target image
             if (self.isOpen && target) {
                 return self.switchImage(target);
@@ -106,9 +109,6 @@ void function (document, window, $) {
             self.isOpen = true;
 
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
-                if (!target) {
-                    return;
-                }
                 // thumbnail is either target itself or expected to be first childNode
                 var thumbnail = target instanceof HTMLImageElement || target.children[0],
                     future = $.Deferred(), nextFuture = future;
