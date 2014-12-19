@@ -22,7 +22,7 @@ void function (document, window, $) {
      */
     FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend) {
         var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
-        DelegateContainer = DelegateContainer instanceof HTMLElement? DelegateContainer :
+        DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
             document.getElementById(DelegateContainer);
         /**
          * lightbox widget
@@ -86,6 +86,9 @@ void function (document, window, $) {
          */
         self.open = function (target) {
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
+                if (!target) {
+                    return;
+                }
                 // thumbnail is either target itself or expected to be first childNode
                 var thumbnail = target instanceof HTMLImageElement || target.children[0],
                     future = $.Deferred(), nextFuture = future;
@@ -134,11 +137,21 @@ void function (document, window, $) {
 
                     /**
                      * Switches to the next image
-                     * @param direction
+                     * @param {int} direction
                      */
-                    self.switchImage = function (direction) {
-                        var next = direction ? self.getPrev(target) : self.getNext(target),
-                            future = $.Deferred();
+                    self.switchImageByDirection = function (direction) {
+                        var next = direction ? self.getPrev(target) : self.getNext(target);
+                        return self.switchImage(next);
+                    };
+
+                    /**
+                     * Switch to a specific image
+                     * @param next
+                     * @returns {*}
+                     */
+                    self.switchImage = function (next) {
+                        var future = $.Deferred();
+                        nextFuture = future;
                         if (next) {
                             target = next;
                             var nextThumb = next.children[0];
@@ -158,9 +171,17 @@ void function (document, window, $) {
                         return future;
                     };
 
+                    /**
+                     * Checks if lightbox is currently loading
+                     * @returns {boolean}
+                     */
+                    self.isLoading = function () {
+                        return 'resolved' !== nextFuture.state();
+                    };
+
                     // prev or next on touch/click
                     imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
-                        if ('resolved' !== nextFuture.state()) {
+                        if (self.isLoading()) {
                             return;
                         }
                         e.preventDefault();
@@ -174,7 +195,7 @@ void function (document, window, $) {
                             wrapperWidth = rect.width,
                             posX = pageX - imgX;
 
-                        nextFuture = self.switchImage(wrapperWidth / 2 > posX);
+                        self.switchImageByDirection(wrapperWidth / 2 > posX);
                     }, true);
 
                     function highRes(thisThumbnail, thisImgHighResolution) {
@@ -205,7 +226,10 @@ void function (document, window, $) {
                     window.removeEventListener('resize', resizeEvent);
                 }
             });
-            return modalContainer.fromWidget(self.widget);
+            if (self.widget) {
+                // make sure we close stack before
+                return modalContainer.close().fromWidget(self.widget);
+            } else return false;
         }
 
 

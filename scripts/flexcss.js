@@ -703,8 +703,9 @@ void function (window, $) {
         FlexCss.Widget = function (WidgetId) {
             var self = this;
             self.async = null;
-            self.onCloseFunction = null;
-            self.onOpenFunction = null;
+            self.onCloseFunction = [];
+            self.onOpenFunction = [];
+            self.onBeforeCloseFunction = [];
             // A Binding to an DOM Element is optional
             self.widget = WidgetId ? (WidgetId instanceof HTMLElement ?
                 WidgetId : document.getElementById(WidgetId)) : null;
@@ -719,12 +720,12 @@ void function (window, $) {
             };
 
             this.onClose = function (onCloseFunc) {
-                self.onCloseFunction = onCloseFunc;
+                self.onCloseFunction.push(onCloseFunc);
                 return self;
             };
 
             this.onOpen = function (onOpenFunc) {
-                self.onOpenFunction = onOpenFunc;
+                self.onOpenFunction.push(onOpenFunc);
                 return self;
             };
             /**
@@ -732,7 +733,7 @@ void function (window, $) {
              * @returns {*}
              */
             this.onBeforeClose = function (onBeforeClose) {
-                self.onBeforeCloseFunction = onBeforeClose;
+                self.onBeforeCloseFunction.push(onBeforeClose);
                 return self;
             };
 
@@ -757,15 +758,26 @@ void function (window, $) {
             };
 
             this.runOnClose = function () {
-                return self.onCloseFunction ? self.onCloseFunction.apply(self) : false;
+                for(var i=0;self.onCloseFunction.length < i;i++) {
+                    self.onCloseFunction[i].apply(self)
+                }
             };
 
             this.runOnBeforeClose = function (e) {
-                return self.onBeforeCloseFunction ? self.onBeforeCloseFunction.apply(self, [e]) : true;
+                var result = true;
+                for(var i=0;self.onCloseFunction.length < i;i++) {
+                    result = self.onBeforeCloseFunction[i].apply(self, [e]);
+                    if(!result) {
+                        break;
+                    }
+                }
+                return result;
             };
 
             this.runOnOpen = function (e) {
-                return self.onOpenFunction ? self.onOpenFunction.apply(self, [e]) : false;
+                for(var i=0;self.onOpenFunction.length < i;i++) {
+                    self.onOpenFunction[i].apply(self, [e]);
+                }
             };
 
             // Register widget to element if given
@@ -1069,7 +1081,6 @@ void function (window, $) {
              * @returns {*}
              */
             self.close = function (e) {
-
                 if (!self.options.closeOnEscape && e instanceof KeyboardEvent) {
                     return false;
                 }
@@ -1099,18 +1110,17 @@ void function (window, $) {
 
                 // Full stack closed:
                 currentOpen = null;
-
-                modalContainer.classList.remove('open');
-
+                if(modalContainer) {
+                    modalContainer.classList.remove('open');
+                    // Remove all current classes from childnodes
+                    for (var i = 0; i < modalContainer.childNodes.length; i++) {
+                        var cl = modalContainer.childNodes[i].classList;
+                        cl.remove('current');
+                        cl.remove('part-of-stack');
+                    }
+                }
                 if (e) {
                     e.preventDefault();
-                }
-
-                // Remove all current classes from childnodes
-                for (var i = 0; i < modalContainer.childNodes.length; i++) {
-                    var cl = modalContainer.childNodes[i].classList;
-                    cl.remove('current');
-                    cl.remove('part-of-stack');
                 }
 
                 if (self.destroyOnFinish) {
