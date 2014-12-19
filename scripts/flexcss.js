@@ -758,14 +758,15 @@ void function (window, $) {
             };
 
             this.runOnClose = function () {
-                for(var i=0;self.onCloseFunction.length < i;i++) {
+
+                for(var i=0;i<self.onCloseFunction.length;i++) {
                     self.onCloseFunction[i].apply(self)
                 }
             };
 
             this.runOnBeforeClose = function (e) {
                 var result = true;
-                for(var i=0;self.onCloseFunction.length < i;i++) {
+                for(var i=0;i<self.onBeforeCloseFunction.length;i++) {
                     result = self.onBeforeCloseFunction[i].apply(self, [e]);
                     if(!result) {
                         break;
@@ -775,7 +776,7 @@ void function (window, $) {
             };
 
             this.runOnOpen = function (e) {
-                for(var i=0;self.onOpenFunction.length < i;i++) {
+                for(var i=0;i<self.onOpenFunction.length;i++) {
                     self.onOpenFunction[i].apply(self, [e]);
                 }
             };

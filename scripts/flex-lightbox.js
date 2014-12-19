@@ -18,9 +18,10 @@ void function (document, window, $) {
      * @param {HTMLElement|String} DelegateContainer
      * @param {String} AttributeSelector
      * @param {HTMLElement|String} ModalAppend
+     * @param {object} options
      * @constructor
      */
-    FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend) {
+    FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend, options) {
         var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
         DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
             document.getElementById(DelegateContainer);
@@ -29,6 +30,19 @@ void function (document, window, $) {
          * @type {FlexCss.Widget}
          */
         self.widget = null;
+
+        self.isOpen = false;
+
+        self.modal = modalContainer;
+
+        self.options = {
+            onNext: function () {
+                return true;
+            },
+            onClose:function(){}
+        };
+
+        $.extend(self.options, options);
 
         /**
          * Will fetch the next element of a lightBox
@@ -85,6 +99,12 @@ void function (document, window, $) {
          * @returns {$.Deferred|*}
          */
         self.open = function (target) {
+            // if lightbox is open, we just switch to the new target image
+            if (self.isOpen && target) {
+                return self.switchImage(target);
+            }
+            self.isOpen = true;
+
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
                 if (!target) {
                     return;
@@ -141,7 +161,9 @@ void function (document, window, $) {
                      */
                     self.switchImageByDirection = function (direction) {
                         var next = direction ? self.getPrev(target) : self.getNext(target);
-                        return self.switchImage(next);
+                        if(self.options.onNext.apply(self, [next])) {
+                            return self.switchImage(next);
+                        }
                     };
 
                     /**
@@ -221,6 +243,8 @@ void function (document, window, $) {
                 return future;
 
             }).onClose(function () {
+                self.options.onClose.apply(self);
+                self.isOpen = false;
                 this.destroy();
                 if (resizeEvent) {
                     window.removeEventListener('resize', resizeEvent);
