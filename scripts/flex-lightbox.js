@@ -25,6 +25,10 @@ void function (document, window, $) {
         var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
         DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
             document.getElementById(DelegateContainer);
+
+
+        var future = $.Deferred(), nextFuture = future, imageContainer,
+            modalContainerDiv, contentContainer;
         /**
          * lightbox widget
          * @type {FlexCss.Widget}
@@ -94,6 +98,13 @@ void function (document, window, $) {
 
 
         /**
+         * @returns {HTMLElement}
+         */
+        self.getContentContainer = function() {
+            return contentContainer;
+        };
+
+        /**
          * Will show a lightBox on given target
          * @param {HTMLElement} target
          * @returns {$.Deferred|*}
@@ -104,30 +115,31 @@ void function (document, window, $) {
             }
             // if lightbox is open, we just switch to the new target image
             if (self.isOpen && target) {
-                return self.switchImage(target);
+                return self.switchImage(target).then(function(){
+                    return $.Deferred().resolve(self);
+                });
             }
             self.isOpen = true;
 
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
                 // thumbnail is either target itself or expected to be first childNode
-                var thumbnail = target instanceof HTMLImageElement || target.children[0],
-                    future = $.Deferred(), nextFuture = future;
+                var thumbnail = target instanceof HTMLImageElement || target.children[0];
 
                 var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
                     imgSrc = thumbnail.getAttribute('data-src') || thumbnail.src;
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
-                var imageContainer = document.createElement('div'),
-                    modalContainer = document.createElement('div'),
+                  imageContainer = document.createElement('div'),
+                      modalContainerDiv = document.createElement('div'),
                     contentContainer = document.createElement('div');
 
 
-                modalContainer.className = 'modal image-modal';
-                modalContainer.appendChild(imageContainer);
-                modalContainer.appendChild(contentContainer);
+                modalContainerDiv.className = 'modal image-modal';
+                modalContainerDiv.appendChild(imageContainer);
+                modalContainerDiv.appendChild(contentContainer);
                 contentContainer.className = 'content-container';
-                self.widget.setWidget(modalContainer);
+                self.widget.setWidget(modalContainerDiv);
 
                 imageObj.addEventListener('load', function () {
                     imageContainer.className = 'image-container';
@@ -143,7 +155,7 @@ void function (document, window, $) {
                         }
                     };
 
-                    future.resolve(modalContainer).then(function () {
+                    future.resolve(modalContainerDiv).then(function () {
                         calculateContainer();
                     });
 
@@ -165,6 +177,7 @@ void function (document, window, $) {
                             return self.switchImage(next);
                         }
                     };
+
 
                     /**
                      * Switch to a specific image
@@ -252,7 +265,11 @@ void function (document, window, $) {
             });
             if (self.widget) {
                 // make sure we close stack before
-                return modalContainer.close().fromWidget(self.widget);
+                return modalContainer.close().fromWidget(self.widget).then(function(){
+                    return future.then(function(){
+                        return $.Deferred().resolve(self);
+                    });
+                });
             } else return false;
         };
 
