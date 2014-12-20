@@ -696,6 +696,8 @@ void function (window, $) {
 
         /**
          * Register an Element as Widget and adds custom functionality
+         *
+         * Provides a small and simple event system
          * @param WidgetId
          * @returns {FlexCss.Widget}
          * @constructor
@@ -719,18 +721,28 @@ void function (window, $) {
                 return self;
             };
 
+            /**
+             * Registers an on close handler
+             * @param {Function} onCloseFunc
+             * @returns {FlexCss.Widget}
+             */
             this.onClose = function (onCloseFunc) {
                 self.onCloseFunction.push(onCloseFunc);
                 return self;
             };
-
+            /**
+             * Register an open function
+             * @param {Function} onOpenFunc
+             * @returns {FlexCss.Widget}
+             */
             this.onOpen = function (onOpenFunc) {
                 self.onOpenFunction.push(onOpenFunc);
                 return self;
             };
             /**
-             * Will run before a widget closes, return false to cancel close execution
-             * @returns {*}
+             * Registers a before open event, return false to cancel closing
+             * @param {Function} onBeforeClose
+             * @returns {FlexCss.Widget}
              */
             this.onBeforeClose = function (onBeforeClose) {
                 self.onBeforeCloseFunction.push(onBeforeClose);
@@ -744,6 +756,11 @@ void function (window, $) {
                 return self.async;
             };
 
+            /**
+             * Setup widget instance
+             * @param {HTMLElement} widget
+             * @returns {FlexCss.Widget}
+             */
             this.setWidget = function (widget) {
                 self.widget = widget;
                 return self;
@@ -757,10 +774,11 @@ void function (window, $) {
                 return self.getAsync().apply(self);
             };
 
-            this.runOnClose = function () {
+            /* Run event handlers */
 
+            this.runOnClose = function () {
                 for (var i = 0; i < self.onCloseFunction.length; i++) {
-                    self.onCloseFunction[i].apply(self)
+                    self.onCloseFunction[i].apply(self);
                 }
             };
 
@@ -801,6 +819,12 @@ void function (window, $) {
             return this;
         };
 
+        /**
+         * Factory for creating widgets
+         * @param id
+         * @returns {FlexCss.Widget}
+         * @constructor
+         */
         FlexCss.CreateWidget = function (id) {
             return new FlexCss.Widget(id);
         };
@@ -1052,7 +1076,7 @@ void function (window, $) {
             // Instance vars:
 
             if (!container) {
-                throw 'Could not found container element by given ID: ' + DelegateContainer;
+                throw 'Modal: Could not found container element by given ID: ' + DelegateContainer;
             }
 
             /**
@@ -1283,7 +1307,8 @@ void function (window, $) {
                     containerClasses.add('modal-open');
 
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
-                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['padding-right']) + FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['padding-right']) +
+                        FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
                     });
 
                 }

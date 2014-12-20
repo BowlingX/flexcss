@@ -87,7 +87,7 @@ void function (document, window, $) {
                 }
                 if (validTarget) {
                     e.preventDefault();
-                    self.open(target)
+                    self.open(target);
                 }
             }, true);
         };
@@ -254,7 +254,7 @@ void function (document, window, $) {
                 // make sure we close stack before
                 return modalContainer.close().fromWidget(self.widget);
             } else return false;
-        }
+        };
 
 
     };
