@@ -423,7 +423,7 @@ void function (window, $) {
                     NavigationId : doc.getElementById(NavigationId),
                 toggler = ToggleNavigationId instanceof HTMLElement ?
                     ToggleNavigationId : doc.getElementById(ToggleNavigationId),
-                darkener = Darkener instanceof HTMLElement? Darkener : doc.getElementById(Darkener),
+                darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener),
                 DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
                 resetStyles = function (s) {
                     s.transform = '';
@@ -759,16 +759,16 @@ void function (window, $) {
 
             this.runOnClose = function () {
 
-                for(var i=0;i<self.onCloseFunction.length;i++) {
+                for (var i = 0; i < self.onCloseFunction.length; i++) {
                     self.onCloseFunction[i].apply(self)
                 }
             };
 
             this.runOnBeforeClose = function (e) {
                 var result = true;
-                for(var i=0;i<self.onBeforeCloseFunction.length;i++) {
+                for (var i = 0; i < self.onBeforeCloseFunction.length; i++) {
                     result = self.onBeforeCloseFunction[i].apply(self, [e]);
-                    if(!result) {
+                    if (!result) {
                         break;
                     }
                 }
@@ -776,7 +776,7 @@ void function (window, $) {
             };
 
             this.runOnOpen = function (e) {
-                for(var i=0;i<self.onOpenFunction.length;i++) {
+                for (var i = 0; i < self.onOpenFunction.length; i++) {
                     self.onOpenFunction[i].apply(self, [e]);
                 }
             };
@@ -821,6 +821,9 @@ void function (window, $) {
 
             var self = this;
 
+
+            self.destroyOnClose = false;
+
             if (!darkener || !container) {
                 throw 'required elements not found (darkener and container element)';
             }
@@ -833,7 +836,7 @@ void function (window, $) {
             }
 
 
-            function delegateFunction(e) {
+            var delegateFunction = function (e) {
                 if (currentOpen && !FlexCss.isPartOfNode(e.target, currentOpen)) {
                     self.close();
                     return delegateFunction(e);
@@ -861,16 +864,33 @@ void function (window, $) {
                         }
                     }
                 }
-            }
+            };
 
             /**
              * Register Events for this dropdown container
              * @returns {FlexCss.Dropdown}
              */
             self.registerEvents = function () {
-                FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                    container.addEventListener(e, delegateFunction, true);
-                });
+                container.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, true);
+                return self;
+            };
+
+            /**
+             * Destroys this instance, unbinds events
+             * @returns {FlexCss.Dropdown}
+             */
+            self.destroy = function () {
+                container.removeEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, true);
+                return self;
+            };
+
+            /**
+             * Destroys instance on close of dropdown
+             * @param v
+             * @returns {FlexCss.Dropdown}
+             */
+            self.setDestroyOnClose = function(v) {
+                self.destroyOnClose = v;
                 return self;
             };
 
@@ -907,6 +927,9 @@ void function (window, $) {
 
                 currentOpen = null;
 
+                if (self.destroyOnClose) {
+                    self.destroy();
+                }
                 return future;
             };
 
@@ -1111,7 +1134,7 @@ void function (window, $) {
 
                 // Full stack closed:
                 currentOpen = null;
-                if(modalContainer) {
+                if (modalContainer) {
                     modalContainer.classList.remove('open');
                     // Remove all current classes from childnodes
                     for (var i = 0; i < modalContainer.childNodes.length; i++) {
