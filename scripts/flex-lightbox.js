@@ -43,7 +43,8 @@ void function (document, window, $) {
             onNext: function () {
                 return true;
             },
-            onClose:function(){}
+            onClose: function () {
+            }
         };
 
 
@@ -101,7 +102,7 @@ void function (document, window, $) {
         /**
          * @returns {HTMLElement}
          */
-        self.getContentContainer = function() {
+        self.getContentContainer = function () {
             return contentContainer;
         };
 
@@ -116,7 +117,7 @@ void function (document, window, $) {
             }
             // if lightbox is open, we just switch to the new target image
             if (self.isOpen && target) {
-                return self.switchImage(target).then(function(){
+                return self.switchImage(target).then(function () {
                     return $.Deferred().resolve(self);
                 });
             }
@@ -131,9 +132,9 @@ void function (document, window, $) {
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
-                  imageContainer = document.createElement('div');
-                      modalContainerDiv = document.createElement('div');
-                    contentContainer = document.createElement('div');
+                imageContainer = document.createElement('div');
+                modalContainerDiv = document.createElement('div');
+                contentContainer = document.createElement('div');
 
 
                 modalContainerDiv.className = 'modal image-modal';
@@ -174,7 +175,7 @@ void function (document, window, $) {
                      */
                     self.switchImageByDirection = function (direction) {
                         var next = direction ? self.getPrev(target) : self.getNext(target);
-                        if(self.options.onNext.apply(self, [next])) {
+                        if (self.options.onNext.apply(self, [next])) {
                             return self.switchImage(next);
                         }
                     };
@@ -266,8 +267,8 @@ void function (document, window, $) {
             });
             if (self.widget) {
                 // make sure we close stack before
-                return modalContainer.close().fromWidget(self.widget).then(function(){
-                    return future.then(function(){
+                return modalContainer.close().fromWidget(self.widget).then(function () {
+                    return future.then(function () {
                         return $.Deferred().resolve(self);
                     });
                 });
