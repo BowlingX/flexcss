@@ -72,7 +72,7 @@ $indexModalCurrent:10 !default;
 // Box Shadows:
 
 $globalBoxShadow: 0px 0px 3px rgba(#000,.7) !default;
-
+$globalBorderColor:$lightGrayColor !default;
 // Modal Settings:
 $alertWidthDesktop:320px !default;
 $minWidthModalDesktop:640px !default;
@@ -121,3 +121,7 @@ $fontelloFontPath:'../fonts/fontello' !default;
 
 // Effects:
 $darkenerFadeOpacity: .15;
+
+// dropdowns:
+
+$dropdownBorderColor:lighten($grayColor, 20%) !default;

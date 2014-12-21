@@ -9,6 +9,14 @@
   display: none;
 }
 
+
+.visible-desktop,
+.visible-block-desktop,
+.visible-inline-desktop,
+.visible-inline-block-desktop {
+  display: none !important;
+}
+
 @media #{$mediaSmall} {
   .visible-small {
     display: block;
@@ -19,13 +27,29 @@
   }
 
   .hide-small {
-    display:none;
+    display: none;
   }
 }
 
 @media #{$mediaDesktop} {
   .hide-desktop {
     display: none;
+  }
+
+  .visible-desktop {
+    display: block !important;
+  }
+
+  .visible-inline-desktop {
+    display: inline !important;
+  }
+
+  .visible-block-desktop {
+    display: block !important;
+  }
+
+  .visible-inline-block-desktop {
+    display: inline-block !important;
   }
 }
 

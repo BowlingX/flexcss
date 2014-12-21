@@ -6,7 +6,7 @@
     a {
       padding: 15px 15px;
       display: block;
-      border-bottom: 1px solid lighten($grayColor, 20%);
+      border-bottom: 1px solid $dropdownBorderColor;
       font-weight: normal;
       color: $baseColor;
       cursor: pointer;
@@ -23,9 +23,6 @@
       }
     }
 
-    -webkit-overflow-scrolling: touch;
-    max-height: 300px;
-    overflow-y: auto;
     li:last-of-type a {
       border-bottom: none;
       border-bottom-left-radius: $globalRadius;
@@ -52,6 +49,9 @@
   z-index: $indexDropdown;
   font-size: $baseFontSize;
 
+  -webkit-overflow-scrolling: touch;
+  max-height: 300px;
+  overflow-y: auto;
   &.open {
     visibility: visible;
     opacity: 1;
@@ -62,6 +62,15 @@
   ul {
     @include dropdown-content();
   }
+
+  // headline for dropdowns
+  h3 {
+    font-size:$baseFontSize;
+    margin:0;
+    padding: 15px 15px;
+    border-bottom: 1px solid $dropdownBorderColor;
+  }
+
   background: #fff;
   transform: translate3d(0, 100%, 0);
 }

@@ -50,7 +50,7 @@ label:not(.checkbox) {
 fieldset {
   border: none;
   padding: 0 0 30px 0;
-  border-bottom: 1px solid $inputBackground;
+  border-bottom: 1px solid $globalBorderColor;
   margin-bottom: 22px;
 
   &:last-of-type {
@@ -385,7 +385,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  border-top: 1px solid $inputBackground;
+  border-top: 1px solid $globalBorderColor;
   padding-top: 2rem;
 
   &.plain {
