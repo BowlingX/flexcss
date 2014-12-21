@@ -46,6 +46,7 @@ void function (document, window, $) {
             onClose:function(){}
         };
 
+
         $.extend(self.options, options);
 
         /**
@@ -130,8 +131,8 @@ void function (document, window, $) {
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
-                  imageContainer = document.createElement('div'),
-                      modalContainerDiv = document.createElement('div'),
+                  imageContainer = document.createElement('div');
+                      modalContainerDiv = document.createElement('div');
                     contentContainer = document.createElement('div');
 
 
