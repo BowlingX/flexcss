@@ -115,3 +115,7 @@ code {
 ul {
   padding-left:$baseLineHeight * 1rem;
 }
+
+.highlight-span span {
+  color:$primaryColor;
+}
