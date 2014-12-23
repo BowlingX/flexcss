@@ -162,6 +162,10 @@
     border-top-right-radius: $globalRadius;
     position: relative;
 
+    a, .tab-item {
+      line-height: $tabHeight;
+    }
+
     &.loading {
       a {
         cursor: wait;
@@ -205,7 +209,7 @@
   li {
 
     a, .tab-item {
-      line-height: inherit !important;
+      line-height: 1 !important;
       padding-bottom: $tabsSmallPadding !important;
       padding-left: 0 !important;
     }
