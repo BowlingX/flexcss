@@ -63,10 +63,10 @@ $sidebarWidthDesktop: 225px !default;
 $sidebarBackground:#fafafa !default;
 
 // z-indexes:
-$indexModalContainer:20 !default;
+$indexModalContainer:22 !default;
 $indexDarkener: 21 !default;
 $indexDropdown:3 !default;
-$indexFixedDropdown:20 !default;
+$indexFixedDropdown:22 !default;
 $indexTooltip:31 !default;
 $indexMainNavigation: $indexDarkener + 1 !default;
 $indexSidebar: $indexDarkener + 1 !default;

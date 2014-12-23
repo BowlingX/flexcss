@@ -533,7 +533,7 @@ void function (window, $) {
 
             var closer = function (e) {
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                    if (!FlexCss.isPartOfNode(e.target, toggler) && !FlexCss.isPartOfNode(e.target, navigationContainer)) {
+                    if (e.target === darkener) {
                         togglerF(e);
                     }
                 }
@@ -913,7 +913,7 @@ void function (window, $) {
              * @param v
              * @returns {FlexCss.Dropdown}
              */
-            self.setDestroyOnClose = function(v) {
+            self.setDestroyOnClose = function (v) {
                 self.destroyOnClose = v;
                 return self;
             };
