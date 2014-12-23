@@ -182,7 +182,7 @@
 
     &.disabled {
       a {
-        color: lighten($grayColor, 20%);
+        color: lighten($grayColor, 20%) !important;
         cursor: not-allowed;
       }
 
