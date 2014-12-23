@@ -21,6 +21,15 @@
       i {
         color: $baseColor;
       }
+
+      &.disabled {
+        cursor:not-allowed;
+        background: none;
+        color:$inputDisabledColor;
+        > * {
+          color:$inputDisabledColor;
+        }
+      }
     }
 
     li:last-of-type a {
@@ -46,7 +55,7 @@
   pointer-events: none;
   transition: transform .25s ease, opacity .25s ease;
   // should be over modals
-  z-index: $indexDropdown;
+  z-index: $indexFixedDropdown;
   font-size: $baseFontSize;
 
   -webkit-overflow-scrolling: touch;
@@ -127,6 +136,7 @@
     box-shadow: $globalBoxShadow;
     max-width: 320px;
     transition: none;
+    z-index: $indexDropdown;
 
     // reset positioning
     &:not(.open) {

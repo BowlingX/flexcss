@@ -637,7 +637,7 @@ void function (window, $) {
                     colRect = container.getBoundingClientRect();
 
                 var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
-                    isCollisionTop = 0 >= (targetTop - targetRect.height - containerRect.height),
+                    isCollisionTop = 0 >= (targetTop - containerRect.height),
                     classList = tooltipContainer.classList;
                 if (isCollisionTop) {
                     tooltipContainer.style.top = (targetRect.bottom) - colRect.top + 'px';

@@ -65,7 +65,8 @@ $sidebarBackground:#fafafa !default;
 // z-indexes:
 $indexModalContainer:20 !default;
 $indexDarkener: 21 !default;
-$indexDropdown:30 !default;
+$indexDropdown:3 !default;
+$indexFixedDropdown:20 !default;
 $indexTooltip:31 !default;
 $indexMainNavigation: $indexDarkener + 1 !default;
 $indexSidebar: $indexDarkener + 1 !default;

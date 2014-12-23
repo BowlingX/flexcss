@@ -506,7 +506,7 @@ void function (document, window, $) {
      * @param {Object} options
      */
     FlexCss.Form.init = function (selector, options) {
-        var forms = document.querySelectorAll(selector);
+        var forms = selector instanceof HTMLElement ? selector.querySelectorAll('form') : document.querySelectorAll(selector);
         for (var i = 0; i < forms.length; i++) {
             new FlexCss.Form(forms[i], options);
         }

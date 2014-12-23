@@ -28,7 +28,7 @@ form {
     }
   }
 
-  &:last-of-type {
+  &.tight, &:last-of-type {
     .controls {
       margin-bottom: 0;
     }
