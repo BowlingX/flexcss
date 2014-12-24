@@ -112,6 +112,7 @@
     @include animate(fromBottom, .25s);
   }
   box-shadow:none;
+  word-wrap: break-word;
 }
 
 // desktop version
