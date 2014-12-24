@@ -82,7 +82,7 @@ form.loading {
   border-radius: $globalRadius;
   color: $baseColor;
   display: block;
-  padding: 8px 10px;
+  padding: $inputPadding;
   width: 100%;
   max-width: 100%;
   will-change: background-color;
