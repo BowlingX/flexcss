@@ -30,6 +30,15 @@
 
 }
 
+@mixin centralLoader() {
+  left:calc(50% - #{$loaderSize + 5px});
+  top:calc(50% - #{$loaderSize + 5px});
+  background:#fff;
+  padding:10px;
+  border-radius:$globalRadius;
+  box-shadow:$globalBoxShadow;
+}
+
 // creates an arrow at top
 @mixin arrow-top($color: #fff, $left: 50%) {
 

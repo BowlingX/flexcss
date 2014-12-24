@@ -57,12 +57,7 @@
   }
 
   &.current ~ .loader-container {
-    left:calc(50% - 25px);
-    top:calc(50% - 25px);
-    background:#fff;
-    padding:10px;
-    border-radius:$globalRadius;
-    box-shadow:$globalBoxShadow;
+    @include centralLoader();
   }
   box-shadow:$globalBoxShadow;
 }
