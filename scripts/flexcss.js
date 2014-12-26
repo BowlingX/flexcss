@@ -841,7 +841,8 @@ void function (window, $) {
                     DelegateContainer : doc.getElementById(DelegateContainer),
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
                 currentOpen = null, darkener = Darkener instanceof HTMLElement ?
-                    Darkener : document.getElementById(Darkener);
+                    Darkener : document.getElementById(Darkener), ATTR_CC = 'data-collision-container', ATTR_DARKENER =
+                    'data-darkener-container', DARKENER_INIT = 'init';
 
             var self = this;
 
@@ -945,9 +946,13 @@ void function (window, $) {
                         currentOpen.hfWidgetInstance.runOnClose();
                     }
                 }
-
                 currentOpen.classList.remove('open');
-                darkener.classList.remove('init');
+
+                if(currentOpen.flexDarkenerInstance) {
+                    currentOpen.flexDarkenerInstance.remove(DARKENER_INIT);
+                } else {
+                    darkener.classList.remove(DARKENER_INIT);
+                }
 
                 currentOpen = null;
 
@@ -1019,7 +1024,7 @@ void function (window, $) {
                     var isAbsolute = window.getComputedStyle(dropdownContent).position === 'absolute';
 
                     if (!target.flexCollisionContainer) {
-                        var collisionC = target.getAttribute('data-collision-container');
+                        var collisionC = target.getAttribute(ATTR_CC);
                         target.flexCollisionContainer = collisionC ?
                         doc.getElementById(collisionC) || document.body : document.body;
                     }
@@ -1034,7 +1039,16 @@ void function (window, $) {
                     } else {
                         container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
                         container.classList.add(DARKENER_CLASS_TOGGLE);
-                        darkener.classList.toggle('init');
+
+                        // optionally get custom darkener container for target
+                        var d = target.getAttribute(ATTR_DARKENER);
+                        if(d) {
+                            dropdownContent.flexDarkenerInstance = doc.getElementById(d);
+                            (dropdownContent.flexDarkenerInstance || darkener).classList.toggle(DARKENER_INIT);
+                        } else {
+                            darkener.classList.toggle(DARKENER_INIT);
+                        }
+
                         dropdownContent.style.left = '0';
                         dropdownContent.style.top = 'auto';
                     }
