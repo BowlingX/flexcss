@@ -95,7 +95,7 @@
       top: 0 !important;
       bottom: auto;
       transform: translate3d(0, -100%, 0);
-
+      box-shadow:$globalBoxShadow;
       &.open {
         transform: translate3d(0, 0, 0);
 
