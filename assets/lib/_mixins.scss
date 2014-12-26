@@ -30,6 +30,12 @@
 
 }
 
+@mixin perspectiveHelper() {
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform-style:preserve-3d;
+}
+
 @mixin centralLoader() {
   left:calc(50% - #{$loaderSize + 5px});
   top:calc(50% - #{$loaderSize + 5px});
