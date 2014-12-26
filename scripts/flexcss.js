@@ -917,8 +917,12 @@ void function (window, $) {
                 return self;
             };
 
+            /**
+             * Will add the right class to container for specific darkener id
+             * @param instance
+             * @param show
+             */
             function toggleDarkenerToggler(instance, show){
-                console.log(instance);
                 var cls = 'toggle-' + (instance.id || 'darkener-dropdown');
                 if(show) {
                     container.classList.add(cls);
