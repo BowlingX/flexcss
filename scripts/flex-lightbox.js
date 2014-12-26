@@ -40,6 +40,7 @@ void function (document, window, $) {
         self.modal = modalContainer;
 
         self.options = {
+            registerPrevNextEvents:true,
             // called when next image is requested (either by keyboard or click
             onNext: function () {
                 return true;
@@ -86,9 +87,6 @@ void function (document, window, $) {
          */
         self.registerEvents = function () {
             DelegateContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
-                if (FlexCss.TOUCHMOVE) {
-                    return;
-                }
                 var target = e.target, parent = target.parentNode,
                     validTarget = target.hasAttribute(AttributeSelector),
                     parentIsValid = parent.hasAttribute(AttributeSelector);
@@ -225,24 +223,26 @@ void function (document, window, $) {
                         return 'resolved' !== nextFuture.state();
                     };
 
-                    // prev or next on touch/click
-                    imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
-                        if (self.isLoading()) {
-                            return;
-                        }
-                        e.preventDefault();
+                    if(self.options.registerPrevNextEvents) {
+                        // prev or next on touch/click
+                        imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
+                            if (self.isLoading()) {
+                                return;
+                            }
+                            e.preventDefault();
 
-                        var ev = e.detail.originalEvent;
+                            var ev = e.detail.originalEvent;
 
-                        var pageX = window.TouchEvent && ev instanceof TouchEvent ?
-                            ev.changedTouches[0].pageX : ev.pageX;
+                            var pageX = window.TouchEvent && ev instanceof TouchEvent ?
+                                ev.changedTouches[0].pageX : ev.pageX;
 
-                        var rect = imageContainer.getBoundingClientRect(), imgX = rect.left,
-                            wrapperWidth = rect.width,
-                            posX = pageX - imgX;
+                            var rect = imageContainer.getBoundingClientRect(), imgX = rect.left,
+                                wrapperWidth = rect.width,
+                                posX = pageX - imgX;
 
-                        self.switchImageByDirection(wrapperWidth / 2 > posX);
-                    }, true);
+                            self.switchImageByDirection(wrapperWidth / 2 > posX);
+                        }, true);
+                    }
 
                     function highRes(thisThumbnail, thisImgHighResolution) {
                         var future = $.Deferred();
