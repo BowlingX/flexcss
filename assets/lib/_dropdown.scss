@@ -88,6 +88,22 @@
   }
 }
 
+// dropdowns in modal in small:
+@media #{$mediaSmall} {
+  .modal {
+    .dropdown {
+      top: 0 !important;
+      bottom: auto;
+      transform: translate3d(0, -100%, 0);
+
+      &.open {
+        transform: translate3d(0, 0, 0);
+
+      }
+    }
+  }
+}
+
 
 
 // Global Tooltip
