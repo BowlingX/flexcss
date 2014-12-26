@@ -40,10 +40,15 @@ void function (document, window, $) {
         self.modal = modalContainer;
 
         self.options = {
+            // called when next image is requested (either by keyboard or click
             onNext: function () {
                 return true;
             },
             onClose: function () {
+            },
+            // called when underlying target changed
+            onSwitchImage: function () {
+
             }
         };
 
@@ -189,6 +194,8 @@ void function (document, window, $) {
                     self.switchImage = function (next) {
                         var future = $.Deferred();
                         nextFuture = future;
+                        // notify observers about image switching
+                        self.options.onSwitchImage.apply(self, [future]);
                         if (next) {
                             target = next;
                             var nextThumb = next.children[0];
@@ -205,6 +212,8 @@ void function (document, window, $) {
                         } else {
                             future.resolve(null);
                         }
+
+
                         return future;
                     };
 

@@ -316,16 +316,20 @@ void function (document, window, $) {
                 });
             }
 
+            if(!self.options.createTooltips) {
+                return;
+            }
+
             setTimeout(function () {
                 if (!target.flexFormsSavedValidity) {
                     return;
                 }
                 if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                    self.tooltips.createTooltip(target,
-                        _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+                        self.tooltips.createTooltip(target,
+                            _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
                 } else {
                     if (remove) {
-                        self.tooltips.removeTooltip(target);
+                            self.tooltips.removeTooltip(target);
                     }
                 }
             }, 0);
