@@ -853,8 +853,6 @@ void function (window, $) {
                 throw 'required elements not found (darkener and container element)';
             }
 
-            var DARKENER_CLASS_TOGGLE = 'toggle-' + (darkener.id || 'darkener-dropdown');
-
             // check for correct instance mode
             if (!(self instanceof FlexCss.Dropdown)) {
                 throw 'no static instances allowed';
@@ -919,6 +917,16 @@ void function (window, $) {
                 return self;
             };
 
+            function toggleDarkenerToggler(instance, show){
+                console.log(instance);
+                var cls = 'toggle-' + (instance.id || 'darkener-dropdown');
+                if(show) {
+                    container.classList.add(cls);
+                } else {
+                    container.classList.remove(cls);
+                }
+            }
+
             /**
              * Closes Dropdown on current instance
              * @return {Boolean|$.Deferred}
@@ -928,12 +936,13 @@ void function (window, $) {
                 if (!currentOpen) {
                     return false;
                 }
-                var future = $.Deferred(), widget = currentOpen.hfWidgetInstance;
+                var future = $.Deferred(), widget = currentOpen.hfWidgetInstance,
+                    darkenerInstance = currentOpen.flexDarkenerInstance || darkener;
 
                 if (window.getComputedStyle(currentOpen).position === 'fixed') {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
                         container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
-                        container.classList.remove(DARKENER_CLASS_TOGGLE);
+                        toggleDarkenerToggler(darkenerInstance, false);
                         $(currentOpen).trigger('flexcss.dropdown.closed');
                         if (widget) {
                             widget.runOnClose();
@@ -949,7 +958,7 @@ void function (window, $) {
                 currentOpen.classList.remove('open');
 
                 if(currentOpen.flexDarkenerInstance) {
-                    currentOpen.flexDarkenerInstance.remove(DARKENER_INIT);
+                    currentOpen.flexDarkenerInstance.classList.remove(DARKENER_INIT);
                 } else {
                     darkener.classList.remove(DARKENER_INIT);
                 }
@@ -1038,8 +1047,6 @@ void function (window, $) {
                         FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
                     } else {
                         container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
-                        container.classList.add(DARKENER_CLASS_TOGGLE);
-
                         // optionally get custom darkener container for target
                         var d = target.getAttribute(ATTR_DARKENER);
                         if(d) {
@@ -1048,6 +1055,8 @@ void function (window, $) {
                         } else {
                             darkener.classList.toggle(DARKENER_INIT);
                         }
+
+                        toggleDarkenerToggler(dropdownContent.flexDarkenerInstance || darkener, true);
 
                         dropdownContent.style.left = '0';
                         dropdownContent.style.top = 'auto';
