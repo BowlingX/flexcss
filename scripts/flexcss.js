@@ -574,10 +574,10 @@ void function (window, $) {
 
             if (isCollisionLeft) {
                 // put element to left if collision with left
-                elementToPosition.style.left = targetPosition.left + 'px';
+                elementToPosition.style.left = (targetPosition.left - colRect.left) + 'px';
                 elementToPosition.classList.add(COL_LEFT_CLASS);
             } else {
-                elementToPosition.style.left = (targetRight - elementRect.width) + 'px';
+                elementToPosition.style.left = (targetRight - elementRect.width - colRect.left)  + 'px';
                 elementToPosition.classList.remove(COL_LEFT_CLASS);
             }
             if (isCollisionBottom) {

@@ -67,7 +67,7 @@ form.loading {
 }
 
 // Basic form and input types
-.input-xlarge, select, textarea, input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
+.input, .input-xlarge, select, textarea, input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
   background-color: $inputBackground;
   border: none;
 
