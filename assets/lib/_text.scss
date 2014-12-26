@@ -125,3 +125,12 @@ ul {
   color:$primaryColor;
   font-weight:bold;
 }
+
+.unbreakable {
+  white-space: nowrap;
+}
+
+
+::selection {
+  background: $lightGrayColor;
+}
