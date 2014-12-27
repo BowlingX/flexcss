@@ -25,7 +25,7 @@ void function (document, window, $) {
     FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend, options) {
         var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
         DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
-            document.getElementById(DelegateContainer)
+            document.getElementById(DelegateContainer);
 
 
 
