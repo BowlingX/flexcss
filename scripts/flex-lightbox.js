@@ -155,7 +155,6 @@ void function (document, window, $) {
                     imageContainer.className = 'image-container';
                     var img = document.createElement('img');
                     img.src = imgSrc;
-                    console.log(widthHighResolution);
                     if(widthHighResolution && heightHighResolution) {
                         img.style.maxWidth = widthHighResolution + "px";
                         img.style.maxHeight = heightHighResolution + "px";
