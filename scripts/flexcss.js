@@ -1333,7 +1333,7 @@ void function (window, $) {
                 if (0 === FlexCss._modalInstances.length) {
                     containerClasses.add('modal-open');
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
-                        n.style.paddingRight = parseInt(window.getComputedStyle(n)['paddingRight']) +
+                        n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
                         FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
                     });
 

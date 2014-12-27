@@ -39,18 +39,19 @@ void function (document, window, $) {
 
         self.modal = modalContainer;
 
+        /**
+         * Default options
+         */
         self.options = {
+            // set if prev and next should be available
             registerPrevNextEvents:true,
             // called when next image is requested (either by keyboard or click
             onNext: function () {
                 return true;
             },
-            onClose: function () {
-            },
+            onClose: function () {},
             // called when underlying target changed
-            onSwitchImage: function () {
-
-            }
+            onSwitchImage: function () {}
         };
 
 
