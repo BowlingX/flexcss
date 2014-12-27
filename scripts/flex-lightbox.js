@@ -30,7 +30,7 @@ void function (document, window, $) {
 
 
         var future = $.Deferred(), nextFuture = future, imageContainer,
-            modalContainerDiv, contentContainer;
+            modalContainerDiv, contentContainer,closerContainerDiv;
         /**
          * lightbox widget
          * @type {FlexCss.Widget}
@@ -142,12 +142,16 @@ void function (document, window, $) {
                 imageObj.src = imgSrc;
                 imageContainer = document.createElement('div');
                 modalContainerDiv = document.createElement('div');
+                closerContainerDiv = document.createElement('i');
                 contentContainer = document.createElement('div');
 
+                closerContainerDiv.className = 'modal-close modal-close-lightbox icon-cancel-1';
+                closerContainerDiv.setAttribute('data-close-modal', 'data-close-modal');
 
                 modalContainerDiv.className = 'modal image-modal';
                 modalContainerDiv.appendChild(imageContainer);
                 modalContainerDiv.appendChild(contentContainer);
+                modalContainerDiv.appendChild(closerContainerDiv);
                 contentContainer.className = 'content-container';
                 self.widget.setWidget(modalContainerDiv);
 
