@@ -43,7 +43,7 @@
   position:relative;
   background: #fff;
   display: none;
-  padding: 43px 12px 35px;
+  padding: 43px 12px 25px;
   align-self: flex-start;
   will-change:transform, opacity;
   @include perspectiveHelper();
@@ -121,7 +121,7 @@
     min-width:$minWidthModalDesktop;
     max-width:$minWidthModalDesktop;
     margin-bottom: 20px;
-    padding: 25px 30px 35px;
+    padding: 25px 30px 25px;
 
     &.center {
       align-self: center;

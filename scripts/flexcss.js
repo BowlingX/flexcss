@@ -1111,6 +1111,7 @@ void function (window, $) {
              * Default Options
              */
             self.options = {
+                classNames:'modal',
                 closeOnEscape: true,
                 closeOnBackgroundClick: true
             };
@@ -1350,7 +1351,7 @@ void function (window, $) {
                         } else {
                             // Create container Element:
                             var element = doc.createElement('div');
-                            element.className = 'modal';
+                            element.className = self.options.classNames;
                             element.innerHTML = r;
                             element.id = FlexCss.guid();
                             // Setup modal as widget to widget instance:
