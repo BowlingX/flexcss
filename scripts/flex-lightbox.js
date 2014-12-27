@@ -12,6 +12,7 @@ void function (document, window, $) {
 
     var FlexCss = window.FlexCss;
 
+
     /**
      * A LightBox Widget
      *
@@ -24,7 +25,8 @@ void function (document, window, $) {
     FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend, options) {
         var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
         DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
-            document.getElementById(DelegateContainer);
+            document.getElementById(DelegateContainer)
+
 
 
         var future = $.Deferred(), nextFuture = future, imageContainer,
@@ -132,7 +134,9 @@ void function (document, window, $) {
                 var thumbnail = target instanceof HTMLImageElement || target.children[0];
 
                 var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
-                    imgSrc = thumbnail.getAttribute('data-src') || thumbnail.src;
+                    imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src,
+                    widthHighResolution = target.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
+                    heightHighResolution = target.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
@@ -151,6 +155,11 @@ void function (document, window, $) {
                     imageContainer.className = 'image-container';
                     var img = document.createElement('img');
                     img.src = imgSrc;
+                    console.log(widthHighResolution);
+                    if(widthHighResolution && heightHighResolution) {
+                        img.style.maxWidth = widthHighResolution + "px";
+                        img.style.maxHeight = heightHighResolution + "px";
+                    }
                     imageContainer.appendChild(img);
 
                     var calculateContainer = function () {
@@ -198,11 +207,17 @@ void function (document, window, $) {
                         if (next) {
                             target = next;
                             var nextThumb = next.children[0];
-                            var nextSource = nextThumb.getAttribute('data-src') || nextThumb.src;
+                            var nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src,
+                                nextMaxWidth = nextThumb.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
+                                nextMaxHeight = nextThumb.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
                             var nextImgObject = new Image();
                             nextImgObject.src = nextSource;
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
+                                if(nextMaxWidth && nextMaxHeight) {
+                                    img.style.maxWidth = nextMaxWidth + "px";
+                                    img.style.maxHeight = nextMaxHeight + "px";
+                                }
                                 calculateContainer();
                                 highRes(nextThumb, next.getAttribute('data-href') ||
                                 next.getAttribute('href'));
@@ -287,5 +302,10 @@ void function (document, window, $) {
 
 
     };
+
+    FlexCss.LightBox.ATTR_MAX_WIDTH = 'data-original-width';
+    FlexCss.LightBox.ATTR_MAX_HEIGHT = 'data-original-height';
+    FlexCss.LightBox.ATTR_SRC = 'data-src';
+
 
 }(document, window, jQuery);
