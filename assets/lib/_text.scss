@@ -132,5 +132,6 @@ ul {
 
 
 ::selection {
-  background: $lightGrayColor;
+  background: lighten($primaryColor,25%);
+  color:white;
 }
