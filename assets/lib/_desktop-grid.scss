@@ -2,7 +2,7 @@
   // utilities:
 
   .hide-desktop {
-    display:none;
+    display: none;
   }
 
   body {
@@ -10,10 +10,9 @@
     // FIXME: There is a bug in firefox that causes flickering animations:
     // TODO: Check if this is a performance overhead
     // http://stackoverflow.com/questions/13626412/firefox-transitions-breaking-when-parent-overflow-is-changed
-    &.modal-open {
-      overflow-y: hidden;
-    }
+
   }
+
 
   .aside {
     flex: 1 auto;
@@ -39,7 +38,7 @@
 
   .content-wrapper {
     overflow: visible;
-    padding:0;
+    padding: 0;
     position: static;
   }
 
@@ -83,13 +82,12 @@
     justify-content: space-between;
 
     .main-nav {
-      flex:1 1 auto;
+      flex: 1 1 auto;
     }
 
     .more-space {
-      margin-top:0;
+      margin-top: 0;
     }
-
 
     ul {
       flex-direction: row;
@@ -116,7 +114,7 @@
         }
       }
       .button {
-        margin-left:10px;
+        margin-left: 10px;
       }
     }
   }
@@ -128,7 +126,7 @@
   }
 
   .home {
-    width:$sidebarWidthDesktop;
+    width: $sidebarWidthDesktop;
     background: none;
     .logo {
       margin-left: $overallPadding;

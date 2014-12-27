@@ -18,6 +18,13 @@
   margin: $topbarHeight auto 0 auto;
 }
 
+html {
+  &.modal-open {
+    body {
+      overflow-y: hidden;
+    }
+  }
+}
 
 // Wrapper where all Content goes
 .content-wrapper {

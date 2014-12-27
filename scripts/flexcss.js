@@ -1099,7 +1099,8 @@ void function (window, $) {
                 container = DelegateContainer instanceof HTMLElement ?
                     DelegateContainer : doc.getElementById(DelegateContainer),
                 modalContainer = null, currentOpen, loader, self = this,
-                loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal';
+                loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal',
+                htmlElement = document.documentElement;
             // Instance vars:
 
             if (!container) {
@@ -1133,7 +1134,7 @@ void function (window, $) {
                 if (t > -1) {
                     FlexCss._modalInstances.splice(t, 1);
                     if (0 === FlexCss._modalInstances.length) {
-                        container.classList.remove('modal-open');
+                        htmlElement.classList.remove('modal-open');
                         FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
                             n.style.paddingRight = '';
                         });
@@ -1331,7 +1332,7 @@ void function (window, $) {
                 };
 
                 if (0 === FlexCss._modalInstances.length) {
-                    containerClasses.add('modal-open');
+                    htmlElement.classList.add('modal-open');
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
                         n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
                         FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
