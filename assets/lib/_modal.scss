@@ -10,7 +10,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(#000, .2);
+  background: rgba(#000, $darkenerFadeOpacity);
   z-index: $indexModalContainer;
   display:none;
   @include perspectiveHelper();
