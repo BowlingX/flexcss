@@ -292,7 +292,7 @@ void function (window, $) {
 
         /**
          * Creates a toggleable element, either for tabs or a single toggle
-         * @param ContainerId
+         * @param {HTMLElement|String} ContainerId
          * @returns {FlexCss.Toggleable}
          * @constructor
          */
@@ -300,9 +300,13 @@ void function (window, $) {
             var doc = document, container = ContainerId instanceof HTMLElement ? ContainerId :
                     doc.getElementById(ContainerId),
                 ATTR_NAME = 'data-toggle', ATTR_TOGGLE_LIST = 'data-toggle-list',
-                ACTIVE_CLASS = 'active', LOADING_CLASS = 'loading', loading = false;
+                ACTIVE_CLASS = 'active', LOADING_CLASS = 'loading', loading = false, self = this;
             if (!container) {
                 throw 'Toggleable container with id "' + ContainerId + '" not found';
+            }
+
+            if(!(this instanceof FlexCss.Toggleable)) {
+                throw 'Toggleable: Static instances are not allowed';
             }
 
             var listener = function (e) {
@@ -312,7 +316,6 @@ void function (window, $) {
                 if (!target.hasAttribute(ATTR_NAME)) {
                     if (parent.hasAttribute(ATTR_NAME)) {
                         target = parent;
-                        parent = target.parentNode;
                     } else {
                         return;
                     }
@@ -323,13 +326,28 @@ void function (window, $) {
                 }
 
                 var refId = target.getAttribute(ATTR_NAME),
-                    ref = doc.getElementById(refId), maybeToggleNode, future = $.Deferred(),
-                    elClassList = target.classList, parentClassList;
+                    ref = doc.getElementById(refId);
 
                 e.preventDefault();
                 if (loading) {
                     return;
                 }
+
+                self.toggleTarget(ref, target);
+
+            };
+
+
+            /**
+             * Toggles given `ref`
+             * @param {HTMLElement} ref
+             * @param {HTMLElement} [target] optional target node that should get
+             */
+            self.toggleTarget = function (ref, target) {
+
+                var maybeToggleNode, future = $.Deferred(),
+                    elClassList = target.classList, parentClassList,
+                    parent = target.parentNode;
 
                 if (ref) {
                     future.resolve(ref);
@@ -383,9 +401,10 @@ void function (window, $) {
                         }
                     }
                 }
-                elClassList.toggle(ACTIVE_CLASS);
-                elClassList.add(LOADING_CLASS);
-
+                if (elClassList) {
+                    elClassList.toggle(ACTIVE_CLASS);
+                    elClassList.add(LOADING_CLASS);
+                }
                 loading = true;
                 future.then(function (r) {
                     $(target).trigger('flexcss.tab.opened', r);
@@ -399,13 +418,21 @@ void function (window, $) {
                     r.classList.toggle(ACTIVE_CLASS);
                     loading = false;
                 });
+
+                return self;
             };
 
-            FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                container.addEventListener(e, listener, true);
-            });
+            /**
+             * Registers events on container element
+             * @returns {FlexCss.Toggleable}
+             */
+            self.registerEvents = function () {
+                FlexCss.SETTINGS.clickEvents.forEach(function (e) {
+                    container.addEventListener(e, listener, true);
+                });
+                return self;
+            };
 
-            return this;
         };
 
         /**
@@ -577,7 +604,7 @@ void function (window, $) {
                 elementToPosition.style.left = (targetPosition.left - colRect.left) + 'px';
                 elementToPosition.classList.add(COL_LEFT_CLASS);
             } else {
-                elementToPosition.style.left = (targetRight - elementRect.width - colRect.left)  + 'px';
+                elementToPosition.style.left = (targetRight - elementRect.width - colRect.left) + 'px';
                 elementToPosition.classList.remove(COL_LEFT_CLASS);
             }
             if (isCollisionBottom) {
@@ -922,9 +949,9 @@ void function (window, $) {
              * @param instance
              * @param show
              */
-            function toggleDarkenerToggler(instance, show){
+            function toggleDarkenerToggler(instance, show) {
                 var cls = 'toggle-' + (instance.id || 'darkener-dropdown');
-                if(show) {
+                if (show) {
                     container.classList.add(cls);
                 } else {
                     container.classList.remove(cls);
@@ -961,7 +988,7 @@ void function (window, $) {
                 }
                 currentOpen.classList.remove('open');
 
-                if(currentOpen.flexDarkenerInstance) {
+                if (currentOpen.flexDarkenerInstance) {
                     currentOpen.flexDarkenerInstance.classList.remove(DARKENER_INIT);
                 } else {
                     darkener.classList.remove(DARKENER_INIT);
@@ -1053,7 +1080,7 @@ void function (window, $) {
                         container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
                         // optionally get custom darkener container for target
                         var d = target.getAttribute(ATTR_DARKENER);
-                        if(d) {
+                        if (d) {
                             dropdownContent.flexDarkenerInstance = doc.getElementById(d);
                             (dropdownContent.flexDarkenerInstance || darkener).classList.toggle(DARKENER_INIT);
                         } else {
@@ -1111,7 +1138,7 @@ void function (window, $) {
              * Default Options
              */
             self.options = {
-                classNames:'modal',
+                classNames: 'modal',
                 closeOnEscape: true,
                 closeOnBackgroundClick: true
             };
@@ -1282,6 +1309,7 @@ void function (window, $) {
                 }
 
 
+                // FIXME: Because we have our own tab event now, this may be deprecated
                 FlexCss.MODAL_JUST_OPENED = true;
 
                 // FIXME: Double event fix for IOS (click event is fired so modal closes directly)
@@ -1290,8 +1318,7 @@ void function (window, $) {
                     FlexCss.MODAL_JUST_OPENED = false;
                 }, 60);
 
-                var containerClasses = container.classList,
-                    modalContainerClasses = modalContainer ? modalContainer.classList : [];
+                var modalContainerClasses = modalContainer ? modalContainer.classList : [];
 
                 if (!modalContainer) {
                     modalContainer = doc.createElement('div');
