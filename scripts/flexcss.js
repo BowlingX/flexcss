@@ -345,6 +345,10 @@ void function (window, $) {
              */
             self.toggleTarget = function (ref, target) {
 
+                if(!target) {
+                    target = document.querySelector('['+ATTR_NAME+'="'+ref.id+'"]');
+                }
+
                 var maybeToggleNode, future = $.Deferred(),
                     elClassList = target.classList, parentClassList,
                     parent = target.parentNode;
