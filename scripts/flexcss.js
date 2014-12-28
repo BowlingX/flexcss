@@ -517,7 +517,7 @@ void function (window, $) {
                                 resetStyles(style);
                                 body.classList.remove(TOGGLE_CLASS);
                                 body.classList.remove(DARKENER_CLASS_TOGGLE);
-                            }, 50);
+                            }, 100);
                         });
 
                         target.classList.remove(OPEN_CLASS);
@@ -538,7 +538,7 @@ void function (window, $) {
                         setTimeout(function () {
                             bodyClass.remove(TOGGLE_CLASS);
                             bodyClass.remove(DARKENER_CLASS_TOGGLE);
-                        }, 50);
+                        }, 100);
                     });
                     navigationContainer.classList.remove(OPEN_CLASS);
                     darkener.classList.remove(INIT_CLASS);
