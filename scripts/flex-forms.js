@@ -95,6 +95,7 @@ void function (document, window, $) {
 
             serverCall.then(function (r) {
                 (self._remoteValidationFunction || FlexCss.Form.globalRemoteValidationFunction).apply(self, [r]);
+                return $.Deferred().resolve(r);
             }).always(function (r) {
                 $(thisForm).trigger('flexcss.form.ajaxCompleted', [e,self, thisForm, r]);
                 // always remove error class
