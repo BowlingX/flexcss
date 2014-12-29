@@ -32,7 +32,10 @@ void function (window, $) {
             // Default click events to bind
             clickEvents: [FlexCss.CONST_FLEX_EVENT_TAB],
 
-            scrollbarUpdateNodes: [window.document.body]
+            scrollbarUpdateNodes: [window.document.body],
+
+            // additional Delay until darkener is fully hidden
+            darkenerFadeDelay:100
         };
 
         /**
@@ -305,7 +308,7 @@ void function (window, $) {
                 throw 'Toggleable container with id "' + ContainerId + '" not found';
             }
 
-            if(!(this instanceof FlexCss.Toggleable)) {
+            if (!(this instanceof FlexCss.Toggleable)) {
                 throw 'Toggleable: Static instances are not allowed';
             }
 
@@ -345,8 +348,8 @@ void function (window, $) {
              */
             self.toggleTarget = function (ref, target) {
 
-                if(!target) {
-                    target = document.querySelector('['+ATTR_NAME+'="'+ref.id+'"]');
+                if (!target) {
+                    target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
                 }
 
                 var maybeToggleNode, future = $.Deferred(),
@@ -517,7 +520,7 @@ void function (window, $) {
                                 resetStyles(style);
                                 body.classList.remove(TOGGLE_CLASS);
                                 body.classList.remove(DARKENER_CLASS_TOGGLE);
-                            }, 100);
+                            }, FlexCss.SETTINGS.darkenerFadeDelay);
                         });
 
                         target.classList.remove(OPEN_CLASS);
@@ -538,7 +541,7 @@ void function (window, $) {
                         setTimeout(function () {
                             bodyClass.remove(TOGGLE_CLASS);
                             bodyClass.remove(DARKENER_CLASS_TOGGLE);
-                        }, 100);
+                        }, FlexCss.SETTINGS.darkenerFadeDelay);
                     });
                     navigationContainer.classList.remove(OPEN_CLASS);
                     darkener.classList.remove(INIT_CLASS);
@@ -976,13 +979,16 @@ void function (window, $) {
 
                 if (window.getComputedStyle(currentOpen).position === 'fixed') {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
-                        container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
-                        toggleDarkenerToggler(darkenerInstance, false);
-                        $(currentOpen).trigger('flexcss.dropdown.closed');
-                        if (widget) {
-                            widget.runOnClose();
-                        }
-                        future.resolve(true);
+                        setTimeout(function () {
+                            toggleDarkenerToggler(darkenerInstance, false);
+                            container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
+
+                            $(currentOpen).trigger('flexcss.dropdown.closed');
+                            if (widget) {
+                                widget.runOnClose();
+                            }
+                            future.resolve(true);
+                        }, FlexCss.SETTINGS.darkenerFadeDelay);
                     });
                 } else {
                     $(currentOpen).trigger('flexcss.dropdown.closed');
