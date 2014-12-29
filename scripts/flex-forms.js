@@ -44,7 +44,7 @@ void function (document, window, $) {
 
         var self = this;
 
-        if(!(self instanceof FlexCss.Form)) {
+        if (!(self instanceof FlexCss.Form)) {
             throw 'Form: static instances are not supported';
         }
 
@@ -79,13 +79,21 @@ void function (document, window, $) {
                     thisForm.getAttribute(REMOTE_ACTION) ||
                     thisForm.getAttribute('action') || window.location.href,
                 useJson = 'json' === shouldUseAjax;
-            thisForm.classList.add(LOADING_CLASS);
 
-            $(thisForm).trigger('flexcss.form.submit', [e, self, thisForm]);
+            var ev =  jQuery.Event('flexcss.form.submit');
+            $(thisForm).trigger(ev, [e, self, thisForm]);
+            // abort execution is event was prevented
+            if (ev.isDefaultPrevented()) {
+                thisForm.classList.remove(LOADING_CLASS);
+                return false;
+            }
 
             if (null === shouldUseAjax) {
+                // submit
                 return thisForm.submit();
             }
+
+            thisForm.classList.add(LOADING_CLASS);
 
             // prevent form from submit normally
             e.preventDefault();
@@ -102,13 +110,13 @@ void function (document, window, $) {
                 data: $(thisForm).serialize()
             });
 
-            $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e,self, thisForm]);
+            $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e, self, thisForm]);
 
             serverCall.then(function (r) {
                 (self._remoteValidationFunction || FlexCss.Form.globalRemoteValidationFunction).apply(self, [r]);
                 return $.Deferred().resolve(r);
             }).always(function (r) {
-                $(thisForm).trigger('flexcss.form.ajaxCompleted', [e,self, thisForm, r]);
+                $(thisForm).trigger('flexcss.form.ajaxCompleted', [e, self, thisForm, r]);
                 // always remove error class
                 thisForm.classList.remove(LOADING_CLASS);
             });
@@ -328,7 +336,7 @@ void function (document, window, $) {
                 });
             }
 
-            if(!self.options.createTooltips) {
+            if (!self.options.createTooltips) {
                 return;
             }
 
@@ -337,11 +345,11 @@ void function (document, window, $) {
                     return;
                 }
                 if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                        self.tooltips.createTooltip(target,
-                            _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+                    self.tooltips.createTooltip(target,
+                        _formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
                 } else {
                     if (remove) {
-                            self.tooltips.removeTooltip(target);
+                        self.tooltips.removeTooltip(target);
                     }
                 }
             }, 0);
@@ -414,12 +422,11 @@ void function (document, window, $) {
              * @returns {boolean}
              */
             function _checkIsValidBlurFocusElement(target) {
-                var attr = target.getAttribute('type'), maybeDisableOnBlur = target.getAttribute(ATTR_DISABLE_INLINE);
-                if(maybeDisableOnBlur) {
+                var attr = target.getAttribute('type'), maybeDisableOnBlur = target.hasAttribute(ATTR_DISABLE_INLINE);
+                if (maybeDisableOnBlur) {
                     return false;
                 }
-                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-                    !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
                 target instanceof HTMLTextAreaElement)));
             }
 
@@ -468,6 +475,9 @@ void function (document, window, $) {
                         for (var i = 0; i < r.checkedFields.length; i++) {
                             var f = r.checkedFields[i];
                             if (!f.validity.valid) {
+                                // Focus element and show tooltip, we explicitly showing tooltip here, because
+                                // element might have focus already
+                                _showAndOrCreateTooltip(f, true);
                                 f.focus();
                                 break;
                             }
