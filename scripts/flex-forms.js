@@ -5,7 +5,8 @@ void function (document, window, $) {
     "use strict";
 
     var ERROR_CLASS_NAME = 'form-error', INPUT_ERROR_CLASS = 'invalid', LOADING_CLASS = 'loading',
-        ARIA_INVALID = 'aria-invalid', REMOTE = 'data-remote', REMOTE_ACTION = 'data-remote-action';
+        ARIA_INVALID = 'aria-invalid', REMOTE = 'data-remote', REMOTE_ACTION = 'data-remote-action',
+        ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
     if (!window.FlexCss) {
         window.FlexCss = {};
     }
@@ -43,12 +44,20 @@ void function (document, window, $) {
 
         var self = this;
 
+        if(!(self instanceof FlexCss.Form)) {
+            throw 'Form: static instances are not supported';
+        }
+
         self.tooltips = null;
 
         self.options = {
+            // if true creates tooltips above element, uses FlexCss Tooltips
             createTooltips: true,
+            // if true appends error message after input element
             appendError: false,
+            // type of ajax submit
             ajaxSubmitType: 'POST',
+            // json content type if ajax method is set to json
             ajaxJsonContentType: 'application/json; charset=utf-8'
         };
 
@@ -169,7 +178,7 @@ void function (document, window, $) {
          * Registers a custom validator
          * @param {String} name
          * @param {Function} validator a validation function should always return either a Future(true) or Future(false)
-         * even when the field has been invalidated with `setCustomValidity`, because of different browser bugs
+         * even when the field has been invalidated with `setCustomValidity`, because of different browser `bugs`
          * we can't rely on that
          * @returns {window.FlexCss.Form}
          */
@@ -400,12 +409,17 @@ void function (document, window, $) {
 
             /**
              * Validates if target is a valid input field to check blur and focus events
+             *
              * @param {HTMLElement} target
              * @returns {boolean}
              */
             function _checkIsValidBlurFocusElement(target) {
-                var attr = target.getAttribute('type');
-                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+                var attr = target.getAttribute('type'), maybeDisableOnBlur = target.getAttribute(ATTR_DISABLE_INLINE);
+                if(maybeDisableOnBlur) {
+                    return false;
+                }
+                return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
+                    !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
                 target instanceof HTMLTextAreaElement)));
             }
 
