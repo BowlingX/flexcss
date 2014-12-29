@@ -35,6 +35,23 @@ void function (document, window, $) {
         FlexCss.CONST_FLEX_EVENT_TAB = 'tab';
 
         /**
+         * Triggers an catchable event on element
+         * @param {HTMLElement} element
+         * @param {String} name
+         * @param {Boolean} [bubbles] defaults to true
+         */
+        FlexCss.triggerEvent = function(element, name, bubbles) {
+            var thisBubbles = bubbles !== undefined? bubbles : true;
+            if ("createEvent" in document) {
+                var evt = document.createEvent("HTMLEvents");
+                evt.initEvent(name, thisBubbles, true);
+                element.dispatchEvent(evt);
+            }
+            else
+                element.fireEvent("on"+name);
+        };
+
+        /**
          * A Custom Tab Event
          * @param {HTMLElement} container
          * @param [options]
