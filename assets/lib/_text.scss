@@ -130,6 +130,14 @@ ul {
   white-space: nowrap;
 }
 
+kbd {
+  background: $topbarBg;
+  padding:2px;
+  display: inline-block;
+  color:white;
+  border-radius:$globalRadius;
+}
+
 
 ::selection {
   background: lighten($primaryColor,25%);

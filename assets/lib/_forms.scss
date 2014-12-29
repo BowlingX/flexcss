@@ -415,6 +415,15 @@ textarea {
     margin-bottom: 1rem;
   }
 
+  .left {
+    > label {
+
+      .checkbox-container {
+        margin-bottom:1rem;
+      }
+    }
+  }
+
 }
 
 .toolbar-form {
@@ -499,8 +508,19 @@ textarea {
     flex-direction: row;
     flex-wrap: nowrap;
 
+
     label {
       margin-left: 1rem;
+    }
+
+    .left {
+      > label {
+        margin-left:0;
+
+        .checkbox-container {
+          margin-bottom:0;
+        }
+      }
     }
 
     > div {
