@@ -93,6 +93,8 @@ void function (document, window, $) {
                 data: $(thisForm).serialize()
             });
 
+            $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e,self, thisForm]);
+
             serverCall.then(function (r) {
                 (self._remoteValidationFunction || FlexCss.Form.globalRemoteValidationFunction).apply(self, [r]);
                 return $.Deferred().resolve(r);
