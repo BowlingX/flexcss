@@ -28,9 +28,8 @@ void function (document, window, $) {
             document.getElementById(DelegateContainer);
 
 
-
         var future = $.Deferred(), nextFuture = future, imageContainer,
-            modalContainerDiv, contentContainer,closerContainerDiv;
+            modalContainerDiv, contentContainer, closerContainerDiv;
         /**
          * lightbox widget
          * @type {FlexCss.Widget}
@@ -46,14 +45,16 @@ void function (document, window, $) {
          */
         self.options = {
             // set if prev and next should be available
-            registerPrevNextEvents:true,
+            registerPrevNextEvents: true,
             // called when next image is requested (either by keyboard or click
             onNext: function () {
                 return true;
             },
-            onClose: function () {},
+            onClose: function () {
+            },
             // called when underlying target changed
-            onSwitchImage: function () {}
+            onSwitchImage: function () {
+            }
         };
 
 
@@ -129,9 +130,13 @@ void function (document, window, $) {
             }
             self.isOpen = true;
 
+            // reoload futures
+            future = $.Deferred();
+            nextFuture = future;
+
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
                 // thumbnail is either target itself or expected to be first childNode
-                var thumbnail = target instanceof HTMLImageElement || target.children[0];
+                var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
 
                 var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
                     imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src,
@@ -159,7 +164,7 @@ void function (document, window, $) {
                     imageContainer.className = 'image-container';
                     var img = document.createElement('img');
                     img.src = imgSrc;
-                    if(widthHighResolution && heightHighResolution) {
+                    if (widthHighResolution && heightHighResolution) {
                         img.style.maxWidth = widthHighResolution + "px";
                         img.style.maxHeight = heightHighResolution + "px";
                     }
@@ -172,7 +177,6 @@ void function (document, window, $) {
                             }, 0);
                         }
                     };
-
                     future.resolve(modalContainerDiv).then(function () {
                         calculateContainer();
                     });
@@ -217,7 +221,7 @@ void function (document, window, $) {
                             nextImgObject.src = nextSource;
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
-                                if(nextMaxWidth && nextMaxHeight) {
+                                if (nextMaxWidth && nextMaxHeight) {
                                     img.style.maxWidth = nextMaxWidth + "px";
                                     img.style.maxHeight = nextMaxHeight + "px";
                                 }
@@ -242,7 +246,7 @@ void function (document, window, $) {
                         return 'resolved' !== nextFuture.state();
                     };
 
-                    if(self.options.registerPrevNextEvents) {
+                    if (self.options.registerPrevNextEvents) {
                         // prev or next on touch/click
                         imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
                             if (self.isLoading()) {
