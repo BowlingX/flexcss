@@ -162,7 +162,7 @@ void function (document, window, $) {
                 var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
 
                 var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
-                    imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src;
+                    imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src || imgHighResolution;
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
@@ -231,16 +231,17 @@ void function (document, window, $) {
                         self.options.onSwitchImage.apply(self, [future]);
                         if (next) {
                             target = next;
-                            var nextThumb =  next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next);
-                            var nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src;
-                            var nextImgObject = new Image();
+                            var nextThumb =  next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next),
+                                nextHighRes = next.getAttribute('data-href') ||
+                                next.getAttribute('href'),
+                                nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src || nextHighRes,
+                                nextImgObject = new Image();
                             nextImgObject.src = nextSource;
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
                                 self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                                 calculateContainer();
-                                highRes(nextThumb, next.getAttribute('data-href') ||
-                                next.getAttribute('href'));
+                                highRes(nextThumb, nextHighRes);
                                 future.resolve(nextSource);
                             });
                         } else {
