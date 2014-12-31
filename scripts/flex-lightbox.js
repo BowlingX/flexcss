@@ -136,9 +136,9 @@ void function (document, window, $) {
 
             /**
              * Setup max-width and max-height
-             * @param {HTMLElement} target
-             * @param {HTMLElement} img
-             * @param {Image} loadedImage
+             * @param target
+             * @param img
+             * @param loadedImage
              * @private
              */
             self._setupMaxWidthHeight = function(target, img, loadedImage) {
@@ -153,7 +153,10 @@ void function (document, window, $) {
                 }
             };
 
-
+            /**
+             * Setup Widget for modal
+             * @type {FlexCss.Widget}
+             */
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
                 // thumbnail is either target itself or expected to be first childNode
                 var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
