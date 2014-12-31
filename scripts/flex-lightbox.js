@@ -134,14 +134,32 @@ void function (document, window, $) {
             future = $.Deferred();
             nextFuture = future;
 
+            /**
+             * Setup max-width and max-height
+             * @param {HTMLElement} target
+             * @param {HTMLElement} img
+             * @param {Image} loadedImage
+             * @private
+             */
+            self._setupMaxWidthHeight = function(target, img, loadedImage) {
+                var nextMaxWidth = target.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
+                    nextMaxHeight = target.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
+                if (nextMaxWidth && nextMaxHeight) {
+                    img.style.maxWidth = nextMaxWidth + "px";
+                    img.style.maxHeight = nextMaxHeight + "px";
+                } else {
+                    img.style.maxWidth = loadedImage.width + "px";
+                    img.style.maxHeight = loadedImage.height + "px";
+                }
+            };
+
+
             self.widget = new FlexCss.Widget().registerAsyncContent(function () {
                 // thumbnail is either target itself or expected to be first childNode
                 var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
 
                 var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
-                    imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src,
-                    widthHighResolution = target.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
-                    heightHighResolution = target.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
+                    imgSrc = thumbnail.getAttribute(FlexCss.LightBox.ATTR_SRC) || thumbnail.src;
 
                 var imageObj = new Image();
                 imageObj.src = imgSrc;
@@ -160,14 +178,11 @@ void function (document, window, $) {
                 contentContainer.className = 'content-container';
                 self.widget.setWidget(modalContainerDiv);
 
-                imageObj.addEventListener('load', function () {
+                imageObj.addEventListener('load', function (r) {
                     imageContainer.className = 'image-container';
                     var img = document.createElement('img');
                     img.src = imgSrc;
-                    if (widthHighResolution && heightHighResolution) {
-                        img.style.maxWidth = widthHighResolution + "px";
-                        img.style.maxHeight = heightHighResolution + "px";
-                    }
+                    self._setupMaxWidthHeight(target, img, imageObj);
                     imageContainer.appendChild(img);
 
                     var calculateContainer = function () {
@@ -213,18 +228,13 @@ void function (document, window, $) {
                         self.options.onSwitchImage.apply(self, [future]);
                         if (next) {
                             target = next;
-                            var nextThumb = next.children[0];
-                            var nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src,
-                                nextMaxWidth = nextThumb.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
-                                nextMaxHeight = nextThumb.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
+                            var nextThumb =  next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next);
+                            var nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src;
                             var nextImgObject = new Image();
                             nextImgObject.src = nextSource;
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
-                                if (nextMaxWidth && nextMaxHeight) {
-                                    img.style.maxWidth = nextMaxWidth + "px";
-                                    img.style.maxHeight = nextMaxHeight + "px";
-                                }
+                                self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                                 calculateContainer();
                                 highRes(nextThumb, next.getAttribute('data-href') ||
                                 next.getAttribute('href'));
