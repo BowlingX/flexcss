@@ -89,7 +89,7 @@ void function (document, window, $) {
         /**
          * Registers events for delegate container
          */
-        self.registerEvents = function () {
+        self.registerEvents = function (onOpen) {
             DelegateContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
                 var target = e.target, parent = target.parentNode,
                     validTarget = target.hasAttribute(AttributeSelector),
@@ -100,7 +100,11 @@ void function (document, window, $) {
                 }
                 if (validTarget) {
                     e.preventDefault();
-                    self.open(target);
+                    self.open(target).then(function(r){
+                        if(onOpen) {
+                            onOpen.apply(self, [r, target]);
+                        }
+                    });
                 }
             }, true);
         };
