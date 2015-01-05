@@ -373,7 +373,7 @@ void function (window, $) {
                             }
                         });
                     } else {
-                        throw 'Could not found content for tab, provide a widget instance';
+                       return false;
                     }
                 }
 
