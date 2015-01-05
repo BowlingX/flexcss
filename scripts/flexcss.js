@@ -347,7 +347,9 @@ void function (window, $) {
              * @param {HTMLElement} [target] optional target node that should get
              */
             self.toggleTarget = function (ref, target) {
-
+                if(!target && !ref) {
+                    return;
+                }
                 if (!target) {
                     target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
                 }
