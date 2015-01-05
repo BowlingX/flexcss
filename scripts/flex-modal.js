@@ -101,9 +101,7 @@ void function (document, window, $) {
                     return false;
                 }
 
-
-                if (!self.options.closeOnBackgroundClick
-                    && e.type === FlexCss.CONST_FLEX_EVENT_TAB &&
+                if (!self.options.closeOnBackgroundClick && e.type === FlexCss.CONST_FLEX_EVENT_TAB &&
                     !e.target.hasAttribute(ATTR_CLOSE)) {
                     return false;
                 }
