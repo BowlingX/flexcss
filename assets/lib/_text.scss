@@ -48,11 +48,11 @@ a {
   transition: color .2s ease;
   font-weight: 600;
   &:hover {
-    color: darken($primaryColor, 20%);
+    color: lighten($primaryColor, 10%);
   }
 
   &:active {
-    color: darken($primaryColor, 50%);
+    color: darken($primaryColor, 20%);
   }
 }
 
@@ -103,6 +103,10 @@ code {
   font-weight: normal;
   &:hover {
     color: $grayColor;
+  }
+
+  &.plain {
+    text-decoration: none;
   }
 }
 
