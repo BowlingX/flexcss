@@ -1,4 +1,4 @@
-/* global HTMLImageElement, Image*/
+/* global Image*/
 
 /**
  * A Simple LightBox
@@ -185,7 +185,7 @@ void function (document, window, $) {
                 contentContainer.className = 'content-container';
                 self.widget.setWidget(modalContainerDiv);
 
-                imageObj.addEventListener('load', function (r) {
+                imageObj.addEventListener('load', function () {
                     imageContainer.className = 'image-container';
                     var img = document.createElement('img');
                     img.src = imgSrc;
