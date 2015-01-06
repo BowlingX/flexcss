@@ -19,6 +19,7 @@
   }
 
   .sidebar {
+    will-change: inherit;
     position: static;
     max-width: $sidebarWidthDesktop;
     min-width: $sidebarWidthDesktop;
