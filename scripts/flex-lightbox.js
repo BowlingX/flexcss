@@ -23,7 +23,8 @@ void function (document, window, $) {
      * @constructor
      */
     FlexCss.LightBox = function (DelegateContainer, AttributeSelector, ModalAppend, options) {
-        var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent;
+        var modalContainer = new FlexCss.Modal(ModalAppend || DelegateContainer), self = this, resizeEvent,
+            keyboardNextEvent;
         DelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
             document.getElementById(DelegateContainer);
 
@@ -46,6 +47,8 @@ void function (document, window, $) {
         self.options = {
             // set if prev and next should be available
             registerPrevNextEvents: true,
+            // set if modal should be closed after last image
+            closeOnLast: false,
             // called when next image is requested (either by keyboard or click
             onNext: function () {
                 return true;
@@ -67,7 +70,7 @@ void function (document, window, $) {
          */
         self.getNext = function (target) {
             var next = target.parentNode.nextElementSibling;
-            if (next) {
+            if (next && next.children[0].hasAttribute(AttributeSelector)) {
                 return next.children[0];
             }
             return null;
@@ -80,7 +83,7 @@ void function (document, window, $) {
          */
         self.getPrev = function (target) {
             var previous = target.parentNode.previousElementSibling;
-            if (previous) {
+            if (previous && previous.children[0].hasAttribute(AttributeSelector)) {
                 return previous.children[0];
             }
             return null;
@@ -100,8 +103,8 @@ void function (document, window, $) {
                 }
                 if (validTarget) {
                     e.preventDefault();
-                    self.open(target).then(function(r){
-                        if(onOpen) {
+                    self.open(target).then(function (r) {
+                        if (onOpen) {
                             onOpen.apply(self, [r, target]);
                         }
                     });
@@ -145,7 +148,7 @@ void function (document, window, $) {
              * @param loadedImage
              * @private
              */
-            self._setupMaxWidthHeight = function(target, img, loadedImage) {
+            self._setupMaxWidthHeight = function (target, img, loadedImage) {
                 var nextMaxWidth = target.getAttribute(FlexCss.LightBox.ATTR_MAX_WIDTH),
                     nextMaxHeight = target.getAttribute(FlexCss.LightBox.ATTR_MAX_HEIGHT);
                 if (nextMaxWidth && nextMaxHeight) {
@@ -213,7 +216,7 @@ void function (document, window, $) {
 
                     /**
                      * Switches to the next image
-                     * @param {int} direction
+                     * @param {boolean} direction
                      */
                     self.switchImageByDirection = function (direction) {
                         var next = direction ? self.getPrev(target) : self.getNext(target);
@@ -234,22 +237,28 @@ void function (document, window, $) {
                         // notify observers about image switching
                         self.options.onSwitchImage.apply(self, [future]);
                         if (next) {
-                            target = next;
-                            var nextThumb =  next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next),
+                            var nextThumb = next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next),
                                 nextHighRes = next.getAttribute('data-href') ||
-                                next.getAttribute('href'),
+                                    next.getAttribute('href'),
                                 nextSource = nextThumb.getAttribute(FlexCss.LightBox.ATTR_SRC) || nextThumb.src || nextHighRes,
                                 nextImgObject = new Image();
+                            if (!nextSource) {
+                                future.reject(next);
+                                return future;
+                            }
+                            target = next;
                             nextImgObject.src = nextSource;
+
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
                                 self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                                 calculateContainer();
                                 highRes(nextThumb, nextHighRes);
-                                future.resolve(nextSource);
+                                self._setupPrevNextStates();
+                                future.resolve(nextSource, target);
                             });
                         } else {
-                            future.resolve(null);
+                            future.reject();
                         }
 
 
@@ -261,10 +270,29 @@ void function (document, window, $) {
                      * @returns {boolean}
                      */
                     self.isLoading = function () {
-                        return 'resolved' !== nextFuture.state();
+                        return 'pending' === nextFuture.state();
+                    };
+
+                    /**
+                     * Checks if modal should be closed
+                     * @private
+                     */
+                    self._runOptionalClose = function () {
+                        if (self.options.closeOnLast) {
+                            self.modal.close();
+                        }
+                    };
+
+                    self._setupPrevNextStates = function () {
+                        var hasPrev = self.getPrev(target), hasNext = self.getNext(target);
+
+                        imageContainer.classList.toggle('has-prev', hasPrev);
+                        imageContainer.classList.toggle('has-next', hasNext);
                     };
 
                     if (self.options.registerPrevNextEvents) {
+
+                        self._setupPrevNextStates();
                         // prev or next on touch/click
                         imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
                             if (self.isLoading()) {
@@ -281,7 +309,26 @@ void function (document, window, $) {
                                 wrapperWidth = rect.width,
                                 posX = pageX - imgX;
 
-                            self.switchImageByDirection(wrapperWidth / 2 > posX);
+                            self.switchImageByDirection(wrapperWidth / 2 > posX).fail(function () {
+                                self._runOptionalClose();
+                            });
+                        }, true);
+
+                        // register keyboard events
+                        keyboardNextEvent = function (e) {
+                            if (e.keyCode === 39 || e.keyCode === 37) {
+                                if (self.isLoading()) {
+                                    return;
+                                }
+                                self.switchImageByDirection(e.keyCode === 37).fail(function () {
+                                    self._runOptionalClose();
+                                });
+                            }
+                        };
+                        window.addEventListener('keydown', keyboardNextEvent);
+                    } else {
+                        imageContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function () {
+                            self._runOptionalClose();
                         }, true);
                     }
 
@@ -311,6 +358,11 @@ void function (document, window, $) {
                 self.options.onClose.apply(self);
                 self.isOpen = false;
                 this.destroy();
+
+                // unbind events
+                if (keyboardNextEvent) {
+                    window.removeEventListener('keydown', keyboardNextEvent);
+                }
                 if (resizeEvent) {
                     window.removeEventListener('resize', resizeEvent);
                 }
