@@ -248,13 +248,14 @@ void function (document, window, $) {
                             }
                             target = next;
                             nextImgObject.src = nextSource;
-
+                            imageContainer.classList.add('loading');
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
                                 self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                                 calculateContainer();
                                 highRes(nextThumb, nextHighRes);
                                 self._setupPrevNextStates();
+                                imageContainer.classList.remove('loading');
                                 future.resolve(nextSource, target);
                             });
                         } else {
