@@ -238,7 +238,7 @@
 
 // Content of a toggleable element
 .toggle-content {
-  padding: $overallPadding;
+  padding: $overallPadding 0 0 $overallPadding;
   display: none;
 
   &.active {
