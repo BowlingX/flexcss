@@ -14,7 +14,8 @@
   z-index: $indexModalContainer;
   display:none;
   @include perspectiveHelper();
-
+  // fixes iOS blurry screen
+  transform: translateZ(0);
   &.open {
     display: flex;
   }
@@ -46,6 +47,7 @@
   padding: 43px 12px 25px;
   align-self: flex-start;
   will-change:transform, opacity;
+  transform: translateZ(0);
   @include perspectiveHelper();
 
   &.current {

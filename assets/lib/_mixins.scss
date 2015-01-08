@@ -32,7 +32,7 @@
 // helper to fix flickering/blurry in different browsers
 @mixin perspectiveHelper() {
   backface-visibility: hidden;
-  perspective: 1000;
+  perspective: 1000px;
   transform-style:preserve-3d;
 }
 
