@@ -460,7 +460,7 @@ void function (window, $) {
                 toggler = ToggleNavigationId instanceof HTMLElement ?
                     ToggleNavigationId : doc.getElementById(ToggleNavigationId),
                 darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener),
-                DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener,
+                DARKENER_CLASS_TOGGLE = 'toggle-' + Darkener, ATTR_CLOSE_SIDEBAR = 'data-close-sidebar',
                 resetStyles = function (s) {
                     s.transform = '';
                     s.transition = '';
@@ -569,7 +569,8 @@ void function (window, $) {
 
             var closer = function (e) {
                 if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                    if (e.target === darkener) {
+                    if (e.target === darkener || e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
+                        e.preventDefault();
                         togglerF(e);
                     }
                 }
