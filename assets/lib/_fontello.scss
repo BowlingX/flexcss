@@ -46,6 +46,14 @@
     }
   }
 
+  // icons in buttons:
+  .button, .dropdown  {
+    [class^="icon-"]:before, [class*=" icon-"]:before {
+      margin-right:.3em;
+      margin-left:.3em;
+    }
+  }
+
   .icon-up-dir:before { content: '\25b4'; } /* '▴' */
   .icon-down-dir:before { content: '\25be'; } /* '▾' */
   .icon-star:before { content: '\2605'; } /* '★' */

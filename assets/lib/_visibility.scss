@@ -9,7 +9,7 @@
   display: none;
 }
 
-
+.visible-inline-block-large,
 .visible-desktop,
 .visible-block-desktop,
 .visible-inline-desktop,
@@ -19,11 +19,11 @@
 
 @media #{$mediaSmall} {
   .visible-small {
-    display: block;
+    display: block !important;
   }
 
   span.visible-small {
-    display: inline;
+    display: inline !important;
   }
 
   .hide-small {
@@ -65,5 +65,9 @@
 
   span.visible-large {
     display: inline;
+  }
+
+  .visible-inline-block-large {
+    display: inline-block !important;
   }
 }

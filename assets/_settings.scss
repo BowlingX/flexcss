@@ -58,6 +58,8 @@ $breakpointDesktop:768px !default;
 $mediaDesktop: "all and (min-width: #{$breakpointDesktop})";
 $mediaLarge: "all and (min-width: #{$breakpointLarge})";
 $mediaSmall: "all and (max-width:  #{$breakpointDesktop - 1px})";
+$mediaLandscape: "only screen and (orientation: landscape)" !default;
+$mediaPortrait: "only screen and (orientation: portrait)" !default;
 
 $sidebarWidthLarge: 273px !default;
 $sidebarWidthDesktop: 225px !default;
