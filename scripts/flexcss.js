@@ -60,7 +60,7 @@ void function (window, $) {
             // Measure scrollbar width
             FlexCss.CONST_SCROLLBAR_WIDTH = FlexCss.getScrollBarWidth();
             // detect right transition end event
-            FlexCss.CONST_TRANSITION_EVENT = FlexCss._whichTransitionEvent();
+            FlexCss.CONST_TRANSITION_EVENT = FlexCss._whichTransitionEndEvent();
 
 
         };
@@ -71,7 +71,7 @@ void function (window, $) {
          * @returns {*}
          * @private
          */
-        FlexCss._whichTransitionEvent = function () {
+        FlexCss._whichTransitionEndEvent = function () {
             var t;
             var el = document.createElement('fakeelement');
 
