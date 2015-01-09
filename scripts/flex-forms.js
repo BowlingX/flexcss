@@ -58,7 +58,9 @@ void function (document, window, $) {
             // type of ajax submit
             ajaxSubmitType: 'POST',
             // json content type if ajax method is set to json
-            ajaxJsonContentType: 'application/json; charset=utf-8'
+            ajaxJsonContentType: 'application/json; charset=utf-8',
+            // allow inline validation
+            inlineValidation: true
         };
 
         self.options = $.extend(self.options, options);
@@ -431,6 +433,11 @@ void function (document, window, $) {
              * @returns {boolean}
              */
             function _checkIsValidBlurFocusElement(target) {
+
+                if(!self.options.inlineValidation) {
+                    return false;
+                }
+
                 var attr = target.getAttribute('type'), maybeDisableOnBlur = target.hasAttribute(ATTR_DISABLE_INLINE);
                 if (maybeDisableOnBlur) {
                     return false;
