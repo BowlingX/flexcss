@@ -251,6 +251,15 @@ void function (document, window, $) {
         }
 
         /**
+         * Remove all errors for this form
+         * @returns {window.FlexCss.Form}
+         */
+        self.removeErrors = function(){
+            _removeElementErrors(form);
+            return self;
+        };
+
+        /**
          * Will handle errors for given fields
          * @param {Array|NodeList} fields
          * @param {Boolean} removeAllErrors
