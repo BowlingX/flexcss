@@ -657,6 +657,11 @@ void function (window, $) {
              * @param {Boolean} removeTitle
              */
             self.createTooltip = function (target, text, removeTitle) {
+                // abort if text is empty
+                if(text.trim() === '') {
+                    return;
+                }
+
                 if (!tooltipContainer) {
                     tooltipContainer = doc.createElement('div');
                     tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
@@ -879,7 +884,7 @@ void function (window, $) {
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
                 currentOpen = null, darkener = Darkener instanceof HTMLElement ?
                     Darkener : document.getElementById(Darkener), ATTR_CC = 'data-collision-container', ATTR_DARKENER =
-                    'data-darkener-container', DARKENER_INIT = 'init';
+                    'data-darkener-container', DARKENER_INIT = 'init', ATTR_DATA_TARGET = 'data-target';
 
             var self = this;
 
@@ -1088,7 +1093,9 @@ void function (window, $) {
                     }
                     if (isAbsolute) {
                         // Check collision:
-                        FlexCss.SetupPositionNearby(target, dropdownContent, target.flexCollisionContainer);
+                        var selfTarget = target.getAttribute(ATTR_DATA_TARGET)
+                        selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
+                        FlexCss.SetupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
                     } else {
                         container.classList.add(FlexCss.CONST_CANVAS_TOGGLE);
                         // optionally get custom darkener container for target
