@@ -35,7 +35,7 @@ void function (window, $) {
             scrollbarUpdateNodes: [window.document.body],
 
             // additional Delay until darkener is fully hidden
-            darkenerFadeDelay:100
+            darkenerFadeDelay: 100
         };
 
         /**
@@ -347,7 +347,7 @@ void function (window, $) {
              * @param {HTMLElement} [target] optional target node that should get
              */
             self.toggleTarget = function (ref, target) {
-                if(!target && !ref) {
+                if (!target && !ref) {
                     return;
                 }
                 if (!target) {
@@ -375,7 +375,7 @@ void function (window, $) {
                             }
                         });
                     } else {
-                       return false;
+                        return false;
                     }
                 }
 
@@ -601,20 +601,36 @@ void function (window, $) {
          * @constructor
          */
         FlexCss.SetupPositionNearby = function (target, elementToPosition, collisionContainer) {
+
+            // determine relative offsets
+            var amountTop = 0, amountLeft = 0;
+            FlexCss.parentsUntil(target.parentNode, function (el) {
+                var style = window.getComputedStyle(el);
+                if (FlexCss.isPartOfNode(elementToPosition, el)) {
+                    if (style && style.position === 'relative') {
+                        amountTop += el.offsetTop || 0;
+                        amountLeft += el.offsetLeft || 0;
+                    }
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
             var targetPosition = target.getBoundingClientRect(),
                 elementRect = elementToPosition.getBoundingClientRect(),
                 colRect = collisionContainer.getBoundingClientRect(),
-                targetTop = targetPosition.top, targetRight = targetPosition.right,
-                isCollisionBottom = window.innerHeight < (targetTop + targetPosition.height + elementRect.height),
+                targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
+                isCollisionBottom = window.innerHeight < (targetTop + amountTop + targetPosition.height + elementRect.height),
                 isCollisionLeft = targetRight < elementRect.width,
                 COL_LEFT_CLASS = 'is-collision-left';
 
             if (isCollisionLeft) {
                 // put element to left if collision with left
-                elementToPosition.style.left = (targetPosition.left - colRect.left) + 'px';
+                elementToPosition.style.left = (targetPosition.left - colRect.left - amountLeft) + 'px';
                 elementToPosition.classList.add(COL_LEFT_CLASS);
             } else {
-                elementToPosition.style.left = (targetRight - elementRect.width - colRect.left) + 'px';
+                elementToPosition.style.left = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px';
                 elementToPosition.classList.remove(COL_LEFT_CLASS);
             }
             if (isCollisionBottom) {
@@ -658,10 +674,9 @@ void function (window, $) {
              */
             self.createTooltip = function (target, text, removeTitle) {
                 // abort if text is empty
-                if(text.trim() === '') {
+                if (!text || text && text.trim() === '') {
                     return;
                 }
-
                 if (!tooltipContainer) {
                     tooltipContainer = doc.createElement('div');
                     tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
