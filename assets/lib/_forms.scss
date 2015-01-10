@@ -304,9 +304,6 @@ textarea {
   color: $selectPickerColor;
   height: 100%;
   pointer-events: none;
-
-  -webkit-border-radius: 0 $globalRadius $globalRadius 0;
-  -moz-border-radius: 0 $globalRadius $globalRadius 0;
   border-radius: 0 $globalRadius $globalRadius 0;
 
   &:focus, &:active {
