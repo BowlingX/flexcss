@@ -605,6 +605,9 @@ void function (window, $) {
             // determine relative offsets
             var amountTop = 0, amountLeft = 0;
             FlexCss.parentsUntil(target.parentNode, function (el) {
+                if(!(el instanceof HTMLElement)) {
+                    return false;
+                }
                 var style = window.getComputedStyle(el);
                 if (FlexCss.isPartOfNode(elementToPosition, el)) {
                     if (style && style.position === 'relative') {
