@@ -998,15 +998,18 @@ void function (window, $) {
                     return false;
                 }
                 var future = $.Deferred(), widget = currentOpen.hfWidgetInstance,
-                    darkenerInstance = currentOpen.flexDarkenerInstance || darkener;
+                    darkenerInstance = currentOpen.flexDarkenerInstance || darkener, thisCurrentOpen = currentOpen;
 
                 if (window.getComputedStyle(currentOpen).position === 'fixed') {
                     FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, currentOpen, function () {
+                        $(thisCurrentOpen).trigger('flexcss.dropdown.closed');
                         setTimeout(function () {
+                            // if a new dropdown has been opened in the meantime, do not remove darkener
+                            if(null !== currentOpen) {
+                                return;
+                            }
                             toggleDarkenerToggler(darkenerInstance, false);
                             container.classList.remove(FlexCss.CONST_CANVAS_TOGGLE);
-
-                            $(currentOpen).trigger('flexcss.dropdown.closed');
                             if (widget) {
                                 widget.runOnClose();
                             }
