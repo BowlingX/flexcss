@@ -605,7 +605,7 @@ void function (window, $) {
             // determine relative offsets
             var amountTop = 0, amountLeft = 0;
             FlexCss.parentsUntil(target.parentNode, function (el) {
-                if(!(el instanceof HTMLElement)) {
+                if (!(el instanceof HTMLElement)) {
                     return false;
                 }
                 var style = window.getComputedStyle(el);
@@ -902,7 +902,8 @@ void function (window, $) {
                 STATE_LOADING = 'loading', ATTR_NAME = 'data-select',
                 currentOpen = null, darkener = Darkener instanceof HTMLElement ?
                     Darkener : document.getElementById(Darkener), ATTR_CC = 'data-collision-container', ATTR_DARKENER =
-                    'data-darkener-container', DARKENER_INIT = 'init', ATTR_DATA_TARGET = 'data-target';
+                    'data-darkener-container', DARKENER_INIT = 'init', ATTR_DATA_TARGET = 'data-target',
+                ATTR_CLOSE_DROPDOWN = 'data-close-dropdown';
 
             var self = this;
 
@@ -939,11 +940,13 @@ void function (window, $) {
                     self.createDropdown(target);
                 } else {
                     if (currentOpen) {
-                        if (e.target.hasAttribute('data-close-dropdown')) {
-                            return self.close();
+                        // FIXME: Because of an unkown bug we need to put this close method in the next
+                        // frame, otherwise click handler (at least of ember apps) is not called on touch devices
+                        if (e.target.hasAttribute(ATTR_CLOSE_DROPDOWN)) {
+                            self.close();
                         }
                         if (!FlexCss.isPartOfNode(e.target, currentOpen)) {
-                            return self.close();
+                            self.close();
                         }
                     }
                 }
@@ -1008,7 +1011,7 @@ void function (window, $) {
                         $(thisCurrentOpen).trigger('flexcss.dropdown.closed');
                         setTimeout(function () {
                             // if a new dropdown has been opened in the meantime, do not remove darkener
-                            if(null !== currentOpen) {
+                            if (null !== currentOpen) {
                                 return;
                             }
                             toggleDarkenerToggler(darkenerInstance, false);
@@ -1020,7 +1023,7 @@ void function (window, $) {
                         }, FlexCss.SETTINGS.darkenerFadeDelay);
                     });
                 } else {
-                    $(currentOpen).trigger('flexcss.dropdown.closed');
+                    $(thisCurrentOpen).trigger('flexcss.dropdown.closed');
                     if (widget) {
                         currentOpen.hfWidgetInstance.runOnClose();
                     }
@@ -1114,7 +1117,7 @@ void function (window, $) {
                     }
                     if (isAbsolute) {
                         // Check collision:
-                        var selfTarget = target.getAttribute(ATTR_DATA_TARGET)
+                        var selfTarget = target.getAttribute(ATTR_DATA_TARGET);
                         selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                         FlexCss.SetupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
                     } else {

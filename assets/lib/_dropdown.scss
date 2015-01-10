@@ -10,9 +10,11 @@
       font-weight: normal;
       color: $baseColor;
       cursor: pointer;
+      &.active,
       &:hover {
         background: lighten($grayColor, 35%);
       }
+
 
       &:active {
         background: lighten($grayColor, 25%);
