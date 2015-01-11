@@ -82,6 +82,10 @@
 }
 
 .topbar-action {
+  
+  > * {
+    pointer-events: none;
+  }
   &.active,
   &:active {
     background: rgba(#000, .2);

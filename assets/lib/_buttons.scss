@@ -27,6 +27,10 @@
     }
   }
 
+  > * {
+    pointer-events: none;
+  }
+
   &:active, &:focus {
     color:$buttonColor;
     outline: none;
