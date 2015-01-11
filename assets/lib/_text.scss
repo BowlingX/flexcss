@@ -78,6 +78,10 @@ code {
   color: $grayColor;
 }
 
+.color-warning {
+  color:$alertColor;
+}
+
 // Font-Sizes:
 
 .small-font {
@@ -145,4 +149,8 @@ kbd {
 ::selection {
   background: lighten($primaryColor,25%);
   color:white;
+}
+
+.help {
+  cursor:help;
 }
