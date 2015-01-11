@@ -335,7 +335,7 @@ void function (document, window, $) {
 
                     function highRes(thisThumbnail, thisImgHighResolution) {
                         var future = $.Deferred();
-                        if (thisThumbnail.src !== thisImgHighResolution) {
+                        if (thisImgHighResolution && thisThumbnail.src !== thisImgHighResolution) {
                             var highImageObj = new Image();
                             highImageObj.src = imgHighResolution;
                             highImageObj.addEventListener('load', function () {
