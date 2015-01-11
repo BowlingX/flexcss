@@ -40,15 +40,15 @@ void function (document, window, $) {
          * @param {String} name
          * @param {Boolean} [bubbles] defaults to true
          */
-        FlexCss.triggerEvent = function(element, name, bubbles) {
-            var thisBubbles = bubbles !== undefined? bubbles : true;
+        FlexCss.triggerEvent = function (element, name, bubbles) {
+            var thisBubbles = bubbles !== undefined ? bubbles : true;
             if ("createEvent" in document) {
                 var evt = document.createEvent("HTMLEvents");
                 evt.initEvent(name, thisBubbles, true);
                 element.dispatchEvent(evt);
             }
             else
-                element.fireEvent("on"+name);
+                element.fireEvent("on" + name);
         };
 
         /**
@@ -61,8 +61,9 @@ void function (document, window, $) {
 
             var MOVE = false, TAB_EVENT = FlexCss.CONST_FLEX_EVENT_TAB,
                 tabDelay = new Date().getTime(), _options = {
-                tabDelay: 10
-            };
+                    tabDelay: 10,
+                    simulateClickOnTouchEnd: true
+                };
 
             $.extend(_options, options);
 
@@ -100,6 +101,14 @@ void function (document, window, $) {
             container.addEventListener('touchend', function (e) {
                 if (!MOVE) {
                     tabDelay = new Date().getTime();
+                    if(_options.simulateClickOnTouchEnd) {
+                        // trigger click event on target element to run click handlers
+                        /* we add a delay here because otherwise the event is executed so fast that underlying elements
+                           are clicked */
+                        setTimeout(function(){
+                            $(e.target).trigger('click');
+                        }, 10);
+                    }
                     dispatchTabEvent(e.target, e);
                 }
             }, false);
