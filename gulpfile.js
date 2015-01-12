@@ -13,11 +13,12 @@ var concat = require('gulp-concat'),
     jshint = require('gulp-jshint'),
     del = require('del'),
     mainBowerFiles = require('main-bower-files'),
-    autoprefixer = require('gulp-autoprefixer'),
+    autoprefixer = require('autoprefixer-core'),
     es = require("event-stream"), gulpFilter = require('gulp-filter'),
     order = require('gulp-order'),
     connect = require('gulp-connect'), plumber = require('gulp-plumber'),
-    gutil = require('gulp-util'), postcss  = require('gulp-postcss');
+    gutil = require('gulp-util'), postcss  = require('gulp-postcss'),
+    csswring = require('csswring');
 
 var sass = require('gulp-sass');
 
@@ -112,7 +113,12 @@ gulp.task('sass', ['clean'], function () {
 // we got a bug here with the sourcemaps: https://github.com/floridoo/gulp-sourcemaps/issues/60
 gulp.task('compileSass', function () {
     var processors = [
-        require('csswring')
+        autoprefixer({
+            // include IE 9:
+            browsers: ['last 4 versions'],
+            cascade: false
+        }),
+        csswring
     ];
 
     return gulp.src(paths.sassThemes)
@@ -123,10 +129,6 @@ gulp.task('compileSass', function () {
         .pipe(sass())
         .pipe(sourcemaps.write({includeContent: false}))
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
         .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('build/css'));

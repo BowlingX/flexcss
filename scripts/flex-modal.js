@@ -39,7 +39,7 @@ void function (document, window, $) {
                     DelegateContainer : doc.getElementById(DelegateContainer),
                 modalContainer = null, currentOpen, loader, self = this,
                 loading = false, ATTR_CREATE_NEW = 'data-new-instance', ATTR_CLOSE = 'data-close-modal',
-                htmlElement = document.documentElement;
+                htmlElement = document.documentElement, CLS_CONTAINER_CURRENT = 'front';
             // Instance vars:
 
             if (!container) {
@@ -128,12 +128,21 @@ void function (document, window, $) {
                 // Full stack closed:
                 currentOpen = null;
                 if (modalContainer) {
-                    modalContainer.classList.remove('open');
+
+                    // setup next open
+                    var lastContainer = FlexCss._modalInstances[FlexCss._modalInstances.length -1],
+                        classList = modalContainer.classList;
+                    classList.remove(CLS_CONTAINER_CURRENT);
+                    classList.remove('open');
                     // Remove all current classes from childnodes
                     for (var i = 0; i < modalContainer.childNodes.length; i++) {
                         var cl = modalContainer.childNodes[i].classList;
                         cl.remove('current');
                         cl.remove('part-of-stack');
+                    }
+
+                    if(lastContainer) {
+                        lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
                     }
                 }
                 if (e) {
@@ -159,6 +168,15 @@ void function (document, window, $) {
                     last.classList.add('part-of-stack');
                 }
                 currentOpen = co;
+
+                // bring current container to the front
+                var instances = FlexCss._modalInstances;
+
+                for(var m=0;m<instances.length;m++) {
+                   instances[m].parentNode.classList.remove(CLS_CONTAINER_CURRENT);
+                }
+                modalContainer.classList.add(CLS_CONTAINER_CURRENT);
+
                 for (var i = 0; i < modalContainer.childNodes.length; i++) {
                     var n = modalContainer.childNodes[i], isCurrent = n.classList.contains('current'),
                         widget = n.hfWidgetInstance;
@@ -280,6 +298,7 @@ void function (document, window, $) {
                     });
 
                 }
+                modalContainerClasses.add(CLS_CONTAINER_CURRENT);
                 modalContainerClasses.add('loading');
                 loading = true;
                 toggleLoader(true);

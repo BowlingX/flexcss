@@ -12,6 +12,10 @@
   width: 100%;
   background: rgba(#000, $darkenerFadeOpacity);
   z-index: $indexModalContainer;
+
+  &.front {
+    z-index: $indexModalContainer +1;
+  }
   display:none;
   @include perspectiveHelper();
   // fixes iOS blurry screen
