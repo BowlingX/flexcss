@@ -306,6 +306,7 @@ void function (document, window, $) {
                     future = widget.runAsync().then(function (r) {
                         var f;
                         if (r instanceof HTMLElement || r instanceof DocumentFragment) {
+                            widget.setWidget(r);
                             f = $.Deferred().resolve(r);
                         } else {
                             // Create container Element:
