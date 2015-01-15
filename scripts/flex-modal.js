@@ -323,6 +323,10 @@ void function (document, window, $) {
                     var el = targetContent instanceof HTMLElement ||
                     targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
                     if (el) {
+                        // If Widget is bound to content container, use this as our widget
+                        if(el.hfWidgetInstance) {
+                            widget = el.hfWidgetInstance;
+                        }
                         future = $.Deferred().resolve(el);
                     } else {
                         throw 'Could not found given modal element with ID: ' + targetContent;
