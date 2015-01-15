@@ -108,42 +108,7 @@
 
 
 
-// Global Tooltip
-.tooltip-container {
-  z-index: $indexTooltip;
-  pointer-events: none;
-  display: inline-block;
-  opacity: 0;
-  position: absolute;
-  color: #fff;
-  border-radius: 5px;
-  padding: 7px 10px 7px;
-  will-change: transform, opacity;
-  transition: opacity .4s ease;
-  font-size: $smallFontSize;
-  font-weight: bold;
-  transform: translate3d(0, -3px, 0);
-  background: $topbarBg;
-  word-wrap: break-word;
 
-  &.error-tooltip {
-    word-break: normal;
-  }
-  &.open {
-    opacity: 1;
-  }
-  max-width: 250px;
-  text-align: center;
-
-  &.arrow-bottom {
-    @include arrow-bottom($topbarBg);
-  }
-
-  &.arrow-top {
-    transform: translate3d(0, 4px, 0);
-    @include arrow-top($topbarBg);
-  }
-}
 
 // Desktop version of dropdowns
 @media #{$mediaDesktop} {
