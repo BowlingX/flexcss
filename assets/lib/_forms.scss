@@ -12,7 +12,7 @@ form {
   p {
     margin-bottom: 0;
     font-size: $smallFontSize;
-    line-height:$smallFontSizeLineHeight;
+    line-height: $smallFontSizeLineHeight;
   }
 
   .controls {
@@ -97,11 +97,10 @@ form.loading {
   &.uneditable-input {
     overflow: hidden;
     text-overflow: ellipsis;
-    word-wrap:break-word;
-    height:auto;
-    min-height:$inputHeight;
+    word-wrap: break-word;
+    height: auto;
+    min-height: $inputHeight;
   }
-
 
   &.uneditable-input,
   &.disabled {
@@ -116,7 +115,7 @@ form.loading {
   }
 
   &.copyable {
-    cursor:copy;
+    cursor: copy;
   }
 
   /**
@@ -207,7 +206,7 @@ form.loading {
     position: absolute;
     left: 8px;
     top: 3px;
-    width:2px;
+    width: 2px;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -395,8 +394,8 @@ textarea {
     flex: 1;
 
     > * {
-      width:100%;
-      text-align:center;
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -416,7 +415,7 @@ textarea {
     > label {
 
       .checkbox-container {
-        margin-bottom:1rem;
+        margin-bottom: 1rem;
       }
     }
   }
@@ -436,6 +435,118 @@ textarea {
   }
 }
 
+input[type="range"] {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.multiple-range-input {
+  overflow: hidden;
+  position: relative;
+  height: $inputHeight;
+}
+
+// Range Controls
+.multiple-range-input input {
+  pointer-events: none;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  outline: none;
+}
+
+@mixin slider-thumb {
+  pointer-events: all;
+  position: relative;
+  background: $primaryColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: background .3s ease;
+  &:hover {
+    background: lighten($primaryColor, 10%);
+  }
+
+  &:focus, &:active {
+    background: darken($primaryColor, 10%);
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  z-index: 1;
+  outline: 0;
+  @include slider-thumb;
+  margin-top: -9px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  z-index: 10;
+  @include slider-thumb;
+}
+
+input[type="range"]::-ms-thumb {
+  z-index: 1;
+  @include slider-thumb;
+}
+
+input::-webkit-slider-runnable-track {
+  height: 3px;
+  background: $lighterGrayColor;
+  position: relative;
+}
+
+input[type="range"]::-ms-track {
+  height: 3px;
+  background: $lighterGrayColor;
+  position: relative;
+  border-color: transparent;
+  color: transparent;
+  z-index: -1;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: $lighterGrayColor;
+  border-radius: 0;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: $lighterGrayColor;
+  border-radius: 0;
+}
+
+input::-moz-range-track {
+  position: relative;
+  z-index: -1;
+  background-color: $lighterGrayColor;
+  border: 0;
+}
+
+.multiple-range-input {
+  input:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+  }
+  input:last-of-type {
+    &::-ms-fill-lower {
+      background: none transparent;
+    }
+
+    &::-ms-fill-upper {
+      background: none transparent;
+    }
+    &::-ms-track {
+      background: none transparent;
+    }
+  }
+
+}
+
 // Desktop Version of Forms
 @media #{$mediaDesktop} {
 
@@ -452,7 +563,7 @@ textarea {
       position: relative;
       top: 5px;
       margin-bottom: 0;
-      word-wrap:break-word;
+      word-wrap: break-word;
     }
 
     .no-label {
@@ -504,25 +615,24 @@ textarea {
     flex-direction: row;
     flex-wrap: nowrap;
 
-
     label {
       margin-left: 1rem;
     }
 
     .left {
       > label {
-        margin-left:0;
+        margin-left: 0;
 
         .checkbox-container {
-          margin-bottom:0;
+          margin-bottom: 0;
         }
       }
     }
 
     > div {
       > * {
-        width:auto;
-        text-align:left;
+        width: auto;
+        text-align: left;
       }
     }
 
@@ -533,7 +643,6 @@ textarea {
     .button, button, input[type="submit"] {
       margin-bottom: 0;
     }
-
 
   }
 }
