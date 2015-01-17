@@ -450,9 +450,10 @@ void function (window, $) {
          * @param {HTMLElement|String} ToggleNavigationId
          * @param {HTMLElement|String} Darkener
          * @param {int} factor
+         * @param {bool} [disableTouch] if true all touch events are disabled
          * @constructor
          */
-        FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor) {
+        FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor, disableTouch) {
 
             var doc = document, touched = 0, body = doc.body,
                 navigationContainer = NavigationId instanceof HTMLElement ?
@@ -472,68 +473,70 @@ void function (window, $) {
                     return window.innerWidth >= FlexCss.SETTINGS.smallBreakpoint;
                 };
 
-            navigationContainer.addEventListener('touchstart', function (e) {
-                requestAnimationFrame(function () {
+            if (!disableTouch) {
+                navigationContainer.addEventListener('touchstart', function (e) {
+                    requestAnimationFrame(function () {
+                        if (shouldNotTouch()) {
+                            return;
+                        }
+                        touched = e.touches[0].clientX;
+                        var target = navigationContainer, style = target.style;
+                        target.mustHide = false;
+                        style.transition = 'transform 0s ease';
+                        style.webkitTransition = '-webkit-transform 0s ease';
+
+                    });
+                });
+                navigationContainer.addEventListener('touchmove', function (e) {
+
                     if (shouldNotTouch()) {
                         return;
                     }
-                    touched = e.touches[0].clientX;
-                    var target = navigationContainer, style = target.style;
-                    target.mustHide = false;
-                    style.transition = 'transform 0s ease';
-                    style.webkitTransition = '-webkit-transform 0s ease';
-
-                });
-            });
-            navigationContainer.addEventListener('touchmove', function (e) {
-
-                if (shouldNotTouch()) {
-                    return;
-                }
-                var x = e.touches[0].clientX, target = navigationContainer, style = target.style, calc = touched - x,
-                    bounds = target.getBoundingClientRect(),
-                    compare = factor > 0 ? calc <= 0 : calc >= 0;
-                if (compare) {
-                    target.mustHide = factor > 0 ? calc * -1 >
-                    bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-                    style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
-                    style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
-                }
-            });
-            navigationContainer.addEventListener('touchend', function () {
-
-                requestAnimationFrame(function () {
-                    if (shouldNotTouch()) {
-                        return;
-                    }
-                    var target = navigationContainer, style = target.style;
-
-                    if (target.mustHide) {
-                        var width = target.getBoundingClientRect().width * factor;
-                        style.transition = 'transform .2s ease';
-                        style.webkitTransition = '-webkit-transform .2s ease';
-
-                        style.transform = 'translate3d(' + width + 'px,0,0)';
-                        style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
-
-                        FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
-                            // add timeout because transition event fires a little to early
-                            setTimeout(function () {
-                                resetStyles(style);
-                                body.classList.remove(TOGGLE_CLASS);
-                                body.classList.remove(DARKENER_CLASS_TOGGLE);
-                            }, FlexCss.SETTINGS.darkenerFadeDelay);
-                        });
-
-                        target.classList.remove(OPEN_CLASS);
-                        darkener.classList.remove(INIT_CLASS);
-
-
-                    } else {
-                        resetStyles(style);
+                    var x = e.touches[0].clientX, target = navigationContainer, style = target.style, calc = touched - x,
+                        bounds = target.getBoundingClientRect(),
+                        compare = factor > 0 ? calc <= 0 : calc >= 0;
+                    if (compare) {
+                        target.mustHide = factor > 0 ? calc * -1 >
+                        bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
+                        style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
+                        style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
                     }
                 });
-            });
+                navigationContainer.addEventListener('touchend', function () {
+
+                    requestAnimationFrame(function () {
+                        if (shouldNotTouch()) {
+                            return;
+                        }
+                        var target = navigationContainer, style = target.style;
+
+                        if (target.mustHide) {
+                            var width = target.getBoundingClientRect().width * factor;
+                            style.transition = 'transform .2s ease';
+                            style.webkitTransition = '-webkit-transform .2s ease';
+
+                            style.transform = 'translate3d(' + width + 'px,0,0)';
+                            style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
+
+                            FlexCss.addEventOnce(FlexCss.CONST_TRANSITION_EVENT, target, function () {
+                                // add timeout because transition event fires a little to early
+                                setTimeout(function () {
+                                    resetStyles(style);
+                                    body.classList.remove(TOGGLE_CLASS);
+                                    body.classList.remove(DARKENER_CLASS_TOGGLE);
+                                }, FlexCss.SETTINGS.darkenerFadeDelay);
+                            });
+
+                            target.classList.remove(OPEN_CLASS);
+                            darkener.classList.remove(INIT_CLASS);
+
+
+                        } else {
+                            resetStyles(style);
+                        }
+                    });
+                });
+            }
             var togglerF = function (e) {
                 e.preventDefault();
                 var bodyClass = body.classList, darkenerClass = darkener.classList;
