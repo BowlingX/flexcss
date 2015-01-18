@@ -5,7 +5,6 @@
 // settings about css
 @import "settings";
 
-@import "lib/visibility";
 
 @import "lib/mixins";
 
@@ -44,3 +43,5 @@
 @import 'lib/helpers';
 
 @import 'lib/tooltip';
+
+@import "lib/visibility";

@@ -14,8 +14,14 @@
   }
 
   .sidebar {
-    max-width: $sidebarWidthLarge;
-    min-width: $sidebarWidthLarge;
+    max-width: $sidebarWidthLarge !important;
+    min-width: $sidebarWidthLarge !important;
+    will-change: inherit;
+    position: static;
+    height: auto;
+    transform: none;
+    transition: none;
+    z-index: 0;
   }
 
 

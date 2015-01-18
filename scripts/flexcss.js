@@ -453,7 +453,8 @@ void function (window, $) {
          * @param {bool} [disableTouch] if true all touch events are disabled
          * @constructor
          */
-        FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor, disableTouch) {
+        FlexCss.CreateOffCanvas = function (NavigationId, ToggleNavigationId, Darkener, factor,
+                                            disableTouch) {
 
             var doc = document, touched = 0, body = doc.body,
                 navigationContainer = NavigationId instanceof HTMLElement ?

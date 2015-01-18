@@ -10,7 +10,6 @@
     // FIXME: There is a bug in firefox that causes flickering animations:
     // TODO: Check if this is a performance overhead
     // http://stackoverflow.com/questions/13626412/firefox-transitions-breaking-when-parent-overflow-is-changed
-
   }
 
 
@@ -18,12 +17,6 @@
     flex: 1 auto;
   }
 
-  .sidebar {
-    will-change: inherit;
-    position: static;
-    max-width: $sidebarWidthDesktop;
-    min-width: $sidebarWidthDesktop;
-  }
 
   .main {
     flex: 2 0px;
@@ -55,7 +48,10 @@
     padding-left: 7px;
     background: $lightGrayColor;
   }
-  .sidebar {
+  .sidebar:not(.sidebar-desktop) {
+    max-width: $sidebarWidthDesktop;
+    min-width: $sidebarWidthDesktop;
+    will-change: inherit;
     position: static;
     height: auto;
     transform: none;
