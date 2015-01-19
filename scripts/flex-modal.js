@@ -210,8 +210,9 @@ void function (document, window, $) {
                     var foundInstance = FlexCss.parentsUntil(e.target, function(node){
                         return node.flexModalInstance;
                     });
+
                     // if another instance has been found, abort
-                    if(foundInstance !== DelegateContainer) {
+                    if(foundInstance !== container) {
                         return;
                     }
                 }
