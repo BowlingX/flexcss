@@ -38,8 +38,8 @@
 
 // a central loader
 @mixin centralLoader() {
-  left:calc(50% - #{$loaderSize + 5px});
-  top:calc(50% - #{$loaderSize + 5px});
+  left:calc(50% - #{$loaderSize - 10px});
+  top:calc(50% - #{$loaderSize - 10px});
   background:#fff;
   padding:10px;
   border-radius:$globalRadius;
