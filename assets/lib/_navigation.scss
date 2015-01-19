@@ -16,7 +16,7 @@
     transform: translate3d(0%, 0, 0);
   }
 
-  a {
+  a:not(.button) {
     color: #aaa;
     &:active:not(.logo) {
       background: rgba(#000, .3) !important;
@@ -49,7 +49,7 @@
           color: #fff;
         }
       }
-      a {
+      a:not(.button) {
         padding: 10px 20px;
         display: inline-block;
         width: 100%;
@@ -81,6 +81,10 @@
   }
 }
 
+.topbar {
+  display:flex;
+}
+
 .topbar-action {
   
   > * {
@@ -104,7 +108,27 @@
   .badge {
     vertical-align: 1px;
   }
+
+  span {
+    font-size:$baseFontSize;
+    vertical-align: top;
+  }
 }
+
+
+.navigation-toggler {
+  flex:1;
+  text-align:left;
+  white-space: nowrap;
+  padding-right:30px;
+  span {
+    text-overflow:ellipsis;
+    max-width:100%;
+    display:inline-block;
+    overflow:hidden;
+  }
+}
+
 
 .subnav-content {
   overflow: hidden;

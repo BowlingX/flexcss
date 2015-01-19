@@ -204,6 +204,17 @@ void function (document, window, $) {
                 if (loading) {
                     return;
                 }
+
+                // check if another modal has registered events on this dom path:
+                if(e && e.target) {
+                    var foundInstance = FlexCss.parentsUntil(e.target, function(node){
+                        return node.flexModalInstance;
+                    });
+                    // if another instance has been found, abort
+                    if(foundInstance !== DelegateContainer) {
+                        return;
+                    }
+                }
                 var targetContent, future, widget, target, hasTarget = true,
                     isHtmlElement = e instanceof HTMLElement, isWidget = e instanceof FlexCss.Widget;
                 if (isHtmlElement || isWidget) {
@@ -361,6 +372,8 @@ void function (document, window, $) {
                 var delegateContainer = delegate || container;
 
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
+                    // register modal instance so we can detect multiple registrars
+                    delegateContainer.flexModalInstance = self;
                     delegateContainer.addEventListener(e, createWidget, true);
                 });
 
