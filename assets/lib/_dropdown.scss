@@ -106,10 +106,6 @@
   }
 }
 
-
-
-
-
 // Desktop version of dropdowns
 @media #{$mediaDesktop} {
 
@@ -124,7 +120,7 @@
     max-width: 320px;
     transition: none;
     z-index: $indexDropdown;
-
+    min-width:120px;
     // reset positioning
     &:not(.open) {
       top: -100% !important;
