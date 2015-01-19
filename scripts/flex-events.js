@@ -61,8 +61,9 @@ void function (document, window, $) {
 
             var MOVE = false, TAB_EVENT = FlexCss.CONST_FLEX_EVENT_TAB,
                 ATTR_DELEGATE_CLICK = 'data-delegate-click',
-                tabDelay = new Date().getTime(), _options = {
-                    tabDelay: 10
+                tabDelay = new Date().getTime(), clickDelay = new Date().getTime(),
+                _options = {
+                    tabDelay: 30
                 };
 
             $.extend(_options, options);
@@ -99,7 +100,7 @@ void function (document, window, $) {
             }
 
             container.addEventListener('touchend', function (e) {
-                if (!MOVE) {
+                if (!MOVE && ((new Date().getTime() - clickDelay) > _options.tabDelay)) {
                     tabDelay = new Date().getTime();
                     // trigger click event on target element to run click handlers
                     // add timeout to prevent elements underneath to be clicked
@@ -114,6 +115,7 @@ void function (document, window, $) {
 
             container.addEventListener('click', function (e) {
                 if ((new Date().getTime() - tabDelay) > _options.tabDelay) {
+                    clickDelay = new Date().getTime();
                     dispatchTabEvent(e.target, e);
                 }
             }, false);
