@@ -195,6 +195,17 @@ void function (document, window, $) {
                 }
             };
 
+
+            var handleScrollbar = function() {
+                if (0 === FlexCss._modalInstances.length) {
+                    htmlElement.classList.add('modal-open');
+                    FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
+                        n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
+                        FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
+                    });
+                }
+            };
+
             /**
              * Creates this instance
              * @param e
@@ -302,14 +313,8 @@ void function (document, window, $) {
                     }
                 };
 
-                if (0 === FlexCss._modalInstances.length) {
-                    htmlElement.classList.add('modal-open');
-                    FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
-                        n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
-                        FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
-                    });
+                handleScrollbar();
 
-                }
                 modalContainerClasses.add(CLS_CONTAINER_CURRENT);
                 modalContainerClasses.add('loading');
                 loading = true;
@@ -350,18 +355,33 @@ void function (document, window, $) {
                     el.hfWidgetInstance = widget;
                     el.hfContainerInstance = self;
                     modalContainer.appendChild(el);
-                    switchModals(el, currentOpen);
                     modalContainerClasses.remove('loading');
                     loading = false;
                     toggleLoader(false);
 
-                    if (el.hfWidgetInstance) {
-                        el.hfWidgetInstance.runOnOpen(el);
-                    }
+                    self.open(el, true);
 
-                    $(el).trigger('flexcss.modal.opened');
                     return $.Deferred().resolve(el);
                 });
+            };
+
+            /**
+             * Open's an already rendered modal
+             * @param {HTMLElement} modal
+             * @param {Boolean} [internal], set to true to prevent container management
+             */
+            this.open = function(modal, internal) {
+                if(!internal) {
+                    modalContainer.classList.add('open');
+                    handleScrollbar();
+                }
+                switchModals(modal, currentOpen);
+
+                if (modal.hfWidgetInstance) {
+                    modal.hfWidgetInstance.runOnOpen(modal);
+                }
+
+                $(modal).trigger('flexcss.modal.opened');
             };
 
             /**
