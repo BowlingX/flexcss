@@ -380,7 +380,7 @@ void function (document, window, $) {
                 if (modal.hfWidgetInstance) {
                     modal.hfWidgetInstance.runOnOpen(modal);
                 }
-                $(modal).trigger('flexcss.modal.opened');
+                $(modal).trigger('flexcss.modal.opened', [self]);
             };
 
             /**
