@@ -17,7 +17,7 @@ $maxSlide: 10;
   position: relative;
   height: 100%;
   padding: 0 10px 0 0;
-  flex:1;
+  flex: 1;
 
 }
 
@@ -38,11 +38,11 @@ $maxSlide: 10;
   margin: 2rem 0 0 0;
   padding: 0;
   label {
-    font-size:$baseFontSize;
+    font-size: $baseFontSize;
     color: $lighterGrayColor;
-    cursor:pointer;
-    transition:color .5s ease;
-    margin:0 5px;
+    cursor: pointer;
+    transition: color .5s ease;
+    margin: 0 5px;
   }
 }
 
@@ -57,10 +57,9 @@ $maxSlide: 10;
 
   @for $i from 0 through $maxSlide {
     input {
-      &:nth-of-type(#{$i+1}):checked ~ .slider
-    ) {
-      transform: translate3d(#{ $i *100 *-1 }%, 0, 0);
-    }
+      &:nth-of-type(#{$i+1}):checked ~ .slider {
+        transform: translate3d(#{$i *100% *-1}, 0, 0);
+      }
 
       &:nth-of-type(#{$i+1}):checked ~ .slide-navigation li:nth-of-type(#{$i+1}) label {
         color: $grayColor;
