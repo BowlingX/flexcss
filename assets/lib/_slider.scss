@@ -32,23 +32,21 @@ $maxSlide: 10;
 .slide-navigation {
 
   display: flex;
+  justify-content: center;
   list-style: none;
-  margin: 1rem 0 0 0;
+  margin: 2rem 0 0 0;
   padding: 0;
   label {
     font-size:$baseFontSize;
     color: $lighterGrayColor;
     cursor:pointer;
     transition:color .5s ease;
+    margin:0 5px;
   }
 }
 
 .slide-container {
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 
   input {
     visibility: hidden;
