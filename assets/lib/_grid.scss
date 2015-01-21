@@ -97,6 +97,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width:0;
 }
 
 // A Darkener that spans the complete screen
@@ -122,13 +123,6 @@ html {
 
 .toggled-canvas .darkener.init {
   @include animate(darkenerFadeIn);
-}
-
-// FIXME: Eliminates firefox strange behaviour with subnavs when very long (prevents wrapping)
-@-moz-document url-prefix() {
-  .main {
-    overflow: hidden;
-  }
 }
 
 // Some flex utility classes:
