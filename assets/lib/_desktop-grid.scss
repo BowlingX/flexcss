@@ -42,6 +42,10 @@
 
   .page-content {
     padding: 30px $paddingRightLeftDesktop;
+
+    .page-content {
+      padding:0 $paddingRightLeftDesktop;
+    }
   }
 
   .subnav {
