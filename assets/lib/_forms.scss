@@ -52,7 +52,7 @@ fieldset {
   padding: 0 0 30px 0;
   border-bottom: 1px solid $globalBorderColor;
   margin-bottom: 22px;
-
+  margin-left:0;
   &:last-of-type {
     border-bottom: none;
     margin-bottom: 0;
@@ -582,6 +582,7 @@ input::-moz-range-track {
       width: 50%;
       min-width: $formMinWidthControls;
     }
+
 
     fieldset:not(:last-of-type) {
       padding: 0 0 30px 0;

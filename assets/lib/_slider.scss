@@ -12,12 +12,13 @@ $maxSlide: 10;
 }
 
 .slide {
-  width: 100%;
+  min-width: 100%;
   display: inline-block;
   position: relative;
   height: 100%;
-  white-space: normal;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
+  flex:1;
+
 }
 
 .slider {
@@ -25,8 +26,8 @@ $maxSlide: 10;
   margin: 0;
   padding: 0;
   position: relative;
-  white-space: nowrap;
   transition: transform .5s cubic-bezier(0.77, 0, 0.175, 1);
+  display: flex;
 }
 
 .slide-navigation {
@@ -70,6 +71,6 @@ $maxSlide: 10;
 
 @media #{$mediaDesktop} {
   .slide {
-    width: 50%;
+    min-width: 50%;
   }
 }
