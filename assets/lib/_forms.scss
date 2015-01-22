@@ -616,6 +616,7 @@ input::-moz-range-track {
     flex-direction: row;
     flex-wrap: nowrap;
 
+
     label {
       margin-left: 1rem;
     }
@@ -643,6 +644,19 @@ input::-moz-range-track {
 
     .button, button, input[type="submit"] {
       margin-bottom: 0;
+    }
+
+
+    &.break {
+      margin-top:1rem;
+      flex-wrap:wrap;
+      p {
+        margin:0;
+      }
+
+      .button {
+       margin:1rem 1rem 1rem 0;
+      }
     }
 
   }
