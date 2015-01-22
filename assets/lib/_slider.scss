@@ -16,9 +16,7 @@ $maxSlide: 10;
   display: inline-block;
   position: relative;
   height: 100%;
-  padding: 0 10px 0 0;
   flex: 1;
-
 }
 
 .slider {
@@ -39,7 +37,7 @@ $maxSlide: 10;
   padding: 0;
   label {
     font-size: $baseFontSize;
-    color: $lighterGrayColor;
+    color: lighten($grayColor, 30%);
     cursor: pointer;
     transition: color .5s ease;
     margin: 0 5px;
@@ -62,7 +60,7 @@ $maxSlide: 10;
       }
 
       &:nth-of-type(#{$i+1}):checked ~ .slide-navigation li:nth-of-type(#{$i+1}) label {
-        color: $grayColor;
+        color: lighten($grayColor, 15%);
       }
     }
   }
@@ -71,5 +69,9 @@ $maxSlide: 10;
 @media #{$mediaDesktop} {
   .slide {
     min-width: 50%;
+    padding-right:30px;
+    &:nth-child(2n) {
+      padding-left:22px;
+    }
   }
 }
