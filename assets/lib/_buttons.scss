@@ -136,5 +136,11 @@
     @include loadingContainer();
   }
 
+  &.loadMoreButton {
+    margin-top:2rem;
+    padding-right: 85px;
+    padding-left:85px;
+  }
+
   @include interface();
 }
