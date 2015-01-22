@@ -17,7 +17,7 @@
   }
 
   a:not(.button) {
-    color: #aaa;
+    color: $topbarColorWide;
     &:active:not(.logo) {
       background: rgba(#000, .3) !important;
     }
@@ -104,7 +104,11 @@
   display: inline-block;
   padding: 0 3px;
   font-weight: bold;
-  color: #fff !important;
+  color: $topbarColor;
+
+  &:hover {
+    color:#fff;
+  }
   min-width:30px;
   text-align: center;
   .badge {
