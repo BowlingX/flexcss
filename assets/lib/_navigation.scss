@@ -169,7 +169,7 @@
   li {
     display: inline-block;
 
-    margin-right: 6px;
+    margin-right: 0px;
     a, .tab-item {
       padding: 0 $overallPadding;
       color: $subnavColor;
@@ -250,7 +250,6 @@
 // Tabs
 .tabs-small {
   li {
-
     a, .tab-item {
       line-height: 1 !important;
       padding-bottom: $tabsSmallPadding !important;

@@ -121,8 +121,11 @@
   }
 
   .subnav, .tabs {
-    li a {
-      padding: 0px 10px;
+    li {
+      margin-right: 6px;
+      a {
+        padding: 0px 10px;
+      }
     }
   }
 
