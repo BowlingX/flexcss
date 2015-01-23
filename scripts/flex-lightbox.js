@@ -292,12 +292,12 @@ void function (document, window, $) {
                         if(hasPrev) {
                             imageContainer.classList.add(hasPrevClass);
                         } else {
-                            imageContainer.classList.remove(hasPrevClass)
+                            imageContainer.classList.remove(hasPrevClass);
                         }
                         if(hasNext) {
                             imageContainer.classList.add(hasNextClass);
                         } else {
-                            imageContainer.classList.remove(hasNextClass)
+                            imageContainer.classList.remove(hasNextClass);
                         }
                     };
 
