@@ -38,4 +38,17 @@
     padding:0 $overallPaddingLarge 0 $overallPaddingLarge;
   }
 
+  .wrapper-full-width {
+    .header {
+      padding:0 $overallPaddingLarge + $paddingRightLeftDesktop 0 $overallPaddingLarge + $paddingRightLeftDesktop;
+
+      .navbar-main {
+        padding:0;
+
+        .logo {
+          margin-left:0;
+        }
+      }
+    }
+  }
 }
