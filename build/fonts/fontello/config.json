@@ -655,6 +655,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "7222571caa5c15f83dcfd447c58d68d9",
+      "css": "search-1",
+      "code": 59461,
+      "src": "entypo"
+    },
+    {
       "uid": "2cfb3f2b46b34a1790aec0aa846297b6",
       "css": "reorder",
       "code": 9776,

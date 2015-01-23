@@ -115,7 +115,7 @@
     vertical-align: 1px;
   }
 
-  span {
+  span:not(.badge) {
     font-size:$baseFontSize;
     vertical-align: top;
   }
