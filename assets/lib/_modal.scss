@@ -48,7 +48,7 @@
   position:relative;
   background: #fff;
   display: none;
-  padding: 43px 12px 25px;
+  padding: 30px 12px 25px;
   align-self: flex-start;
   will-change:transform, opacity;
   transform: translateZ(0);
@@ -106,6 +106,7 @@
   bottom:0;
   left:0;
   width:100%;
+  padding-top:15px;
   &.current {
     @include animate(fromBottom, .25s);
   }
@@ -135,6 +136,7 @@
   }
 
   .modal.alert {
+    padding-top:25px;
     min-width:0;
     box-shadow:$globalBoxShadow;
     position:relative;
