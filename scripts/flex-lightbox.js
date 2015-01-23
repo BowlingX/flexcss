@@ -285,10 +285,20 @@ void function (document, window, $) {
                     };
 
                     self._setupPrevNextStates = function () {
-                        var hasPrev = self.getPrev(target), hasNext = self.getNext(target);
+                        var hasPrev = self.getPrev(target), hasNext = self.getNext(target),
+                            hasPrevClass = 'has-prev', hasNextClass = 'has-next';
 
-                        imageContainer.classList.toggle('has-prev', hasPrev);
-                        imageContainer.classList.toggle('has-next', hasNext);
+                        // because IE does not support the second toggle parameter, we need to do this manually
+                        if(hasPrev) {
+                            imageContainer.classList.add(hasPrevClass);
+                        } else {
+                            imageContainer.classList.remove(hasPrevClass)
+                        }
+                        if(hasNext) {
+                            imageContainer.classList.add(hasNextClass);
+                        } else {
+                            imageContainer.classList.remove(hasNextClass)
+                        }
                     };
 
                     if (self.options.registerPrevNextEvents) {
