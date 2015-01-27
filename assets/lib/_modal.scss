@@ -3,6 +3,27 @@
 *
 */
 
+// add animations only for non-ios devices to prevent a lot of issues with scrolling/forms etc.
+html:not(.device-ios) {
+  .modal-container {
+    @include perspectiveHelper();
+    // fixes iOS blurry screen
+    transform: translateZ(0);
+  }
+  .modal {
+    transform: translateZ(0);
+    @include perspectiveHelper();
+
+    &.current {
+      @include animate(bounceIn);
+    }
+
+    &.alert.current {
+      @include animate(fromBottom, .25s);
+    }
+  }
+}
+
 /* Container that contains all Modals of an instance */
 .modal-container {
   position: fixed;
@@ -16,10 +37,7 @@
   &.front {
     z-index: $indexModalContainer +1;
   }
-  display:none;
-  @include perspectiveHelper();
-  // fixes iOS blurry screen
-  transform: translateZ(0);
+  display: none;
   &.open {
     display: flex;
   }
@@ -33,85 +51,86 @@
   > .loader-container {
     align-self: center;
     position: fixed;
-    left:calc(50% - 20px);
-    top:calc(50% - 20px);
-    z-index:101;
+    left: calc(50% - 20px);
+    top: calc(50% - 20px);
+    z-index: 101;
   }
 
   &.loading {
-    cursor:wait;
+    cursor: wait;
   }
 }
+
 // The Modal itself
 .modal {
-  width:100%;
-  position:relative;
+  width: 100%;
+  position: relative;
   background: #fff;
   display: none;
   padding: 30px 12px 25px;
   align-self: flex-start;
-  will-change:transform, opacity;
-  transform: translateZ(0);
-  @include perspectiveHelper();
+  will-change: transform, opacity;
 
   &.current {
     display: block;
-    @include animate(bounceIn);
   }
 
   &.current ~ .loader-container {
     @include centralLoader();
   }
-  box-shadow:$globalBoxShadow;
+  box-shadow: $globalBoxShadow;
 }
 
 // setup z-index just when in container
 .modal-container {
   .modal.current {
-    z-index:$indexModalCurrent;
+    z-index: $indexModalCurrent;
   }
 }
 
 // Close icon, top right
 .modal-close {
-  position:absolute;
-  right:0px;
-  top:0px;
-  z-index:3;
-  padding:9px 10px 10px;
-  font-size:16px;
-  cursor:pointer;
-  color:lighten($baseColor, 50%);
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  padding: 9px 10px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: lighten($baseColor, 50%);
 
   &:hover {
     color: lighten($baseColor, 40%);
-    background:lighten($grayColor, 35%);
+    background: lighten($grayColor, 35%);
   }
 
   &:active {
     color: lighten($baseColor, 10%);
-    background:lighten($grayColor, 30%);
+    background: lighten($grayColor, 30%);
   }
 
 }
 
 .modal-title {
-  margin:0 0 1rem 0;
-  color:$primaryColor;
+  margin: 0 0 1rem 0;
+  color: $primaryColor;
 }
 
 // An Alert box is always on the bottom on mobile
 .modal.alert {
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  padding-top:15px;
-  &.current {
-    @include animate(fromBottom, .25s);
-  }
-  box-shadow:none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 15px;
+  box-shadow: none;
   word-wrap: break-word;
+}
+
+.modal-open {
+  body {
+    width: 100%;
+  }
 }
 
 // desktop version
@@ -124,9 +143,9 @@
   }
 
   .modal {
-    width:auto;
-    min-width:$minWidthModalDesktop;
-    max-width:$minWidthModalDesktop;
+    width: auto;
+    min-width: $minWidthModalDesktop;
+    max-width: $minWidthModalDesktop;
     margin-bottom: 20px;
     padding: 25px 30px 25px;
 
@@ -136,18 +155,23 @@
   }
 
   .modal.alert {
-    padding-top:25px;
-    min-width:0;
-    box-shadow:$globalBoxShadow;
-    position:relative;
-    width:$alertWidthDesktop;
-    &.current {
-      @include animate(bounceIn);
-    }
+    padding-top: 25px;
+    min-width: 0;
+    box-shadow: $globalBoxShadow;
+    position: relative;
+    width: $alertWidthDesktop;
   }
 
   .modal.small-modal {
-    min-width:0;
-    width:$modalWidthSmall;
+    min-width: 0;
+    width: $modalWidthSmall;
+  }
+
+  html:not(.device-ios) {
+    .modal {
+      &.alert.current {
+        @include animate(bounceIn);
+      }
+    }
   }
 }
