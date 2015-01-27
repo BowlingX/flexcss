@@ -11,9 +11,6 @@ html:not(.device-ios) {
     transform: translateZ(0);
   }
   .modal {
-    transform: translateZ(0);
-    @include perspectiveHelper();
-
     &.current {
       @include animate(bounceIn);
     }
@@ -63,6 +60,10 @@ html:not(.device-ios) {
 
 // The Modal itself
 .modal {
+
+  transform: translateZ(0);
+  @include perspectiveHelper();
+
   width: 100%;
   position: relative;
   background: #fff;
