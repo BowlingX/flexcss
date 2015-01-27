@@ -64,6 +64,9 @@ void function (document, window, $) {
             // Otherwise container is recycled
             self.destroyOnFinish = false;
 
+            self.dataMainPageContainer = document.body;
+
+            self.currentScrollTop = 0;
             /**
              * Removes this modal from global stack
              * @private
@@ -76,6 +79,12 @@ void function (document, window, $) {
                     if (0 === FlexCss._modalInstances.length) {
                         htmlElement.classList.remove('modal-open');
                         FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
+                            // restore scrollPosition:
+                            if(self.dataMainPageContainer) {
+                                self.dataMainPageContainer.style.position = "static";
+                                self.dataMainPageContainer.style.top = "0px";
+                                $(window, document.body).scrollTop(self.currentScrollTop);
+                            }
                             n.style.paddingRight = '';
                         });
 
@@ -140,7 +149,6 @@ void function (document, window, $) {
                         cl.remove('current');
                         cl.remove('part-of-stack');
                     }
-
                     if(lastContainer) {
                         lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
                     }
@@ -199,6 +207,14 @@ void function (document, window, $) {
             var handleScrollbar = function() {
                 if (0 === FlexCss._modalInstances.length) {
                     htmlElement.classList.add('modal-open');
+                    // save current scrollTop:
+                    var scrollTop = window.pageYOffset,
+                        c = self.dataMainPageContainer
+                    self.currentScrollTop = scrollTop;
+                    if(c) {
+                        c.style.top = scrollTop*-1 + 'px';
+                        c.style.position = 'fixed';
+                    }
                     FlexCss.SETTINGS.scrollbarUpdateNodes.forEach(function (n) {
                         n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
                         FlexCss.CONST_SCROLLBAR_WIDTH + 'px';
