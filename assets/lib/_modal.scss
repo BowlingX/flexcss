@@ -5,11 +5,6 @@
 
 // add animations only for non-ios devices to prevent a lot of issues with scrolling/forms etc.
 html:not(.device-ios) {
-  .modal-container {
-    @include perspectiveHelper();
-    // fixes iOS blurry screen
-    transform: translateZ(0);
-  }
   .modal {
     &.current {
       @include animate(bounceIn);
@@ -23,6 +18,9 @@ html:not(.device-ios) {
 
 /* Container that contains all Modals of an instance */
 .modal-container {
+  @include perspectiveHelper();
+  // fixes iOS blurry screen
+  transform: translateZ(0);
   position: fixed;
   top: 0;
   left: 0;
