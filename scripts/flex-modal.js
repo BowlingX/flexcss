@@ -131,6 +131,10 @@ void function (document, window, $) {
                         $(currentOpen).trigger('flexcss.modal.closed', e);
                         widget.runOnClose();
                     }
+
+
+                    currentOpen.removeAttribute('style');
+
                 }
                 _removeModalFromStack(currentOpen);
 
@@ -209,7 +213,7 @@ void function (document, window, $) {
                     htmlElement.classList.add('modal-open');
                     // save current scrollTop:
                     var scrollTop = window.pageYOffset,
-                        c = self.dataMainPageContainer
+                        c = self.dataMainPageContainer;
                     self.currentScrollTop = scrollTop;
                     if(c) {
                         c.style.top = scrollTop*-1 + 'px';
@@ -349,6 +353,9 @@ void function (document, window, $) {
                             element.id = FlexCss.guid();
                             // Setup modal as widget to widget instance:
                             widget.setWidget(element);
+
+
+
                             f = $.Deferred().resolve(element);
                         }
                         return f;
@@ -370,6 +377,13 @@ void function (document, window, $) {
                 return future.then(function (el) {
                     el.hfWidgetInstance = widget;
                     el.hfContainerInstance = self;
+
+                    FlexCss.PrefixedAnimateEvent(el,'AnimationEnd', function(e, self){
+                        e.target.style.animation = 'none';
+                        e.target.style.webkitAnimation = 'none';
+                        el.removeEventListener(e.type, self, true);
+                    });
+
                     modalContainer.appendChild(el);
                     modalContainerClasses.remove('loading');
                     loading = false;
@@ -387,6 +401,8 @@ void function (document, window, $) {
              * @param {Boolean} [internal], set to true to prevent container management
              */
             this.open = function(modal, internal) {
+
+
                 if(!internal) {
                     modalContainer.classList.add('open');
                     handleScrollbar();
