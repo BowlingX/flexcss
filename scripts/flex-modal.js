@@ -118,7 +118,14 @@ void function (document, window, $) {
                 if (loading) {
                     return false;
                 }
+
+                if (e) {
+                    e.preventDefault();
+                }
+
                 if (currentOpen) {
+                    currentOpen.removeAttribute('style');
+
                     var widget = currentOpen.hfWidgetInstance;
                     if (widget && !widget.runOnBeforeClose(e)) {
                         return false;
@@ -131,10 +138,6 @@ void function (document, window, $) {
                         $(currentOpen).trigger('flexcss.modal.closed', e);
                         widget.runOnClose();
                     }
-
-
-                    currentOpen.removeAttribute('style');
-
                 }
                 _removeModalFromStack(currentOpen);
 
@@ -147,18 +150,17 @@ void function (document, window, $) {
                         classList = modalContainer.classList;
                     classList.remove(CLS_CONTAINER_CURRENT);
                     classList.remove('open');
-                    // Remove all current classes from childnodes
+                    // Remove all current classes from child-nodes
                     for (var i = 0; i < modalContainer.childNodes.length; i++) {
-                        var cl = modalContainer.childNodes[i].classList;
+                        var node = modalContainer.childNodes[i], cl = node.classList;
+                        // remove applied styles
+                        node.removeAttribute('style');
                         cl.remove('current');
                         cl.remove('part-of-stack');
                     }
                     if(lastContainer) {
                         lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
                     }
-                }
-                if (e) {
-                    e.preventDefault();
                 }
 
                 if (self.destroyOnFinish) {
@@ -188,6 +190,12 @@ void function (document, window, $) {
                    instances[m].parentNode.classList.remove(CLS_CONTAINER_CURRENT);
                 }
                 modalContainer.classList.add(CLS_CONTAINER_CURRENT);
+
+                FlexCss.PrefixedAnimateEvent(co,'AnimationEnd', function(e, self){
+                    e.target.style.animation = 'none';
+                    e.target.style.webkitAnimation = 'none';
+                    co.removeEventListener(e.type, self, true);
+                });
 
                 for (var i = 0; i < modalContainer.childNodes.length; i++) {
                     var n = modalContainer.childNodes[i], isCurrent = n.classList.contains('current'),
@@ -378,11 +386,6 @@ void function (document, window, $) {
                     el.hfWidgetInstance = widget;
                     el.hfContainerInstance = self;
 
-                    FlexCss.PrefixedAnimateEvent(el,'AnimationEnd', function(e, self){
-                        e.target.style.animation = 'none';
-                        e.target.style.webkitAnimation = 'none';
-                        el.removeEventListener(e.type, self, true);
-                    });
 
                     modalContainer.appendChild(el);
                     modalContainerClasses.remove('loading');
