@@ -89,6 +89,18 @@ void function (window, $) {
             }
         };
 
+        var pfx = ["webkit", "moz", "MS", "o", ""];
+        FlexCss.PrefixedAnimateEvent = function(element, type, callback) {
+            var thisFunction = function(e){
+                callback.apply(element, [e, thisFunction]);
+            };
+
+            for (var p = 0; p < pfx.length; p++) {
+                if (!pfx[p]) type = type.toLowerCase();
+                var name = pfx[p]+type;
+                element.addEventListener(name, thisFunction, true);
+            }
+        };
         /**
          * Run an event once
          * @param {String} ev

@@ -48,7 +48,7 @@ $primaryColor:#258db8 !default;
 $secondaryColor:#e6007e !default;
 $actionColor:#83ba5e !default;
 $alertColor: #d84c3d;
-
+$dangerColor:#f08201;
 $globalRadius:3px !default;
 
 // breakpoints
@@ -108,7 +108,7 @@ $checkRadioColor:$primaryColor !default;
 $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;
 $btnSecondaryColor: #c3c3c3 !default;
-$btnDangerColor: #f08201 !default;
+$btnDangerColor: $dangerColor !default;
 $btnAlternativeColor: $primaryColor !default;
 
 // tabs

@@ -118,7 +118,14 @@ void function (document, window, $) {
                 if (loading) {
                     return false;
                 }
+
+                if (e) {
+                    e.preventDefault();
+                }
+
                 if (currentOpen) {
+                    currentOpen.removeAttribute('style');
+
                     var widget = currentOpen.hfWidgetInstance;
                     if (widget && !widget.runOnBeforeClose(e)) {
                         return false;
@@ -143,18 +150,17 @@ void function (document, window, $) {
                         classList = modalContainer.classList;
                     classList.remove(CLS_CONTAINER_CURRENT);
                     classList.remove('open');
-                    // Remove all current classes from childnodes
+                    // Remove all current classes from child-nodes
                     for (var i = 0; i < modalContainer.childNodes.length; i++) {
-                        var cl = modalContainer.childNodes[i].classList;
+                        var node = modalContainer.childNodes[i], cl = node.classList;
+                        // remove applied styles
+                        node.removeAttribute('style');
                         cl.remove('current');
                         cl.remove('part-of-stack');
                     }
                     if(lastContainer) {
                         lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
                     }
-                }
-                if (e) {
-                    e.preventDefault();
                 }
 
                 if (self.destroyOnFinish) {
@@ -185,6 +191,12 @@ void function (document, window, $) {
                 }
                 modalContainer.classList.add(CLS_CONTAINER_CURRENT);
 
+                FlexCss.PrefixedAnimateEvent(co,'AnimationEnd', function(e, self){
+                    e.target.style.animation = 'none';
+                    e.target.style.webkitAnimation = 'none';
+                    co.removeEventListener(e.type, self, true);
+                });
+
                 for (var i = 0; i < modalContainer.childNodes.length; i++) {
                     var n = modalContainer.childNodes[i], isCurrent = n.classList.contains('current'),
                         widget = n.hfWidgetInstance;
@@ -209,7 +221,7 @@ void function (document, window, $) {
                     htmlElement.classList.add('modal-open');
                     // save current scrollTop:
                     var scrollTop = window.pageYOffset,
-                        c = self.dataMainPageContainer
+                        c = self.dataMainPageContainer;
                     self.currentScrollTop = scrollTop;
                     if(c) {
                         c.style.top = scrollTop*-1 + 'px';
@@ -349,6 +361,9 @@ void function (document, window, $) {
                             element.id = FlexCss.guid();
                             // Setup modal as widget to widget instance:
                             widget.setWidget(element);
+
+
+
                             f = $.Deferred().resolve(element);
                         }
                         return f;
@@ -370,6 +385,8 @@ void function (document, window, $) {
                 return future.then(function (el) {
                     el.hfWidgetInstance = widget;
                     el.hfContainerInstance = self;
+
+
                     modalContainer.appendChild(el);
                     modalContainerClasses.remove('loading');
                     loading = false;
@@ -387,6 +404,8 @@ void function (document, window, $) {
              * @param {Boolean} [internal], set to true to prevent container management
              */
             this.open = function(modal, internal) {
+
+
                 if(!internal) {
                     modalContainer.classList.add('open');
                     handleScrollbar();
