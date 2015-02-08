@@ -1,4 +1,5 @@
 /*global Form*/
+
 import Tooltip from 'Tooltip';
 import $ from 'jquery';
 
@@ -16,8 +17,6 @@ const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 
 export default
 class Form {
-
-
     /**
      * @param {HTMLElement} form
      * @param [options] optional options

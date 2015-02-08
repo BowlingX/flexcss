@@ -26,7 +26,7 @@ var concat = require('gulp-concat'),
 var sass = require('gulp-sass');
 
 var paths = {
-    scripts: ['src/main/*.js'],
+    scripts: ['src/main/**/*.js'],
     tests:['src/test/**/*.js'],
     images: ['assets/img/**/*', 'themes/img/**/*'],
     fonts: 'assets/fonts/**/*',
@@ -57,13 +57,16 @@ gulp.task('compileScriptsWithDependencies', function () {
     var path = require("path");
     var webpackInst = require("webpack");
 
+    var config = Object.create(webpackConfig);
+    config.watch = argv.watch;
+
     return gulp.src(paths.scripts)
         .pipe(plumber({
             errorHandler: onError
         }))
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(webpack(webpackConfig))
+        .pipe(webpack(config))
         .pipe(gulp.dest('build/js'))
 
 });
