@@ -32,7 +32,6 @@ class Form {
         this.form = form;
 
         /**
-         *
          * @type {Tooltip}
          */
         this.tooltips = null;
