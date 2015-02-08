@@ -1,12 +1,9 @@
 module.exports = function (config) {
     config.set({
-
-        basePath: '',
-
+        basePath: '.',
         frameworks: ['jasmine'],
-
         browsers: ['Chrome'],
-        preprocessors: {'**/*.js': ['webpack']},
+        preprocessors: {'./src/**/*.js': ['webpack']},
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',

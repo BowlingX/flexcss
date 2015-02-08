@@ -26,7 +26,8 @@ var concat = require('gulp-concat'),
 var sass = require('gulp-sass');
 
 var paths = {
-    scripts: ['src/**/*.js'],
+    scripts: ['src/main/*.js'],
+    tests:['src/test/**/*.js'],
     images: ['assets/img/**/*', 'themes/img/**/*'],
     fonts: 'assets/fonts/**/*',
     sassThemes: 'examples/**/*.scss',
@@ -67,12 +68,11 @@ gulp.task('compileScriptsWithDependencies', function () {
 
 });
 
-// run tests, will pipe bower dependencies, local vendor scripts and all app files to karma
+// setup tests
 gulp.task('test', function () {
-    var jsFilter = gulpFilter('*.js');
     var config = Object.create(webpackConfig);
     config.watch = false;
-    return gulp.src(paths.scripts)
+    return gulp.src(paths.tests)
         .pipe(karma({
             configFile: paths.karmaConfig,
             action: argv.watch ? 'watch' : 'run',

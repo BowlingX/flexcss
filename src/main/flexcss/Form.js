@@ -1,4 +1,5 @@
-import Tooltip from './Tooltip.js';
+/*global Form*/
+import Tooltip from 'Tooltip';
 import $ from 'jquery';
 
 const ERROR_CLASS_NAME = 'form-error';
@@ -22,6 +23,8 @@ class Form {
      * @param [options] optional options
      */
     constructor(form, options) {
+
+        console.assert(form instanceof HTMLElement, 'argument form needs to be an html element');
 
         /**
          * The Form
@@ -208,7 +211,7 @@ class Form {
         if (!this._validators[validationRef]) {
             throw 'Could not found validator: ' + validationRef;
         }
-        var cl = field.classList, future = this._validators[validationRef].apply(this, [field, form]);
+        var cl = field.classList, future = this._validators[validationRef].apply(this, [field, this.form]);
         cl.add(LOADING_CLASS);
         future.always(function () {
             cl.remove(LOADING_CLASS);
@@ -258,7 +261,7 @@ class Form {
      * @returns {Form}
      */
     removeErrors() {
-        this._removeElementErrors(form);
+        this._removeElementErrors(this.form);
         return this;
     }
 
@@ -269,7 +272,7 @@ class Form {
      */
     prepareErrors(fields, removeAllErrors) {
         if (removeAllErrors) {
-            this._removeElementErrors(form);
+            this._removeElementErrors(this.form);
         }
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
@@ -368,7 +371,7 @@ class Form {
 
         if (!this.tooltips && this.options.createTooltips) {
 
-            this.tooltips = new Tooltip(form, {
+            this.tooltips = new Tooltip(this.form, {
                 containerClass: 'error-tooltip'
             });
         }
