@@ -4,10 +4,16 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
         browsers: ['Chrome'],
         preprocessors: {'./src/**/*.js': ['webpack']},
+        reporters: ['progress', 'coverage'],
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/'
+        },
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
             'karma-junit-reporter',
+            'karma-coverage',
             require("karma-webpack")
         ],
         webpackMiddleware: {

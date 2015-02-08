@@ -44,7 +44,7 @@ class Tooltip {
      * Creates and shows a tooltip
      * @param {HTMLElement} target where is this tooltip positioned
      * @param {String} text text content in tooltip, will be NOT escaped
-     * @param {Boolean} removeTitle, removes title element if given
+     * @param {Boolean} removeTitle removes title element if given
      */
     createTooltip(target, text, removeTitle) {
         // abort if text is empty
@@ -58,6 +58,7 @@ class Tooltip {
             tooltipContainer = doc.createElement('div');
             tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
             this.container.appendChild(tooltipContainer);
+            this.tooltipContainer = tooltipContainer;
         }
         tooltipContainer.style.left = 'auto';
         tooltipContainer.style.top = 'auto';

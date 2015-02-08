@@ -6,3 +6,4 @@ css/*.css
 css/*.map
 scripts/min
 node_modules
+coverage

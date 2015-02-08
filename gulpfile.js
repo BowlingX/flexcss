@@ -19,15 +19,13 @@ var concat = require('gulp-concat'),
     connect = require('gulp-connect'), plumber = require('gulp-plumber'),
     gutil = require('gulp-util'), postcss = require('gulp-postcss'),
     csswring = require('csswring'), webpack = require('gulp-webpack'),
-     webpackConfig = require("./webpack.config.js"), karma = require('gulp-karma'),
-    addsrc = require('gulp-add-src'),
-    gulpIgnore = require('gulp-ignore');
+    webpackConfig = require("./webpack.config.js"), karma = require('gulp-karma');
 
 var sass = require('gulp-sass');
 
 var paths = {
-    scripts: ['src/main/**/*.js'],
-    tests:['src/test/**/*.js'],
+    exports: ['src/export.js'],
+    tests: ['src/test/**/*.js'],
     images: ['assets/img/**/*', 'themes/img/**/*'],
     fonts: 'assets/fonts/**/*',
     sassThemes: 'examples/**/*.scss',
@@ -55,12 +53,11 @@ gulp.task('scriptsWithDependencies', ['clean'], function () {
 
 gulp.task('compileScriptsWithDependencies', function () {
     var path = require("path");
-    var webpackInst = require("webpack");
 
     var config = Object.create(webpackConfig);
     config.watch = argv.watch;
 
-    return gulp.src(paths.scripts)
+    return gulp.src(paths.exports)
         .pipe(plumber({
             errorHandler: onError
         }))
@@ -68,7 +65,6 @@ gulp.task('compileScriptsWithDependencies', function () {
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(webpack(config))
         .pipe(gulp.dest('build/js'))
-
 });
 
 // setup tests
@@ -79,7 +75,7 @@ gulp.task('test', function () {
         .pipe(karma({
             configFile: paths.karmaConfig,
             action: argv.watch ? 'watch' : 'run',
-            reporters: argv.writeTestResults ? ['progress', 'junit'] : ['progress']
+            reporters: argv.writeTestResults ? ['progress', 'junit', 'coverage'] : ['progress', 'coverage']
         }))
         .on('error', function (err) {
             // Make sure failed tests cause gulp to exit non-zero

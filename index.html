@@ -1121,8 +1121,10 @@
 <script type="application/javascript">
 
     (function (document) {
+        FlexCss.Form.init('form');
+
         // Setup Handler for Navigation bars:
-        FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
+       /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
 
         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
@@ -1174,7 +1176,8 @@
                 def.resolve(document.getElementById('async-tab'));
             }, 2000);
             return def;
-        });
+        });*/
+
     })(document);
 
     /*new FlexCss.Modal('SiteBody').fromWidget(

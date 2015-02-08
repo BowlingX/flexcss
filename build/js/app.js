@@ -54,9 +54,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = __webpack_require__(2);
+	/* WEBPACK VAR INJECTION */(function(to5Runtime) {"use strict";
 
+	var Form = to5Runtime.interopRequire(__webpack_require__(1));
+
+	var Tooltip = to5Runtime.interopRequire(__webpack_require__(2));
+
+	module.exports = {
+	    Form: Form,
+	    Tooltip: Tooltip
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 1 */
@@ -64,9 +72,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(to5Runtime) {"use strict";
 
-	var _core = __webpack_require__(3);
+	var _core = __webpack_require__(4);
 
-	/*global Form*/
+	/*global Form, HTMLFormElement*/
 
 	var Tooltip = to5Runtime.interopRequire(__webpack_require__(2));
 
@@ -92,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Form(form, options) {
 	        to5Runtime.classCallCheck(this, Form);
 
-	        console.assert(form instanceof HTMLElement, "argument form needs to be an html element");
+	        console.assert(form instanceof HTMLFormElement, "argument {0} form needs to be an form element");
 
 	        /**
 	         * The Form
@@ -529,9 +537,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	             * This form
 	             * @returns {HTMLElement}
 	             */
-	            get: function () {
+	            value: function getForm() {
 	                return this.form;
 	            },
+	            writable: true,
 	            configurable: true
 	        },
 	        registerRemoteValidation: {
@@ -556,8 +565,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	             * @param {Boolean} [remove]
 	             */
 	            value: function showAndOrCreateTooltip(target, remove) {
+	                var self = this;
 	                if (!this.tooltips && this.options.createTooltips) {
-	                    this.tooltips = new Tooltip(this.form, {
+	                    this.tooltips = new Tooltip(this.getForm(), {
 	                        containerClass: "error-tooltip"
 	                    });
 	                }
@@ -571,10 +581,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        return;
 	                    }
 	                    if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-	                        this.tooltips.createTooltip(target, Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+	                        self.tooltips.createTooltip(target, Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
 	                    } else {
 	                        if (remove) {
-	                            this.tooltips.removeTooltip(target);
+	                            self.tooltips.removeTooltip(target);
 	                        }
 	                    }
 	                }, 0);
@@ -776,7 +786,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Form.globalRemoteValidationFunction = function () {};
 
 	Form.globalErrorMessageHandler = function () {};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 2 */
@@ -784,7 +794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(to5Runtime) {"use strict";
 
-	var _core = __webpack_require__(3);
+	var _core = __webpack_require__(4);
 
 	var CLASS_NAMES_TOOLTIP = "tooltip-container";
 	var CLASS_NAMES_TOP = "arrow-top";
@@ -833,7 +843,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	             * Creates and shows a tooltip
 	             * @param {HTMLElement} target where is this tooltip positioned
 	             * @param {String} text text content in tooltip, will be NOT escaped
-	             * @param {Boolean} removeTitle, removes title element if given
+	             * @param {Boolean} removeTitle removes title element if given
 	             */
 	            value: function createTooltip(target, text, removeTitle) {
 	                // abort if text is empty
@@ -847,6 +857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    tooltipContainer = doc.createElement("div");
 	                    tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
 	                    this.container.appendChild(tooltipContainer);
+	                    this.tooltipContainer = tooltipContainer;
 	                }
 	                tooltipContainer.style.left = "auto";
 	                tooltipContainer.style.top = "auto";
@@ -928,10 +939,162 @@ return /******/ (function(modules) { // webpackBootstrap
 	})();
 
 	module.exports = Tooltip;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var global = {};
+
+	"use strict";
+
+	var _core = __webpack_require__(4);
+
+	(function (global) {
+	  var to5Runtime = global.to5Runtime = {};to5Runtime.inherits = function (subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	  };to5Runtime.defaults = function (obj, defaults) {
+	    for (var key in defaults) {
+	      if (obj[key] === undefined) {
+	        obj[key] = defaults[key];
+	      }
+	    }return obj;
+	  };to5Runtime.prototypeProperties = function (child, staticProps, instanceProps) {
+	    if (staticProps) Object.defineProperties(child, staticProps);if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
+	  };to5Runtime.applyConstructor = function (Constructor, args) {
+	    var instance = Object.create(Constructor.prototype);var result = Constructor.apply(instance, args);return result != null && (typeof result == "object" || typeof result == "function") ? result : instance;
+	  };to5Runtime.taggedTemplateLiteral = function (strings, raw) {
+	    return _core.Object.freeze(Object.defineProperties(strings, { raw: { value: _core.Object.freeze(raw) } }));
+	  };to5Runtime.taggedTemplateLiteralLoose = function (strings, raw) {
+	    strings.raw = raw;return strings;
+	  };to5Runtime.interopRequire = function (obj) {
+	    return obj && obj.__esModule ? obj["default"] : obj;
+	  };to5Runtime.toArray = function (arr) {
+	    return Array.isArray(arr) ? arr : _core.Array.from(arr);
+	  };to5Runtime.slicedToArray = function (arr, i) {
+	    if (Array.isArray(arr)) {
+	      return arr;
+	    } else {
+	      var _arr = [];for (var _iterator = _core.$for.getIterator(arr), _step; !(_step = _iterator.next()).done;) {
+	        _arr.push(_step.value);if (i && _arr.length === i) break;
+	      }return _arr;
+	    }
+	  };to5Runtime.objectWithoutProperties = function (obj, keys) {
+	    var target = {};for (var i in obj) {
+	      if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+	    }return target;
+	  };to5Runtime.hasOwn = Object.prototype.hasOwnProperty;to5Runtime.slice = Array.prototype.slice;to5Runtime.bind = Function.prototype.bind;to5Runtime.defineProperty = function (obj, key, value) {
+	    return Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+	  };to5Runtime.asyncToGenerator = function (fn) {
+	    return function () {
+	      var gen = fn.apply(this, arguments);return new _core.Promise(function (resolve, reject) {
+	        var callNext = step.bind(null, "next");var callThrow = step.bind(null, "throw");function step(key, arg) {
+	          try {
+	            var info = gen[key](arg);var value = info.value;
+	          } catch (error) {
+	            reject(error);return;
+	          }if (info.done) {
+	            resolve(value);
+	          } else {
+	            _core.Promise.resolve(value).then(callNext, callThrow);
+	          }
+	        }callNext();
+	      });
+	    };
+	  };to5Runtime.interopRequireWildcard = function (obj) {
+	    return obj && obj.__esModule ? obj : { "default": obj };
+	  };to5Runtime._typeof = function (obj) {
+	    return obj && obj.constructor === _core.Symbol ? "symbol" : typeof obj;
+	  };to5Runtime._extends = _core.Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	      var source = arguments[i];for (var key in source) {
+	        if (Object.prototype.hasOwnProperty.call(source, key)) {
+	          target[key] = source[key];
+	        }
+	      }
+	    }return target;
+	  };to5Runtime.get = function get(object, property, receiver) {
+	    var _arguments = arguments,
+	        _this = this,
+	        _shouldContinue,
+	        _result;
+	    do {
+	      _shouldContinue = false;
+	      _result = (function (object, property, receiver) {
+	        var desc = _core.Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	          var parent = _core.Object.getPrototypeOf(object);if (parent === null) {
+	            return undefined;
+	          } else {
+	            _arguments = [parent, property, receiver];
+	            _this = undefined;
+	            return _shouldContinue = true;
+	          }
+	        } else if ("value" in desc && desc.writable) {
+	          return desc.value;
+	        } else {
+	          var getter = desc.get;if (getter === undefined) {
+	            return undefined;
+	          }return getter.call(receiver);
+	        }
+	      }).apply(_this, _arguments);
+	    } while (_shouldContinue);
+	    return _result;
+	  };to5Runtime.set = function set(object, property, value, receiver) {
+	    var _arguments = arguments,
+	        _this = this,
+	        _shouldContinue,
+	        _result;
+	    do {
+	      _shouldContinue = false;
+	      _result = (function (object, property, value, receiver) {
+	        var desc = _core.Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	          var parent = _core.Object.getPrototypeOf(object);if (parent !== null) {
+	            _arguments = [parent, property, value, receiver];
+	            _this = undefined;
+	            return _shouldContinue = true;
+	          }
+	        } else if ("value" in desc && desc.writable) {
+	          return desc.value = value;
+	        } else {
+	          var setter = desc.set;if (setter !== undefined) {
+	            return setter.call(receiver, value);
+	          }
+	        }
+	      }).apply(_this, _arguments);
+	    } while (_shouldContinue);
+	    return _result;
+	  };to5Runtime.classCallCheck = function (instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
+	    }
+	  };to5Runtime.objectDestructuringEmpty = function (obj) {
+	    if (obj == null) throw new TypeError("Cannot destructure undefined");
+	  };to5Runtime.temporalUndefined = {};to5Runtime.temporalAssertDefined = function (val, name, undef) {
+	    if (val === undef) {
+	      throw new ReferenceError(name + " is not defined - temporal dead zone");
+	    }return true;
+	  };to5Runtime.tailCall = (function () {
+	    function Tail(func, args, context) {
+	      this.func = func;this.args = args;this.context = context;
+	    }Tail.prototype._isTailDescriptor = true;var isRunning = false;return function (func, args, context) {
+	      var result = new Tail(func, args, context);if (!isRunning) {
+	        isRunning = true;do {
+	          result = result.func.apply(result.context, result.args);
+	        } while (result instanceof Tail || result && result._isTailDescriptor);isRunning = false;
+	      }return result;
+	    };
+	  })();
+	})(typeof global === "undefined" ? self : global);
+
+	/*** EXPORTS FROM exports-loader ***/
+	module.exports = global.to5Runtime
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3226,158 +3389,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  })(/\b\w\w?\b/g, /:(.*)\|(.*)$/, {}, "en", "Seconds", "Minutes", "Hours", "Month", "FullYear");
 	})(typeof self != "undefined" && self.Math === Math ? self : Function("return this")(), false);
 	/* ...args */ /* ...args */ /* ...args */ /* ...args */ /* ...args */ /* ...args */
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*** IMPORTS FROM imports-loader ***/
-	var global = {};
-
-	"use strict";
-
-	var _core = __webpack_require__(3);
-
-	(function (global) {
-	  var to5Runtime = global.to5Runtime = {};to5Runtime.inherits = function (subClass, superClass) {
-	    if (typeof superClass !== "function" && superClass !== null) {
-	      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	  };to5Runtime.defaults = function (obj, defaults) {
-	    for (var key in defaults) {
-	      if (obj[key] === undefined) {
-	        obj[key] = defaults[key];
-	      }
-	    }return obj;
-	  };to5Runtime.prototypeProperties = function (child, staticProps, instanceProps) {
-	    if (staticProps) Object.defineProperties(child, staticProps);if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-	  };to5Runtime.applyConstructor = function (Constructor, args) {
-	    var instance = Object.create(Constructor.prototype);var result = Constructor.apply(instance, args);return result != null && (typeof result == "object" || typeof result == "function") ? result : instance;
-	  };to5Runtime.taggedTemplateLiteral = function (strings, raw) {
-	    return _core.Object.freeze(Object.defineProperties(strings, { raw: { value: _core.Object.freeze(raw) } }));
-	  };to5Runtime.taggedTemplateLiteralLoose = function (strings, raw) {
-	    strings.raw = raw;return strings;
-	  };to5Runtime.interopRequire = function (obj) {
-	    return obj && obj.__esModule ? obj["default"] : obj;
-	  };to5Runtime.toArray = function (arr) {
-	    return Array.isArray(arr) ? arr : _core.Array.from(arr);
-	  };to5Runtime.slicedToArray = function (arr, i) {
-	    if (Array.isArray(arr)) {
-	      return arr;
-	    } else {
-	      var _arr = [];for (var _iterator = _core.$for.getIterator(arr), _step; !(_step = _iterator.next()).done;) {
-	        _arr.push(_step.value);if (i && _arr.length === i) break;
-	      }return _arr;
-	    }
-	  };to5Runtime.objectWithoutProperties = function (obj, keys) {
-	    var target = {};for (var i in obj) {
-	      if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-	    }return target;
-	  };to5Runtime.hasOwn = Object.prototype.hasOwnProperty;to5Runtime.slice = Array.prototype.slice;to5Runtime.bind = Function.prototype.bind;to5Runtime.defineProperty = function (obj, key, value) {
-	    return Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
-	  };to5Runtime.asyncToGenerator = function (fn) {
-	    return function () {
-	      var gen = fn.apply(this, arguments);return new _core.Promise(function (resolve, reject) {
-	        var callNext = step.bind(null, "next");var callThrow = step.bind(null, "throw");function step(key, arg) {
-	          try {
-	            var info = gen[key](arg);var value = info.value;
-	          } catch (error) {
-	            reject(error);return;
-	          }if (info.done) {
-	            resolve(value);
-	          } else {
-	            _core.Promise.resolve(value).then(callNext, callThrow);
-	          }
-	        }callNext();
-	      });
-	    };
-	  };to5Runtime.interopRequireWildcard = function (obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
-	  };to5Runtime._typeof = function (obj) {
-	    return obj && obj.constructor === _core.Symbol ? "symbol" : typeof obj;
-	  };to5Runtime._extends = _core.Object.assign || function (target) {
-	    for (var i = 1; i < arguments.length; i++) {
-	      var source = arguments[i];for (var key in source) {
-	        if (Object.prototype.hasOwnProperty.call(source, key)) {
-	          target[key] = source[key];
-	        }
-	      }
-	    }return target;
-	  };to5Runtime.get = function get(object, property, receiver) {
-	    var _arguments = arguments,
-	        _this = this,
-	        _shouldContinue,
-	        _result;
-	    do {
-	      _shouldContinue = false;
-	      _result = (function (object, property, receiver) {
-	        var desc = _core.Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-	          var parent = _core.Object.getPrototypeOf(object);if (parent === null) {
-	            return undefined;
-	          } else {
-	            _arguments = [parent, property, receiver];
-	            _this = undefined;
-	            return _shouldContinue = true;
-	          }
-	        } else if ("value" in desc && desc.writable) {
-	          return desc.value;
-	        } else {
-	          var getter = desc.get;if (getter === undefined) {
-	            return undefined;
-	          }return getter.call(receiver);
-	        }
-	      }).apply(_this, _arguments);
-	    } while (_shouldContinue);
-	    return _result;
-	  };to5Runtime.set = function set(object, property, value, receiver) {
-	    var _arguments = arguments,
-	        _this = this,
-	        _shouldContinue,
-	        _result;
-	    do {
-	      _shouldContinue = false;
-	      _result = (function (object, property, value, receiver) {
-	        var desc = _core.Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-	          var parent = _core.Object.getPrototypeOf(object);if (parent !== null) {
-	            _arguments = [parent, property, value, receiver];
-	            _this = undefined;
-	            return _shouldContinue = true;
-	          }
-	        } else if ("value" in desc && desc.writable) {
-	          return desc.value = value;
-	        } else {
-	          var setter = desc.set;if (setter !== undefined) {
-	            return setter.call(receiver, value);
-	          }
-	        }
-	      }).apply(_this, _arguments);
-	    } while (_shouldContinue);
-	    return _result;
-	  };to5Runtime.classCallCheck = function (instance, Constructor) {
-	    if (!(instance instanceof Constructor)) {
-	      throw new TypeError("Cannot call a class as a function");
-	    }
-	  };to5Runtime.objectDestructuringEmpty = function (obj) {
-	    if (obj == null) throw new TypeError("Cannot destructure undefined");
-	  };to5Runtime.temporalUndefined = {};to5Runtime.temporalAssertDefined = function (val, name, undef) {
-	    if (val === undef) {
-	      throw new ReferenceError(name + " is not defined - temporal dead zone");
-	    }return true;
-	  };to5Runtime.tailCall = (function () {
-	    function Tail(func, args, context) {
-	      this.func = func;this.args = args;this.context = context;
-	    }Tail.prototype._isTailDescriptor = true;var isRunning = false;return function (func, args, context) {
-	      var result = new Tail(func, args, context);if (!isRunning) {
-	        isRunning = true;do {
-	          result = result.func.apply(result.context, result.args);
-	        } while (result instanceof Tail || result && result._isTailDescriptor);isRunning = false;
-	      }return result;
-	    };
-	  })();
-	})(typeof global === "undefined" ? self : global);
-
-	/*** EXPORTS FROM exports-loader ***/
-	module.exports = global.to5Runtime
 
 /***/ },
 /* 5 */

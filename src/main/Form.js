@@ -1,4 +1,4 @@
-/*global Form*/
+/*global Form, HTMLFormElement*/
 
 import Tooltip from 'Tooltip';
 import $ from 'jquery';
@@ -23,7 +23,7 @@ class Form {
      */
     constructor(form, options) {
 
-        console.assert(form instanceof HTMLElement, 'argument form needs to be an html element');
+        console.assert(form instanceof HTMLFormElement, 'argument {0} form needs to be an form element');
 
         /**
          * The Form
@@ -368,9 +368,9 @@ class Form {
      */
     showAndOrCreateTooltip(target, remove) {
 
+        var self = this;
         if (!this.tooltips && this.options.createTooltips) {
-
-            this.tooltips = new Tooltip(this.form, {
+            this.tooltips = new Tooltip(this.getForm(), {
                 containerClass: 'error-tooltip'
             });
         }
@@ -384,11 +384,11 @@ class Form {
                 return;
             }
             if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                this.tooltips.createTooltip(target,
+                self.tooltips.createTooltip(target,
                     Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
             } else {
                 if (remove) {
-                    this.tooltips.removeTooltip(target);
+                    self.tooltips.removeTooltip(target);
                 }
             }
         }, 0);
@@ -467,8 +467,7 @@ class Form {
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-            !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
@@ -564,7 +563,7 @@ class Form {
      * Registers a global event Handler
      * @param errorFunc
      */
-    static registerErrorMessageHandler (errorFunc) {
+    static registerErrorMessageHandler(errorFunc) {
         Form.globalErrorMessageHandler = errorFunc;
     }
 

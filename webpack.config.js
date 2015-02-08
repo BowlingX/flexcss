@@ -5,7 +5,12 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.js$/, loader: '6to5-loader?experimental&runtime&optional=selfContained'}
-        ]
+        ],
+        postLoaders: [{ //
+            test: /\.js$/,
+            exclude: /(test|node_modules|bower_components)\//,
+            loader: 'istanbul-instrumenter'
+        }]
     },
     resolve: {
         // add bower components and main source to resolved paths
