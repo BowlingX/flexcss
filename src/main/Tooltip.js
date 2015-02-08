@@ -4,7 +4,7 @@ const CLASS_NAMES_BOTTOM = 'arrow-bottom';
 const CLASS_NAMES_OPEN = 'open';
 var doc = document;
 
-export class Tooltip {
+export default class Tooltip {
 
     /**
      * Creates a Tooltip

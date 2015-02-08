@@ -15,7 +15,7 @@ const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
  * A HTML5 Form Validation replacement
  */
 
-export class Form {
+export default class Form {
     /**
      * @param {HTMLElement} form
      * @param [options] optional options
