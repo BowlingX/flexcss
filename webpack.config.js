@@ -9,7 +9,7 @@ module.exports = {
     },
     resolve: {
         // add bower components and main source to resolved paths
-        root: [path.join(__dirname, "bower_components"), path.join(__dirname, 'src/main/flexcss')]
+        root: [path.join(__dirname, "bower_components"), path.join(__dirname, 'src/main')]
     },
     output: {
         filename: 'app.js',

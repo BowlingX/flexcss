@@ -336,7 +336,7 @@ class Form {
      * This form
      * @returns {HTMLElement}
      */
-    get getForm() {
+    getForm() {
         return this.form;
     }
 
