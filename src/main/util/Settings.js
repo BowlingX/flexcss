@@ -2,7 +2,7 @@
  * Global Settings
  */
 let GLOBAL_SETTINGS = {
-    //
+    // defined breakpoint for small devices < n
     smallBreakpoint: 768,
     // nodes that should be updated when no scrollbar is expected
     scrollbarUpdateNodes: [global.document.body],

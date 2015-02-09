@@ -15,7 +15,8 @@ const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
  * A HTML5 Form Validation replacement
  */
 
-export default class Form {
+export default
+class Form {
     /**
      * @param {HTMLElement} form
      * @param [options] optional options
@@ -35,6 +36,10 @@ export default class Form {
          */
         this.tooltips = null;
 
+        /**
+         * Default options
+         * @type {Object}
+         */
         this.options = {
             // if true creates tooltips above element, uses FlexCss Tooltips
             createTooltips: true,
@@ -392,6 +397,33 @@ export default class Form {
         }, 0);
     }
 
+    /**
+     * Handles invalid event of a form
+     * @param {Event} e
+     * @returns {$.Deferred|boolean}
+     * @private
+     */
+    _checkIsInvalid(e) {
+        e.preventDefault();
+        var invalidFields = this.getForm().querySelectorAll(":invalid"), self = this;
+        var arr = Form._createArrayFromInvalidFieldList(invalidFields);
+        // Prevent fire this N times:
+        if (arr.indexOf(e.target) > 0) {
+            return false;
+        }
+        // focus the first field:
+        if (arr.length > 0) {
+            setTimeout(function () {
+                arr[0].focus();
+                self.showAndOrCreateTooltip(arr[0]);
+            }, 0);
+        }
+
+        var validation = self.validateCustomFields();
+        this.prepareErrors(arr, true);
+        return validation;
+    }
+
 
     /**
      * Initializes validation for a given form, registers event handlers
@@ -400,30 +432,15 @@ export default class Form {
         // Suppress the default bubbles
         var form = this.getForm(), invalidFormFired = false, currentValidationFuture, self = this;
         form.addEventListener("invalid", function (e) {
-            e.preventDefault();
-            var invalidFields = form.querySelectorAll(":invalid");
-            var arr = Form._createArrayFromInvalidFieldList(invalidFields);
-            // Prevent fire this N times:
-            if (arr.indexOf(e.target) > 0) {
-                return;
+            var result = self._checkIsInvalid(e);
+            if (result) {
+                currentValidationFuture = $.Deferred();
+                result.done(function (r) {
+                    self.prepareErrors(r.checkedFields, false);
+                    currentValidationFuture.resolve(r);
+                    invalidFormFired = false;
+                });
             }
-            // focus the first field:
-            if (arr.length > 0) {
-                setTimeout(function () {
-                    arr[0].focus();
-                    self.showAndOrCreateTooltip(arr[0]);
-                }, 0);
-            }
-            currentValidationFuture = $.Deferred();
-
-            var validation = self.validateCustomFields();
-            self.prepareErrors(arr, true);
-            validation.done(function (r) {
-                self.prepareErrors(r.checkedFields, false);
-                currentValidationFuture.resolve(r);
-                invalidFormFired = false;
-            });
-
         }, true);
 
         // handle focus out for text elements
