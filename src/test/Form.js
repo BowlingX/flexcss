@@ -15,3 +15,15 @@ describe("Construct a Form Element", function() {
         expect(form.options.appendError).toBe(true);
     })
 });
+
+describe("Sumit a Form", function(){
+
+    it("Just submit an empty form", function(){
+        var htmlForm = document.createElement('form');
+        var requiredInput = document.createElement('input');
+        requiredInput.setAttribute('required', 'required');
+        htmlForm.appendChild(requiredInput);
+        var form = new Form(htmlForm);
+        htmlForm.submit();
+    });
+});

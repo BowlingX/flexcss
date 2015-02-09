@@ -1,7 +1,7 @@
 module.exports = function (config) {
     config.set({
         basePath: '.',
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine-jquery', 'jasmine'],
         browsers: ['Chrome'],
         preprocessors: {'./src/**/*.js': ['webpack']},
         reporters: ['progress', 'coverage'],
@@ -12,6 +12,7 @@ module.exports = function (config) {
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
+            'karma-jasmine-jquery',
             'karma-junit-reporter',
             'karma-coverage',
             require("karma-webpack")
