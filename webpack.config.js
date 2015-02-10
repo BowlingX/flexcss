@@ -14,7 +14,9 @@ module.exports = {
     },
     resolve: {
         // add bower components and main source to resolved
-        root: [path.join(__dirname, "bower_components"), path.join(__dirname, 'src/main'), path.join(__dirname, 'src/test_helpers')]
+        root: [path.join(__dirname, "bower_components"),
+            path.join(__dirname, 'src/main'),
+            path.join(__dirname, 'src/test_helpers')]
     },
     output: {
         filename: 'app.js',
