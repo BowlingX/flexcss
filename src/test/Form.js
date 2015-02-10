@@ -1,4 +1,7 @@
 import Form from 'Form';
+import setup_jasmine from 'setup_jasmine';
+import $ from 'jquery';
+setup_jasmine();
 
 describe("Construct a Form Element", function() {
     it("A valid form object without options needs to be constructed", function() {
@@ -19,11 +22,10 @@ describe("Construct a Form Element", function() {
 describe("Sumit a Form", function(){
 
     it("Just submit an empty form", function(){
-        var htmlForm = document.createElement('form');
-        var requiredInput = document.createElement('input');
-        requiredInput.setAttribute('required', 'required');
-        htmlForm.appendChild(requiredInput);
+        loadFixtures('simple-form.html');
+
+        var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
-        htmlForm.submit();
+        $htmlForm.trigger('submit');
     });
 });

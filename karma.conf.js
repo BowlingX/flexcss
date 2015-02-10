@@ -1,13 +1,22 @@
 module.exports = function (config) {
     config.set({
-        basePath: '.',
+        basePath: '',
+        files: [
+            'src/test/**/*.js',
+            {
+                pattern: 'src/test/fixtures/**/*.html',
+                watched: true,
+                included: false,
+                served: true
+            }
+        ],
         frameworks: ['jasmine-jquery', 'jasmine'],
         browsers: ['Chrome'],
         preprocessors: {'./src/**/*.js': ['webpack']},
         reporters: ['progress', 'coverage'],
         coverageReporter: {
-            type : 'html',
-            dir : 'coverage/'
+            type: 'html',
+            dir: 'coverage/'
         },
         plugins: [
             'karma-chrome-launcher',

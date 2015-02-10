@@ -5,6 +5,11 @@
 
 var gulp = require('gulp');
 
+// serve all plugins under $ and remove gulp prefix
+var $ = require('gulp-load-plugins')({
+    replaceString: /^gulp(-|\.)([0-9]+)?/
+});
+
 // Libraries
 var concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
@@ -71,8 +76,8 @@ gulp.task('compileScriptsWithDependencies', function () {
 gulp.task('test', function () {
     var config = Object.create(webpackConfig);
     config.watch = false;
-    return gulp.src(paths.tests)
-        .pipe(karma({
+    return gulp.src('./doesNotExists')
+        .pipe($.karma({
             configFile: paths.karmaConfig,
             action: argv.watch ? 'watch' : 'run',
             reporters: argv.writeTestResults ? ['progress', 'junit', 'coverage'] : ['progress', 'coverage']
