@@ -37,6 +37,11 @@ class Form {
         this.tooltips = null;
 
         /**
+         * @type {Future}
+         */
+        this.currentValidationFuture = $.Deferred();
+
+        /**
          * Default options
          * @type {Object}
          */
@@ -430,14 +435,14 @@ class Form {
      */
     initFormValidation() {
         // Suppress the default bubbles
-        var form = this.getForm(), invalidFormFired = false, currentValidationFuture, self = this;
+        var form = this.getForm(), invalidFormFired = false, self = this;
         form.addEventListener("invalid", function (e) {
             var result = self._checkIsInvalid(e);
             if (result) {
-                currentValidationFuture = $.Deferred();
+                this.currentValidationFuture = $.Deferred();
                 result.done(function (r) {
                     self.prepareErrors(r.checkedFields, false);
-                    currentValidationFuture.resolve(r);
+                    self.currentValidationFuture.resolve(r);
                     invalidFormFired = false;
                 });
             }
@@ -510,7 +515,7 @@ class Form {
 
         // prevent default if form is invalid
         var submitListener = function (e) {
-            self._submitListener(e, submitListener, currentValidationFuture)
+            self._submitListener(e, submitListener)
         };
         form.addEventListener("submit", submitListener);
     }
@@ -519,11 +524,10 @@ class Form {
      * Listener that is executed on form submit
      * @param e
      * @param submitListener
-     * @param currentValidationFuture
      * @returns {boolean}
      * @private
      */
-    _submitListener(e, submitListener, currentValidationFuture) {
+    _submitListener(e, submitListener) {
 
         var form = this.getForm(), self = this;
 
@@ -540,7 +544,7 @@ class Form {
         if (form.checkValidity()) {
             form.addEventListener("submit", submitListener);
             // Custom validations did never pass
-            currentValidationFuture = $.Deferred();
+            self.currentValidationFuture = $.Deferred();
             var validation = self.validateCustomFields();
             validation.done(function (r) {
                 // focus first invalid field:
@@ -555,9 +559,9 @@ class Form {
                     }
                 }
                 self.prepareErrors(r.checkedFields, false);
-                currentValidationFuture.resolve(r);
+                self.currentValidationFuture.resolve(r);
             });
-            currentValidationFuture.done(function (r) {
+            self.currentValidationFuture.done(function (r) {
                 form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
