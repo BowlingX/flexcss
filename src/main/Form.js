@@ -487,7 +487,8 @@ class Form {
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
+            !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
