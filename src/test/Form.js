@@ -19,13 +19,15 @@ describe("Construct a Form Element", function() {
     })
 });
 
-describe("Sumit a Form", function(){
-
-    it("Just submit an empty form", function(){
+describe("Submit a Form", function(){
+    beforeEach(function(){
         loadFixtures('simple-form.html');
+    });
+
+    it("submit an empty form (no validation)", function(){
 
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
-        $htmlForm.trigger('submit');
+        $('#submit-test-form').trigger('click');
     });
 });

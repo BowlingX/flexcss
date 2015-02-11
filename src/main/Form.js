@@ -510,50 +510,64 @@ class Form {
 
         // prevent default if form is invalid
         var submitListener = function (e) {
-
-            if (form.classList.contains(LOADING_CLASS)) {
-                e.preventDefault();
-                return false;
-            }
-
-            form.classList.add(LOADING_CLASS);
-            form.removeEventListener("submit", submitListener);
-            this._removeElementErrors(form);
-            e.preventDefault();
-            // reset:
-            if (form.checkValidity()) {
-                form.addEventListener("submit", submitListener);
-                // Custom validations did never pass
-                currentValidationFuture = $.Deferred();
-                var validation = self.validateCustomFields();
-                validation.done(function (r) {
-                    // focus first invalid field:
-                    for (var i = 0; i < r.checkedFields.length; i++) {
-                        var f = r.checkedFields[i];
-                        if (!f.validity.valid) {
-                            // Focus element and show tooltip, we explicitly showing tooltip here, because
-                            // element might have focus already
-                            self.showAndOrCreateTooltip(f, true);
-                            f.focus();
-                            break;
-                        }
-                    }
-                    self.prepareErrors(r.checkedFields, false);
-                    currentValidationFuture.resolve(r);
-                });
-                currentValidationFuture.done(function (r) {
-                    form.classList.remove(LOADING_CLASS);
-                    if (!r.foundAnyError) {
-                        // Handle submitting the form to server:
-                        self._handleSubmit(e);
-                    }
-                });
-            } else {
-                form.classList.remove(LOADING_CLASS);
-                form.addEventListener("submit", submitListener);
-            }
+            self._submitListener(e, submitListener, currentValidationFuture)
         };
         form.addEventListener("submit", submitListener);
+    }
+
+    /**
+     * Listener that is executed on form submit
+     * @param e
+     * @param submitListener
+     * @param currentValidationFuture
+     * @returns {boolean}
+     * @private
+     */
+    _submitListener(e, submitListener, currentValidationFuture) {
+
+        var form = this.getForm(), self = this;
+
+        if (form.classList.contains(LOADING_CLASS)) {
+            e.preventDefault();
+            return false;
+        }
+
+        form.classList.add(LOADING_CLASS);
+        form.removeEventListener("submit", submitListener);
+        this._removeElementErrors(form);
+        e.preventDefault();
+        // reset:
+        if (form.checkValidity()) {
+            form.addEventListener("submit", submitListener);
+            // Custom validations did never pass
+            currentValidationFuture = $.Deferred();
+            var validation = self.validateCustomFields();
+            validation.done(function (r) {
+                // focus first invalid field:
+                for (var i = 0; i < r.checkedFields.length; i++) {
+                    var f = r.checkedFields[i];
+                    if (!f.validity.valid) {
+                        // Focus element and show tooltip, we explicitly showing tooltip here, because
+                        // element might have focus already
+                        self.showAndOrCreateTooltip(f, true);
+                        f.focus();
+                        break;
+                    }
+                }
+                self.prepareErrors(r.checkedFields, false);
+                currentValidationFuture.resolve(r);
+            });
+            currentValidationFuture.done(function (r) {
+                form.classList.remove(LOADING_CLASS);
+                if (!r.foundAnyError) {
+                    // Handle submitting the form to server:
+                    self._handleSubmit(e);
+                }
+            });
+        } else {
+            form.classList.remove(LOADING_CLASS);
+            form.addEventListener("submit", submitListener);
+        }
     }
 
 
