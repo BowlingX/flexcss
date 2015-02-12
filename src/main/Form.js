@@ -40,7 +40,7 @@ class Form {
         /**
          * @type {Future}
          */
-        this.currentValidationFuture = $.Deferred();
+        this.currentValidationFuture = new Promise(() => {});
 
         /**
          * Default options
@@ -195,7 +195,7 @@ class Form {
         }
         var cl = field.classList, future = this._validators[validationRef].apply(this, [field, this.form]);
         cl.add(LOADING_CLASS);
-        future.always(function () {
+        future.then(() => {
             cl.remove(LOADING_CLASS);
         });
         return future;
@@ -206,7 +206,7 @@ class Form {
      * Run custom validations for elements, validations are done async do support XHR Requests or other stuff
      *
      * @param {Array|NodeList} fields
-     * @returns {$.Deferred} contains either true if validations passed or false if something went wrong
+     * @returns {Promise} contains either true if validations passed or false if something went wrong
      * @private
      */
     _customValidationsForElements(fields) {
@@ -222,7 +222,7 @@ class Form {
                 futures.push(this._runValidation(validationRef, field));
             }
         }
-        return $.when.apply(this, futures).then(function () {
+        return Promise.all(futures).then(function () {
             var allFutures = arguments, l = allFutures.length;
             var result = {
                 checkedFields: checkedFields,
@@ -234,7 +234,7 @@ class Form {
                     result.foundAnyError = true;
                 }
             }
-            return $.Deferred().resolve(result);
+            return result;
         });
     }
 
@@ -289,7 +289,7 @@ class Form {
 
     /**
      * Validates all custom fields
-     * @returns {$.Deferred}
+     * @returns {Promise}
      */
     validateCustomFields() {
         return this._customValidationsForElements(
@@ -380,7 +380,7 @@ class Form {
     /**
      * Handles invalid event of a form
      * @param {Event} e
-     * @returns {$.Deferred|boolean}
+     * @returns {Promise|boolean}
      * @private
      */
     _checkIsInvalid(e) {
@@ -414,11 +414,12 @@ class Form {
         form.addEventListener("invalid", function (e) {
             var result = self._checkIsInvalid(e);
             if (result) {
-                this.currentValidationFuture = $.Deferred();
-                result.done(function (r) {
-                    self.prepareErrors(r.checkedFields, false);
-                    self.currentValidationFuture.resolve(r);
-                    invalidFormFired = false;
+                this.currentValidationFuture = new Promise((resolve) => {
+                    result.then(function (r) {
+                        self.prepareErrors(r.checkedFields, false);
+                        resolve(r);
+                        invalidFormFired = false;
+                    });
                 });
             }
         }, true);
@@ -438,7 +439,7 @@ class Form {
             if (target.classList.contains(INPUT_ERROR_CLASS)) {
                 hasError = true;
             }
-            self._customValidationsForElements([e.target]).done(function () {
+            self._customValidationsForElements([e.target]).then(function () {
                 self.prepareErrors([e.target], false);
                 if (!hasError) {
                     self.showAndOrCreateTooltip(e.target);
@@ -482,7 +483,7 @@ class Form {
             var name = e.target.getAttribute('name');
             if (name) {
                 var inputs = form.querySelectorAll('[name="' + name + '"]');
-                self._customValidationsForElements(inputs).done(function () {
+                self._customValidationsForElements(inputs).then(function () {
                     self.prepareErrors(inputs, false);
                     self.showAndOrCreateTooltip(e.target, true);
                 });
@@ -520,24 +521,26 @@ class Form {
         if (form.checkValidity()) {
             form.addEventListener("submit", submitListener);
             // Custom validations did never pass
-            self.currentValidationFuture = $.Deferred();
-            var validation = self.validateCustomFields();
-            validation.done(function (r) {
-                // focus first invalid field:
-                for (var i = 0; i < r.checkedFields.length; i++) {
-                    var f = r.checkedFields[i];
-                    if (!f.validity.valid) {
-                        // Focus element and show tooltip, we explicitly showing tooltip here, because
-                        // element might have focus already
-                        self.showAndOrCreateTooltip(f, true);
-                        f.focus();
-                        break;
+            self.currentValidationFuture = new Promise((resolve) => {
+
+                var validation = self.validateCustomFields();
+                validation.then(function (r) {
+                    // focus first invalid field:
+                    for (var i = 0; i < r.checkedFields.length; i++) {
+                        var f = r.checkedFields[i];
+                        if (!f.validity.valid) {
+                            // Focus element and show tooltip, we explicitly showing tooltip here, because
+                            // element might have focus already
+                            self.showAndOrCreateTooltip(f, true);
+                            f.focus();
+                            break;
+                        }
                     }
-                }
-                self.prepareErrors(r.checkedFields, false);
-                self.currentValidationFuture.resolve(r);
+                    self.prepareErrors(r.checkedFields, false);
+                    resolve(r);
+                });
             });
-            self.currentValidationFuture.done(function (r) {
+            self.currentValidationFuture.then(function (r) {
                 form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
