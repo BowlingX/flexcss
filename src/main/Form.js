@@ -88,7 +88,7 @@ class Form {
      * @param {HTMLFormElement} thisForm
      * @param {Event} e
      * @private
-     * @returns {*}
+     * @returns {Promise|boolean}
      */
     _submitFunction(thisForm, e) {
         var shouldUseAjax = thisForm.getAttribute(REMOTE), ajaxPostUrl =
@@ -128,9 +128,7 @@ class Form {
 
         $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e, this, thisForm]);
 
-        serverCall.then(function (r) {
-            return $.Deferred().resolve(r);
-        }).always(function (r) {
+        return serverCall.all(function (r) {
 
             (self._remoteValidationFunction || Form.globalRemoteValidationFunction).apply(self, [r]);
 
