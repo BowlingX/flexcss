@@ -3,14 +3,14 @@ import setup_jasmine from 'setup_jasmine';
 import $ from 'jquery';
 setup_jasmine();
 
-describe("Construct a Form Element", function() {
-    it("A valid form object without options needs to be constructed", function() {
+describe("Construct a Form Element", () => {
+    it("A valid form object without options needs to be constructed", () => {
         var form = new Form(document.createElement('form'));
         expect(form).toBe(form);
     });
 
-    it("A valid form object with overwritten default options needs to be constructed", function(){
-        var form = new Form(document.createElement('form'), {createTooltips:false, appendError:true});
+    it("A valid form object with overwritten default options needs to be constructed", () => {
+        var form = new Form(document.createElement('form'), {createTooltips: false, appendError: true});
         expect(form).toBe(form);
 
         // check created options
@@ -19,26 +19,39 @@ describe("Construct a Form Element", function() {
     })
 });
 
-describe("Submit a simple Form", function(){
-    beforeEach(function(){
+describe("Submit a simple Form", () => {
+    beforeEach(() => {
         loadFixtures('simple-form.html');
     });
 
-    it("submit an empty form (no validation)", function(){
+    it("submit an empty form (no validation)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
         $('#submit-test-form').trigger('click');
+        expect(htmlForm.checkValidity()).toBe(true);
+
     });
 });
 
-describe("Submit a form with validation", function(){
-    beforeEach(function(){
+describe("Submit a form with validation", () => {
+    beforeEach(() => {
         loadFixtures('form-with-validation.html');
     });
 
-    it("submit a form with validation", function(){
+    it("submit a form with validation (invalid)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
         $('#submit-test-form').trigger('click');
+        expect(htmlForm.checkValidity()).toBe(false);
+    });
+});
+
+describe("Submit a form with a custom validator", () => {
+    beforeEach(() => {
+        loadFixtures('form-with-custom-validator.html');
+    });
+
+    it("submit a form with custom validator and fail input", () => {
+
     });
 });
