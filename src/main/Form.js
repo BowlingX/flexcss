@@ -1,17 +1,23 @@
 /*global Form, HTMLFormElement*/
 
 import Tooltip from 'Tooltip';
-import $ from 'jquery';
 import fetch from 'fetch';
+import Event from 'util/Event';
 
-const ERROR_CLASS_NAME = 'form-error';
-const INPUT_ERROR_CLASS = 'invalid';
-const LOADING_CLASS = 'loading';
-const ARIA_INVALID = 'aria-invalid';
-const REMOTE = 'data-remote';
-const REMOTE_ACTION = 'data-remote-action';
-const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
+export const ERROR_CLASS_NAME = 'form-error';
+export const INPUT_ERROR_CLASS = 'invalid';
+export const LOADING_CLASS = 'loading';
+export const ARIA_INVALID = 'aria-invalid';
+export const REMOTE = 'data-remote';
+export const REMOTE_ACTION = 'data-remote-action';
+export const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 
+
+export const EVENT_FORM_READY = 'flexcss.form.ready';
+export const EVENT_FORM_SUBMIT = 'flexcss.form.submit';
+export const EVENT_FORM_AFTER_AJAX_SUBMIT = 'flexcss.form.afterAjaxSubmit';
+export const EVENT_FORM_AJAX_COMPLETED = 'flexcss.form.ajaxCompleted';
+export const EVENT_FORM_BEFORE_SUBMIT = 'flexcss.form.beforeSubmit';
 /**
  * A HTML5 Form Validation replacement
  */
@@ -40,7 +46,8 @@ class Form {
         /**
          * @type {Future}
          */
-        this.currentValidationFuture = new Promise(() => {});
+        this.currentValidationFuture = new Promise(() => {
+        });
 
         /**
          * Default options
@@ -96,8 +103,8 @@ class Form {
                 thisForm.getAttribute('action') || window.location.href,
             useJson = 'json' === shouldUseAjax, self = this;
 
-        var ev = jQuery.Event('flexcss.form.submit');
-        $(thisForm).trigger(ev, [e, this, thisForm]);
+        var ev = Event.dispatch(thisForm, EVENT_FORM_SUBMIT).withOriginal(e).fire();
+
         // abort execution is event was prevented
         if (ev.isDefaultPrevented()) {
             thisForm.classList.remove(LOADING_CLASS);
@@ -120,19 +127,18 @@ class Form {
                 'Content-Type': this.options.ajaxJsonContentType
             },
             method: this.options.ajaxSubmitType,
-            body: JSON.stringify(Form.serializeFormJSON($(thisForm)))
+            body: JSON.stringify(/*Form.serializeFormJSON($(thisForm))*/)
         }) : fetch(ajaxPostUrl, {
             method: this.options.ajaxSubmitType,
             body: new FormData(thisForm)
         });
 
-        $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e, this, thisForm]);
+        Event.dispatch(thisForm, EVENT_FORM_AFTER_AJAX_SUBMIT).withOriginal(e).fire();
 
-        return serverCall.all(function (r) {
-
+        return serverCall.then((r) => {
             (self._remoteValidationFunction || Form.globalRemoteValidationFunction).apply(self, [r]);
 
-            $(thisForm).trigger('flexcss.form.ajaxCompleted', [e, self, thisForm, r]);
+            Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail(r).fire();
             // always remove error class
             thisForm.classList.remove(LOADING_CLASS);
         });
@@ -186,7 +192,7 @@ class Form {
      * Runs async validation
      * @param {String} validationRef
      * @param {HTMLElement} field
-     * @returns {*}
+     * @returns {Promise}
      * @private
      */
     _runValidation(validationRef, field) {
@@ -463,8 +469,7 @@ class Form {
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-            !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
@@ -495,6 +500,8 @@ class Form {
             self._submitListener(e, submitListener)
         };
         form.addEventListener("submit", submitListener);
+
+        Event.dispatchAndFire(form, EVENT_FORM_READY);
     }
 
     /**
@@ -560,11 +567,9 @@ class Form {
      * @private
      */
     _handleSubmit(e) {
-        var obj = {
-            abort: false
-        };
-        $(this.form).trigger('flexcss.form.beforeSubmit', [e, this, this.form, obj]);
-        if (obj.abort === true) {
+        var beforeSubmitEvent = Event.dispatchAndFire(this.form, EVENT_FORM_BEFORE_SUBMIT);
+
+        if (beforeSubmitEvent.isDefaultPrevented()) {
             return false;
         }
         this._submitFunction.apply(this, [this.form, e]);

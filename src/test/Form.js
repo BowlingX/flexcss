@@ -1,4 +1,4 @@
-import Form from 'Form';
+import Form, {EVENT_FORM_READY} from 'Form';
 import setup_jasmine from 'setup_jasmine';
 import $ from 'jquery';
 setup_jasmine();
@@ -37,11 +37,8 @@ describe("Submit a form with validation", function(){
     });
 
     it("submit a form with validation", function(){
-
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
         $('#submit-test-form').trigger('click');
-
-
     });
 });

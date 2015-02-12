@@ -74,8 +74,6 @@ gulp.task('compileScriptsWithDependencies', function () {
 
 // setup tests
 gulp.task('test', function () {
-    var config = Object.create(webpackConfig);
-    config.watch = false;
     return gulp.src('./doesNotExists')
         .pipe($.karma({
             configFile: paths.karmaConfig,
