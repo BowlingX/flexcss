@@ -13,11 +13,27 @@ export const REMOTE_ACTION = 'data-remote-action';
 export const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 
 
+/**
+ * Triggered when form is fully initialized and handlers are binded
+ * @type {string}
+ */
 export const EVENT_FORM_READY = 'flexcss.form.ready';
+/**
+ * Fires when a form is submitted, cancelable
+ * @type {string}
+ */
 export const EVENT_FORM_SUBMIT = 'flexcss.form.submit';
+/**
+ * Fired directly after the form has been submitted via ajax
+ * @type {string}
+ */
 export const EVENT_FORM_AFTER_AJAX_SUBMIT = 'flexcss.form.afterAjaxSubmit';
+/**
+ * Fired when ajax events did complete
+ * @type {string}
+ */
 export const EVENT_FORM_AJAX_COMPLETED = 'flexcss.form.ajaxCompleted';
-export const EVENT_FORM_BEFORE_SUBMIT = 'flexcss.form.beforeSubmit';
+
 /**
  * A HTML5 Form Validation replacement
  */
@@ -30,7 +46,9 @@ class Form {
      */
     constructor(form, options) {
 
-        console.assert(form instanceof HTMLFormElement, 'argument {0} form needs to be an form element');
+        if(!(form instanceof HTMLFormElement)) {
+            throw 'argument {0} form needs to be an form element';
+        }
 
         /**
          * The Form
@@ -44,7 +62,7 @@ class Form {
         this.tooltips = null;
 
         /**
-         * @type {Future}
+         * @type {Promise}
          */
         this.currentValidationFuture = new Promise(() => {
         });
@@ -95,7 +113,7 @@ class Form {
      * @param {HTMLFormElement} thisForm
      * @param {Event} e
      * @private
-     * @returns {Promise|boolean}
+     * @returns {Promise|boolean} returns false if submit is cancled
      */
     _submitFunction(thisForm, e) {
         var shouldUseAjax = thisForm.getAttribute(REMOTE), ajaxPostUrl =
@@ -469,7 +487,8 @@ class Form {
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
+            !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
@@ -567,11 +586,6 @@ class Form {
      * @private
      */
     _handleSubmit(e) {
-        var beforeSubmitEvent = Event.dispatchAndFire(this.form, EVENT_FORM_BEFORE_SUBMIT);
-
-        if (beforeSubmitEvent.isDefaultPrevented()) {
-            return false;
-        }
         this._submitFunction.apply(this, [this.form, e]);
     }
 

@@ -8,7 +8,7 @@ module.exports = {
         ],
         postLoaders: [{ //
             test: /\.js$/,
-            exclude: /(test|node_modules|bower_components)\//,
+            exclude: /(test|node_modules|bower_components|test_helpers)\//,
             loader: 'istanbul-instrumenter'
         }]
     },
