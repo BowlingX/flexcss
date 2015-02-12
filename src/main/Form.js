@@ -2,6 +2,7 @@
 
 import Tooltip from 'Tooltip';
 import $ from 'jquery';
+import fetch from 'fetch';
 
 const ERROR_CLASS_NAME = 'form-error';
 const INPUT_ERROR_CLASS = 'invalid';
@@ -83,30 +84,6 @@ class Form {
     }
 
     /**
-     * Serializes a form to a property map
-     * @param {jQuery} form
-     * @returns {{}}
-     * @private
-     */
-    static serializeFormJSON(form) {
-
-        var o = {};
-        var a = form.serializeArray();
-        $.each(a, function () {
-            if (o[this.name]) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
-    }
-
-
-    /**
      * Submits this form, either via ajax or just classical (default)
      * @param {HTMLFormElement} thisForm
      * @param {Event} e
@@ -138,15 +115,15 @@ class Form {
         e.preventDefault();
 
         // support either JSON request payload or normal payload submission
-        var serverCall = useJson ? $.ajax({
-            contentType: this.options.ajaxJsonContentType,
-            type: this.options.ajaxSubmitType,
-            url: ajaxPostUrl,
-            data: JSON.stringify(Form.serializeFormJSON($(thisForm)))
-        }) : $.ajax({
-            type: this.options.ajaxSubmitType,
-            url: ajaxPostUrl,
-            data: $(thisForm).serialize()
+        var serverCall = useJson ? fetch(ajaxPostUrl, {
+            headers: {
+                'Content-Type': this.options.ajaxJsonContentType
+            },
+            method: this.options.ajaxSubmitType,
+            body: JSON.stringify(Form.serializeFormJSON($(thisForm)))
+        }) : fetch(ajaxPostUrl, {
+            method: this.options.ajaxSubmitType,
+            body: new FormData(thisForm)
         });
 
         $(thisForm).trigger('flexcss.form.afterAjaxSubmit', [e, this, thisForm]);
