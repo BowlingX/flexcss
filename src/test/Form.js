@@ -52,6 +52,9 @@ describe("Submit a form with a custom validator", () => {
     });
 
     it("submit a form with custom validator and fail input", () => {
+        var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
+        var form = new Form(htmlForm);
+        $('#submit-test-form').trigger('click');
 
     });
 });

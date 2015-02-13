@@ -4,13 +4,14 @@ import Tooltip from 'Tooltip';
 import fetch from 'fetch';
 import Event from 'util/Event';
 
-export const ERROR_CLASS_NAME = 'form-error';
-export const INPUT_ERROR_CLASS = 'invalid';
-export const LOADING_CLASS = 'loading';
-export const ARIA_INVALID = 'aria-invalid';
-export const REMOTE = 'data-remote';
-export const REMOTE_ACTION = 'data-remote-action';
-export const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
+const ERROR_CLASS_NAME = 'form-error';
+const INPUT_ERROR_CLASS = 'invalid';
+const LOADING_CLASS = 'loading';
+const ARIA_INVALID = 'aria-invalid';
+const REMOTE = 'data-remote';
+const REMOTE_ACTION = 'data-remote-action';
+const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
+const ATTR_VALIDATOR = 'data-validate';
 
 
 /**
@@ -236,7 +237,7 @@ class Form {
     _customValidationsForElements(fields) {
         var futures = [], fieldsLength = fields.length, checkedFields = [];
         for (var iVal = 0; iVal < fieldsLength; iVal++) {
-            var field = fields[iVal], validationRef = field.getAttribute('data-validate'), validity = field.validity;
+            var field = fields[iVal], validationRef = field.getAttribute(ATTR_VALIDATOR), validity = field.validity;
             if (this._validators[validationRef]) {
                 // use local validation first and then continue with custom validations
                 if (!validity.customError && !validity.valid) {
@@ -244,6 +245,10 @@ class Form {
                 }
                 checkedFields.push(field);
                 futures.push(this._runValidation(validationRef, field));
+            } else {
+                if(validationRef) {
+                    console.warn('data-validate was set but no validator was found');
+                }
             }
         }
         return Promise.all(futures).then(function () {
