@@ -1,3 +1,4 @@
+import Util from 'util/Util';
 /**
  * Global Settings
  */
@@ -27,3 +28,10 @@ export default class Settings {
         return GLOBAL_SETTINGS;
     }
 }
+
+// Settings Statics, used by widgets
+
+// Measure scrollbar width
+Settings.CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
+// detect right transition end event
+Settings.CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
