@@ -6,15 +6,21 @@ import Event from 'util/Event';
 import Util from 'util/Util';
 
 const HTML_ELEMENT = global.document.documentElement;
+
+/* Attribute Names */
 const ATTR_CREATE_NEW = 'data-new-instance';
 const ATTR_CLOSE = 'data-close-modal';
-const CLS_CONTAINER_CURRENT = 'front';
 const ATTR_NAME = 'data-modal';
+
+/* Class names */
+const CLS_CONTAINER_CURRENT = 'front';
 const CLS_OPEN = 'open';
-const CURRENT_CLASS = 'current';
-const PART_OF_STACK_CLASS = 'part-of-stack';
+const CLS_CURRENT = 'current';
+const CLS_PART_OF_STACK = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
 
+
+/* Events */
 const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
 const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
 
@@ -163,8 +169,8 @@ class Modal {
                 var node = self.modalContainer.childNodes[i], cl = node.classList;
                 // remove applied styles
                 node.removeAttribute('style');
-                cl.remove(CURRENT_CLASS);
-                cl.remove(PART_OF_STACK_CLASS);
+                cl.remove(CLS_CURRENT);
+                cl.remove(CLS_PART_OF_STACK);
             }
             if (lastContainer) {
                 lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
@@ -209,12 +215,12 @@ class Modal {
         });
 
         for (var i = 0; i < this.modalContainer.childNodes.length; i++) {
-            var n = this.modalContainer.childNodes[i], isCurrent = n.classList.contains(CURRENT_CLASS);
+            var n = this.modalContainer.childNodes[i], isCurrent = n.classList.contains(CLS_CURRENT);
             if (n === co) {
-                co.classList.add(CURRENT_CLASS);
-                co.classList.remove(PART_OF_STACK_CLASS);
+                co.classList.add(CLS_CURRENT);
+                co.classList.remove(CLS_PART_OF_STACK);
             } else {
-                n.classList.remove(CURRENT_CLASS);
+                n.classList.remove(CLS_CURRENT);
                 if (isCurrent) {
                     this._removeModalFromStack(n);
                     Event.dispatchAndFire(n, EVENT_MODAL_CLOSED);
