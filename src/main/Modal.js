@@ -1,5 +1,10 @@
 /*global KeyboardEvent*/
 
+import Settings from 'util/Settings';
+import $ from 'jquery';
+import Event from 'util/Event';
+import Util from 'util/Util';
+
 const HTML_ELEMENT = global.document.documentElement;
 const ATTR_CREATE_NEW = 'data-new-instance';
 const ATTR_CLOSE = 'data-close-modal';
@@ -9,10 +14,6 @@ const CLS_OPEN = 'open';
 const CURRENT_CLASS = 'current';
 const PART_OF_STACK_CLASS = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
-import Settings from 'util/Settings';
-import $ from 'jquery';
-import Event from 'util/Event';
-import Util from 'util/Util';
 
 const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
 const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
