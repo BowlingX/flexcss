@@ -1,5 +1,5 @@
 /**
- * A Widget is a
+ * A Widget provides async content on a specific target (e.g. a modal link)
  */
 export default
 class Widget {
