@@ -35,3 +35,5 @@ export default class Settings {
 Settings.CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
 // detect right transition end event
 Settings.CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
+
+Settings.CONST_TAB_EVENT = 'click';

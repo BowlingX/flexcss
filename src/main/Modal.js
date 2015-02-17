@@ -4,6 +4,7 @@ import Settings from 'util/Settings';
 import $ from 'jquery';
 import Event from 'util/Event';
 import Util from 'util/Util';
+import Widget from 'Widget';
 
 const HTML_ELEMENT = global.document.documentElement;
 
@@ -18,9 +19,19 @@ const CLS_OPEN = 'open';
 const CLS_CURRENT = 'current';
 const CLS_PART_OF_STACK = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
+const CLS_MODAL_CONTAINER = 'modal-container';
 
 /* Events */
+
+/**
+ * Event triggered when modal is closed
+ * @type {string}
+ */
 const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
+/**
+ * Event triggered before a modal is closed, cancelable
+ * @type {string}
+ */
 const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
 
 /**
@@ -87,6 +98,7 @@ class Modal {
                     if (this.dataMainPageContainer) {
                         this.dataMainPageContainer.style.position = "static";
                         this.dataMainPageContainer.style.top = "0px";
+                        // FIXME: Replace
                         $(window, document.body).scrollTop(this.currentScrollTop);
                     }
                     n.style.paddingRight = '';
@@ -192,7 +204,7 @@ class Modal {
         Modal._modalInstances.push(co);
 
         if (last) {
-            last.classList.add('part-of-stack');
+            last.classList.add(CLS_PART_OF_STACK);
         }
         // set new currentOpen
         this.currentOpen = co;
@@ -233,7 +245,7 @@ class Modal {
         if (0 === Modal._modalInstances.length) {
             HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
             // save current scrollTop:
-            var scrollTop = window.pageYOffset,
+            var scrollTop = global.pageYOffset,
                 c = self.dataMainPageContainer;
             self.currentScrollTop = scrollTop;
             if (c) {
@@ -241,20 +253,21 @@ class Modal {
                 c.style.position = 'fixed';
             }
             Settings.get().scrollbarUpdateNodes.forEach(function (n) {
-                n.style.paddingRight = parseInt(window.getComputedStyle(n).paddingRight) +
+                n.style.paddingRight = parseInt(global.getComputedStyle(n).paddingRight) +
                 Settings.CONST_SCROLLBAR_WIDTH + 'px';
             });
         }
     }
 
     /**
-     * Creates this instance
+     * Creates a Modal and opens it (later)
      * @param e
-     * @returns {*} (Future, undefined if in unstable state)
+     * @returns {Promise|boolean}
      */
     createWidget(e) {
+        var self = this;
         if (this.loading) {
-            return;
+            return false;
         }
 
         // check if another modal has registered events on this dom path:
@@ -265,82 +278,79 @@ class Modal {
 
             // if another instance has been found, abort
             if (foundInstance !== this.container) {
-                return;
+                return false;
             }
         }
         var targetContent, future, widget, target, hasTarget = true,
-            isHtmlElement = e instanceof HTMLElement, isWidget = e instanceof FlexCss.Widget;
+            isHtmlElement = e instanceof HTMLElement, isWidget = e instanceof Widget;
         if (isHtmlElement || isWidget) {
             if (isHtmlElement) {
                 targetContent = e;
-                widget = e.hfWidgetInstance;
             } else {
                 widget = e;
-                targetContent = widget.widget;
+                targetContent = widget.element;
             }
         } else {
             target = e.target;
             hasTarget = target.hasAttribute(ATTR_NAME);
             targetContent = target.getAttribute(ATTR_NAME);
             widget = target.hfWidgetInstance;
-
             if (target.hasAttribute(ATTR_CREATE_NEW) && !e.newInstance) {
-                var newInstance = new FlexCss.Modal(this.container)
+                var newInstance = new Modal(this.container)
                     .setDestroyOnFinish(true);
                 e.newInstance = true;
                 newInstance.fromEvent(e).then(function () {
                     newInstance.registerEvents(newInstance.getModalContainer());
                 });
-                return;
+                return false;
             }
-
             if (hasTarget) {
                 e.stopImmediatePropagation();
                 e.preventDefault();
             }
         }
+
         if (!hasTarget) {
-            return;
+            return false;
         }
 
         var modalContainerClasses = this.modalContainer ? this.modalContainer.classList : [];
 
+        // lazy create modal container
         if (!this.modalContainer) {
-            this.modalContainer = doc.createElement('div');
-            this.modalContainer.className = 'modal-container ' + CLS_OPEN;
+            this.modalContainer = global.document.createElement('div');
+            this.modalContainer.className = CLS_MODAL_CONTAINER + ' ' + CLS_OPEN;
             var closeModalFunction = function (e) {
-                if (loading || FlexCss.MODAL_JUST_OPENED) {
-                    return;
+                if (this.loading) {
+                    return false;
                 }
-                if (FlexCss.isPartOfNode(e.target, currentOpen)) {
+                if (Util.isPartOfNode(e.target, self.currentOpen)) {
                     if (!e.target.hasAttribute(ATTR_CLOSE)) {
-                        return;
+                        return false;
                     }
                 }
                 self.close(e);
             };
 
-            FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                this.modalContainer.addEventListener(e, closeModalFunction, true);
-            });
+            this.modalContainer.addEventListener(Settings.CONST_TAB_EVENT, closeModalFunction, false);
 
             modalContainerClasses = this.modalContainer.classList;
-            container.appendChild(this.modalContainer);
+            this.container.appendChild(this.modalContainer);
 
         } else {
             modalContainerClasses.add(CLS_OPEN);
         }
 
-        var loader, toggleLoader = function (show) {
+        var loader, doc = global.document, toggleLoader = function (show) {
             if (show) {
                 loader = doc.createElement('div');
                 loader.className = 'loader-container';
                 var loaderLoader = doc.createElement('div');
                 loaderLoader.className = 'loader';
                 loader.appendChild(loaderLoader);
-                modalContainer.appendChild(this.loader);
+                self.modalContainer.appendChild(loader);
             } else {
-                loader.parentNode.removeChild(this.loader);
+                loader.parentNode.removeChild(loader);
             }
         };
 
@@ -350,10 +360,9 @@ class Modal {
         modalContainerClasses.add('loading');
         this.loading = true;
         toggleLoader(true);
-        if (widget instanceof FlexCss.Widget && widget.getAsync()) {
-            future = widget.runAsync().then(function (r) {
+        if (widget instanceof Widget && widget.getAsync()) {
+            future = widget.getAsync().then(function (r) {
                 if (r instanceof HTMLElement || r instanceof DocumentFragment) {
-                    widget.setWidget(r);
                     return r;
                 } else {
                     // Create container Element:
@@ -361,8 +370,6 @@ class Modal {
                     element.className = self.options.classNames;
                     element.innerHTML = r;
                     element.id = Util.guid();
-                    // Setup modal as widget to widget instance:
-                    widget.setWidget(element);
                     return element;
                 }
             });
@@ -370,10 +377,6 @@ class Modal {
             var el = targetContent instanceof HTMLElement ||
             targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
             if (el) {
-                // If Widget is bound to content container, use this as our widget
-                if (el.hfWidgetInstance) {
-                    widget = el.hfWidgetInstance;
-                }
                 future = new Promise((resolve) => {
                     resolve(el);
                 });
@@ -382,13 +385,10 @@ class Modal {
             }
         }
 
-        var self = this;
 
         return future.then(function (el) {
-            el.hfWidgetInstance = widget;
             el.hfContainerInstance = self;
-
-            modalContainer.appendChild(el);
+            self.modalContainer.appendChild(el);
             modalContainerClasses.remove('loading');
             self.loading = false;
             toggleLoader(false);
@@ -399,9 +399,79 @@ class Modal {
         });
     }
 
+    registerEvents(delegate) {
+        var delegateContainer = delegate || this.container, self = this;
+
+        // register modal instance so we can detect multiple registrars
+        delegateContainer.flexModalInstance = self;
+        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, self.createWidget, false);
+
+        self.eventContainer = delegateContainer;
+        return self;
+    }
+
+
+    /**
+     * Creates a new Dialog Instance either directly from HTML Element or a Widget instance
+     * @param {HTMLElement|Widget} widget instance or html element
+     * @returns {Promise}
+     */
+    fromWidget(widget) {
+        return this.createWidget(widget);
+    }
+
+    /**
+     * Creates a Widget from event
+     * @param e
+     * @returns {Promise}
+     */
+    fromEvent(e) {
+        return this.createWidget(e);
+    }
+
+    setDestroyOnFinish(v) {
+        this.destroyOnFinish = v;
+        return this;
+    }
+
+    /**
+     * Destroy this widget instance, cleans empty DOM nodes
+     * Will use fast MutationObserver if available, otherwise falls back to DOMNodeRemoved event
+     */
+    destroy() {
+        var self = this, modalContainer = this.modalContainer;
+        // Remove event listener on destroy, do not remove DOM node
+        if (self.eventContainer) {
+            FlexCss.SETTINGS.clickEvents.forEach(function (e) {
+                self.eventContainer.removeEventListener(e, createWidget, true);
+            });
+        }
+
+        if (0 === modalContainer.childNodes.length) {
+            if (modalContainer.parentNode) {
+                modalContainer.parentNode.removeChild(modalContainer);
+            }
+        }
+        if (global.MutationObserver) {
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function () {
+                    if (0 === modalContainer.childNodes.length) {
+                        modalContainer.parentNode.removeChild(modalContainer);
+                        observer.disconnect();
+                    }
+                });
+            });
+            observer.observe(modalContainer, {childList: true});
+        } else {
+            modalContainer.addEventListener('DOMNodeRemoved', function (e) {
+                if (e.target !== modalContainer && 0 === (modalContainer.childNodes.length - 1)) {
+                    modalContainer.parentNode.removeChild(modalContainer);
+                }
+            });
+        }
+    }
+
 ;
-
-
 }
 
 
