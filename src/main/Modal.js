@@ -5,10 +5,10 @@ const ATTR_CREATE_NEW = 'data-new-instance';
 const ATTR_CLOSE = 'data-close-modal';
 const CLS_CONTAINER_CURRENT = 'front';
 const ATTR_NAME = 'data-modal';
-
+const CLS_OPEN = 'open';
 const CURRENT_CLASS = 'current';
 const PART_OF_STACK_CLASS = 'part-of-stack';
-
+const CLS_MODAL_OPEN = 'modal-open';
 import Settings from 'util/Settings';
 import $ from 'jquery';
 import Event from 'util/Event';
@@ -32,8 +32,6 @@ class Modal {
         }
 
         this.currentOpen = null;
-
-        this.loader = null;
 
         this.loading = false;
 
@@ -77,7 +75,7 @@ class Modal {
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
             if (0 === FlexCss._modalInstances.length) {
-                HTML_ELEMENT.classList.remove('modal-open');
+                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
                 Settings.get().scrollbarUpdateNodes.forEach(function (n) {
                     // restore scrollPosition:
                     if (this.dataMainPageContainer) {
@@ -158,14 +156,14 @@ class Modal {
             var lastContainer = Modal._modalInstances[Modal._modalInstances.length - 1],
                 classList = self.modalContainer.classList;
             classList.remove(CLS_CONTAINER_CURRENT);
-            classList.remove('open');
+            classList.remove(CLS_OPEN);
             // Remove all current classes from child-nodes
             for (var i = 0; i < self.modalContainer.childNodes.length; i++) {
                 var node = self.modalContainer.childNodes[i], cl = node.classList;
                 // remove applied styles
                 node.removeAttribute('style');
-                cl.remove('current');
-                cl.remove('part-of-stack');
+                cl.remove(CURRENT_CLASS);
+                cl.remove(PART_OF_STACK_CLASS);
             }
             if (lastContainer) {
                 lastContainer.parentNode.classList.add(CLS_CONTAINER_CURRENT);
@@ -227,7 +225,7 @@ class Modal {
     handleScrollbar() {
         var self = this;
         if (0 === Modal._modalInstances.length) {
-            HTML_ELEMENT.classList.add('modal-open');
+            HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
             // save current scrollTop:
             var scrollTop = window.pageYOffset,
                 c = self.dataMainPageContainer;
@@ -303,7 +301,7 @@ class Modal {
 
         if (!this.modalContainer) {
             this.modalContainer = doc.createElement('div');
-            this.modalContainer.className = 'modal-container open';
+            this.modalContainer.className = 'modal-container ' + CLS_OPEN;
             var closeModalFunction = function (e) {
                 if (loading || FlexCss.MODAL_JUST_OPENED) {
                     return;
@@ -324,19 +322,19 @@ class Modal {
             container.appendChild(this.modalContainer);
 
         } else {
-            modalContainerClasses.add('open');
+            modalContainerClasses.add(CLS_OPEN);
         }
 
-        var toggleLoader = function (show) {
+        var loader, toggleLoader = function (show) {
             if (show) {
-                this.loader = doc.createElement('div');
-                this.loader.className = 'loader-container';
+                loader = doc.createElement('div');
+                loader.className = 'loader-container';
                 var loaderLoader = doc.createElement('div');
                 loaderLoader.className = 'loader';
-                this.loader.appendChild(loaderLoader);
+                loader.appendChild(loaderLoader);
                 modalContainer.appendChild(this.loader);
             } else {
-                this.loader.parentNode.removeChild(this.loader);
+                loader.parentNode.removeChild(this.loader);
             }
         };
 
@@ -348,23 +346,19 @@ class Modal {
         toggleLoader(true);
         if (widget instanceof FlexCss.Widget && widget.getAsync()) {
             future = widget.runAsync().then(function (r) {
-                var f;
                 if (r instanceof HTMLElement || r instanceof DocumentFragment) {
                     widget.setWidget(r);
-                    f = $.Deferred().resolve(r);
+                    return r;
                 } else {
                     // Create container Element:
                     var element = doc.createElement('div');
                     element.className = self.options.classNames;
                     element.innerHTML = r;
-                    element.id = FlexCss.guid();
+                    element.id = Util.guid();
                     // Setup modal as widget to widget instance:
                     widget.setWidget(element);
-
-
-                    f = $.Deferred().resolve(element);
+                    return element;
                 }
-                return f;
             });
         } else {
             var el = targetContent instanceof HTMLElement ||
@@ -374,25 +368,28 @@ class Modal {
                 if (el.hfWidgetInstance) {
                     widget = el.hfWidgetInstance;
                 }
-                future = $.Deferred().resolve(el);
+                future = new Promise((resolve) => {
+                    resolve(el);
+                });
             } else {
                 throw 'Could not found given modal element with ID: ' + targetContent;
             }
         }
 
+        var self = this;
+
         return future.then(function (el) {
             el.hfWidgetInstance = widget;
             el.hfContainerInstance = self;
 
-
             modalContainer.appendChild(el);
             modalContainerClasses.remove('loading');
-            loading = false;
+            self.loading = false;
             toggleLoader(false);
 
             self.open(el, true);
 
-            return $.Deferred().resolve(el);
+            return el;
         });
     }
 
