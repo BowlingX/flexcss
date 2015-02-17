@@ -19,7 +19,6 @@ const CLS_CURRENT = 'current';
 const CLS_PART_OF_STACK = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
 
-
 /* Events */
 const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
 const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';

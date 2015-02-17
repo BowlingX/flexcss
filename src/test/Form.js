@@ -6,12 +6,12 @@ setup_jasmine();
 describe("Construct a Form Element", () => {
     it("A valid form object without options needs to be constructed", () => {
         var form = new Form(document.createElement('form'));
-        expect(form).toBe(form);
+        expect(form instanceof Form).toBe(true);
     });
 
     it("A valid form object with overwritten default options needs to be constructed", () => {
         var form = new Form(document.createElement('form'), {createTooltips: false, appendError: true});
-        expect(form).toBe(form);
+        expect(form instanceof Form).toBe(true);
 
         // check created options
         expect(form.options.createTooltips).toBe(false);
