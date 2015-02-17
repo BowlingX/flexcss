@@ -1122,8 +1122,8 @@
 
     (function (document) {
         FlexCss.Form.init('form');
-        new FlexCss.Tooltip('SiteBody').registerEvents();
-
+        new FlexCss.Tooltip(document.body).registerEvents();
+        new FlexCss.Modal(document.body).registerEvents();
         // Setup Handler for Navigation bars:
        /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
 

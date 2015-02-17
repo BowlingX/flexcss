@@ -14,7 +14,7 @@ class Util {
             callback.apply(element, [e, thisFunction]);
         };
 
-        for (var p = 0; p < pfx.length; p++) {
+        for (var p = 0; p < PFX.length; p++) {
             if (!PFX[p]) type = type.toLowerCase();
             var name = PFX[p] + type;
             element.addEventListener(name, thisFunction, true);

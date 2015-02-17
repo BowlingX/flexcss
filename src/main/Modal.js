@@ -33,7 +33,11 @@ const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
  * @type {string}
  */
 const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
-
+/**
+ * Event triggered when a modal is opened
+ * @type {string}
+ */
+const EVENT_MODAL_OPENED = 'flexcss.modal.opened';
 /**
  * A Modal Implementation
  */
@@ -51,7 +55,6 @@ class Modal {
         this.currentOpen = null;
 
         this.loading = false;
-
 
         this.container = container;
 
@@ -88,18 +91,18 @@ class Modal {
      * @param n
      */
     _removeModalFromStack(n) {
-        var t = Modal._modalInstances.indexOf(n);
+        var t = Modal._modalInstances.indexOf(n), self = this;
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
-            if (0 === FlexCss._modalInstances.length) {
+            if (0 === Modal._modalInstances.length) {
                 HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
                 Settings.get().scrollbarUpdateNodes.forEach(function (n) {
                     // restore scrollPosition:
-                    if (this.dataMainPageContainer) {
-                        this.dataMainPageContainer.style.position = "static";
-                        this.dataMainPageContainer.style.top = "0px";
+                    if (self.dataMainPageContainer) {
+                        self.dataMainPageContainer.style.position = "static";
+                        self.dataMainPageContainer.style.top = "0px";
                         // FIXME: Replace
-                        $(window, document.body).scrollTop(this.currentScrollTop);
+                        $(window, document.body).scrollTop(self.currentScrollTop);
                     }
                     n.style.paddingRight = '';
                 });
@@ -132,7 +135,7 @@ class Modal {
 
         // close only on background if instance should
         if (!self.options.closeOnBackgroundClick && e &&
-            e.type === FlexCss.CONST_FLEX_EVENT_TAB && !e.target.hasAttribute(ATTR_CLOSE)) {
+            e.type === Settings.CONST_TAB_EVENT && !e.target.hasAttribute(ATTR_CLOSE)) {
             return false;
         }
 
@@ -148,7 +151,7 @@ class Modal {
         if (self.currentOpen) {
             // dispatch beforeClose event, if prevented prevent modal from closing
             var ev = Event.dispatchAndFire(self.currentOpen, EVENT_MODAL_BEFORE_CLOSED);
-            if (ev.isDefaultPrevented()) {
+            if (ev.defaultPrevented) {
                 return false;
             }
 
@@ -216,10 +219,9 @@ class Modal {
             instances[m].parentNode.classList.remove(CLS_CONTAINER_CURRENT);
         }
         this.modalContainer.classList.add(CLS_CONTAINER_CURRENT);
-
         // remove animations if animations has been completed, fixes various bugs:
         // - fixes nested scrolling element issue in iOS Browsers / Mobile-Safari
-        Util.PrefixedAnimateEvent(co, 'AnimationEnd', function (e, self) {
+        Util.prefixedAnimateEvent(co, 'AnimationEnd', function (e, self) {
             e.target.style.animation = 'none';
             e.target.style.webkitAnimation = 'none';
             co.removeEventListener(e.type, self, true);
@@ -321,7 +323,7 @@ class Modal {
             this.modalContainer = global.document.createElement('div');
             this.modalContainer.className = CLS_MODAL_CONTAINER + ' ' + CLS_OPEN;
             var closeModalFunction = function (e) {
-                if (this.loading) {
+                if (self.loading) {
                     return false;
                 }
                 if (Util.isPartOfNode(e.target, self.currentOpen)) {
@@ -399,12 +401,32 @@ class Modal {
         });
     }
 
+    /**
+     * Open's an already rendered modal
+     * @param {HTMLElement} modal
+     * @param {Boolean} [internal], set to true to prevent container management
+     */
+    open(modal, internal) {
+
+
+        if (!internal) {
+            this.modalContainer.classList.add('open');
+            this.handleScrollbar();
+        }
+        this.switchModals(modal, this.currentOpen);
+
+        Event.dispatchAndFire(modal, EVENT_MODAL_OPENED);
+    }
+
+
     registerEvents(delegate) {
         var delegateContainer = delegate || this.container, self = this;
 
         // register modal instance so we can detect multiple registrars
         delegateContainer.flexModalInstance = self;
-        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, self.createWidget, false);
+        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, function () {
+            self.createWidget.apply(self, arguments);
+        }, false);
 
         self.eventContainer = delegateContainer;
         return self;
@@ -442,9 +464,7 @@ class Modal {
         var self = this, modalContainer = this.modalContainer;
         // Remove event listener on destroy, do not remove DOM node
         if (self.eventContainer) {
-            FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                self.eventContainer.removeEventListener(e, createWidget, true);
-            });
+            self.eventContainer.removeEventListener(Settings.CONST_TAB_EVENT, createWidget, true);
         }
 
         if (0 === modalContainer.childNodes.length) {
@@ -487,5 +507,3 @@ global.addEventListener('keydown', function (e) {
         }
     }
 });
-
-Modal.MODAL_JUST_OPENED = false;
