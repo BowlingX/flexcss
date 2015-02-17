@@ -9,20 +9,29 @@ class Widget {
      * @param [element], optional define the content of widget
      */
     constructor(element) {
-        if (element) {
-            this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
-            if (this.element) {
-                this.element.hfWidgetInstance = this;
-            } else {
-                throw 'Could not found element with ID: ' + element;
-            }
-        }
+
         /**
          *
          * @type {Promise}
          */
         this.asyncContent = null;
 
+        if (element) {
+            /**
+             * @type {HTMLElement}
+             */
+            this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
+            if (this.element) {
+                this.element.hfWidgetInstance = this;
+                this.setAsync(() => {
+                    return new Promise((s) => {
+                        s(this.element);
+                    })
+                })
+            } else {
+                throw 'Could not found element with ID: ' + element;
+            }
+        }
         /**
          * The final resulted content that a widget did create (e.g. a modal container)
          * @type {HTMLElement}
@@ -39,7 +48,7 @@ class Widget {
     }
 
     /**
-     * @param {Promise} async
+     * @param {() => Promise} async
      * @returns {Widget}
      */
     setAsync(async) {
