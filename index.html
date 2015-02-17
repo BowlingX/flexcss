@@ -1124,6 +1124,20 @@
         FlexCss.Form.init('form');
         new FlexCss.Tooltip(document.body).registerEvents();
         new FlexCss.Modal(document.body).registerEvents();
+
+
+        var widget = new FlexCss.Widget('SecondModal').setAsync(function(){
+            return new Promise(function(s){
+                setTimeout(function(){
+                    s('<p>blaaa</p>');
+                }, 600);
+            });
+        });
+
+        widget.element.addEventListener('flexcss.modal.asyncTargetLoaded', function(){
+
+        });
+
         // Setup Handler for Navigation bars:
        /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
 

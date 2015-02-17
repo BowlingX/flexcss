@@ -11,13 +11,23 @@ class Widget {
     constructor(element) {
         if (element) {
             this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
-            this.element.hfWidgetInstance = this;
+            if (this.element) {
+                this.element.hfWidgetInstance = this;
+            } else {
+                throw 'Could not found element with ID: ' + element;
+            }
         }
         /**
          *
          * @type {Promise}
          */
         this.asyncContent = null;
+
+        /**
+         * The final resulted content that a widget did create (e.g. a modal container)
+         * @type {HTMLElement}
+         */
+        this.finalContent = null;
     }
 
     /**
@@ -25,7 +35,7 @@ class Widget {
      * @returns {Promise}
      */
     getAsync() {
-        return this.asyncContent;
+        return this.asyncContent();
     }
 
     /**
@@ -35,6 +45,31 @@ class Widget {
     setAsync(async) {
         this.asyncContent = async;
         return this;
+    }
+
+    /**
+     * @returns {HTMLElement}
+     */
+    getFinalContent() {
+        return this.finalContent;
+    }
+
+    /**
+     * Destroys the generated content of this widget
+     * @returns {boolean}
+     */
+    destroy() {
+
+        if (this.finalContent && this.finalContent.parentNode) {
+            this.finalContent.parentNode.removeChild(this.finalContent);
+            return true;
+        }
+
+        delete this.element;
+        delete this.asyncContent;
+        delete this.finalContent;
+
+        return false;
     }
 
 }

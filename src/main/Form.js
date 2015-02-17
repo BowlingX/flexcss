@@ -125,7 +125,7 @@ class Form {
         var ev = Event.dispatch(thisForm, EVENT_FORM_SUBMIT).withOriginal(e).fire();
 
         // abort execution is event was prevented
-        if (ev.isDefaultPrevented()) {
+        if (ev.defaultPrevented) {
             thisForm.classList.remove(LOADING_CLASS);
             return false;
         }

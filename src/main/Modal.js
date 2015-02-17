@@ -27,17 +27,30 @@ const CLS_MODAL_CONTAINER = 'modal-container';
  * Event triggered when modal is closed
  * @type {string}
  */
-const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
+export const EVENT_MODAL_CLOSED = 'flexcss.modal.closed';
 /**
  * Event triggered before a modal is closed, cancelable
  * @type {string}
  */
-const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
+export const EVENT_MODAL_BEFORE_CLOSED = 'flexcss.modal.beforeClose';
 /**
  * Event triggered when a modal is opened
  * @type {string}
  */
-const EVENT_MODAL_OPENED = 'flexcss.modal.opened';
+export const EVENT_MODAL_OPENED = 'flexcss.modal.opened';
+
+/**
+ * Event triggered when modal is initilized, called on target
+ * @type {string}
+ */
+export const EVENT_MODAL_INIT = 'flexcss.modal.init';
+
+/**
+ * Triggered when the content of an async modal on a target is loaded, called on target
+ * @type {string}
+ */
+export const EVENT_MODAL_ASYNC_TARGET_LOADED = 'flexcss.modal.asyncTargetLoaded';
+
 /**
  * A Modal Implementation
  */
@@ -362,18 +375,23 @@ class Modal {
         modalContainerClasses.add('loading');
         this.loading = true;
         toggleLoader(true);
-        if (widget instanceof Widget && widget.getAsync()) {
-            future = widget.getAsync().then(function (r) {
+        var async = widget ? widget.getAsync() : null;
+        if (widget instanceof Widget && async) {
+            future = async.then(function (r) {
+                var result;
                 if (r instanceof HTMLElement || r instanceof DocumentFragment) {
-                    return r;
+                    result = r;
                 } else {
                     // Create container Element:
                     var element = doc.createElement('div');
                     element.className = self.options.classNames;
                     element.innerHTML = r;
                     element.id = Util.guid();
-                    return element;
+                    result = element;
                 }
+                widget.finalContent = result;
+                Event.dispatchAndFire(target, EVENT_MODAL_ASYNC_TARGET_LOADED);
+                return result;
             });
         } else {
             var el = targetContent instanceof HTMLElement ||
@@ -387,6 +405,7 @@ class Modal {
             }
         }
 
+        Event.dispatchAndFire(target, EVENT_MODAL_INIT);
 
         return future.then(function (el) {
             el.hfContainerInstance = self;
