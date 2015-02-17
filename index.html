@@ -1135,7 +1135,9 @@
         });
 
         widget.element.addEventListener('flexcss.modal.asyncTargetLoaded', function(){
-
+            widget.getFinalContent().addEventListener('flexcss.modal.closed', function(){
+                widget.destroy();
+            });
         });
 
         // Setup Handler for Navigation bars:

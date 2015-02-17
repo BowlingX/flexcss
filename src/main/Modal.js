@@ -204,7 +204,7 @@ class Modal {
             }
         }
 
-        if (self.options.destroyOnFinish) {
+        if (self.destroyOnFinish) {
             self.destroy();
         }
         return self;
@@ -443,9 +443,10 @@ class Modal {
 
         // register modal instance so we can detect multiple registrars
         delegateContainer.flexModalInstance = self;
-        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, function () {
+        self.eventFunction = function () {
             self.createWidget.apply(self, arguments);
-        }, false);
+        };
+        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, self.eventFunction, false);
 
         self.eventContainer = delegateContainer;
         return self;
@@ -483,7 +484,7 @@ class Modal {
         var self = this, modalContainer = this.modalContainer;
         // Remove event listener on destroy, do not remove DOM node
         if (self.eventContainer) {
-            self.eventContainer.removeEventListener(Settings.CONST_TAB_EVENT, createWidget, true);
+            self.eventContainer.removeEventListener(Settings.CONST_TAB_EVENT, self.eventFunction, true);
         }
 
         if (0 === modalContainer.childNodes.length) {
