@@ -3,7 +3,6 @@ import Tooltip from 'Tooltip';
 import Modal from 'Modal';
 import Widget from 'Widget';
 import Settings from 'util/Settings';
-
 // default export as component object
 export default {
     Form: Form,

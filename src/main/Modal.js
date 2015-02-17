@@ -1,7 +1,6 @@
 /*global KeyboardEvent*/
 
 import Settings from 'util/Settings';
-import $ from 'jquery';
 import Event from 'util/Event';
 import Util from 'util/Util';
 import Widget from 'Widget';
@@ -115,8 +114,9 @@ class Modal {
                     if (self.dataMainPageContainer) {
                         self.dataMainPageContainer.style.position = "static";
                         self.dataMainPageContainer.style.top = "0px";
-                        // FIXME: Replace
-                        $(window, document.body).scrollTop(self.currentScrollTop);
+                        // reset scrollTop
+                        window.scrollTop = self.currentScrollTop;
+                        document.body.scrollTop = self.currentScrollTop;
                     }
                     n.style.paddingRight = '';
                 });
