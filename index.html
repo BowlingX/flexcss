@@ -1122,6 +1122,7 @@
 
     (function (document) {
         FlexCss.Form.init('form');
+        FlexCss.Settings.setup( {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
         new FlexCss.Tooltip(document.body).registerEvents();
         new FlexCss.Modal(document.body).registerEvents();
 

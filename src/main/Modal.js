@@ -85,6 +85,7 @@ class Modal {
 
         // Container where events are delegated
         this.eventContainer = null;
+        this.eventFunction = null;
 
         this.dataMainPageContainer = global.document.body;
 
