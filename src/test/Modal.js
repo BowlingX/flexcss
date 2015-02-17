@@ -12,7 +12,12 @@ describe("Construct a Modal Element", () => {
 });
 
 describe("Open a Modal Element", () => {
-    it("Open a Modal", () => {
+    it("Open a Modal from a widget", () => {
+        var form = new Modal(document.createElement('body'));
+        form.fromWidget(new Widget(document.createElement('div')))
+    });
+
+    it("Open a Modal from a widget, no element needs to be an async element", () => {
         var form = new Modal(document.createElement('body'));
         form.fromWidget(new Widget(document.createElement('div')))
     });

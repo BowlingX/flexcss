@@ -3,19 +3,21 @@
  */
 export default
 class Widget {
-    
+
     /**
-     * @param element
+     * Creates a new Widget
+     * @param [element], optional define the content of widget
      */
     constructor(element) {
-        this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
-        this.element.hfWidgetInstance = this;
+        if (element) {
+            this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
+            this.element.hfWidgetInstance = this;
+        }
         /**
          *
          * @type {Promise}
          */
-        this.asyncContent = new Promise(() => {
-        });
+        this.asyncContent = null;
     }
 
     /**

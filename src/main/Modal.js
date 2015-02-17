@@ -381,7 +381,7 @@ class Modal {
                     resolve(el);
                 });
             } else {
-                throw 'Could not found given modal element with ID: ' + targetContent;
+                throw 'Could not found given modal element (content) with ID: ' + targetContent;
             }
         }
 
