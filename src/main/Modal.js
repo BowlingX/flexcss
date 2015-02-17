@@ -391,9 +391,7 @@ class Modal {
                     result = element;
                 }
                 widget.finalContent = result;
-                if (target) {
                     Event.dispatchAndFire(target, EVENT_MODAL_ASYNC_TARGET_LOADED);
-                }
                 return result;
             });
         } else {
@@ -408,10 +406,8 @@ class Modal {
             }
         }
 
-        if (target) {
             Event.dispatchAndFire(target, EVENT_MODAL_INIT);
-        }
-        
+
         return future.then(function (el) {
             el.hfContainerInstance = self;
             self.modalContainer.appendChild(el);

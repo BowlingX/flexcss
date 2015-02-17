@@ -51,7 +51,9 @@ class EventHandler {
      */
     fire() {
         var e = new CustomEvent(this.name, this.defaultOptions);
-        this.target.dispatchEvent(e);
+        if(this.target) {
+            this.target.dispatchEvent(e);
+        }
         return e;
     }
 }
