@@ -125,8 +125,6 @@ gulp.task('compileSass', function () {
         }))
         .pipe(sourcemaps.init())
         .pipe(sass())
-        .pipe(sourcemaps.write({includeContent: false}))
-        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('build/css'));

@@ -4,7 +4,7 @@ module.exports = {
     watch: false,
     module: {
         loaders: [
-            {test: /\.js$/, loader: '6to5-loader?experimental&runtime&optional=selfContained'}
+            {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader?experimental&optional=selfContained'}
         ],
         postLoaders: [{ //
             test: /\.js$/,
@@ -26,9 +26,6 @@ module.exports = {
     plugins: [
         new webpack.ResolverPlugin(
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-        ),
-        new webpack.ProvidePlugin({
-            to5Runtime: "imports?global=>{}!exports?global.to5Runtime!6to5/runtime"
-        })
+        )
     ]
 };
