@@ -1,5 +1,5 @@
 /*
- * Build file for flexcss
+ * Build file for FlexCSS
  * @author David Heidrich (me@bowlingx.com)
  */
 
@@ -10,21 +10,15 @@ var $ = require('gulp-load-plugins')({
     replaceString: /^gulp(-|\.)([0-9]+)?/
 });
 
-// Libraries
-var concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    imagemin = require('gulp-imagemin'),
-    sourcemaps = require('gulp-sourcemaps'),
-    jshint = require('gulp-jshint'),
+// other Libraries
+var
     del = require('del'),
     autoprefixer = require('autoprefixer-core'),
-    es = require("event-stream"), gulpFilter = require('gulp-filter'),
+    es = require("event-stream"),
     order = require('gulp-order'),
     argv = require('yargs').argv,
-    connect = require('gulp-connect'), plumber = require('gulp-plumber'),
-    gutil = require('gulp-util'), postcss = require('gulp-postcss'),
-    csswring = require('csswring'), webpack = require('gulp-webpack'),
-    webpackConfig = require("./webpack.config.js"), karma = require('gulp-karma');
+    csswring = require('csswring'),
+    webpackConfig = require("./webpack.config.js");
 
 var sass = require('gulp-sass');
 
@@ -40,7 +34,7 @@ var paths = {
 };
 
 var onError = function (err) {
-    gutil.beep();
+    $.util.beep();
     console.log(err);
     // continue:
     this.emit('end');
@@ -60,15 +54,15 @@ gulp.task('compileScriptsWithDependencies', function () {
     var path = require("path");
 
     var config = Object.create(webpackConfig);
-    config.watch = argv.watch;
+    config.watch = true;
 
     return gulp.src(paths.exports)
-        .pipe(plumber({
+        .pipe($.plumber({
             errorHandler: onError
         }))
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(webpack(config))
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.webpack(config))
         .pipe(gulp.dest('build/js'))
 });
 
@@ -82,6 +76,7 @@ gulp.task('test', function () {
         }))
         .on('error', function (err) {
             // Make sure failed tests cause gulp to exit non-zero
+            $.util.beep();
             throw err;
         });
 });
@@ -95,7 +90,7 @@ gulp.task('images', ['clean'], function () {
 gulp.task('imagesReload', function () {
     return gulp.src(paths.images)
         // Pass in options to the task
-        .pipe(imagemin({optimizationLevel: 5}))
+        .pipe($.imagemin({optimizationLevel: 5}))
         .pipe(gulp.dest('build/img'));
 });
 
@@ -120,13 +115,13 @@ gulp.task('compileSass', function () {
     ];
 
     return gulp.src(paths.sassThemes)
-        .pipe(plumber({
+        .pipe($.plumber({
             errorHandler: onError
         }))
-        .pipe(sourcemaps.init())
-        .pipe(sass())
-        .pipe(postcss(processors))
-        .pipe(sourcemaps.write('.'))
+        .pipe($.sourcemaps.init())
+        .pipe($.sass())
+        .pipe($.postcss(processors))
+        .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest('build/css'));
 });
 
@@ -142,7 +137,7 @@ gulp.task('watch', function () {
 
 // webserver
 gulp.task('webserver', function () {
-    connect.server({
+    $.connect.server({
         port: 5757,
         livereload: true
     });
