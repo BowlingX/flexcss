@@ -14,8 +14,6 @@ var $ = require('gulp-load-plugins')({
 var
     del = require('del'),
     autoprefixer = require('autoprefixer-core'),
-    es = require("event-stream"),
-    order = require('gulp-order'),
     argv = require('yargs').argv,
     csswring = require('csswring'),
     webpackConfig = require("./webpack.config.js");
@@ -138,6 +136,7 @@ gulp.task('watch', function () {
 // webserver
 gulp.task('webserver', function () {
     $.connect.server({
+        root:['.'],
         port: 5757,
         livereload: true
     });
