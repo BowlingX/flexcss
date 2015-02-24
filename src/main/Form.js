@@ -606,7 +606,7 @@ class Form {
     /**
      * Initialize forms for a specific selector
      * @param {String} selector
-     * @param {Object} options
+     * @param {Object} [options]
      */
     static init(selector, options) {
         var forms = selector instanceof HTMLElement ? selector.querySelectorAll('form') :
