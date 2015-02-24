@@ -77,9 +77,9 @@ void function (document, window, $) {
 
             function dispatchTabEvent(target, oe) {
                 var event = new CustomEvent(TAB_EVENT, {
+                        cancelable: true,
+                        bubbles: true,
                         detail: {
-                            cancelable: true,
-                            bubbles: true,
                             originalEvent: oe
                         }
                     }), _pd = CustomEvent.prototype.preventDefault,
@@ -105,9 +105,9 @@ void function (document, window, $) {
                     // trigger click event on target element to run click handlers
                     // add timeout to prevent elements underneath to be clicked
                     if (e.target && e.target.hasAttribute(ATTR_DELEGATE_CLICK)) {
-                        setTimeout(function(){
+                        setTimeout(function () {
                             $(e.target).trigger('click');
-                        },10);
+                        }, 10);
                     }
                     dispatchTabEvent(e.target, e);
                 }

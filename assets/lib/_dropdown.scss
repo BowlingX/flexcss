@@ -32,6 +32,10 @@
           color:$inputDisabledColor;
         }
       }
+      // remove pointer events to prevent selections and wrong bubbeling
+      > * {
+        pointer-events: none;
+      }
     }
 
     li:last-of-type a {

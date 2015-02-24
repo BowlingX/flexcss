@@ -247,7 +247,7 @@ void function (document, window, $) {
                 // check if another modal has registered events on this dom path:
                 if(e && e.target) {
                     var foundInstance = FlexCss.parentsUntil(e.target, function(node){
-                        return node.flexModalInstance;
+                        return node ? node.flexModalInstance : null;
                     });
 
                     // if another instance has been found, abort
@@ -429,7 +429,7 @@ void function (document, window, $) {
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
                     // register modal instance so we can detect multiple registrars
                     delegateContainer.flexModalInstance = self;
-                    delegateContainer.addEventListener(e, createWidget, true);
+                    delegateContainer.addEventListener(e, createWidget, false);
                 });
 
                 self.eventContainer = delegateContainer;

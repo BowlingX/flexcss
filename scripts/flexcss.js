@@ -329,7 +329,7 @@ void function (window, $) {
 
                 // support target child element to clicked
                 if (!target.hasAttribute(ATTR_NAME)) {
-                    if (parent.hasAttribute(ATTR_NAME)) {
+                    if (parent && parent.hasAttribute(ATTR_NAME)) {
                         target = parent;
                     } else {
                         return;
@@ -449,7 +449,7 @@ void function (window, $) {
              */
             self.registerEvents = function () {
                 FlexCss.SETTINGS.clickEvents.forEach(function (e) {
-                    container.addEventListener(e, listener, true);
+                    container.addEventListener(e, listener, false);
                 });
                 return self;
             };
@@ -973,7 +973,7 @@ void function (window, $) {
              * @returns {FlexCss.Dropdown}
              */
             self.registerEvents = function () {
-                container.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, true);
+                container.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, false);
                 return self;
             };
 
@@ -982,7 +982,7 @@ void function (window, $) {
              * @returns {FlexCss.Dropdown}
              */
             self.destroy = function () {
-                container.removeEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, true);
+                container.removeEventListener(FlexCss.CONST_FLEX_EVENT_TAB, delegateFunction, false);
                 return self;
             };
 
