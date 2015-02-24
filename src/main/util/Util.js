@@ -1,5 +1,8 @@
 const PFX = ["webkit", "moz", "MS", "o", ""];
 
+/**
+ * Provides some shared Util functions
+ */
 export default
 class Util {
 
