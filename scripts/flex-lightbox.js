@@ -194,7 +194,7 @@ void function (document, window, $) {
                     img.src = imgSrc;
                     self._setupMaxWidthHeight(target, img, imageObj);
                     imageContainer.appendChild(img);
-
+                    imageContainer.style['backgroundImage'] = 'url('+imgSrc+')';
                     var calculateContainer = function () {
                         if (FlexCss.CONST_IS_IE) {
                             setTimeout(function () {
@@ -352,6 +352,7 @@ void function (document, window, $) {
                                 // if current image is still available
                                 if (thisThumbnail.src === img.src) {
                                     img.src = thisImgHighResolution;
+                                    imageContainer.style['backgroundImage'] = 'url('+thisImgHighResolution+')';
                                 }
                                 future.resolve(this);
                             });
