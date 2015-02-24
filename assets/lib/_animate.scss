@@ -13,6 +13,15 @@
   }
 }
 
+@include keyframes(backgroundFadeIn) {
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    background: rgba(0, 0, 0, .35);
+  }
+}
+
 /**
 * Creates a small bounce effect
 */
@@ -83,7 +92,6 @@
   }
 }
 
-
 /**
 * Endless spinner, used for loaders
 */
@@ -112,7 +120,7 @@
 
 @include keyframes(tabWobbleLine) {
   0% {
-   opacity: 0;
+    opacity: 0;
     left: calc(50% - (#{$overallPadding}));
     width: 0%;
 
@@ -138,7 +146,6 @@
     width: calc(100% - (#{$tabsSmallPadding*2}));
   }
 }
-
 
 .loader {
   display: block;
@@ -166,9 +173,9 @@
   }
 
   &.small {
-    width:$smallLoaderSize;
-    height:$smallLoaderSize;
-    border-width:$smallLoaderBorder;
+    width: $smallLoaderSize;
+    height: $smallLoaderSize;
+    border-width: $smallLoaderBorder;
     &:before {
       width: $smallLoaderSize;
       height: $smallLoaderSize;

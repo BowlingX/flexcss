@@ -115,7 +115,7 @@ class Modal {
                         self.dataMainPageContainer.style.position = "static";
                         self.dataMainPageContainer.style.top = "0px";
                         // reset scrollTop
-                        window.scrollTop = self.currentScrollTop;
+                        document.documentElement.scrollTop = self.currentScrollTop;
                         document.body.scrollTop = self.currentScrollTop;
                     }
                     n.style.paddingRight = '';
