@@ -249,9 +249,9 @@ void function (document, window, $) {
                             target = next;
                             nextImgObject.src = nextSource;
                             imageContainer.classList.add('loading');
-                            imageContainer.style['backgroundImage'] = 'url('+nextSource+')';
                             nextImgObject.addEventListener('load', function () {
                                 img.src = nextSource;
+                                imageContainer.style['backgroundImage'] = 'url('+nextSource+')';
                                 self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                                 calculateContainer();
                                 highRes(nextThumb, nextHighRes);
