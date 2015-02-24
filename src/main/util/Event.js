@@ -1,3 +1,24 @@
+// polyfill for custom events to make thinks work in IE
+// The needed polyfill is so small that I embedded it here
+void function () {
+    if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
+        var CustomEvent;
+        CustomEvent = function (event, params) {
+            var evt;
+            params = params || {
+                bubbles: false,
+                cancelable: false,
+                detail: undefined
+            };
+            evt = document.createEvent("CustomEvent");
+            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+            return evt;
+        };
+        CustomEvent.prototype = global.Event.prototype;
+        global.CustomEvent = CustomEvent;
+    }
+}();
+
 /**
  * Simpler Event dispatching
  */
@@ -51,14 +72,15 @@ class EventHandler {
      */
     fire() {
         var e = new CustomEvent(this.name, this.defaultOptions);
-        if(this.target) {
+        if (this.target) {
             this.target.dispatchEvent(e);
         }
         return e;
     }
 }
 
-export default class Event {
+export default
+class Event {
     /**
      * Dispatches a custom event
      * @param {HTMLElement} target
