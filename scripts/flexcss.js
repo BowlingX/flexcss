@@ -62,6 +62,7 @@ void function (window, $) {
             // detect right transition end event
             FlexCss.CONST_TRANSITION_EVENT = FlexCss._whichTransitionEndEvent();
 
+            FlexCss.IS_TOUCH_DEVICE = ('ontouchstart' in window || !!(navigator.msMaxTouchPoints));
 
         };
 

@@ -1,4 +1,4 @@
-/* global CustomEvent */
+/* global CustomEvent, IS_TOUCH_DEVICE */
 
 /**
  * Provides some custom events
@@ -59,7 +59,7 @@ void function (document, window, $) {
          */
         FlexCss.TabEvent = function (container, options) {
 
-            var MOVE = false, TAB_EVENT = FlexCss.CONST_FLEX_EVENT_TAB,
+            var MOVE = false, TAB_EVENT = FlexCss.CONST_FLEX_EVENT_TAB, ts,
                 ATTR_DELEGATE_CLICK = 'data-delegate-click',
                 tabDelay = new Date().getTime(), clickDelay = new Date().getTime(),
                 _options = {
@@ -68,11 +68,14 @@ void function (document, window, $) {
 
             $.extend(_options, options);
 
-            container.addEventListener('touchmove', function () {
-                MOVE = true;
+            container.addEventListener('touchmove', function (e) {
+                if(Math.abs(e.touches[0].clientY-ts) > 20) {
+                    MOVE = true;
+                }
             }, false);
-            container.addEventListener('touchstart', function () {
+            container.addEventListener('touchstart', function (e) {
                 MOVE = false;
+                ts = e.touches[0].clientY;
             }, false);
 
             function dispatchTabEvent(target, oe) {
@@ -115,7 +118,7 @@ void function (document, window, $) {
 
             container.addEventListener('click', function (e) {
                 var time = (new Date().getTime() - tabDelay);
-                if (time > _options.tabDelay && time < _options.tabDelay + 100) {
+                if (time > _options.tabDelay && (!FlexCss.IS_TOUCH_DEVICE || time <= _options.tabDelay + 100)) {
                     clickDelay = new Date().getTime();
                     dispatchTabEvent(e.target, e);
                 }
