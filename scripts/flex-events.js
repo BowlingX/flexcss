@@ -114,7 +114,8 @@ void function (document, window, $) {
             }, false);
 
             container.addEventListener('click', function (e) {
-                if ((new Date().getTime() - tabDelay) > _options.tabDelay) {
+                var time = (new Date().getTime() - tabDelay);
+                if (time > _options.tabDelay && time < _options.tabDelay + 100) {
                     clickDelay = new Date().getTime();
                     dispatchTabEvent(e.target, e);
                 }
