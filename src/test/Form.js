@@ -45,47 +45,39 @@ describe("Submit a form with validation", () => {
 });
 
 
-describe("When Submitted", function () {
-    "use strict";
+describe('Create a form with custom validations', function () {
+
+    var form, submitted, htmlForm;
+
     beforeEach((done) => {
         loadFixtures('form-with-custom-validator.html');
-        done();
+        var $htmlForm = $('#test-form');
+        htmlForm = $htmlForm[0];
+        form = new Form(htmlForm);
+        // set a value
+        $('#sample-input').val('test');
 
-    });
-
-    describe('create a form', function(){
-
-        var form, submitted, htmlForm;
-
-        beforeEach((done) => {
-            var $htmlForm = $('#test-form');
-            htmlForm = $htmlForm[0];
-            form = new Form(htmlForm);
-            // set a value
-            $('#sample-input').val('test');
-
-            // test this value as a custom validator
-            form.registerValidator('custom', (field) => {
-                return new Promise((r) => {
-                    r(field.value === 'test');
-                })
-            });
-
-            // submit form
-            $('#submit-test-form').trigger('click');
-
-            htmlForm.addEventListener(EVENT_FORM_SUBMIT, (e) => {
-                // prevent form from submit, otherwise tests result in a strange output
-                e.preventDefault();
-                submitted = true;
-                done();
-            });
+        // test this value as a custom validator
+        form.registerValidator('custom', (field) => {
+            return new Promise((r) => {
+                r(field.value === 'test');
+            })
         });
 
-        it("submit handler must be called", function () {
-            expect(form instanceof Form).toBe(true);
-            expect(submitted).toBe(true);
-            expect(htmlForm.checkValidity()).toBe(true);
-        })
+        // submit form
+        $('#submit-test-form').trigger('click');
+
+        htmlForm.addEventListener(EVENT_FORM_SUBMIT, (e) => {
+            // prevent form from submit, otherwise tests result in a strange output
+            e.preventDefault();
+            submitted = true;
+            done();
+        });
     });
+
+    it("submit the form", function () {
+        expect(form instanceof Form).toBe(true);
+        expect(submitted).toBe(true);
+        expect(htmlForm.checkValidity()).toBe(true);
+    })
 });
