@@ -286,12 +286,13 @@ void function (document, window, $) {
                     _setupErrorMessages(field, validity);
                     field.classList.add('invalid');
                     field.setAttribute(ARIA_INVALID, 'true');
+                    var message = field.validationMessage;
                     if (self.options.appendError) {
                         parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
-                        field.validationMessage +
+                        message +
                         "</div>");
                     }
-                    field.flexFormsSavedValidationMessage = field.validationMessage;
+                    field.flexFormsSavedValidationMessage = message;
                 } else {
                     field.classList.remove('invalid');
                     field.setAttribute(ARIA_INVALID, 'false');
