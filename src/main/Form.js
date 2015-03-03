@@ -47,7 +47,7 @@ class Form {
      */
     constructor(form, options) {
 
-        if(!(form instanceof HTMLFormElement)) {
+        if (!(form instanceof HTMLFormElement)) {
             throw 'argument {0} form needs to be an form element';
         }
 
@@ -246,7 +246,7 @@ class Form {
                 checkedFields.push(field);
                 futures.push(this._runValidation(validationRef, field));
             } else {
-                if(validationRef) {
+                if (validationRef) {
                     console.warn('data-validate was set but no validator was found');
                 }
             }
@@ -295,23 +295,24 @@ class Form {
                     // Remove current errors:
                     this._removeElementErrors(parent);
                 }
+                var msg = field.validationMessage;
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
                 field.classList.add('invalid');
                 field.setAttribute(ARIA_INVALID, 'true');
                 if (this.options.appendError) {
                     parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
-                    field.validationMessage +
+                    msg +
                     "</div>");
                 }
-                field.flexFormsSavedValidationMessage = field.validationMessage;
+                field.flexFormsSavedValidationMessage = msg;
             } else {
                 field.classList.remove('invalid');
                 field.setAttribute(ARIA_INVALID, 'false');
 
                 this._removeElementErrors(parent);
             }
-            // FIXME: We have to reset the custom validity here to allow native validations work again
+            // We have to reset the custom validity here to allow native validations work again
             field.setCustomValidity('');
         }
     }

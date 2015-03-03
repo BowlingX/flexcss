@@ -1,4 +1,4 @@
-import Form, {EVENT_FORM_READY} from 'Form';
+import Form, {EVENT_FORM_READY, EVENT_FORM_SUBMIT} from 'Form';
 import setup_jasmine from 'setup_jasmine';
 import $ from 'jquery';
 setup_jasmine();
@@ -27,7 +27,6 @@ describe("Submit a simple Form", () => {
     it("submit an empty form (no validation)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
-        $('#submit-test-form').trigger('click');
         expect(htmlForm.checkValidity()).toBe(true);
 
     });
@@ -38,23 +37,55 @@ describe("Submit a form with validation", () => {
         loadFixtures('form-with-validation.html');
     });
 
-    it("submit a form with validation (invalid)", () => {
+    it("submit a form with browser-validation (invalid)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
-        $('#submit-test-form').trigger('click');
         expect(htmlForm.checkValidity()).toBe(false);
     });
 });
 
-describe("Submit a form with a custom validator", () => {
-    beforeEach(() => {
+
+describe("When Submitted", function () {
+    "use strict";
+    beforeEach((done) => {
         loadFixtures('form-with-custom-validator.html');
+        done();
+
     });
 
-    it("submit a form with custom validator and fail input", () => {
-        var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
-        var form = new Form(htmlForm);
-        $('#submit-test-form').trigger('click');
+    describe('create a form', function(){
 
+        var form, submitted, htmlForm;
+
+        beforeEach((done) => {
+            var $htmlForm = $('#test-form');
+            htmlForm = $htmlForm[0];
+            form = new Form(htmlForm);
+            // set a value
+            $('#sample-input').val('test');
+
+            // test this value as a custom validator
+            form.registerValidator('custom', (field) => {
+                return new Promise((r) => {
+                    r(field.value === 'test');
+                })
+            });
+
+            // submit form
+            $('#submit-test-form').trigger('click');
+
+            htmlForm.addEventListener(EVENT_FORM_SUBMIT, (e) => {
+                // prevent form from submit, otherwise tests result in a strange output
+                e.preventDefault();
+                submitted = true;
+                done();
+            });
+        });
+
+        it("submit handler must be called", function () {
+            expect(form instanceof Form).toBe(true);
+            expect(submitted).toBe(true);
+            expect(htmlForm.checkValidity()).toBe(true);
+        })
     });
 });
