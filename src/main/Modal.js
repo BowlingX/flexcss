@@ -331,7 +331,7 @@ class Modal {
             target = e.target;
             hasTarget = target.hasAttribute(ATTR_NAME);
             targetContent = target.getAttribute(ATTR_NAME);
-            widget = target.hfWidgetInstance;
+            widget = Widget.findWidget(target);
             if (target.hasAttribute(ATTR_CREATE_NEW) && !e.newInstance) {
                 var newInstance = new Modal(this.container)
                     .setDestroyOnFinish(true);

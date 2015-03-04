@@ -81,4 +81,13 @@ class Widget {
         return false;
     }
 
+    /**
+     * Will find a widget on a Element
+     * @param {HTMLElement} element
+     * @returns {Widget|undefined}
+     */
+    static findWidget(element) {
+        return element? element.hfWidgetInstance : undefined;
+    }
+
 }

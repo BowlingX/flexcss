@@ -222,7 +222,8 @@
                                 <label for="hometown_id">Heimatstadt (DE)</label>
 
                                 <div class="controls">
-                                    <input data-validate="equals" required id="hometown_id" name="hometown" type="text" maxLength="50"
+                                    <input data-validate="equals" required id="hometown_id" name="hometown" type="text"
+                                           maxLength="50"
                                            value="Düsseldorf"/>
                                 </div>
                             </div>
@@ -265,11 +266,11 @@
                                     <input type="radio" name="interests[]" value="D"/>
                                     <span class="checkbox-container">Dating</span>
                                 </label><label class="checkbox">
-                                    <input  type="radio" name="interests[]" value="P"/>
+                                    <input type="radio" name="interests[]" value="P"/>
                                     <span class="checkbox-container">Geschäftskontakte</span>
                                 </label>
                                     <label class="checkbox">
-                                        <input  type="radio" name="interests[]" value="F"/>
+                                        <input type="radio" name="interests[]" value="F"/>
                                         <span class="checkbox-container">Und das hier ist eine ganze lange Checkbox, sie ist so lang das sie lang ist</span>
                                     </label>
                                 </div>
@@ -1017,7 +1018,8 @@
                                     </div>
 
                                     <div class="right">
-                                        <button data-modal="next-modal" class="button small" type="submit">New Topic</button>
+                                        <button data-modal="next-modal" class="button small" type="submit">New Topic
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -1126,85 +1128,94 @@
 
     (function (document) {
         FlexCss.Form.init('form');
-        FlexCss.Settings.setup( {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
+        FlexCss.Settings.setup({scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
         new FlexCss.Tooltip(document.body).registerEvents();
         new FlexCss.Modal(document.body).registerEvents();
 
 
-        var widget = new FlexCss.Widget('SecondModal').setAsync(function(){
-            return new Promise(function(s){
-                setTimeout(function(){
+        var widget = new FlexCss.Widget('SecondModal').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
                     s('<p>An Async Modal</p>');
                 }, 600);
             });
         });
 
-        widget.element.addEventListener('flexcss.modal.asyncTargetLoaded', function(){
-            widget.getFinalContent().addEventListener('flexcss.modal.closed', function(){
+        widget.element.addEventListener('flexcss.modal.asyncTargetLoaded', function () {
+            widget.getFinalContent().addEventListener('flexcss.modal.closed', function () {
                 widget.destroy();
             });
         });
 
-        // Setup Handler for Navigation bars:
-       /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
-
-        FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
-        FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
-
-        // Setup Dropdown and Tooltip
-        new FlexCss.Dropdown('SiteBody', 'Darkener').registerEvents();
-        new FlexCss.Tooltip('SiteBody').registerEvents();
         new FlexCss.Toggleable('SiteBody').registerEvents();
-        new FlexCss.Modal('SiteBody').registerEvents();
 
-        // Register some selects as Async
-        FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
-            var def = $.Deferred();
-            setTimeout(function () {
-                def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
-            }, 500);
-            return def;
+        new FlexCss.Widget('toggle-photo').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
+                    s(document.getElementById('async-tab'));
+                }, 1000);
+            });
         });
 
-        FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
-            var def = $.Deferred();
-            setTimeout(function () {
-                def.resolve(document.getElementById('test-dropdown'));
-            }, 500);
-            return def;
-        });
+        // Setup Handler for Navigation bars:
+        /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
 
-        FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
-            var def = $.Deferred();
-            setTimeout(function () {
-                def.resolve(document.getElementById('second-modal'));
-            }, 500);
-            return def;
-        });
+         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
 
-        FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
-            var def = $.Deferred();
-            setTimeout(function () {
-                def.resolve('<p>This content was fetched from a future :)</p>');
-            }, 500);
-            return def;
-        }).onClose(function () {
-            this.destroy();
-        });
+         // Setup Dropdown and Tooltip
+         new FlexCss.Dropdown('SiteBody', 'Darkener').registerEvents();
+         new FlexCss.Tooltip('SiteBody').registerEvents();
+         new FlexCss.Modal('SiteBody').registerEvents();
 
-        FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
-            var def = $.Deferred();
-            setTimeout(function () {
-                def.resolve(document.getElementById('async-tab'));
-            }, 2000);
-            return def;
-        });*/
+         // Register some selects as Async
+         FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('test-dropdown'));
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('second-modal'));
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve('<p>This content was fetched from a future :)</p>');
+         }, 500);
+         return def;
+         }).onClose(function () {
+         this.destroy();
+         });
+
+         FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('async-tab'));
+         }, 2000);
+         return def;
+         });*/
 
     })(document);
 
     /*new FlexCss.Modal('SiteBody').fromWidget(
-            new FlexCss.Widget(document.getElementById('second-modal')));
-*/
+     new FlexCss.Widget(document.getElementById('second-modal')));
+     */
 </script>
 
 </body>
