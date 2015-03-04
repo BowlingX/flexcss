@@ -136,7 +136,7 @@ gulp.task('watch', function () {
 // webserver
 gulp.task('webserver', function () {
     $.connect.server({
-        root:['.'],
+        root:[__dirname],
         port: 5757,
         livereload: true
     });

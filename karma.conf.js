@@ -35,6 +35,6 @@ module.exports = function (config) {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
-        webpack: require('./webpack.config.js')
+        webpack: require('./webpack.test.config.js')
     });
 };

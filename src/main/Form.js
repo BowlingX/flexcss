@@ -170,7 +170,7 @@ class Form {
     serialize() {
         var selectors = [
             'input[name]:not([type="radio"]):enabled',
-            'input[type="radio"]:checked',
+            'input[type="radio"][name]:checked',
             'select[name]:enabled',
             'textarea[name]:enabled'
         ], inputs = this.form.querySelectorAll(selectors.join(',')), result = {};
