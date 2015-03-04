@@ -58,8 +58,6 @@ gulp.task('compileScriptsWithDependencies', function () {
         .pipe($.plumber({
             errorHandler: onError
         }))
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.webpack(config))
         .pipe(gulp.dest('build/js'))
 });
