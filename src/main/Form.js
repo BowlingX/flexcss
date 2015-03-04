@@ -1,7 +1,7 @@
 /*global Form, HTMLFormElement*/
 
 import Tooltip from 'Tooltip';
-import fetch from 'fetch';
+export * from 'isomorphic-fetch';
 import Event from 'util/Event';
 
 const ERROR_CLASS_NAME = 'form-error';
@@ -139,18 +139,18 @@ class Form {
 
         // prevent form from submit normally
         e.preventDefault();
-
         // support either JSON request payload or normal payload submission
         var serverCall = useJson ? fetch(ajaxPostUrl, {
             headers: {
                 'Content-Type': this.options.ajaxJsonContentType
             },
             method: this.options.ajaxSubmitType,
-            body: JSON.stringify(/*Form.serializeFormJSON($(thisForm))*/)
+            body: JSON.stringify(this.serialize())
         }) : fetch(ajaxPostUrl, {
             method: this.options.ajaxSubmitType,
             body: new FormData(thisForm)
         });
+
 
         Event.dispatch(thisForm, EVENT_FORM_AFTER_AJAX_SUBMIT).withOriginal(e).fire();
 
@@ -161,6 +161,32 @@ class Form {
             // always remove error class
             thisForm.classList.remove(LOADING_CLASS);
         });
+    }
+
+    /**
+     * Serializes a form to a json object
+     * @returns {Object}
+     */
+    serialize() {
+        var selectors = [
+            'input[name]:not([type="radio"]):enabled',
+            'input[type="radio"]:checked',
+            'select[name]:enabled',
+            'textarea[name]:enabled'
+        ], inputs = this.form.querySelectorAll(selectors.join(',')), result = {};
+
+        Array.prototype.forEach.call(inputs, function (input) {
+            var exists = result[input.name], value = input.value;
+            if (exists instanceof Array) {
+                exists.push(value);
+            } else if (exists) {
+                result[input.name] = [result[input.name], value];
+            } else {
+                result[input.name] = value;
+            }
+        });
+
+        return result;
     }
 
     /**
@@ -493,8 +519,7 @@ class Form {
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' ||
-            !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
@@ -592,7 +617,7 @@ class Form {
      * @private
      */
     _handleSubmit(e) {
-        this._submitFunction.apply(this, [this.form, e]);
+        this._submitFunction(this.form, e)
     }
 
 

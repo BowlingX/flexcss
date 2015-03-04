@@ -23,11 +23,11 @@ class Widget {
             this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
             if (this.element) {
                 this.element.hfWidgetInstance = this;
-                this.setAsync(() => {
-                    return new Promise((s) => {
+                this.setAsync((() => {
+                    return new Promise(((s) => {
                         s(this.element);
-                    })
-                })
+                    }).bind(this))
+                }).bind(this))
             } else {
                 throw 'Could not found element with ID: ' + element;
             }

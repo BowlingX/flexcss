@@ -1,4 +1,4 @@
-import Form, {EVENT_FORM_READY, EVENT_FORM_SUBMIT} from 'Form';
+import Form, {EVENT_FORM_READY, EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT} from 'Form';
 import setup_jasmine from 'setup_jasmine';
 import $ from 'jquery';
 setup_jasmine();
@@ -75,6 +75,32 @@ describe('Create a form with custom validations', function () {
         });
     });
 
+    it("submit the form", function () {
+        expect(form instanceof Form).toBe(true);
+        expect(submitted).toBe(true);
+        expect(htmlForm.checkValidity()).toBe(true);
+    })
+});
+
+describe('Create a form with remote validations', function () {
+    var form, submitted, htmlForm;
+    beforeEach((done) => {
+        loadFixtures('form-with-remote-validation.html');
+        var $htmlForm = $('#test-form');
+        htmlForm = $htmlForm[0];
+        form = new Form(htmlForm);
+        // set a value
+        $('#sample-input').val('test');
+
+
+        // submit form
+        $('#submit-test-form').trigger('click');
+
+        htmlForm.addEventListener(EVENT_FORM_AFTER_AJAX_SUBMIT, () => {
+            submitted = true;
+            done();
+        });
+    });
     it("submit the form", function () {
         expect(form instanceof Form).toBe(true);
         expect(submitted).toBe(true);

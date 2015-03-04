@@ -1,10 +1,6 @@
 {
   "name": "flexcss",
   "version": "0.0.1",
-  "dependencies": {
-    "jquery": "2.1.1",
-    "fetch": "~0.7.0"
-  },
   "main": [
     "scripts/**",
     "assets/_layout.scss",
@@ -16,5 +12,8 @@
   "ignore": [
     "**/.*",
     "*.html"
-  ]
+  ],
+  "resolutions": {
+    "fetch": "~0.7.0"
+  }
 }
