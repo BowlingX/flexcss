@@ -216,7 +216,6 @@ class Modal {
      * @private
      */
     _finishState(target) {
-        target.removeAttribute('style');
         target.classList.remove(CLS_ANIM_END);
     }
 
@@ -227,8 +226,6 @@ class Modal {
      * @private
      */
     _finishAnim(e, self) {
-        e.target.style.animation = 'none';
-        e.target.style.webkitAnimation = 'none';
         e.target.classList.add(CLS_ANIM_END);
         e.target.removeEventListener(e.type, self, true);
     }
