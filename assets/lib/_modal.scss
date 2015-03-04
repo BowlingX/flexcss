@@ -10,6 +10,7 @@
   left: 0;
   height: 100%;
   width: 100%;
+  overflow-x:hidden;
   background: rgba(#000, $darkenerFadeOpacity);
   @include animate(backgroundFadeIn, .25s);
   z-index: $indexModalContainer;
