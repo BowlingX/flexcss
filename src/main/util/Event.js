@@ -85,7 +85,7 @@ class EventHandler {
 export default
 class Event {
     /**
-     * Dispatches a custom event
+     * Prepares to dispatch a custom event (without firing)
      * @param {HTMLElement} target
      * @param {String} name
      * @returns {EventHandler}
@@ -95,7 +95,7 @@ class Event {
     }
 
     /**
-     * Dispatches a custom event
+     * Dispatches a custom event and fires it directly
      * @param {HTMLElement} target
      * @param {String} name
      * @param {Object} [options]
