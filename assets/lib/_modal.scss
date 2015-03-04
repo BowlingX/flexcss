@@ -71,7 +71,7 @@
     @include centralLoader();
   }
   box-shadow:$globalBoxShadow;
-  
+
   &.part-of-stack {
     display: block;
     position: absolute;
