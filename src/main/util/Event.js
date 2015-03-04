@@ -1,6 +1,9 @@
+/*global CustomEvent*/
+
 // polyfill for custom events to make thinks work in IE
 // The needed polyfill is so small that I embedded it here
 void function () {
+    "use strict";
     if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
         var CustomEvent;
         CustomEvent = function (event, params) {

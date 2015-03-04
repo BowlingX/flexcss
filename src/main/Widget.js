@@ -26,8 +26,8 @@ class Widget {
                 this.setAsync((() => {
                     return new Promise(((s) => {
                         s(this.element);
-                    }).bind(this))
-                }).bind(this))
+                    }).bind(this));
+                }).bind(this));
             } else {
                 throw 'Could not found element with ID: ' + element;
             }

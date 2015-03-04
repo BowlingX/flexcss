@@ -10,6 +10,13 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader?experimental&optional=runtime&sourceMap=inline'
             }
+        ],
+        preLoaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/, // exclude any and all files in the node_modules folder
+                loader: "jshint-loader"
+            }
         ]
     },
     resolve: {

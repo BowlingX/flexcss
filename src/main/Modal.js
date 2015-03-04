@@ -532,8 +532,6 @@ class Modal {
             });
         }
     }
-
-;
 }
 
 
@@ -542,6 +540,7 @@ Modal._modalInstances = [];
 
 // Global keydown listener for modal
 global.addEventListener('keydown', function (e) {
+    "use strict";
     if (27 === e.keyCode) {
         var lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
         if (lastModal) {

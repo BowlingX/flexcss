@@ -183,7 +183,7 @@ class Toggleable {
             console.warn(reason);
         });
 
-        return self;
+        return this;
     }
 
     /**

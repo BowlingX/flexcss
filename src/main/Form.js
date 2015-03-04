@@ -1,4 +1,4 @@
-/*global Form, HTMLFormElement*/
+/*global Form, HTMLFormElement, fetch, FormData*/
 
 import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
@@ -547,7 +547,7 @@ class Form {
 
         // prevent default if form is invalid
         var submitListener = function (e) {
-            self._submitListener(e, submitListener)
+            self._submitListener(e, submitListener);
         };
         form.addEventListener("submit", submitListener);
 
@@ -617,7 +617,7 @@ class Form {
      * @private
      */
     _handleSubmit(e) {
-        this._submitFunction(this.form, e)
+        this._submitFunction(this.form, e);
     }
 
 
