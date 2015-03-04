@@ -941,7 +941,7 @@
                     <div class="showcase">
                         <a class="button small secondary" data-modal="content-modal">open</a>
 
-                        <div class="modal current center centered" id="content-modal">
+                        <div class="modal current centered" id="content-modal">
                             <i data-close-modal class="modal-close icon-cancel-1"></i>
 
                             <h2 class="modal-title">New Topic</h2>
@@ -1017,12 +1017,16 @@
                                     </div>
 
                                     <div class="right">
-                                        <button class="button small" type="submit">New Topic</button>
+                                        <button data-modal="next-modal" class="button small" type="submit">New Topic</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
 
+                    </div>
+
+                    <div id="next-modal" class="modal">
+                        <p>Test</p>
                     </div>
 
                     <h3>Alerts</h3>

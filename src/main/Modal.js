@@ -19,7 +19,7 @@ const CLS_CURRENT = 'current';
 const CLS_PART_OF_STACK = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
 const CLS_MODAL_CONTAINER = 'modal-container';
-
+const CLS_ANIM_END = 'modal-anim-end';
 /* Events */
 
 /**
@@ -169,8 +169,7 @@ class Modal {
                 return false;
             }
 
-            self.currentOpen.removeAttribute('style');
-
+            this._finishState(self.currentOpen);
             // if there is an previous modal
             if (self.currentOpen.prevModal) {
                 // switch to the next modal
@@ -196,7 +195,7 @@ class Modal {
             for (var i = 0; i < self.modalContainer.childNodes.length; i++) {
                 var node = self.modalContainer.childNodes[i], cl = node.classList;
                 // remove applied styles
-                node.removeAttribute('style');
+                self._finishState(node);
                 cl.remove(CLS_CURRENT);
                 cl.remove(CLS_PART_OF_STACK);
             }
@@ -212,6 +211,29 @@ class Modal {
     }
 
     /**
+     * Resets a target when newly initilizes
+     * @param target
+     * @private
+     */
+    _finishState(target) {
+        target.removeAttribute('style');
+        target.classList.remove(CLS_ANIM_END);
+    }
+
+    /**
+     * Handler called when a Modal has finished an animation
+     * @param e
+     * @param self
+     * @private
+     */
+    _finishAnim(e, self) {
+        e.target.style.animation = 'none';
+        e.target.style.webkitAnimation = 'none';
+        e.target.classList.add(CLS_ANIM_END);
+        e.target.removeEventListener(e.type, self, true);
+    }
+
+    /**
      * Brings the given modal to front
      * @param co
      * @param last
@@ -221,6 +243,8 @@ class Modal {
         Modal._modalInstances.push(co);
 
         if (last) {
+            this._finishState(last);
+            Util.prefixedAnimateEvent(last, 'AnimationEnd', this._finishAnim);
             last.classList.add(CLS_PART_OF_STACK);
         }
         // set new currentOpen
@@ -235,17 +259,14 @@ class Modal {
         this.modalContainer.classList.add(CLS_CONTAINER_CURRENT);
         // remove animations if animations has been completed, fixes various bugs:
         // - fixes nested scrolling element issue in iOS Browsers / Mobile-Safari
-        Util.prefixedAnimateEvent(co, 'AnimationEnd', function (e, self) {
-            e.target.style.animation = 'none';
-            e.target.style.webkitAnimation = 'none';
-            co.removeEventListener(e.type, self, true);
-        });
+        Util.prefixedAnimateEvent(co, 'AnimationEnd', this._finishAnim);
 
         for (var i = 0; i < this.modalContainer.childNodes.length; i++) {
             var n = this.modalContainer.childNodes[i], isCurrent = n.classList.contains(CLS_CURRENT);
             if (n === co) {
                 co.classList.add(CLS_CURRENT);
                 co.classList.remove(CLS_PART_OF_STACK);
+                this._finishState(co);
             } else {
                 n.classList.remove(CLS_CURRENT);
                 if (isCurrent) {
@@ -391,7 +412,7 @@ class Modal {
                     result = element;
                 }
                 widget.finalContent = result;
-                    Event.dispatchAndFire(target, EVENT_MODAL_ASYNC_TARGET_LOADED);
+                Event.dispatchAndFire(target, EVENT_MODAL_ASYNC_TARGET_LOADED);
                 return result;
             });
         } else {
@@ -406,7 +427,7 @@ class Modal {
             }
         }
 
-            Event.dispatchAndFire(target, EVENT_MODAL_INIT);
+        Event.dispatchAndFire(target, EVENT_MODAL_INIT);
 
         return future.then(function (el) {
             el.hfContainerInstance = self;

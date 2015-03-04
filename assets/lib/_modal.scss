@@ -70,6 +70,15 @@
     @include centralLoader();
   }
   box-shadow:$globalBoxShadow;
+  
+  &.part-of-stack {
+    display: block;
+    position: absolute;
+    @include animate(fadeOut);
+    &.modal-anim-end {
+      display:none;
+    }
+  }
 }
 
 // setup z-index just when in container
