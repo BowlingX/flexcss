@@ -2,6 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 module.exports = {
     watch: false,
+    devtool: "source-map",
     module: {
         loaders: [
             {
