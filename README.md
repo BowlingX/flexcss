@@ -1,6 +1,8 @@
 flexcss
 =======
 
+[ ![Codeship Status for BowlingX/flexcss](https://codeship.com/projects/77646e40-9208-0132-73f3-668629e00ab9/status?branch=master)](https://codeship.com/projects/61792)
+
 A simple css framework using flexbox.
 
 ## Install-Instructions

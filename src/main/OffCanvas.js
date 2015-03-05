@@ -152,15 +152,19 @@ class OffCanvas {
 
         toggler.addEventListener(Settings.CONST_TAB_EVENT, togglerF);
 
-        var closer = function (e) {
+        darkener.addEventListener(Settings.CONST_TAB_EVENT, (e) => {
             if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                if (e.target === darkener || e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
-                    e.preventDefault();
-                    togglerF(e);
-                }
+                e.preventDefault();
+                togglerF(e);
             }
-        };
+        });
 
-        body.addEventListener(Settings.CONST_TAB_EVENT, closer);
+        navigationContainer.addEventListener(Settings.CONST_TAB_EVENT, (e) => {
+            if(e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
+                e.preventDefault();
+                togglerF(e);
+            }
+        })
+
     }
 }

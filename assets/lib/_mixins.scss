@@ -183,7 +183,7 @@
 
   &:after {
     will-change: width, left, opacity;
-    content: '';
+    content: ' ';
     position: absolute;
     width: 0;
     background: $color;

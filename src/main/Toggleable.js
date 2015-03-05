@@ -142,17 +142,12 @@ class Toggleable {
             parentClassList = parent.classList;
             // Abort if element is already active and if is part of a toggle list
             if (maybeToggleNode && !parentClassList.contains(ACTIVE_CLASS)) {
+                parentClassList.toggle(ACTIVE_CLASS);
                 parentClassList.add(LOADING_CLASS);
             } else {
                 return;
             }
-        }
-        if (elClassList) {
-            elClassList.add(LOADING_CLASS);
-        }
-        this.loading = true;
 
-        future.then(function (r) {
             if (maybeToggleNode) {
                 for (var i = 0; i < maybeToggleNode.children.length; i++) {
                     var n = maybeToggleNode.children[i], targetRef = n.children[0];
@@ -164,14 +159,20 @@ class Toggleable {
                             if (el) {
                                 Event.dispatchAndFire(el, EVENT_TAB_CLOSED);
                                 el.classList.remove(ACTIVE_CLASS);
+                                targetRef.classList.remove(ACTIVE_CLASS);
                             }
                         }
                     }
                 }
             }
-            elClassList.toggle(ACTIVE_CLASS);
-            parentClassList.toggle(ACTIVE_CLASS);
 
+        }
+        if (elClassList) {
+            elClassList.toggle(ACTIVE_CLASS);
+            elClassList.add(LOADING_CLASS);
+        }
+        this.loading = true;
+        future.then(function (r) {
             Event.dispatchAndFire(r, EVENT_TAB_OPENED);
             Toggleable._handleLoaded(target);
             r.classList.toggle(ACTIVE_CLASS);
