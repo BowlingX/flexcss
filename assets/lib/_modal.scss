@@ -4,6 +4,10 @@
 */
 
 
+.modal-container {
+  /* autoprefixer: off */
+  perspective: 1000px;
+}
 
 /* Container that contains all Modals of an instance */
 .modal-container {
@@ -16,13 +20,13 @@
   background: rgba(#000, $darkenerFadeOpacity);
   @include animate(backgroundFadeIn, .25s);
   z-index: $indexModalContainer;
-
   &.front {
     z-index: $indexModalContainer +1;
   }
+
+
   display:none;
   // fixes iOS blurry screen
-  transform: translateZ(0);
   &.open {
     display: flex;
   }
@@ -60,10 +64,6 @@
   display: none;
   padding: 30px 12px 25px;
   align-self: flex-start;
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  @include perspectiveHelper();
-
   &.current {
     display: block;
     @include animate(bounceIn);
@@ -75,7 +75,7 @@
   box-shadow: $globalBoxShadow;
 
   &.modal-anim-end {
-    animation-name:none;
+    animation-name:none !important;
   }
 
   &.part-of-stack {
