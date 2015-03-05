@@ -20,6 +20,8 @@ const CLS_PART_OF_STACK = 'part-of-stack';
 const CLS_MODAL_OPEN = 'modal-open';
 const CLS_MODAL_CONTAINER = 'modal-container';
 const CLS_ANIM_END = 'modal-anim-end';
+const CLS_LOADER_CONTAINER = 'loader-container';
+const CLS_LOADER = 'loader';
 /* Events */
 
 /**
@@ -378,9 +380,9 @@ class Modal {
         var loader, doc = global.document, toggleLoader = function (show) {
             if (show) {
                 loader = doc.createElement('div');
-                loader.className = 'loader-container';
+                loader.className = CLS_LOADER_CONTAINER;
                 var loaderLoader = doc.createElement('div');
-                loaderLoader.className = 'loader';
+                loaderLoader.className = CLS_LOADER;
                 loader.appendChild(loaderLoader);
                 self.modalContainer.appendChild(loader);
             } else {

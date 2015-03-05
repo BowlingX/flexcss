@@ -62,7 +62,7 @@ class Toggleable {
 
         // support target child element to clicked
         if (!target.hasAttribute(ATTR_NAME)) {
-            if (parent.hasAttribute(ATTR_NAME)) {
+            if (parent && parent.hasAttribute(ATTR_NAME)) {
                 target = parent;
             } else {
                 return;
