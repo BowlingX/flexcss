@@ -4,6 +4,8 @@ import Modal from 'Modal';
 import Widget from 'Widget';
 import Settings from 'util/Settings';
 import Toggleable from 'Toggleable';
+import OffCanvas from 'OffCanvas';
+
 // default export as component object
 export default {
     Form: Form,
@@ -11,5 +13,6 @@ export default {
     Modal: Modal,
     Widget:Widget,
     Settings:Settings,
-    Toggleable:Toggleable
+    Toggleable:Toggleable,
+    OffCanvas:OffCanvas
 };

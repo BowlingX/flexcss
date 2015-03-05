@@ -1133,6 +1133,9 @@
         new FlexCss.Modal(document.body).registerEvents();
 
 
+        new FlexCss.OffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+        new FlexCss.OffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+
         var widget = new FlexCss.Widget('SecondModal').setAsync(function () {
             return new Promise(function (s) {
                 setTimeout(function () {
