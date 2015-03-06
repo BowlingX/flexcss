@@ -7,7 +7,7 @@ flexcss
 A lightweight Flexbox based mobile-first CSS/Javascript pattern-library build for [hellofellow.com](https://hellofellow.com).
 
 - [Real-World-Example](https://hellofellow.com)
-- [Demo-Page]()
+- [Demo-Page](http://bowlingx.github.io/flexcss)
 
 ## Install-Instructions
 
