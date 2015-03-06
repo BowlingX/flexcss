@@ -3,7 +3,7 @@
 <p>A Default Modal with a <code>.wide</code> form inside. Besides this, if you add
     <code>.center</code>
     to a modal it will be truly centered on Desktop size.
-    </p>
+</p>
 <p>
     Modals are <strong>stackable</strong> (try <code>attach-image</code>) and may also replace an existing one
     (try <code>?</code> next to <code>new topic</code>).
@@ -138,6 +138,24 @@
 <button data-modal="a-modal">open a modal</button>
 <div id="a-modal" class="modal">
     <i data-close-modal class="modal-close icon-cancel-1"></i>
+
     <p>Modal-Content</p>
 </div>
 {% endhighlight %}
+
+<div class="modal" id="async-modal">
+    <form>
+        <div class="control-group">
+            <label for="file_picker">Pick a file</label>
+
+            <div class="controls">
+                <input id="file_picker" type="file"/>
+
+                <p>Only JPEG, GIF or BMP are allowed</p>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button data-close-modal class="button small">aggree, this is fun</button>
+        </div>
+    </form>
+</div>

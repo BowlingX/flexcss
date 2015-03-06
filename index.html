@@ -11,65 +11,7 @@ title: flexcss - hellofellow pattern library
 {% include buttons.html %}
 <hr>
 {% include forms.html %}
-<hr/>
-{% include modals.html %}
-
 <hr>
-<h2>Tabs and Navigation</h2>
-
-<p>Tabs allow content to be separated under different topics.</p>
-
-<div class="overflow-container">
-    <ul class="tabs" data-toggle-list>
-        <li class="active"><a data-toggle="tab-content-about" href="">About me</a></li>
-        <li><a data-toggle="tab-content-friends" href="#">Friends</a></li>
-        <li class="disabled"><a href="">Community-Posts (disabled)</a></li>
-        <li><a id="toggle-photo" data-toggle href="">Photos <span class="badge">20</span></a></li>
-        <li class="link"><a data-dropdown="menu-dropdown" href="#"><i class="icon-ellipsis"></i></a>
-        </li>
-    </ul>
-</div>
-<div id="menu-dropdown" class="dropdown">
-    <ul>
-        <li><a data-close-dropdown href="#">Dropdown-Item 1</a></li>
-        <li><a data-close-dropdown href="#">Dropdown-Item 2</a></li>
-        <li><a data-close-dropdown href="#">Dropdown-Item 3</a></li>
-    </ul>
-</div>
-<div class="toggle-content" id="async-tab"><p>An Asnc Tab</p></div>
-
-<div id="tab-content-friends" class="toggle-content">
-    <p>Whats happening here with my friends?</p>
-</div>
-
-<div id="tab-content-about" class="toggle-content active">
-    <p>About myself</p>
-</div>
-
-<div class="modal" id="fourth-modal">
-    <p>Ich bin ein viertes Modal</p>
-    <br><br>
-</div>
-
-<div class="modal" id="third-modal">
-    <p>Ich bin noch ein Modal</p>
-    <a data-modal="fourth-modal">viertes</a>
-</div>
-
-<div class="modal" id="async-modal">
-    <form>
-
-        <div class="control-group">
-            <label for="file_picker">Pick a file</label>
-
-            <div class="controls">
-                <input id="file_picker" type="file"/>
-
-                <p>Only JPEG, GIF or BMP are allowed</p>
-            </div>
-        </div>
-        <div class="form-actions">
-            <button data-close-modal class="button small">aggree, this is fun</button>
-        </div>
-    </form>
-</div>
+{% include modals.html %}
+<hr>
+{% include tabs.html %}
