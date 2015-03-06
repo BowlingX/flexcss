@@ -1,6 +1,5 @@
 
 # Dependencies
-markdown:         kramdown
 highlighter:      rouge
 
 # Permalinks
