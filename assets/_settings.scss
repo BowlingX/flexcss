@@ -132,6 +132,5 @@ $fontelloFontPath:'../fonts/fontello' !default;
 $darkenerFadeOpacity: .35;
 
 // dropdowns:
-
 $dropdownBorderColor:lighten($grayColor, 20%) !default;
-$dropdownMaxHeight:300px;
+$dropdownMaxHeight:300px !default;

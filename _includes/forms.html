@@ -1,0 +1,249 @@
+<h2>Forms</h2>
+<p>Forms are <strong>fully responsive</strong> and include styles for common <code>HTML</code> widgets (input, select,
+    checkbox) </p>
+<hr>
+<form>
+    <fieldset>
+        <legend>Please login</legend>
+        <div class="control-group">
+            <label for="login">Username / E-Mail-Address</label>
+
+            <div class="controls">
+                <input required placeholder="Provide your E-Mail-Adress or Username" type="email" id="login"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="password">Password</label>
+
+            <div class="controls">
+                <input required type="password" id="password"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="checkbox no-label">
+                <input type="checkbox" value="true" checked>
+                <span class="checkbox-container">keep me logged in</span>
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button class="button small right" type="submit">Login</button>
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h3>Example form with HTML5 validation</h3>
+{% highlight html %}
+<form>
+    <fieldset>
+        <legend>Please login</legend>
+        <div class="control-group">
+            <label for="login">Username / E-Mail-Address</label>
+
+            <div class="controls">
+                <input required
+                       placeholder="Provide your E-Mail-Adress or Username"
+                       type="email" id="login"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="password">Password</label>
+
+            <div class="controls">
+                <input required type="password" id="password"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="checkbox no-label">
+                <input type="checkbox" value="true" checked>
+                <span class="checkbox-container">keep me logged in</span>
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button class="button small right" type="submit">Login</button>
+        </div>
+    </fieldset>
+</form>
+
+{% endhighlight%}
+<hr>
+<h3>Complex form Examples</h3>
+<p>Forms can be quite complex, flexcss has multiple options to display widgets</p>
+<h4>Multiple fields in one row</h4>
+<form>
+    <fieldset>
+        <div class="control-group">
+            <label>Birthday</label>
+
+            <div class="controls">
+                <div class="multi-form">
+                    <div class="select-day">
+                        <div class="select-element">
+                            <select required>
+                                <option value=""></option>
+                                <option value="1">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="select-month">
+                        <div class="select-element">
+                            <select required>
+                                <option value=""></option>
+                                <option value="1">October</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="select-year">
+                        <div class="select-element">
+                            <select required>
+                                <option value=""></option>
+                                <option value="1">1985</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <p class="help-block">please provide your birthday, we will not publish your age...</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>Multiple Inputs</label>
+
+            <div class="controls">
+                <div class="multi-form">
+                    <div><input type="text"/></div>
+                    <div><input required type="date"/></div>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls no-label">
+                <div class="multi-form">
+                    <div><input required type="text"/></div>
+                    <div><input required type="range"/></div>
+                    <div><input type="text"/></div>
+                    <div><input type="number"/></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="button small" type="submit">save</button>
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h3>Example with multiple inputs in one row</h3>
+<p>Use <code>.multi-form</code> to group inputs in one row</p>
+{% highlight html %}
+<div class="control-group">
+    <div class="controls no-label">
+        <div class="multi-form">
+            <div><input type="text"/></div>
+            <div><input type="text"/></div>
+            <!-- [...] -->
+        </div>
+    </div>
+</div>
+{% endhighlight %}
+<hr>
+<h3>A <code>.wide</code> form</h3>
+<p><code>.wide</code> forms will stay in widescreen mode and the label is always on top</p>
+<form class="wide">
+    <fieldset>
+        <div class="control-group">
+            <label for="title_id">Topic / Headline</label>
+
+            <div class="controls">
+                <input id="title_id" required placeholder="Be descriptive and meaningfull" maxlength="70" type="text">
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="textarea_text">Text</label>
+
+            <p>A Description may also be on top, you could write something more about
+                this here...</p>
+
+            <div class="controls">
+                <textarea required placeholder="Please be nice and do not post anything awkward"
+                          id="textarea_text"></textarea>
+
+                <p>A help text under an element</p>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h3>Uneditable inputs</h3>
+<p>To let simple elements look like an input field, add <code>.input</code></p>
+<form class="saveRemember ajxForm form-horizontal" method="POST" data-remote="json">
+    <fieldset>
+        <div class="control-group">
+            <label>A disabled <code>.input</code></label>
+
+            <div class="controls">
+                <span class="input uneditable-input">BowlingX</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>An <code>.input</code> field</label>
+
+            <div class="controls">
+                <span class="input">BowlingX</span>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<hr>
+{%highlight html %}
+<span class="input">Value</span>
+<span class="input uneditable-input">Uneditable</span>
+{%endhighlight%}
+<hr>
+<h3>Checkboxes and Radios</h3>
+<form>
+    <fieldset>
+        <div class="control-group">
+            <label>Interest</label>
+
+            <div class="controls multi-select-field">
+                <label class="checkbox">
+                    <input disabled checked="checked" type="checkbox"/>
+                    <span class="checkbox-container">find friends (disabled)</span>
+                </label>
+                <label class="checkbox">
+                    <input checked="checked" type="checkbox"/>
+                    <span class="checkbox-container">dating</span>
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>Select your favorite language</label>
+
+            <div class="controls multi-select-field">
+                <label class="checkbox">
+                    <input required type="radio" name="radio" value="S"/>
+                    <span class="checkbox-container">Scala</span>
+                </label>
+                <label class="checkbox">
+                    <input required type="radio" name="radio" value="J"/>
+                    <span class="checkbox-container">Java</span>
+                </label>
+                <label class="checkbox">
+                    <input disabled required type="radio" name="radio" value="X"/>
+                    <span class="checkbox-container">PHP (disabled)</span>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h4>Example radio (we always use <code>.checkbox</code>)</h4>
+{% highlight html %}
+<div class="controls multi-select-field">
+    <label class="checkbox">
+        <input required type="radio" name="radio" value="S"/>
+        <span class="checkbox-container">Scala</span>
+    </label>
+</div>
+{% endhighlight %}

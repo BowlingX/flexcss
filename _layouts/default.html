@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <link rel="stylesheet" href="build/css/doc.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,400' rel='stylesheet'
+          type='text/css'>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+</head>
+<body id="SiteBody">
+<header class="header" id="Header">
+    <div class="topbar" id="TopBar">
+        <a id="ToggleMainNavigation" class="icon-menu topbar-action navigation-toggler"><span
+                id="TitleText">Community</span></a>
+        <a id="ToggleSidebar" class="right icon-user topbar-action"></a>
+        <a class="right icon-mail-alt topbar-action"> <span class="badge">20</span></a>
+    </div>
+    <nav class="navbar-main" id="MainNavigation" role="navigation">
+        <div class="home">
+            <a class="logo" data-close-sidebar href="/">hellofellow.com</a>
+        </div>
+        <ul class="main-nav">
+            <li><a href="">Home</a></li>
+            <li><a href="">Community</a></li>
+            <li><a href="">People</a></li>
+            <li class="active"><a href="">Gallery</a></li>
+            <li><a href=""><i class="icon-mail-alt hide-large hide-small"></i> <span
+                    class="visible-large visible-small">Messages</span> <span class="badge">5</span></a></li>
+        </ul>
+        <ul>
+            <li><a href=""><i class="icon-user hide-large"></i> <span
+                    class="visible-large visible-small">Profil</span></a></li>
+            <li><a href=""><i class="icon-cog hide-large"></i> <span
+                    class="visible-large visible-small">Account</span></a></li>
+
+            <li class="visible-small"><a href=""><i class="icon-off"></i> Logout</a></li>
+            <li class="flex-align-center hide-small">
+                <form>
+                    <button class="button mini alternative"><i class="icon-off hide-large"></i> <span
+                            class="visible-large">Logout</span>
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <div class="darkener" id="Darkener"></div>
+
+</header>
+<div class="content-wrapper" id="AllContentWrapper">
+    <section class="wrapper wrapper-center" id="main" role="document">
+        <section id="MainContent" class="main">
+            <section>
+                <section class="subnav-content" id="SuvNavContent" role="region">
+                    <ul id="Subnav" class="subnav">
+                        <li><a href="#">Suche</a></li>
+                        <li class="active"><a href="#">Freunde</a></li>
+                        <li><a href="#">Anfragen</a></li>
+                        <li><a href="#">Blockliste <span class="badge">20</span></a></li>
+                        <li>
+                            <div data-toggle-on-focus class="toolbar-form"><i class="icon-search color-gray"></i>
+                                <input
+                                        placeholder="Suche"></div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="page-content" id="UpperContent" role="main">
+                    {{ content }}
+                </section>
+            </section>
+            <footer class="footer" id="Footer">Footer</footer>
+        </section>
+        <aside id="Sidebar" class="aside sidebar">
+            <div class="aside-content">
+
+                <ul class="tabs small-font tabs-small">
+                    <li class="no-hover"><span class="tab-item">A Tab but not clickable</span></li>
+                </ul>
+                <br>
+                <ul class="tabs small-font tabs-small" data-toggle-list>
+                    <li class="active"><a data-toggle="tab-content-all" href="">a tab</a></li>
+                    <li><a data-toggle="tab-content-countrymen" href="#">a second tab</a></li>
+                </ul>
+                <div class="toggle-content toggle-content-small active" id="tab-content-all">
+                    <p class="small-font">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+                        ligula eget dolor.
+                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                        mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                    </p>
+                </div>
+                <div class="toggle-content toggle-content-small" id="tab-content-countrymen">
+                    <p class="small-font">No content available.</p>
+                </div>
+
+            </div>
+        </aside>
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
+<script type="application/javascript" src="build/js/flexcss.js"></script>
+<script type="application/javascript">
+    (function (document) {
+        // init all forms on this page
+        FlexCss.Form.init('form');
+        // setup scrollbar nodes to be updated
+        FlexCss.Settings.setup({scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
+
+        // init tooltips
+        new FlexCss.Tooltip(document.body).registerEvents();
+
+        // init modals
+        new FlexCss.Modal(document.body).registerEvents();
+
+        // Create of canvas navigation
+        new FlexCss.OffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+        new FlexCss.OffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+
+        // setup
+        new FlexCss.Widget('SecondModal').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
+                    s(document.getElementById('async-modal'));
+                }, 600);
+            });
+        });
+
+        new FlexCss.Toggleable('SiteBody').registerEvents();
+
+        new FlexCss.Widget('toggle-photo').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
+                    s(document.getElementById('async-tab'));
+                }, 1000);
+            });
+        });
+
+        // Setup Handler for Navigation bars:
+        /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
+
+         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
+         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+
+         // Setup Dropdown and Tooltip
+         new FlexCss.Dropdown('SiteBody', 'Darkener').registerEvents();
+         new FlexCss.Tooltip('SiteBody').registerEvents();
+         new FlexCss.Modal('SiteBody').registerEvents();
+
+         // Register some selects as Async
+         FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('test-dropdown'));
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('second-modal'));
+         }, 500);
+         return def;
+         });
+
+         FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve('<p>This content was fetched from a future :)</p>');
+         }, 500);
+         return def;
+         }).onClose(function () {
+         this.destroy();
+         });
+
+         FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
+         var def = $.Deferred();
+         setTimeout(function () {
+         def.resolve(document.getElementById('async-tab'));
+         }, 2000);
+         return def;
+         });*/
+
+    })(document);
+
+    /*new FlexCss.Modal('SiteBody').fromWidget(
+     new FlexCss.Widget(document.getElementById('second-modal')));
+     */
+</script>
+</body>
+</html>

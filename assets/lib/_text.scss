@@ -28,7 +28,7 @@ p {
   margin: 0 0 1rem 0;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0 0 1rem 0;
 }
 
@@ -58,6 +58,7 @@ a {
 
 code {
   background: lighten($grayColor, 35%);
+  padding:3px;
 }
 
 pre > code {
@@ -66,6 +67,7 @@ pre > code {
   padding:20px;
   border-radius:$globalRadius;
   border-bottom:2px solid lighten($grayColor, 20%);
+  overflow-y:auto;
 }
 
 .badge {
