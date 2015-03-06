@@ -619,6 +619,7 @@ void function (window, $) {
          */
         FlexCss.SetupPositionNearby = function (target, elementToPosition, collisionContainer) {
 
+            console.log(target, elementToPosition);
             // determine relative offsets
             var amountTop = 0, amountLeft = 0;
             FlexCss.parentsUntil(target.parentNode, function (el) {

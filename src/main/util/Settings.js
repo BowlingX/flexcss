@@ -69,3 +69,5 @@ Settings.CONST_TAB_EVENT = 'click';
 Settings._CONST_IS_IOS = null;
 
 Settings._CONST_IS_TOUCH = null;
+
+Settings.CONST_CANVAS_TOGGLE = 'toggled-canvas';

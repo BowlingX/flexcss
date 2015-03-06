@@ -5,6 +5,7 @@ import Widget from 'Widget';
 import Settings from 'util/Settings';
 import Toggleable from 'Toggleable';
 import OffCanvas from 'OffCanvas';
+import Dropdown from 'Dropdown';
 
 // default export as component object
 export default {
@@ -14,5 +15,6 @@ export default {
     Widget:Widget,
     Settings:Settings,
     Toggleable:Toggleable,
-    OffCanvas:OffCanvas
+    OffCanvas:OffCanvas,
+    Dropdown:Dropdown
 };
