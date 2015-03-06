@@ -1,9 +1,25 @@
+/**
+ * @type {string}
+ */
 const CLASS_NAMES_TOOLTIP = 'tooltip-container';
+/**
+ * @type {string}
+ */
 const CLASS_NAMES_TOP = 'arrow-top';
+/**
+ * @type {string}
+ */
 const CLASS_NAMES_BOTTOM = 'arrow-bottom';
+/**
+ * @type {string}
+ */
 const CLASS_NAMES_OPEN = 'open';
-var doc = document;
 
+var doc = global.document;
+
+/**
+ * Simple Tooltip
+ */
 export default class Tooltip {
 
     /**
