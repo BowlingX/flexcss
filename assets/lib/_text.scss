@@ -68,6 +68,7 @@ pre > code {
   border-radius:$globalRadius;
   border-bottom:2px solid lighten($grayColor, 20%);
   overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 .badge {
