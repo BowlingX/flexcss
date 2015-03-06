@@ -57,8 +57,15 @@ a {
 }
 
 code {
+  background: lighten($grayColor, 35%);
+}
+
+pre > code {
+  display:block;
   font-family: monospace;
-  background: lighten($grayColor, 30%);
+  padding:20px;
+  border-radius:$globalRadius;
+  border-bottom:2px solid lighten($grayColor, 20%);
 }
 
 .badge {

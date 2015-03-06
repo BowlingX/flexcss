@@ -23,10 +23,7 @@
   &.front {
     z-index: $indexModalContainer +1;
   }
-
-
   display:none;
-  // fixes iOS blurry screen
   &.open {
     display: flex;
   }

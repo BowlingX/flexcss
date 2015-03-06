@@ -1,3 +1,6 @@
+---
+title: Demo
+---
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -999,7 +1002,7 @@
                                                 this here...</p>
 
                                             <div class="controls">
-                                                <textarea placeholder="Please be nice and do not post anything awkward"
+                                                <textarea required placeholder="Please be nice and do not post anything awkward"
                                                           id="textarea_text"></textarea>
 
                                                 <p><a id="SecondModal" data-new-instance data-modal="second-modal"><i
@@ -1018,7 +1021,8 @@
                                     </div>
 
                                     <div class="right">
-                                        <button data-modal="next-modal" class="button small" type="submit">New Topic
+                                        <button data-modal="next-modal"  class="button small action secondary"><i class="icon-help"></i></button>
+                                        <button class="button small" type="submit">New Topic
                                         </button>
                                     </div>
                                 </div>
@@ -1028,7 +1032,14 @@
                     </div>
 
                     <div id="next-modal" class="modal">
-                        <p>Test</p>
+                        <i data-close-modal class="modal-close icon-cancel-1"></i>
+                        <p>Post something usefull here...</p>
+                        <ul>
+                            <li>Point 1</li>
+                            <li>Point 2</li>
+                            <li>...</li>
+                        </ul>
+                        <button class="button block secondary small" data-close-modal>thanks, got it</button>
                     </div>
 
                     <h3>Alerts</h3>
@@ -1055,11 +1066,13 @@
                     </div>
 
                     <br>
-                    <h4>More Variations</h4>
+                    {% highlight html%}
+<h4>More Variations</h4>
 
-                    <p>Beneath standard modals with staticly linked content, there is also an <a href="" id="AsyncModal"
-                                                                                                 data-modal>async
-                        version.</a></p>
+<p>Beneath standard modals with staticly linked content, there is also an
+    <a href="" id="AsyncModal" data-modal>async version.</a>
+</p>
+                    {% endhighlight %}
 
 
                     <hr>
@@ -1139,7 +1152,7 @@
         var widget = new FlexCss.Widget('SecondModal').setAsync(function () {
             return new Promise(function (s) {
                 setTimeout(function () {
-                    s('<p>An Async Modal</p>');
+                    s(document.getElementById('async-modal'));
                 }, 600);
             });
         });
