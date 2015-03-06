@@ -1,6 +1,6 @@
 {
   "name": "flexcss",
-  "version": "0.1",
+  "version": "0.1.0",
   "main": [
     "build/js/**",
     "assets/_layout.scss",
@@ -12,8 +12,5 @@
   "ignore": [
     "**/.*",
     "*.html"
-  ],
-  "resolutions": {
-    "fetch": "~0.7.0"
-  }
+  ]
 }

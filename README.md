@@ -97,6 +97,7 @@ Although running in production, it's not 100% ready for a public release. Use at
 The MIT License (MIT)
 
 Copyright (c) 2015 David Heidrich, hellofellow KG
+
 Design Copyright (c) 2015 Sascha Ropertz, hellofellow KG
 
 Any contribution is welcome, just issue a pull-request or bug/feature if you found something :)
