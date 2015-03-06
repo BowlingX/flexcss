@@ -470,9 +470,12 @@ input[type="range"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  transition: background .3s ease;
+  transition: background .3s ease, transform .2s ease;
+  cursor: pointer;
+  transform:scale3d(1,1,1);
   &:hover {
     background: lighten($primaryColor, 10%);
+    transform:scale3d(1.2,1.2,1.2);
   }
 
   &:focus, &:active {
