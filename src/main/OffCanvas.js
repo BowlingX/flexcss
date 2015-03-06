@@ -164,7 +164,7 @@ class OffCanvas {
                 e.preventDefault();
                 togglerF(e);
             }
-        })
+        });
 
     }
 }
