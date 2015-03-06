@@ -43,23 +43,25 @@ gulp.task('clean', function (cb) {
     del(['build'], cb);
 });
 
-// all scripts with vendor dependencies
-gulp.task('scriptsWithDependencies', ['clean'], function () {
-    gulp.start('compileScriptsWithDependencies');
-});
-
-gulp.task('compileScriptsWithDependencies', function () {
+function createScripts(watch) {
     var path = require("path");
 
     var config = Object.create(webpackConfig);
-    config.watch = true;
-
+    config.watch = watch;
     return gulp.src(paths.exports)
         .pipe($.plumber({
             errorHandler: onError
         }))
         .pipe($.webpack(config))
         .pipe(gulp.dest('build/js'))
+}
+
+gulp.task('compileScriptsWithDependencies', ['clean'], function () {
+    return createScripts(false);
+});
+
+gulp.task('watchScriptsWithDependencies', ['clean'], function () {
+    return createScripts(true);
 });
 
 // setup tests
@@ -99,12 +101,10 @@ gulp.task('sass', ['clean'], function () {
     return gulp.start('compileSass');
 });
 
-// we got a bug here with the sourcemaps: https://github.com/floridoo/gulp-sourcemaps/issues/60
 gulp.task('compileSass', function () {
     var processors = [
         autoprefixer({
-            // include IE 9:
-            browsers: ['last 4 versions'],
+            browsers: ['last 2 versions'],
             cascade: false
         }),
         csswring
@@ -131,17 +131,7 @@ gulp.task('watch', function () {
 
 });
 
-// webserver
-gulp.task('webserver', function () {
-    $.connect.server({
-        root:[__dirname],
-        port: 5757,
-        livereload: true
-    });
-});
-
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['watch', 'fonts', 'images', 'sass', 'scriptsWithDependencies', 'webserver']);
+gulp.task('default', ['watch', 'fonts', 'images', 'sass', 'watchScriptsWithDependencies']);
 
-// distribution task
-gulp.task('dist', ['scripts', 'fonts', 'images', 'sass']);
+gulp.task('dist', ['fonts', 'images', 'sass', 'compileScriptsWithDependencies']);
