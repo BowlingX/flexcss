@@ -1002,7 +1002,8 @@ title: Demo
                                                 this here...</p>
 
                                             <div class="controls">
-                                                <textarea required placeholder="Please be nice and do not post anything awkward"
+                                                <textarea required
+                                                          placeholder="Please be nice and do not post anything awkward"
                                                           id="textarea_text"></textarea>
 
                                                 <p><a id="SecondModal" data-new-instance data-modal="second-modal"><i
@@ -1021,7 +1022,8 @@ title: Demo
                                     </div>
 
                                     <div class="right">
-                                        <button data-modal="next-modal"  class="button small action secondary"><i class="icon-help"></i></button>
+                                        <button data-tooltip title="ask for help" data-modal="next-modal"
+                                                class="button small action secondary"><i class="icon-help"></i></button>
                                         <button class="button small" type="submit">New Topic
                                         </button>
                                     </div>
@@ -1033,6 +1035,7 @@ title: Demo
 
                     <div id="next-modal" class="modal">
                         <i data-close-modal class="modal-close icon-cancel-1"></i>
+
                         <p>Post something usefull here...</p>
                         <ul>
                             <li>Point 1</li>
@@ -1067,11 +1070,11 @@ title: Demo
 
                     <br>
                     {% highlight html%}
-<h4>More Variations</h4>
+                    <h4>More Variations</h4>
 
-<p>Beneath standard modals with staticly linked content, there is also an
-    <a href="" id="AsyncModal" data-modal>async version.</a>
-</p>
+                    <p>Beneath standard modals with staticly linked content, there is also an
+                        <a href="" id="AsyncModal" data-modal>async version.</a>
+                    </p>
                     {% endhighlight %}
 
 
@@ -1134,7 +1137,21 @@ title: Demo
             </div>
         </aside>
     </section>
+    <div class="modal" id="async-modal">
+        <form>
 
+            <div class="control-group">
+                <label for="title_id">Pick a file</label>
+                <div class="controls">
+                    <input type="file"/>
+                    <p>Only JPEG, GIF or BMP are allowed</p>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button data-close-modal class="button small">aggree, this is fun</button>
+            </div>
+        </form>
+    </div>
 </div>
 <script type="application/javascript" src="build/js/app.js"></script>
 <script type="application/javascript">
@@ -1157,11 +1174,6 @@ title: Demo
             });
         });
 
-        widget.element.addEventListener('flexcss.modal.asyncTargetLoaded', function () {
-            widget.getFinalContent().addEventListener('flexcss.modal.closed', function () {
-                widget.destroy();
-            });
-        });
 
         new FlexCss.Toggleable('SiteBody').registerEvents();
 
