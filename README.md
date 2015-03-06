@@ -3,7 +3,8 @@ flexcss
 
 [ ![Codeship Status for BowlingX/flexcss](https://img.shields.io/codeship/77646e40-9208-0132-73f3-668629e00ab9/master.svg)](https://codeship.com/projects/61792)
 ![Dependencies](https://img.shields.io/david/bowlingx/flexcss.svg)
-A lightweight CSS Flexbox based CSS/Javascript Framework build for hellofellow.com.
+
+A lightweight CSS Flexbox based CSS/Javascript Framework build for [hellofellow.com](https://hellofellow.com).
 
 ## Install-Instructions
 
