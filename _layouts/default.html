@@ -104,6 +104,15 @@
         </aside>
     </section>
 </div>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-60479403-1', 'auto');
+    ga('send', 'pageview');
+</script>
 <script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
 <script type="application/javascript" src="{{ site.baseurl }}build/js/flexcss.js"></script>
 <script type="application/javascript">
@@ -141,60 +150,10 @@
                 }, 1000);
             });
         });
-
-        // Setup Handler for Navigation bars:
-        /*FlexCss.init(document, {scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
-
-         FlexCss.CreateOffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
-         FlexCss.CreateOffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
-
+        /*
          // Setup Dropdown and Tooltip
          new FlexCss.Dropdown('SiteBody', 'Darkener').registerEvents();
-         new FlexCss.Tooltip('SiteBody').registerEvents();
-         new FlexCss.Modal('SiteBody').registerEvents();
-
-         // Register some selects as Async
-         FlexCss.CreateWidget('AsyncSelect1').registerAsyncContent(function () {
-         var def = $.Deferred();
-         setTimeout(function () {
-         def.resolve('<ul><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li><li><a href="">Test 1</a></li></ul>');
-         }, 500);
-         return def;
-         });
-
-         FlexCss.CreateWidget('AsyncSelect2').registerAsyncContent(function () {
-         var def = $.Deferred();
-         setTimeout(function () {
-         def.resolve(document.getElementById('test-dropdown'));
-         }, 500);
-         return def;
-         });
-
-         FlexCss.CreateWidget('SecondModal').registerAsyncContent(function () {
-         var def = $.Deferred();
-         setTimeout(function () {
-         def.resolve(document.getElementById('second-modal'));
-         }, 500);
-         return def;
-         });
-
-         FlexCss.CreateWidget('AsyncModal').registerAsyncContent(function () {
-         var def = $.Deferred();
-         setTimeout(function () {
-         def.resolve('<p>This content was fetched from a future :)</p>');
-         }, 500);
-         return def;
-         }).onClose(function () {
-         this.destroy();
-         });
-
-         FlexCss.CreateWidget('toggle-photo').registerAsyncContent(function () {
-         var def = $.Deferred();
-         setTimeout(function () {
-         def.resolve(document.getElementById('async-tab'));
-         }, 2000);
-         return def;
-         });*/
+        */
 
     })(document);
 
