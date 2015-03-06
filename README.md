@@ -102,3 +102,4 @@ Design Copyright (c) 2015 Sascha Ropertz, hellofellow KG
 
 Any contribution is welcome, just issue a pull-request or bug/feature if you found something :)
 
+hellofellow and the hellofellow logo Copyright © 2013 – 2015 hellofellow KG
