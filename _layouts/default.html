@@ -65,7 +65,7 @@
                                     <span class="add-on"><i class="icon-search"></i></span>
 
                                     <input type="text" class="small-input ui-autocomplete-input"
-                                           placeholder="Suche (alle Sprachen)" autocomplete="off">
+                                           placeholder="Sarch something" autocomplete="off">
                                 </div>
                             </div>
                         </li>
@@ -79,9 +79,10 @@
             <footer class="footer" id="Footer">
                 <p>Made with ♥ by David Heidrich, content and code licensed under the <a
                         href="https://github.com/BowlingX/flexcss/blob/master/LICENSE">MIT License</a><br>
-                    Designed by Sascha Ropertz</p>
                 <span class="small-font">hellofellow and the hellofellow logo Copyright © 2013 – 2015 hellofellow KG<br><a
-                        data-modal="impressum">Impressum</a></span></footer>
+                        data-modal="impressum">Impressum</a></span>
+                </p>
+            </footer>
         </section>
         <aside id="Sidebar" class="aside sidebar">
             <div class="aside-content">
@@ -128,7 +129,7 @@
 <script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
 <script type="application/javascript" src="{{ site.baseurl }}build/js/flexcss.js"></script>
 <script type="application/javascript">
-    (function (document) {
+    void function (document) {
         // init all forms on this page
         FlexCss.Form.init('form');
         // setup scrollbar nodes to be updated
@@ -165,12 +166,12 @@
         });
         // Setup Dropdown
         new FlexCss.Dropdown(document.body, 'Darkener').registerEvents();
-
-    })(document);
-
-    /*new FlexCss.Modal('SiteBody').fromWidget(
-     new FlexCss.Widget(document.getElementById('second-modal')));
-     */
+        new FlexCss.Widget('async-dropdown-target').setAsync(function() { return new Promise(function (r) {
+            setTimeout(function(){
+                r(document.getElementById('dropdown-test'));
+            }, 2000);
+        })});
+    }(document);
 </script>
 <div class="modal" id="impressum">
     <i data-close-modal class="modal-close icon-cancel-1"></i>

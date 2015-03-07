@@ -35,17 +35,17 @@ Includes different ready-to-use Javascript Components and Widgets that are **hea
 
 All Javascript Components haven been created without external dependencies (almost).
 
-### Branch Information
-- `master` contains the latest es6 rewrite
-- `hellofellow` version that runs on hellofellow, will be abandoned in the future (and replaced with master).
-   - No pull-requests are accepted here
-
 ### Polyfills / Dependencies used
 
 - `Object.assign` ([MDN](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign),
     [Polyfill](https://www.npmjs.com/package/object-assign))
 - `Promise` ([Polyfill](https://github.com/jakearchibald/es6-promise))
 - `fetch` ([link](https://github.com/github/fetch))
+
+### Branch Information
+- `master` contains the latest es6 rewrite
+- `hellofellow` version that runs on hellofellow, will be abandoned in the future (and replaced with master).
+   - No pull-requests are accepted here
 
 ## Browser/Device Support
 
@@ -97,8 +97,6 @@ Although running in production, it's not 100% ready for a public release. Use at
 The MIT License (MIT)
 
 Copyright (c) 2015 David Heidrich, hellofellow KG
-
-Design Copyright (c) 2015 Sascha Ropertz, hellofellow KG
 
 Any contribution is welcome, just issue a pull-request or bug/feature if you found something :)
 

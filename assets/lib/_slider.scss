@@ -17,6 +17,7 @@ $maxSlide: 10;
   position: relative;
   height: 100%;
   flex: 1;
+  overflow:hidden;
 }
 
 .slider {
@@ -68,10 +69,10 @@ $maxSlide: 10;
 
 @media #{$mediaDesktop} {
   .slide {
-    min-width: 50%;
-    padding-right:30px;
+    min-width: calc(50% - 10px);
+    margin-right:10px;
     &:nth-child(2n) {
-      padding-left:22px;
+      margin:0 0 0 10px;
     }
   }
 }
