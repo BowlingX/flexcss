@@ -19,7 +19,7 @@ const ATTR_HREF = 'href';
 
 const KEY_NEXT = 39;
 const KEY_PREV = 37;
-
+const ATTR_CLOSE = 'data-close-modal';
 /**
  * A Simple LightBox
  */
@@ -250,7 +250,7 @@ class LightBox {
         if (Settings.isIE()) {
             setTimeout(function () {
                 this._imageContainer.style.height = img.offsetHeight + 'px';
-            }, 0);
+            }.bind(this), 0);
         }
     }
 
@@ -358,9 +358,9 @@ class LightBox {
          */
         this._widget = new Widget().setAsync(function () {
             // thumbnail is either target itself or expected to be first childNode
-            var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
+            var thumbnail = target.hasAttribute(ATTR_NO_THUMBNAIL) ? target : (target.children[0] || target);
 
-            var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
+            var imgHighResolution = target.getAttribute(ATTR_DATA_HREF) || target.getAttribute(ATTR_HREF),
                 imgSrc = this._getSrc(thumbnail) || imgHighResolution;
 
             var imageObj = new Image();
@@ -371,7 +371,7 @@ class LightBox {
             this._contentContainer = document.createElement('div');
 
             this._closerContainerDiv.className = 'modal-close modal-close-lightbox icon-cancel-1';
-            this._closerContainerDiv.setAttribute('data-close-modal', 'data-close-modal');
+            this._closerContainerDiv.setAttribute(ATTR_CLOSE, ATTR_CLOSE);
 
             this._modalContainerDiv.className = 'modal image-modal';
             this._modalContainerDiv.appendChild(this._imageContainer);
