@@ -11,6 +11,7 @@
 
 /* Container that contains all Modals of an instance */
 .modal-container {
+  @include interface();
   position: fixed;
   top: 0;
   left: 0;

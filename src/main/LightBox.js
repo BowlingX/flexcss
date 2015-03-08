@@ -8,12 +8,24 @@ import Widget from 'Widget';
 const ATTR_MAX_WIDTH = 'data-original-width';
 const ATTR_MAX_HEIGHT = 'data-original-height';
 const ATTR_SRC = 'data-src';
+
+const CLS_HAS_PREV = 'has-prev';
+const CLS_HAS_NEXT = 'has-next';
+const CLS_LOADING = 'loading';
+const ATTR_NO_THUMBNAIL = 'data-no-thumbnail';
+const ATTR_DATA_HREF = 'data-href';
+const ATTR_HREF = 'href';
+
+const KEY_NEXT = 39;
+const KEY_PREV = 37;
 /**
  * A Simple LightBox
  */
 export default
 class LightBox {
+
     /**
+     * Creates a new Lightbox
      * @param DelegateContainer
      * @param AttributeSelector
      * @param ModalAppend
@@ -82,6 +94,11 @@ class LightBox {
          * @type {HTMLElement}
          */
         this.img = null;
+
+        /**
+         * @type {boolean}
+         */
+        this._isLoading = false;
 
         /**
          * Default options
@@ -163,7 +180,7 @@ class LightBox {
      * @param {HTMLElement} loadedImage
      * @private
      */
-    _setupMaxWidthHeight(target, img, loadedImage) {
+    static _setupMaxWidthHeight(target, img, loadedImage) {
         var nextMaxWidth = target.getAttribute(ATTR_MAX_WIDTH),
             nextMaxHeight = target.getAttribute(ATTR_MAX_HEIGHT);
         if (nextMaxWidth && nextMaxHeight) {
@@ -191,7 +208,7 @@ class LightBox {
      * @returns {boolean}
      */
     isLoading() {
-        return this.loading;
+        return this._isLoading;
     }
 
     /**
@@ -206,7 +223,7 @@ class LightBox {
 
     _setupPrevNextStates() {
         var target = this.target, hasPrev = this.getPrev(target), hasNext = this.getNext(target),
-            hasPrevClass = 'has-prev', hasNextClass = 'has-next';
+            hasPrevClass = CLS_HAS_PREV, hasNextClass = CLS_HAS_NEXT;
         // because IE does not support the second toggle parameter, we need to do this manually
         if (hasPrev) {
             this._imageContainer.classList.add(hasPrevClass);
@@ -239,13 +256,14 @@ class LightBox {
      */
     switchImage(next) {
         var self = this, img = this.img;
+        this._isLoading = true;
         self._nextFuture = new Promise(((resolve, reject) => {
             // notify observers about image switching
             self.options.onSwitchImage.apply(self, [self._nextFuture]);
             if (next) {
-                var nextThumb = next.hasAttribute('data-no-thumbnail') ? next : (next.children[0] || next),
-                    nextHighRes = next.getAttribute('data-href') ||
-                        next.getAttribute('href'),
+                var nextThumb = next.hasAttribute(ATTR_NO_THUMBNAIL) ? next : (next.children[0] || next),
+                    nextHighRes = next.getAttribute(ATTR_DATA_HREF) ||
+                        next.getAttribute(ATTR_HREF),
                     nextSource = nextThumb.getAttribute(ATTR_SRC) || nextThumb.src || nextHighRes,
                     nextImgObject = new Image();
 
@@ -256,15 +274,16 @@ class LightBox {
                 // set new target to next element
                 this.target = next;
                 nextImgObject.src = nextSource;
-                self._imageContainer.classList.add('loading');
+                self._imageContainer.classList.add(CLS_LOADING);
                 nextImgObject.addEventListener('load', function () {
                     img.src = nextSource;
-                    self._imageContainer.style.backgroundImage = 'url('+nextSource+')';
-                    self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
+                    self._imageContainer.style.backgroundImage = 'url(' + nextSource + ')';
+                    LightBox._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                     self._calculateContainer(img);
                     self.highRes(nextThumb, nextHighRes);
                     self._setupPrevNextStates();
-                    self._imageContainer.classList.remove('loading');
+                    self._imageContainer.classList.remove(CLS_LOADING);
+                    this._isLoading = false;
                     resolve(nextSource, this.target);
                 }.bind(this));
             } else {
@@ -279,25 +298,30 @@ class LightBox {
      * Setup High-Resolution picture
      * @param {HTMLElement} thisThumbnail
      * @param {String} thisImgHighResolution
-     * @returns {Promise}
      */
     highRes(thisThumbnail, thisImgHighResolution) {
-        return new Promise((resolve) => {
-            if (thisImgHighResolution && thisThumbnail.src !== thisImgHighResolution) {
-                var highImageObj = new Image();
-                highImageObj.src = thisImgHighResolution;
-                highImageObj.addEventListener('load', function () {
-                    // if current image is still available
-                    if (thisThumbnail.src === this.img.src) {
-                        this.img.src = thisImgHighResolution;
-                        this._imageContainer.style.backgroundImage = 'url('+thisImgHighResolution+')';
-                    }
-                    resolve(this);
-                }.bind(this));
-            } else {
-                resolve(null);
-            }
-        });
+
+        if (thisImgHighResolution && thisThumbnail.src !== thisImgHighResolution) {
+            var highImageObj = new Image();
+            highImageObj.src = thisImgHighResolution;
+            highImageObj.addEventListener('load', function () {
+                // if current image is still available
+                if (this._getSrc(thisThumbnail) === this.img.src) {
+                    this.img.src = thisImgHighResolution;
+                    this._imageContainer.style.backgroundImage = 'url(' + thisImgHighResolution + ')';
+                }
+            }.bind(this));
+        }
+    }
+
+    /**
+     * Extracts the source of an image
+     * @param target
+     * @returns {String|null}
+     * @private
+     */
+    _getSrc(target) {
+        return target.getAttribute(ATTR_SRC) || target.src;
     }
 
     /**
@@ -332,7 +356,7 @@ class LightBox {
             var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
 
             var imgHighResolution = target.getAttribute('data-href') || target.getAttribute('href'),
-                imgSrc = thumbnail.getAttribute(ATTR_SRC) || thumbnail.src || imgHighResolution;
+                imgSrc = this._getSrc(thumbnail) || imgHighResolution;
 
             var imageObj = new Image();
             imageObj.src = imgSrc;
@@ -349,6 +373,7 @@ class LightBox {
             this._modalContainerDiv.appendChild(this._contentContainer);
             this._modalContainerDiv.appendChild(this._closerContainerDiv);
             this._contentContainer.className = 'content-container';
+            this._isLoading = true;
             this._future = new Promise(((resolve) => {
                 imageObj.addEventListener('load', function () {
                     this._imageContainer.className = 'image-container';
@@ -357,11 +382,12 @@ class LightBox {
                     this.img = img;
 
                     img.src = imgSrc;
-                    self._setupMaxWidthHeight(target, img, imageObj);
+                    LightBox._setupMaxWidthHeight(target, img, imageObj);
                     this._imageContainer.appendChild(img);
-                    this._imageContainer.style.backgroundImage = 'url('+imgSrc+')';
+                    this._imageContainer.style.backgroundImage = 'url(' + imgSrc + ')';
 
                     resolve(self._modalContainerDiv);
+                    this._isLoading = false;
 
                     if (Settings.isIE()) {
                         self._resizeEvent = global.addEventListener('resize', function () {
@@ -397,11 +423,11 @@ class LightBox {
 
                         // register keyboard events
                         self._keyboardNextEvent = function (e) {
-                            if (e.keyCode === 39 || e.keyCode === 37) {
+                            if (e.keyCode === KEY_NEXT || e.keyCode === KEY_PREV) {
                                 if (self.isLoading()) {
                                     return;
                                 }
-                                self.switchImageByDirection(e.keyCode === 37).catch(function () {
+                                self.switchImageByDirection(e.keyCode === KEY_PREV).catch(function () {
                                     self._runOptionalClose();
                                 });
                             }
