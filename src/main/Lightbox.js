@@ -259,6 +259,7 @@ class LightBox {
                 self._imageContainer.classList.add('loading');
                 nextImgObject.addEventListener('load', function () {
                     img.src = nextSource;
+                    self._imageContainer.style.backgroundImage = 'url('+nextSource+')';
                     self._setupMaxWidthHeight(nextThumb, img, nextImgObject);
                     self._calculateContainer(img);
                     self.highRes(nextThumb, nextHighRes);
@@ -289,9 +290,10 @@ class LightBox {
                     // if current image is still available
                     if (thisThumbnail.src === this.img.src) {
                         this.img.src = thisImgHighResolution;
+                        this._imageContainer.style.backgroundImage = 'url('+thisImgHighResolution+')';
                     }
                     resolve(this);
-                });
+                }.bind(this));
             } else {
                 resolve(null);
             }
@@ -357,7 +359,7 @@ class LightBox {
                     img.src = imgSrc;
                     self._setupMaxWidthHeight(target, img, imageObj);
                     this._imageContainer.appendChild(img);
-
+                    this._imageContainer.style.backgroundImage = 'url('+imgSrc+')';
 
                     resolve(self._modalContainerDiv);
 
