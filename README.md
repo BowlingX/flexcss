@@ -1,17 +1,18 @@
-flexcss
+FlexCss
 =======
 
 [ ![Codeship Status for BowlingX/flexcss](https://img.shields.io/codeship/77646e40-9208-0132-73f3-668629e00ab9/master.svg)](https://codeship.com/projects/61792)
 ![Dependencies](https://img.shields.io/david/bowlingx/flexcss.svg)
 
-A lightweight Flexbox based mobile-first CSS/Javascript pattern-library build for [hellofellow.com](https://hellofellow.com).
+A lightweight Flexbox based mobile-first CSS/Javascript pattern-library created by [David Heidrich](https://github.com/BowlingX),
+build for [hellofellow.com](https://hellofellow.com).
 
 - [Real-World-Example](https://hellofellow.com)
 - [Demo-Page](http://bowlingx.github.io/flexcss)
 
 ## Install-Instructions
 
-Feel free to use our patterns in your project with:
+Feel free to use my patterns in your project with:
 
 #### bower
 
@@ -58,14 +59,14 @@ Due the use of Flexbox and other HTML5 features we are limited to IE 10+.
 | Internet Explorer | 10+|
 | Firefox | 30+|
 
-We have tested `flexcss` on different Android and iOS Devices.
+I tested `FlexCss` on different Android and iOS Devices.
 
 ## Sass/css
 The patterns included may be used for prototyping and to get an *idea* what is possible with flexbox.
-It's not supposed to be a *generic* production-ready framework yet (but become in the future)
+It's not supposed to be a *generic* production-ready framework yet (but might become in the future).
 
 ### Fonts
-flexcss includes a custom font set of fontello (http://fontello.com/),
+`FlexCss` includes a custom font set of fontello (http://fontello.com/),
 you can disable including this by overwriting `$includeFontello` and set it to `false`
 
 Either way, there is also a mixin called `icon` which you can use to setup a font.
@@ -77,7 +78,7 @@ run `npm install`, and `gulp` to start compiling sources, recompilation is trigg
 
 ### jekyll
 jekyll is used to create the pages for this project, run `bundle install`
-for setup and then `bundle exec jekyll serve` to start the local server to read documentation
+for setup and then `bundle exec jekyll serve` to start the local server to read documentation.
 
 ### Tests
 There is no `100%` coverage yet, but I'm working on it :D.
@@ -89,7 +90,8 @@ run `npm test` to run all specs, run `npm test --watch` to start TDD mode.
 The Project is in a really early stage and a lot of things have to be improved.
 Although running in production, it's not 100% ready for a public release. Use at your own risk!
 
-- [ ] Documentation, more examples
+- [ ] API Documentation, more examples
+- [ ] Code Cleanup
 - [ ] get near to 100% Coverage by specs
 - [ ] improve tooling and gulp setup
 

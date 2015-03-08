@@ -421,7 +421,7 @@ class LightBox {
                             self.switchImageByDirection(wrapperWidth / 2 > posX).catch(function () {
                                 self._runOptionalClose();
                             });
-                        }, true);
+                        });
 
                         // register keyboard events
                         self._keyboardNextEvent = function (e) {
@@ -438,7 +438,7 @@ class LightBox {
                     } else {
                         self._imageContainer.addEventListener(Settings.CONST_TAB_EVENT, function () {
                             self._runOptionalClose();
-                        }, true);
+                        });
                     }
 
                     self.highRes(thumbnail, imgHighResolution);
