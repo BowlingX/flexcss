@@ -55,6 +55,17 @@ class Settings {
         }
         return Settings._CONST_IS_TOUCH;
     }
+
+    /**
+     * Checks if current browser is Internet Explorer
+     * @returns {boolean|*}
+     */
+    static isIE() {
+        if (!Settings._CONST_IS_IE) {
+            Settings._CONST_IS_IE = "ActiveXObject" in window;
+        }
+        return Settings._CONST_IS_IE;
+    }
 }
 
 // Settings Statics, used by widgets
@@ -71,3 +82,5 @@ Settings._CONST_IS_IOS = null;
 Settings._CONST_IS_TOUCH = null;
 
 Settings.CONST_CANVAS_TOGGLE = 'toggled-canvas';
+
+Settings._CONST_IS_IE = null;

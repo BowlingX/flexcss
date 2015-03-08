@@ -62,6 +62,14 @@ class Widget {
     getFinalContent() {
         return this.finalContent;
     }
+    /**
+     * @param {HTMLElement} element
+     * @returns {Widget}
+     */
+    setElement(element) {
+        this.element = element;
+        return this;
+    }
 
     /**
      * Destroys the generated content of this widget
