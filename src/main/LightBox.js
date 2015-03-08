@@ -12,12 +12,14 @@ const ATTR_SRC = 'data-src';
 const CLS_HAS_PREV = 'has-prev';
 const CLS_HAS_NEXT = 'has-next';
 const CLS_LOADING = 'loading';
+
 const ATTR_NO_THUMBNAIL = 'data-no-thumbnail';
 const ATTR_DATA_HREF = 'data-href';
 const ATTR_HREF = 'href';
 
 const KEY_NEXT = 39;
 const KEY_PREV = 37;
+
 /**
  * A Simple LightBox
  */
@@ -398,7 +400,6 @@ class LightBox {
                     }
 
                     if (self.options.registerPrevNextEvents) {
-
                         self._setupPrevNextStates();
                         // prev or next on touch/click
                         self._imageContainer.addEventListener(Settings.CONST_TAB_EVENT, function (e) {
@@ -408,10 +409,8 @@ class LightBox {
                             e.preventDefault();
 
                             var ev = e;
-
                             var pageX = global.TouchEvent && ev instanceof TouchEvent ?
                                 ev.changedTouches[0].pageX : ev.pageX;
-
                             var rect = self._imageContainer.getBoundingClientRect(), imgX = rect.left,
                                 wrapperWidth = rect.width,
                                 posX = pageX - imgX;
