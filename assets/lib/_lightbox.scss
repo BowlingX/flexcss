@@ -111,16 +111,17 @@ html:not(.touch) {
   .image-modal {
     background: rgba($lightGrayColor, 1);
     position: relative;
-    min-width: 90%;
-    max-width: 90%;
+    min-width: 60%;
+    max-width: 60%;
+    align-self:center;
   }
 
   .image-container {
-    min-height: calc(100vh - 40px);
+    min-height: calc(80vh - 40px);
     img {
       display:none;
     }
-    width: calc(100% - #{$lightboxContentContainerWidth});
+    width: 100%;
   }
 
   .modal-close-lightbox {
