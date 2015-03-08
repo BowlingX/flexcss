@@ -309,7 +309,7 @@ class Modal {
         // check if another modal has registered events on this dom path:
         if (e && e.target) {
             var foundInstance = Util.parentsUntil(e.target, function (node) {
-                return node.flexModalInstance;
+                return node && node.flexModalInstance;
             });
 
             // if another instance has been found, abort

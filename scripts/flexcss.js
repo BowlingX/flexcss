@@ -787,7 +787,7 @@ void function (window, $) {
             self.onOpenFunction = [];
             self.onBeforeCloseFunction = [];
             // A Binding to an DOM Element is optional
-            self.widget = WidgetId ? (WidgetId instanceof HTMLElement ?
+            self._widget = WidgetId ? (WidgetId instanceof HTMLElement ?
                 WidgetId : document.getElementById(WidgetId)) : null;
 
             /**
@@ -840,7 +840,7 @@ void function (window, $) {
              * @returns {FlexCss.Widget}
              */
             this.setWidget = function (widget) {
-                self.widget = widget;
+                self._widget = widget;
                 return self;
             };
 
@@ -878,8 +878,8 @@ void function (window, $) {
             };
 
             // Register widget to element if given
-            if (self.widget) {
-                self.widget.hfWidgetInstance = self;
+            if (self._widget) {
+                self._widget.hfWidgetInstance = self;
             }
 
             /**
@@ -887,8 +887,8 @@ void function (window, $) {
              * @returns {boolean}
              */
             this.destroy = function () {
-                if (self.widget && self.widget.parentNode) {
-                    self.widget.parentNode.removeChild(self.widget);
+                if (self._widget && self._widget.parentNode) {
+                    self._widget.parentNode.removeChild(self._widget);
                     return true;
                 }
                 return false;

@@ -35,7 +35,7 @@ void function (document, window, $) {
          * lightbox widget
          * @type {FlexCss.Widget}
          */
-        self.widget = null;
+        self._widget = null;
 
         self.isOpen = false;
 
@@ -96,7 +96,7 @@ void function (document, window, $) {
             DelegateContainer.addEventListener(FlexCss.CONST_FLEX_EVENT_TAB, function (e) {
                 var target = e.target, parent = target.parentNode,
                     validTarget = target.hasAttribute(AttributeSelector),
-                    parentIsValid = parent.hasAttribute(AttributeSelector);
+                    parentIsValid = parent && parent.hasAttribute(AttributeSelector);
                 if (!validTarget && parentIsValid) {
                     validTarget = true;
                     target = parent;
@@ -164,7 +164,7 @@ void function (document, window, $) {
              * Setup Widget for modal
              * @type {FlexCss.Widget}
              */
-            self.widget = new FlexCss.Widget().registerAsyncContent(function () {
+            self._widget = new FlexCss.Widget().registerAsyncContent(function () {
                 // thumbnail is either target itself or expected to be first childNode
                 var thumbnail = target.hasAttribute('data-no-thumbnail') ? target : (target.children[0] || target);
 
@@ -186,7 +186,7 @@ void function (document, window, $) {
                 modalContainerDiv.appendChild(contentContainer);
                 modalContainerDiv.appendChild(closerContainerDiv);
                 contentContainer.className = 'content-container';
-                self.widget.setWidget(modalContainerDiv);
+                self._widget.setWidget(modalContainerDiv);
 
                 imageObj.addEventListener('load', function () {
                     imageContainer.className = 'image-container';
@@ -378,9 +378,9 @@ void function (document, window, $) {
                     window.removeEventListener('resize', resizeEvent);
                 }
             });
-            if (self.widget) {
+            if (self._widget) {
                 // make sure we close stack before
-                return modalContainer.close().fromWidget(self.widget).then(function () {
+                return modalContainer.close().fromWidget(self._widget).then(function () {
                     return future.then(function () {
                         return $.Deferred().resolve(self);
                     });

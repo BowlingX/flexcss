@@ -1,0 +1,130 @@
+/**
+* Everything about photo lightbox
+*/
+
+.image-container {
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  img {
+    // Prevent firefox from looking creepy
+    width: 100%;
+    height: auto;
+  }
+}
+
+.image-lightbox-meta {
+  max-height: none;
+}
+
+.image-modal {
+  padding: 0;
+}
+
+.image-container {
+  min-height: 300px;
+  background: $lightboxImageBackground no-repeat center;
+  background-size:contain;
+  position: relative;
+  opacity: 1;
+  transition: opacity ease .2s;
+  &.loading {
+    cursor:wait !important;
+    opacity: .6;
+  }
+  &.has-prev {
+    &:before {
+      @include icon();
+      @extend .icon-left-open:before;
+      left: 20px;
+    }
+  }
+
+  &.has-next {
+    &:after {
+      @include icon();
+      @extend .icon-right-open:before;
+      right: 20px;
+    }
+  }
+  &.has-prev, &.has-next {
+    cursor: pointer;
+    &:before, &:after {
+      text-shadow: 0 0 1px #000;
+      position: absolute;
+      color: #fff;
+      font-size: 30px;
+      top: calc(50% - 20px);
+      transition: opacity .1s ease;
+    }
+  }
+
+}
+
+// hide toolbox on non touch devices
+html:not(.touch) {
+
+  .image-container {
+    &.has-prev, &.has-next {
+      &:before, &:after {
+        opacity: 0;
+      }
+    }
+    &:hover {
+      &.has-prev, &.has-next {
+        &:before, &:after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .image-modal {
+    .modal-close {
+      transition: opacity .2s ease;
+      opacity: 0;
+    }
+  }
+
+  .image-modal:hover {
+    .navigation {
+      opacity: .8;
+    }
+    .lightbox-toolbar {
+      opacity: 1;
+    }
+    .modal-close {
+      opacity: 1;
+    }
+  }
+}
+
+// lightbox closer
+.modal-close-lightbox {
+  color: #fff;
+  background: rgba(#000, .8);
+}
+
+@media #{$mediaLarge} {
+
+  .image-modal {
+    background: rgba($lightGrayColor, 1);
+    position: relative;
+    min-width: 90%;
+    max-width: 90%;
+  }
+
+  .image-container {
+    min-height: calc(100vh - 40px);
+    img {
+      display:none;
+    }
+    width: calc(100% - #{$lightboxContentContainerWidth});
+  }
+
+  .modal-close-lightbox {
+    left: 0;
+    right: auto;
+  }
+}
