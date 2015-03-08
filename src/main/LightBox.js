@@ -80,7 +80,6 @@ class LightBox {
          */
         this._attributeSelector = AttributeSelector;
         /**
-         * lightbox widget
          * @type {Widget}
          */
         this._widget = null;
@@ -96,7 +95,6 @@ class LightBox {
          * @type {HTMLElement}
          */
         this.img = null;
-
         /**
          * @type {boolean}
          */
@@ -124,6 +122,11 @@ class LightBox {
         Object.assign(this.options, options);
     }
 
+    /**
+     * Will fetch the next element of a lightBox
+     * @param target
+     * @returns {*}
+     */
     getNext(target) {
         var next = target.parentNode.nextElementSibling;
         if (next && next.children[0].hasAttribute(this._attributeSelector)) {
