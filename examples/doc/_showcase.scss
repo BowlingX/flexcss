@@ -35,3 +35,11 @@ hr {
     transform:scale3d(1.2, 1.2, 1.2);
   }
 }
+
+.color-twitter {
+  background-color:#00aced;
+
+  &:hover, &:active, &:focus {
+    background-color:lighten(#00aced, 10%);
+  }
+}
