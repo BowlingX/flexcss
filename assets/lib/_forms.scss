@@ -160,10 +160,9 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
     // Firefox will render a boxshadow
     box-shadow: none;
     border: none;
-
+    transition: background .5s ease;
     &.loading {
       @include loadingContainer($alertColor);
-
     }
   }
 
