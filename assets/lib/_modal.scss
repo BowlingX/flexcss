@@ -26,7 +26,7 @@
   }
   display:none;
   &.open {
-    display: flex;
+    display: block;
   }
   -webkit-overflow-scrolling: touch;
   justify-content: center;
@@ -143,6 +143,10 @@
   .modal-container {
     padding: 20px 20px 0 20px;
     top: 0;
+
+    &.open {
+      display:flex;
+    }
   }
 
   .modal {
