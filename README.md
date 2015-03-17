@@ -13,7 +13,9 @@ build for [hellofellow.com](https://hellofellow.com).
 
 ## Install-Instructions
 
-Feel free to use my patterns in your project (available soon over `npm/bower`)
+Feel free to use my patterns in your project
+
+`npm install flexcss --save-dev`
 
 ## Overview
 Includes different ready-to-use Javascript Components and Widgets that are **heavily optimized** to be used in a responsive environment.
