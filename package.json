@@ -1,10 +1,20 @@
 {
   "name": "flexcss",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "dependencies": {
     "isomorphic-fetch": "^2.0.0",
     "whatwg-fetch": "^0.7.0"
   },
+  "main": [
+    "src/main/Dropdown.js",
+    "src/main/Form.js",
+    "src/main/LightBox.js",
+    "src/main/Modal.js",
+    "src/main/OffCanvas.js",
+    "src/main/Toggleable.js",
+    "src/main/Tooltip.js",
+    "src/main/Widget.js"
+  ],
   "keywords": [
     "css",
     "mobile-first",
