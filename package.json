@@ -23,6 +23,10 @@
     "framework",
     "patterns"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BowlingX/flexcss.git"
+  },
   "homepage": "https://hellofellow.com",
   "author": "hellofellow KG, David Heidrich",
   "license": {
