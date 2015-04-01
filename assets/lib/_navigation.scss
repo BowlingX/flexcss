@@ -157,8 +157,7 @@
 * Subnavigation and tabs
 */
 .subnav, .tabs {
-  background: $lightGrayColor;
-
+  background: $subnavBg;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 0;

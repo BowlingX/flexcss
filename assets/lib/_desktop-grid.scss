@@ -49,8 +49,7 @@
   }
 
   .subnav {
-    padding-left: 7px;
-    background: $lightGrayColor;
+    padding-left: $overallPadding;
   }
   .sidebar:not(.sidebar-desktop) {
     max-width: $sidebarWidthDesktop;
@@ -97,9 +96,8 @@
         &.active a {
           background: none !important;
         }
-        margin-right: 10px;
-        &.home + li {
-          margin-left: 153px;
+        &:not(:last-of-type) {
+          margin-right: 10px;
         }
         a:not(.button) {
           line-height: $topbarHeight;
@@ -130,7 +128,9 @@
   }
 
   .home {
-    width: $sidebarWidthDesktop;
+    &:not(.single-column) {
+      width: $sidebarWidthDesktop;
+    }
     background: none;
     .logo {
       margin-left: $overallPadding;

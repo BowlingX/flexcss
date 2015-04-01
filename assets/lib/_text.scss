@@ -105,13 +105,13 @@ small,
 }
 
 .fade-out {
-  color: $grayColor;
+  color: $grayColor !important;
   a {
-    color: $grayColor;
+    color: $grayColor !important;
     text-decoration: underline;
     font-weight: normal;
     &:hover {
-      color: darken($grayColor, 20);
+      color: darken($grayColor, 20) !important;
     }
   }
 }

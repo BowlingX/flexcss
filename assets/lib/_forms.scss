@@ -42,7 +42,7 @@ legend {
 }
 
 label:not(.checkbox) {
-  font-size: $smallFontSize;
+  font-size: $labelFontSize;
   color: $labelColor;
   margin-bottom: $labelMargin;
   display: block;
@@ -290,6 +290,12 @@ select {
 
 textarea {
   min-height: 12rem;
+}
+
+/* A third row for appended items*/
+form .append {
+  align-self: flex-end;
+  margin: $appendMargin 0 0 0;
 }
 
 .select-element:after {
@@ -598,7 +604,7 @@ input::-moz-range-track {
     label:not(.checkbox) {
       min-width: $labelMinWidth;
       width: $labelWidthDesktop;
-      text-align: right;
+      text-align: $labelTextAlign;
       padding: 5px 15px 0 0;
       position: relative;
       top: 5px;
@@ -619,7 +625,7 @@ input::-moz-range-track {
     }
 
     .controls {
-      width: 50%;
+      width: $formWidthControls;
       min-width: $formMinWidthControls;
     }
 
@@ -696,5 +702,38 @@ input::-moz-range-track {
       }
     }
 
+  }
+
+  form {
+    .append {
+      align-self: flex-start;
+      &.center {
+        align-self: center;
+      }
+      margin: 0 0 0 $appendMargin;
+
+      &:not(.break) {
+        flex:1;
+      }
+      &.break {
+        margin: $appendMargin 0 0 $labelWidthDesktop;
+        max-width: $formWidthControls;
+        min-width: $formMinWidthControls;
+      }
+
+    }
+    .control-group {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media #{$mediaLarge} {
+  form .append {
+    flex: 1;
+    &.break {
+      min-width: 0;
+      margin:0 0 0 $appendMargin;
+    }
   }
 }

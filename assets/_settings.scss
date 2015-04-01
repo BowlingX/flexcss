@@ -40,6 +40,8 @@ $lighterGrayColor: #ccc !default;
 // A base light gray color for surfaces
 $lightGrayColor:#f1f1f1 !default;
 
+// subnav
+$subnavBg: $lightGrayColor !default;
 
 $smallFontSize:12px !default;
 $smallFontSizeLineHeight:1.5 !default;
@@ -94,8 +96,11 @@ $inputFocusColor: darken($inputBackground, 5%) !default;
 $labelWidthDesktop:25% !default;
 $labelMinWidth:0 !default;
 $labelColor: $baseColor !default;
+$labelFontSize: $smallFontSize !default;
 $inputHeight:35px !default;
 $formMinWidthControls:380px !default;
+$appendMargin:15px !default;
+$formWidthControls:50% !default;
 $inputPadding: 8px 10px !default;
 
 $placeholderColor: lighten($grayColor, 10%) !default;
@@ -103,7 +108,7 @@ $selectPickerColor:#a6a6a6 !default;
 $labelMargin:3px !default;
 $checkboxAndOptionHeight:18px !default;
 $checkRadioColor:$primaryColor !default;
-
+$labelTextAlign:right !default;
 // buttons
 $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;
