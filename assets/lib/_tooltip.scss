@@ -13,7 +13,7 @@
   font-size: $smallFontSize;
   font-weight: bold;
   transform: translate3d(0, -3px, 0);
-  background: $topbarBg;
+  background: $tooltipBg;
   word-wrap: break-word;
 
   &.error-tooltip {
@@ -26,11 +26,11 @@
   text-align: center;
 
   &.arrow-bottom {
-    @include arrow-bottom($topbarBg);
+    @include arrow-bottom($tooltipBg);
   }
 
   &.arrow-top {
     transform: translate3d(0, 4px, 0);
-    @include arrow-top($topbarBg);
+    @include arrow-top($tooltipBg);
   }
 }
