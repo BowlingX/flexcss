@@ -45,6 +45,9 @@ $subnavBg: $lightGrayColor !default;
 
 $smallFontSize:12px !default;
 $smallFontSizeLineHeight:1.5 !default;
+$h1FontSize: 24px !default;
+$h1Color: $baseColor !default;
+$headingMargin: 0 0 1rem 0 !default;
 
 $primaryColor:#258db8 !default;
 $secondaryColor:#e6007e !default;
@@ -90,25 +93,38 @@ $minWidthModalDesktop:640px !default;
 //forms
 $inputBackground: $lightGrayColor !default;
 $inputColor: #616161 !default;
+$inputBorder: none !default;
+$inputBorderInvalid: none !default;
+$inputBackgroundInvalid: lighten($alertColor, 30%) !default;
 $inputDisabledBg: #fafafa !default;
 $inputDisabledColor: #bababa !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
+$inputFocusBoxShadow: none !default;
 $labelWidthDesktop:25% !default;
 $labelMinWidth:0 !default;
 $labelColor: $baseColor !default;
 $labelFontSize: $smallFontSize !default;
 $inputHeight:35px !default;
+$formMargin:30px !default;
 $formMinWidthControls:380px !default;
-$appendMargin:15px !default;
+$appendMargin:20px !default;
+$controlMargin:20px !default;
 $formWidthControls:50% !default;
 $inputPadding: 8px 10px !default;
-
+$inputBoxShadow:none !default;
+$legendFontSize:$baseFontSize !default;
+$legendFontWeight: bold !default;
+$legendColor: $baseColor !default;
 $placeholderColor: lighten($grayColor, 10%) !default;
 $selectPickerColor:#a6a6a6 !default;
 $labelMargin:3px !default;
 $checkboxAndOptionHeight:18px !default;
 $checkRadioColor:$primaryColor !default;
 $labelTextAlign:right !default;
+$copyTextFormsFontSize:$smallFontSize!default;
+$copyTextFormsLineHeight:$smallFontSizeLineHeight !default;
+$inputFontSize:$baseFontSize !default;
+$inputTransitions: background .5s ease !default;
 // buttons
 $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;

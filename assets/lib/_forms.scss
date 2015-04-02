@@ -12,16 +12,16 @@ form {
 
   p {
     margin-bottom: 0;
-    font-size: $smallFontSize;
-    line-height: $smallFontSizeLineHeight;
+    font-size: $copyTextFormsFontSize;
+    line-height: $copyTextFormsLineHeight;
   }
 
   .controls {
-    margin-bottom: 20px;
+    margin-bottom: $controlMargin;
     position: relative;
     p {
       margin: $labelMargin 0 0 0;
-      font-size: $smallFontSize;
+      font-size: $copyTextFormsFontSize;
       color: $grayColor;
       a {
         @include link-color();
@@ -37,7 +37,9 @@ form {
 }
 
 legend {
-  font-weight: bold;
+  font-size: $legendFontSize;
+  font-weight: $legendFontWeight;
+  color: $legendColor;
   margin-bottom: 2rem;
 }
 
@@ -50,7 +52,7 @@ label:not(.checkbox) {
 
 fieldset {
   border: none;
-  padding: 0 0 30px 0;
+  padding: 0 0 $formMargin 0;
   border-bottom: 1px solid $globalBorderColor;
   margin-bottom: 22px;
   margin-left: 0;
@@ -72,8 +74,8 @@ form.loading {
 .input, select, textarea,
 input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
   background-color: $inputBackground;
-  border: none;
-
+  border: $inputBorder;
+  font-size: $inputFontSize;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // disable default browser style
@@ -88,13 +90,16 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
   padding: $inputPadding;
   width: 100%;
   max-width: 100%;
-  will-change: background-color;
+  will-change: background-color, box-shadow;
   text-overflow: ellipsis;
   height: $inputHeight;
+  box-shadow: $inputBoxShadow;
+  transition: $inputTransitions;
+
   &:focus {
     background-color: $inputFocusColor;
+    box-shadow: $inputFocusBoxShadow !important;
     outline: none;
-    transition: background .5s ease;
   }
 
   &.uneditable-input {
@@ -156,11 +161,10 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
 
   // validation
   &.invalid {
-    background: lighten($alertColor, 35%);
+    background: $inputBackgroundInvalid;
     // Firefox will render a boxshadow
-    box-shadow: none;
-    border: none;
-    transition: background .5s ease;
+    box-shadow: $inputBoxShadow;
+    border: $inputBorderInvalid;
     &.loading {
       @include loadingContainer($alertColor);
     }
@@ -168,8 +172,8 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
 
   // remove default states
   &:invalid {
-    box-shadow: none;
-    border: none;
+    box-shadow: $inputBoxShadow;
+    border: $inputBorder;
   }
 
   &.loading {
@@ -185,99 +189,8 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
 
 /* Styled Checkbox and Radio Button: */
 
-.multi-select-field {
-  margin-bottom: 10px;
-  margin-top: 2px;
-  .checkbox {
-    display: block;
-    margin-bottom: 10px;
 
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.checkbox {
-  padding: 1px 0 0 25px;
-  position: relative;
-  @include interface();
-  cursor: pointer;
-  input {
-    z-index: -1;
-    position: absolute;
-    left: 8px;
-    top: 3px;
-    width: 2px;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    outline: none !important;
-    box-shadow: none !important;
-
-  }
-  .checkbox-container {
-    line-height: $baseLineHeight;
-    display: inline-block;
-    > span {
-      color: $checkRadioColor;
-    }
-  }
-  .checkbox-container::before {
-    content: ' ';
-    width: $checkboxAndOptionHeight;
-    height: $checkboxAndOptionHeight;
-    position: absolute;
-    left: 0;
-    border-radius: $globalRadius;
-    font-size: 12px;
-    line-height: $checkboxAndOptionHeight;
-    top: 1px;
-    background: $inputBackground;
-    text-align: center;
-    color: $checkRadioColor !important;
-
-    @include icon();
-  }
-
-  &:active {
-    .checkbox-container::before {
-      background: darken($inputBackground, 5%);
-    }
-  }
-
-  input[type="checkbox"], input[type="radio"] {
-    &.invalid + .checkbox-container::before {
-      background: lighten($alertColor, 30%);
-    }
-  }
-
-  input[type="checkbox"], input[type="radio"] {
-    &:focus {
-      + .checkbox-container::before {
-        background: darken($inputBackground, 5%);
-      }
-    }
-  }
-  input[type="checkbox"]:checked + .checkbox-container::before {
-    @extend .icon-ok:before;
-
-  }
-  input[type="radio"]:checked + .checkbox-container::before {
-    @extend .icon-circle:before;
-    font-size: 10px;
-  }
-
-  input[disabled] + .checkbox-container {
-    cursor: not-allowed;
-  }
-
-  input[disabled] + .checkbox-container::before {
-    background: $inputDisabledBg;
-    color: $inputDisabledColor !important;
-    cursor: not-allowed;
-  }
-}
+@import 'forms/checkbox-radio';
 
 // Styled select:
 /* Arrows for Select's*/
@@ -294,8 +207,18 @@ textarea {
 
 /* A third row for appended items*/
 form .append {
-  align-self: flex-end;
   margin: $appendMargin 0 0 0;
+
+  .checkbox {
+    color: $grayColor;
+    font-size: $copyTextFormsFontSize;
+  }
+}
+
+form:not(.wide) {
+  .append {
+    align-self: flex-end;
+  }
 }
 
 .select-element:after {
@@ -308,6 +231,8 @@ form .append {
   line-height: $inputHeight;
   padding: 0 11px 0 11px;
   background: $inputBackground;
+  border: $inputBorder;
+  box-shadow: $inputBoxShadow;
   color: $selectPickerColor;
   height: 100%;
   pointer-events: none;
@@ -316,9 +241,8 @@ form .append {
   &:focus, &:active {
     background: $inputFocusColor;
   }
-  will-change: background;
-
-  transition: background .5s ease;
+  will-change: background, box-shadow;
+  transition: $inputTransitions;
 }
 
 .select-element {
@@ -347,7 +271,9 @@ form .append {
 // Multiple elements in one row
 .multi-form {
   display: flex;
-
+  &.center {
+    @extend .flex-align-items-center;
+  }
   > div {
     margin-left: 10px;
     // all all equal size
@@ -386,12 +312,12 @@ form .append {
 
 .form-actions {
   text-align: left;
-  margin-top: 2rem;
+  margin-top: $formMargin;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   border-top: 1px solid $globalBorderColor;
-  padding-top: 2rem;
+  padding-top: $formMargin;
 
   &.plain {
     border-top: none;
@@ -630,8 +556,8 @@ input::-moz-range-track {
     }
 
     fieldset:not(:last-of-type) {
-      padding: 0 0 30px 0;
-      margin-bottom: 30px;
+      padding: 0 0 $formMargin 0;
+      margin-bottom: $formMargin;
     }
 
     .indent-label {
@@ -704,7 +630,8 @@ input::-moz-range-track {
 
   }
 
-  form {
+
+  form:not(.wide) {
     .append {
       align-self: flex-start;
       &.center {
@@ -713,7 +640,7 @@ input::-moz-range-track {
       margin: 0 0 0 $appendMargin;
 
       &:not(.break) {
-        flex:1;
+        flex: 1;
       }
       &.break {
         margin: $appendMargin 0 0 $labelWidthDesktop;
@@ -725,15 +652,32 @@ input::-moz-range-track {
     .control-group {
       flex-wrap: wrap;
     }
+
+  }
+
+}
+
+
+.control-group:not(:last-of-type) .controls + .append {
+  margin-top: $appendMargin - $formMargin;
+  &.break {
+    margin-bottom:$formMargin;
   }
 }
 
 @media #{$mediaLarge} {
-  form .append {
-    flex: 1;
-    &.break {
-      min-width: 0;
-      margin:0 0 0 $appendMargin;
+
+  form:not(.wide) {
+    .append {
+      flex: 1;
+      &.break {
+        min-width: 0;
+        margin: 0 0 0 $appendMargin;
+      }
     }
+  }
+
+  .control-group:not(:last-of-type) .controls + .append {
+    margin-top: 0;
   }
 }

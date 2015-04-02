@@ -1,0 +1,138 @@
+/**
+* A Styled checkbox
+*
+*/
+
+.multi-select-field {
+  margin-bottom: $controlMargin;
+  margin-top: 2px;
+
+  &.multi-row {
+    display:flex;
+    &.center {
+      @extend .flex-align-items-center;
+      .checkbox {
+        margin-bottom:0;
+      }
+    }
+    .checkbox {
+      margin-right:10px;
+    }
+    .checkbox:not(:last-of-type) {
+      margin-right:30px;
+    }
+  }
+  .checkbox {
+    display: block;
+    margin-bottom: 10px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.checkbox {
+  padding: 1px 0 0 25px;
+  position: relative;
+  @include interface();
+  cursor: pointer;
+  input {
+    z-index: -1;
+    position: absolute;
+    left: 8px;
+    top: 3px;
+    width: 2px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none !important;
+    box-shadow: none !important;
+
+  }
+  .checkbox-container {
+    line-height: $baseLineHeight;
+    display: inline-block;
+    > span {
+      color: $checkRadioColor;
+    }
+  }
+
+  $offsetLeft: 0;
+
+  .checkbox-container::before {
+    content: ' ';
+    width: $checkboxAndOptionHeight;
+    height: $checkboxAndOptionHeight;
+    position: absolute;
+    left: $offsetLeft;
+    border-radius: $globalRadius;
+    background: $inputBackground;
+    border: $inputBorder;
+    transition: background .5s ease;
+  }
+
+  .checkbox-container::after {
+    content: ' ';
+    width: $checkboxAndOptionHeight;
+    height: $checkboxAndOptionHeight;
+    position: absolute;
+    left: $offsetLeft;
+    font-size: 12px;
+    line-height: $checkboxAndOptionHeight;
+    top: 1px;
+    text-align: center;
+    color: $checkRadioColor !important;
+    @include icon();
+    transition: transform .3s ease;
+  }
+
+  &:active {
+    .checkbox-container::before {
+      background: darken($inputBackground, 5%);
+    }
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    &.invalid + .checkbox-container::before {
+      background: $inputBackgroundInvalid;
+    }
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    &:focus {
+      + .checkbox-container::before {
+        background: darken($inputBackground, 5%);
+      }
+    }
+  }
+  input[type="checkbox"] + .checkbox-container::after {
+    @extend .icon-ok:before;
+    transform: scale3d(0, 0, 0);
+  }
+
+  input[type="radio"] + .checkbox-container::after {
+    @extend .icon-circle:before;
+    transform: scale3d(0, 0, 0);
+    font-size: 10px;
+  }
+
+  input[type="checkbox"]:checked + .checkbox-container::after {
+    transform: scale3d(1, 1, 1);
+  }
+  input[type="radio"]:checked + .checkbox-container::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+
+  input[disabled] + .checkbox-container {
+    cursor: not-allowed;
+    color: $inputDisabledColor;
+  }
+
+  input[disabled] + .checkbox-container::before {
+    background: $inputDisabledBg;
+    color: $inputDisabledColor !important;
+    cursor: not-allowed;
+  }
+}
