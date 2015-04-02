@@ -130,9 +130,12 @@
     color: $inputDisabledColor;
   }
 
-  input[disabled] + .checkbox-container::before {
-    background: $inputDisabledBg;
-    color: $inputDisabledColor !important;
-    cursor: not-allowed;
+  input[disabled] + .checkbox-container {
+    &::before, &::after {
+      background: $inputDisabledBg;
+      cursor: not-allowed;
+      color: $inputDisabledColor !important;
+    }
   }
+
 }
