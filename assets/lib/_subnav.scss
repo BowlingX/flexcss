@@ -1,0 +1,22 @@
+/**
+* Everything about the subnavbar
+*/
+.navbar-sub {
+  margin:$topbarHeight 0 0;
+  background:$subnavBg;
+  .subnav {
+    max-width:$overallMaxWidth;
+    margin: 0 auto;
+  }
+
+  border-bottom:1px solid $globalBorderColor;
+  height:$topbarHeight;
+
+
+}
+@media #{$mediaLarge} {
+  .navbar-sub {
+    padding:0 $overallPaddingLarge;
+  }
+}
+
