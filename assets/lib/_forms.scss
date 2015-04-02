@@ -70,9 +70,15 @@ form.loading {
   }
 }
 
+@mixin inputs() {
+  .input, select, textarea,
+  input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
+    @content;
+  }
+}
+
 // Basic form and input types
-.input, select, textarea,
-input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
+@include inputs() {
   background-color: $inputBackground;
   border: $inputBorder;
   font-size: $inputFontSize;
@@ -187,10 +193,8 @@ input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
   font-size: $smallFontSize;
 }
 
-/* Styled Checkbox and Radio Button: */
-
-
 @import 'forms/checkbox-radio';
+@import 'forms/append-button';
 
 // Styled select:
 /* Arrows for Select's*/
