@@ -663,7 +663,7 @@ input::-moz-range-track {
 
 
 .control-group:not(:last-of-type) .controls + .append {
-  margin-top: $appendMargin - $formMargin;
+  margin-top: 0;
   &.break {
     margin-bottom:$formMargin;
   }

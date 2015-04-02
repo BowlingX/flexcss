@@ -4,22 +4,21 @@
 */
 
 .multi-select-field {
-  margin-bottom: $controlMargin;
   margin-top: 2px;
 
   &.multi-row {
-    display:flex;
+    display: flex;
     &.center {
       @extend .flex-align-items-center;
       .checkbox {
-        margin-bottom:0;
+        margin-bottom: 0;
       }
     }
     .checkbox {
-      margin-right:10px;
+      margin-right: 10px;
     }
     .checkbox:not(:last-of-type) {
-      margin-right:30px;
+      margin-right: 30px;
     }
   }
   .checkbox {
@@ -33,7 +32,7 @@
 }
 
 .checkbox {
-  padding: 1px 0 0 25px;
+  padding: 1px 0 0 28px;
   position: relative;
   @include interface();
   cursor: pointer;
@@ -83,7 +82,6 @@
     top: 1px;
     text-align: center;
     color: $checkRadioColor !important;
-    @include icon();
     transition: transform .3s ease;
   }
 
@@ -107,23 +105,33 @@
     }
   }
   input[type="checkbox"] + .checkbox-container::after {
+    @include icon();
     @extend .icon-ok:before;
-    transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0) rotate3d(0,0,1,90deg);
+  }
+
+  input[type="radio"] + .checkbox-container::before {
+    border-radius: 50%;
   }
 
   input[type="radio"] + .checkbox-container::after {
-    @extend .icon-circle:before;
     transform: scale3d(0, 0, 0);
     font-size: 10px;
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    background: $checkRadioColor;
+    border-radius: 50%;
+    top: 6px;
+    left: 5px;
   }
 
   input[type="checkbox"]:checked + .checkbox-container::after {
-    transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1) rotate3d(0,0,1,0deg);
   }
   input[type="radio"]:checked + .checkbox-container::after {
     transform: scale3d(1, 1, 1);
   }
-
 
   input[disabled] + .checkbox-container {
     cursor: not-allowed;
