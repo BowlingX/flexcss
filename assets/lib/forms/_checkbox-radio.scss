@@ -8,6 +8,7 @@
   &.multi-row {
     display: flex;
     &.center {
+      margin-top:0;
       @extend .flex-align-items-center;
       .checkbox {
         margin-bottom: 0;
@@ -30,12 +31,14 @@
   }
 }
 
+
 .checkbox {
-  padding: 1px 0 0 28px;
+  padding: $checkboxMargin;
   position: relative;
+  min-height:$checkboxAndOptionHeight;
   @include interface();
   cursor: pointer;
-  input {
+  > input {
     z-index: -1;
     position: absolute;
     left: 8px;
@@ -46,13 +49,13 @@
     -webkit-appearance: none;
     outline: none !important;
     box-shadow: none !important;
-
   }
   .checkbox-container {
     line-height: $baseLineHeight;
     > span {
       color: $checkRadioColor;
     }
+
   }
 
   $offsetLeft: 0;
