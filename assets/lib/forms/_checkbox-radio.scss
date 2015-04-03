@@ -1,6 +1,5 @@
 /**
 * A Styled checkbox
-*
 */
 
 .multi-select-field {
@@ -51,7 +50,6 @@
   }
   .checkbox-container {
     line-height: $baseLineHeight;
-    display: inline-block;
     > span {
       color: $checkRadioColor;
     }
@@ -61,6 +59,7 @@
 
   .checkbox-container::before {
     content: ' ';
+    box-shadow:$inputBoxShadow;
     width: $checkboxAndOptionHeight;
     height: $checkboxAndOptionHeight;
     position: absolute;

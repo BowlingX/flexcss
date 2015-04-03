@@ -95,7 +95,7 @@ $inputBackground: $lightGrayColor !default;
 $inputColor: #616161 !default;
 $inputBorder: none !default;
 $inputBorderInvalid: none !default;
-$inputBackgroundInvalid: lighten($alertColor, 30%) !default;
+$inputBackgroundInvalid: lighten($alertColor, 40%) !default;
 $inputDisabledBg: #fafafa !default;
 $inputDisabledColor: #bababa !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
