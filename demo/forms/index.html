@@ -1,0 +1,78 @@
+---
+layout: default
+title: Forms
+weight: 2
+---
+
+<h1>Forms</h1>
+<h2>Form-Validation</h2>
+<p>
+    <code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
+    plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
+    browser to support a <strong>consistent UI</strong> across all browsers and adds support for custom validators and
+    inline validation (on <code>blur</code>).
+</p>
+<h3>Features</h3>
+<ul>
+    <li>Plugin-In replacement for HTML5-Form-Validation</li>
+    <li>Inline-Validation</li>
+    <li>Custom-Validation/Validators</li>
+    <li>Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)</li>
+    <li>Beautiful validation UI (Tooltip or inline)</li>
+    <li>Event System</li>
+</ul>
+<h3>Get-Started</h3>
+<p>Initialize the plugin for all forms on a page with the following line:</p>
+{% highlight javascript %}
+FlexCss.Form.init('form', optionalOptions);
+{% endhighlight%}
+<p>The first param <code>form</code> may be a selector defined by <code>Document.querySelector()</code>.
+    The second one allows to overwrite <code>defaultOptions</code> for each form. All Options may be set trough a
+    <code>data</code> attribute.
+</p>
+{% highlight javascript %}
+{
+    // if true creates tooltips above element, uses FlexCss Tooltips
+    createTooltips: true,
+    // if true appends error message after input element
+    appendError: false,
+    // type of ajax submit
+    ajaxSubmitType: 'POST',
+    // json content type if ajax method is set to json
+    ajaxJsonContentType: 'application/json; charset=utf-8',
+    // allow inline validation
+    inlineValidation: true
+}
+{% endhighlight%}
+<hr>
+<h3>Set options trough <code>data-attributes</code></h3>
+<p>All Options can be set per form instance via <code>data-attributes</code>:</p>
+{% highlight html %}
+<form data-create-tooltips="0" data-ajax-submit-type="GET">
+
+</form>
+{% endhighlight%}
+<hr>
+<h3>A Simple form with E-Mail-Validation</h3>
+<p>The following form has an HTML5 <code>email</code> input type defined, the input field is also <code>required</code>.
+</p>
+{% highlight html %}
+<input type="email" required/>
+{% endhighlight%}
+<hr>
+<form>
+    <fieldset>
+        <div class="control-group">
+            <label for="email-field">A simple E-Mail-Input</label>
+
+            <div class="controls">
+                <input required type="email" id="email-field">
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button class="button small" type="submit">validate</button>
+    </div>
+</form>
+
+

@@ -3,6 +3,7 @@
 import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
 import Event from 'util/Event';
+import Util from 'util/Util';
 
 const ERROR_CLASS_NAME = 'form-error';
 const INPUT_ERROR_CLASS = 'invalid';
@@ -87,6 +88,9 @@ class Form {
 
         // overwrite default options
         Object.assign(this.options, options);
+
+        // apply settings from attributes
+        Util.applyOptionsFromElement(form, this.options);
 
         // set form class as widget
         // Forms are very different to classical widgets,

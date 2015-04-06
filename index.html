@@ -1,12 +1,15 @@
 ---
 layout: default
-title: FlexCss - hellofellow pattern library
+title: Playground
+weight: 1
 ---
 
 <h1>Demo-Page</h1>
 <p>This is FlexCss, a pattern library built for <a href="https://hellofellow.com">hellofellow.com</a></p>
-<a class="button" href="https://github.com/BowlingX/flexcss"><i class="icon-github-circled"></i> <span class="hide-small">Fork me on GitHub</span></a>
-<a href="https://twitter.com/bowlingx" class="button color-twitter"><i class="icon-twitter"></i> <span class="hide-small">@bowlingx</span></a>
+<a class="button" href="https://github.com/BowlingX/flexcss"><i class="icon-github-circled"></i> <span
+        class="hide-small">Fork me on GitHub</span></a>
+<a href="https://twitter.com/bowlingx" class="button color-twitter"><i class="icon-twitter"></i> <span
+        class="hide-small">@bowlingx</span></a>
 <br><br>
 {% include text.html %}
 <hr>
@@ -20,5 +23,37 @@ title: FlexCss - hellofellow pattern library
 <hr>
 {% include tabs.html %}
 <hr>
+{% include navigation.html %}
+<hr>
 {% include dropdowns.html %}
 <hr>
+
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Some async widgets
+        new FlexCss.Widget('SecondModal').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
+                    s(document.getElementById('async-modal'));
+                }, 600);
+            });
+        });
+
+        new FlexCss.Widget('toggle-photo').setAsync(function () {
+            return new Promise(function (s) {
+                setTimeout(function () {
+                    s(document.getElementById('async-tab'));
+                }, 1000);
+            });
+        });
+        // Setup Dropdown
+        new FlexCss.Dropdown(document.body, 'Darkener').registerEvents();
+        new FlexCss.Widget('async-dropdown-target').setAsync(function () {
+            return new Promise(function (r) {
+                setTimeout(function () {
+                    r(document.getElementById('dropdown-test'));
+                }, 2000);
+            })
+        });
+    });
+</script>

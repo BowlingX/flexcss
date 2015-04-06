@@ -154,6 +154,45 @@ class Util {
     }
 
     /**
+     * Creates a camelCaseRepresentation of a dashed string
+     * @param {String} str
+     * @returns String
+     */
+    static dashToCamelCase(str) {
+        return str.replace(/-([a-z])/g, function (g) {
+            return g[1].toUpperCase();
+        });
+    }
+
+    /**
+     * Reads options from element (data attributes) and applies to base
+     * @param {HTMLElement} element
+     * @param {Object} base
+     * @return {Object}
+     */
+    static applyOptionsFromElement(element, base) {
+        if (!element) {
+            return base;
+        }
+        let attrs = element.attributes;
+        for (let i = 0; i<attrs.length; i++) {
+            let attr = attrs[i];
+            if(attr) {
+                let s = Util.dashToCamelCase(attr.nodeName.replace('data-', '')),
+                    val = attr.nodeValue;
+                if (base.hasOwnProperty(s)) {
+                    if ('boolean' === typeof base[s]) {
+                        base[s] = 1 === parseInt(val || 1);
+                    } else {
+                        base[s] = val;
+                    }
+                }
+            }
+        }
+        return base;
+    }
+
+    /**
      * Will position an element directly at given target
      * Is aware of a given collision container to detect edges
      * Will put elementToPosition either to left, center or right edge (prefer right)
