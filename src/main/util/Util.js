@@ -1,6 +1,11 @@
 const PFX = ["webkit", "moz", "MS", "o", ""];
 
 const COL_LEFT_CLASS = 'is-collision-left';
+
+const COL_RIGHT_CLASS = 'is-collision-right';
+
+const COL_BOTTOM_CLASS = 'is-collision-bottom';
+
 /**
  * Provides some shared Util functions
  */
@@ -151,15 +156,19 @@ class Util {
     /**
      * Will position an element directly at given target
      * Is aware of a given collision container to detect edges
-     * Will put elementToPosition either to left or right edge (prefer right)
+     * Will put elementToPosition either to left, center or right edge (prefer right)
      *  and either to bottom or top (prefers bottom)
+     *
+     * You may overwrite preferred positioned with `centerHorizontal` and `positionTop`
      *
      * @param {HTMLElement} target the target container to align to
      * @param {HTMLElement} elementToPosition the element to position
      * @param {HTMLElement} collisionContainer the outer container to prevent collisions
+     * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
+     * @param {bool} [positionTop] flip top, by default element is positioned to the bottom.
      * @returns {HTMLElement}
      */
-    static setupPositionNearby(target, elementToPosition, collisionContainer) {
+    static setupPositionNearby(target, elementToPosition, collisionContainer, centerHorizontal, positionTop) {
 
         // determine relative offsets
         var amountTop = 0, amountLeft = 0;
@@ -183,20 +192,38 @@ class Util {
             elementRect = elementToPosition.getBoundingClientRect(),
             colRect = collisionContainer.getBoundingClientRect(),
             targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
+            isCollisionTop = 0 >= (targetTop - elementRect.height),
             isCollisionBottom = window.innerHeight < (targetTop + amountTop + targetPosition.height + elementRect.height),
-            isCollisionLeft = targetRight < elementRect.width;
+            isCollisionLeft = targetRight < elementRect.width, targetLeft = targetPosition.left,
+            isCollisionRight = (targetLeft + elementRect.width) > colRect.width,
+            classList = elementToPosition.classList;
 
-        if (isCollisionLeft) {
+        classList.remove(COL_RIGHT_CLASS);
+        classList.remove(COL_LEFT_CLASS);
+        classList.remove(COL_BOTTOM_CLASS);
+
+        if (isCollisionLeft && !isCollisionRight) {
             // put element to left if collision with left
             elementToPosition.style.left = (targetPosition.left - colRect.left - amountLeft) + 'px';
-            elementToPosition.classList.add(COL_LEFT_CLASS);
+            classList.add(COL_LEFT_CLASS);
         } else {
-            elementToPosition.style.left = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px';
-            elementToPosition.classList.remove(COL_LEFT_CLASS);
+            // maybe center if no collision with either side
+            var rightPosition = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px',
+                leftCentered = ((targetLeft + targetPosition.width / 2) -
+                    (elementRect.width / 2) || 0) - colRect.left,
+                collisionCentered = (leftCentered + elementRect.width) > colRect.width;
+            if (centerHorizontal && !collisionCentered) {
+                elementToPosition.style.left = leftCentered + 'px';
+            } else {
+                classList.add(COL_RIGHT_CLASS);
+                elementToPosition.style.left = rightPosition;
+            }
         }
-        if (isCollisionBottom) {
+
+        if (isCollisionBottom || (positionTop && !isCollisionTop)) {
             // Put Element on top if collision
             elementToPosition.style.top = (targetTop - elementRect.height) - colRect.top + 'px';
+            classList.add(COL_BOTTOM_CLASS);
         } else {
             elementToPosition.style.top = (targetTop + targetPosition.height) - colRect.top + 'px';
         }

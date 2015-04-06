@@ -1,15 +1,8 @@
+import Util from 'util/Util';
 /**
  * @type {string}
  */
 const CLASS_NAMES_TOOLTIP = 'tooltip-container';
-/**
- * @type {string}
- */
-const CLASS_NAMES_TOP = 'arrow-top';
-/**
- * @type {string}
- */
-const CLASS_NAMES_BOTTOM = 'arrow-bottom';
 /**
  * @type {string}
  */
@@ -20,7 +13,8 @@ var doc = global.document;
 /**
  * Simple Tooltip
  */
-export default class Tooltip {
+export default
+class Tooltip {
 
     /**
      * Creates a Tooltip
@@ -83,25 +77,10 @@ export default class Tooltip {
             target.oldTitle = text;
             target.removeAttribute('title');
         }
-        var targetRect = target.getBoundingClientRect(),
-            colRect = this.container.getBoundingClientRect();
 
-        // detect if we have a collision with top/or bottom, we do not support left/right
-        var containerRect = tooltipContainer.getBoundingClientRect(), targetTop = targetRect.top,
-            isCollisionTop = 0 >= (targetTop - containerRect.height),
-            classList = tooltipContainer.classList;
-        if (isCollisionTop) {
-            tooltipContainer.style.top = (targetRect.bottom) - colRect.top + 'px';
-            classList.remove(CLASS_NAMES_BOTTOM);
-            classList.add(CLASS_NAMES_TOP);
-        } else {
-            classList.remove(CLASS_NAMES_TOP);
-            classList.add(CLASS_NAMES_BOTTOM);
-            tooltipContainer.style.top = (targetTop - containerRect.height) - colRect.top + 'px';
-        }
-        tooltipContainer.style.left = ((targetRect.left + targetRect.width / 2) -
-        (containerRect.width / 2) || 0) - colRect.left + 'px';
-        classList.add(CLASS_NAMES_OPEN);
+        Util.setupPositionNearby(target, tooltipContainer, this.container, true, true);
+
+        tooltipContainer.classList.add(CLASS_NAMES_OPEN);
 
     }
 

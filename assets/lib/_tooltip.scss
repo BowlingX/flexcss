@@ -1,3 +1,11 @@
+@mixin spaceTop() {
+  transform: translate3d(0, 6px, 0);
+}
+
+@mixin spaceBottom() {
+  transform: translate3d(0, -3px, 0);
+}
+
 // Global Tooltip
 .tooltip-container {
   z-index: $indexTooltip;
@@ -25,12 +33,37 @@
   max-width: 250px;
   text-align: center;
 
-  &.arrow-bottom {
+
+  // normal state (centered)
+  &.is-collision-bottom:not(.is-collision-left) {
+    @include spaceBottom();
     @include arrow-bottom($tooltipBg);
   }
 
-  &.arrow-top {
-    transform: translate3d(0, 4px, 0);
+  &:not(.is-collision-bottom):not(.is-collision-left) {
+    @include spaceTop();
     @include arrow-top($tooltipBg);
+  }
+
+  // left collisions
+  &.is-collision-left.is-collision-bottom {
+    @include spaceBottom();
+    @include arrow-bottom($tooltipBg, 15px);
+  }
+
+  &.is-collision-left:not(.is-collision-bottom) {
+    @include spaceTop();
+    @include arrow-top($tooltipBg, 15px);
+  }
+
+  // right collisions
+  &.is-collision-right:not(.is-collision-bottom) {
+    @include spaceTop();
+    @include arrow-top($tooltipBg, 93%);
+  }
+
+  &.is-collision-right.is-collision-bottom {
+    @include spaceBottom();
+    @include arrow-bottom($tooltipBg, 93%);
   }
 }
