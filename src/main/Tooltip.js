@@ -98,7 +98,7 @@ class Tooltip {
             if (this.tooltipContainer.flexTooltipCurrentTarget !== target) {
                 return;
             }
-            this._restoreClassNames(this.tooltipContainer);
+            this.tooltipContainer.classList.remove(CLASS_NAMES_OPEN);
         }
         if (target.oldTitle) {
             target.setAttribute('title', target.oldTitle);
