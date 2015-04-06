@@ -65,7 +65,7 @@ class Tooltip {
 
         if (!tooltipContainer) {
             tooltipContainer = doc.createElement('div');
-            tooltipContainer.className = [CLASS_NAMES_TOOLTIP, self.options.containerClass].join(" ");
+            this._restoreClassNames(tooltipContainer);
             this.container.appendChild(tooltipContainer);
             this.tooltipContainer = tooltipContainer;
         }
@@ -84,6 +84,11 @@ class Tooltip {
 
     }
 
+    _restoreClassNames(container) {
+        container.className = [CLASS_NAMES_TOOLTIP, this.options.containerClass].join(" ");
+        return this;
+    }
+
     /**
      * Removes a Tooltip on given target
      * @param {HTMLElement} target
@@ -93,7 +98,7 @@ class Tooltip {
             if (this.tooltipContainer.flexTooltipCurrentTarget !== target) {
                 return;
             }
-            this.tooltipContainer.classList.remove('open');
+            this._restoreClassNames(this.tooltipContainer);
         }
         if (target.oldTitle) {
             target.setAttribute('title', target.oldTitle);

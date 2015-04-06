@@ -1,3 +1,7 @@
+/**
+* Tooltips
+*/
+
 @mixin spaceTop() {
   transform: translate3d(0, 6px, 0);
 }
@@ -17,10 +21,10 @@
   border-radius: $globalRadius;
   padding: 7px 10px 7px;
   will-change: transform, opacity;
-  transition: opacity .4s ease;
+  transition: opacity .4s ease, transform .4s ease;
   font-size: $smallFontSize;
   font-weight: bold;
-  transform: translate3d(0, -3px, 0);
+  transform: translate3d(0, -6px, 0);
   background: $tooltipBg;
   word-wrap: break-word;
 
@@ -33,37 +37,38 @@
   max-width: 250px;
   text-align: center;
 
+  &.open {
+    // normal state (centered)
+    &.is-collision-bottom:not(.is-collision-left) {
+      @include spaceBottom();
+      @include arrow-bottom($tooltipBg);
+    }
 
-  // normal state (centered)
-  &.is-collision-bottom:not(.is-collision-left) {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg);
-  }
+    &:not(.is-collision-bottom):not(.is-collision-left) {
+      @include spaceTop();
+      @include arrow-top($tooltipBg);
+    }
 
-  &:not(.is-collision-bottom):not(.is-collision-left) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg);
-  }
+    // left collisions
+    &.is-collision-left.is-collision-bottom {
+      @include spaceBottom();
+      @include arrow-bottom($tooltipBg, 15px);
+    }
 
-  // left collisions
-  &.is-collision-left.is-collision-bottom {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg, 15px);
-  }
+    &.is-collision-left:not(.is-collision-bottom) {
+      @include spaceTop();
+      @include arrow-top($tooltipBg, 15px);
+    }
 
-  &.is-collision-left:not(.is-collision-bottom) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg, 15px);
-  }
+    // right collisions
+    &.is-collision-right:not(.is-collision-bottom) {
+      @include spaceTop();
+      @include arrow-top($tooltipBg, 93%);
+    }
 
-  // right collisions
-  &.is-collision-right:not(.is-collision-bottom) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg, 93%);
-  }
-
-  &.is-collision-right.is-collision-bottom {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg, 93%);
+    &.is-collision-right.is-collision-bottom {
+      @include spaceBottom();
+      @include arrow-bottom($tooltipBg, 93%);
+    }
   }
 }
