@@ -1,0 +1,79 @@
+/* A Breadcrumb */
+.breadcrumb {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding:0;
+  max-width: 100%;
+  @include clearfix();
+  a {
+    margin-left: 4px;
+    color:$breadcrumbColor;
+    font-weight:normal;
+    &:hover {
+      @extend .inherit-link:hover;
+    }
+  }
+  color: $breadcrumbColor;
+  list-style-type: none;
+  li {
+    display:inline;
+    margin-left: 1px;
+  }
+  li:first-of-type {
+    margin-left: 0;
+    a {
+      margin-left: 0;
+    }
+  }
+  li:before {
+    content: $breadcrumbSeparatorIcon;
+    font-size: 1em;
+  }
+
+  li:first-of-type:before {
+    content: " ";
+  }
+  font-size: $breadcrumbFontSize - 3px;
+  margin: 0;
+}
+
+@media #{$mediaLarge} {
+  .breadcrumb {
+    font-size: $breadcrumbFontSize;
+  }
+}
+
+@media #{$mediaPortrait} {
+
+  .breadcrumb {
+    li {
+      a { display:none; margin-left:0;}
+      &:before {
+        display:none;
+      }
+      margin-left:0;
+    }
+
+    li:last-of-type {
+      &:not(:first-of-type):before {
+        display:inline;
+        content: "\00B7  ... \00B7";
+      }
+      &:not(:first-of-type) a {
+        margin-left:4px;
+      }
+    }
+
+    li:first-of-type,
+    li:last-of-type {
+      a {display:inline; margin-right:1px}
+      &:after {
+        content: "";
+      }
+    }
+  }
+
+}
+

@@ -40,3 +40,86 @@
 {% highlight html %}
 <span class="badge">5</span>
 {% endhighlight %}
+
+<h2>Breadcrumbs</h2>
+
+<div>
+    <ul class="breadcrumb">
+        <li><a href="#">World</a></li>
+        <li><a href="#">Asia</a></li>
+        <li><a href="#">Thailand</a></li>
+        <li><a href="#">Introduce yourself</a></li>
+    </ul>
+</div>
+<div>
+    <ul class="breadcrumb">
+        <li><a href="#">Root</a></li>
+        <li><a href="#">Child 1</a></li>
+        <li><a href="#">Child 2</a></li>
+        <li><a href="#">This is a very long child that may break later or gets cut of</a></li>
+    </ul>
+</div>
+
+{% highlight html %}
+<ul class="breadcrumb">
+    <li><a href="#">Root</a></li>
+    <li><a href="#">Child 1</a></li>
+</ul>
+{% endhighlight %}
+
+<h2>Pagination</h2>
+
+<div>
+    <ul class="paginator">
+        <li class="arrow item"><a><i class="icon-left-open"></i></a></li>
+
+        <li class="item"><a href="#">1</a>
+        </li>
+        <li class="current item"><a href="#">2</a>
+        </li>
+        <li class="item"><a href="#">3</a>
+        </li>
+        <li class="arrow item"><a><i class="icon-right-open"></i></a></li>
+    </ul>
+</div>
+
+<div>
+    <ul class="paginator">
+        <li class="arrow item"><a><i class="icon-left-open"></i></a></li>
+        <li class="item"><a href="#">1</a>
+        </li>
+        <li class="item fade-out">...
+        </li>
+        <li class="item"><a href="#">8</a>
+        </li>
+        <li class="item"><a href="#">9</a>
+        </li>
+        <li class="current item"><a href="#">10</a>
+        </li>
+        <li class="item"><a href="#">11</a>
+        </li>
+        <li class="item"><a href="#">12</a>
+        </li>
+        <li class="item fade-out">...</li>
+        <li class="item"><a href="#">25</a>
+        </li>
+        <li class="arrow item"><a><i class="icon-right-open"></i></a></li>
+    </ul>
+</div>
+
+{% highlight html %}
+<ul class="paginator">
+    <li class="arrow item">
+        <a><i class="icon-left-open"></i></a>
+    </li>
+    <li class="current item">
+        <a href="#">2</a>
+    </li>
+    <li class="item">
+        <a href="#">3</a>
+    </li>
+    <li class="arrow item">
+        <a><i class="icon-right-open"></i></a>
+    </li>
+</ul>
+{% endhighlight %}

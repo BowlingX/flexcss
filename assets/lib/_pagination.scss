@@ -1,0 +1,71 @@
+/**
+* Everything about pagination
+*/
+
+.paginator {
+  list-style: none;
+  display: flex;
+  margin-top: 3rem;
+  padding:0;
+  a, span {
+    display: block;
+    padding: 4px 15px;
+    color: $grayColor;
+    border-radius: $globalRadius;
+    transition: background .3s ease;
+    will-change: background;
+    background: $lightGrayColor;
+
+    i {
+      vertical-align: middle;
+    }
+  }
+
+  .item {
+    margin: 0 10px 0 0;
+    &.current a, span {
+      background: $actionColor;
+      color: #fff;
+    }
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+// hover states only for non touch devices
+html:not(.touch) {
+  .paginator {
+    a, span {
+      background: transparent;
+      &:hover {
+        background: $lightGrayColor;
+      }
+      &:active {
+        background: darken($lightGrayColor, 10%);
+      }
+    }
+  }
+}
+
+@media #{$mediaSmall} {
+  .paginator {
+    width: 100%;
+
+    .prev ~ .next {
+      margin-left:10px;
+    }
+    .item {
+      margin:0;
+      &.arrow {
+        width: 100%;
+        text-align: center;
+        display: block
+      }
+
+      &:not(.arrow) {
+        display: none;
+      }
+    }
+  }
+}
