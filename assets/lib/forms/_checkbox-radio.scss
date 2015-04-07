@@ -7,6 +7,9 @@
 
   &.multi-row {
     display: flex;
+    > input {
+      min-width:1px;
+    }
     &.center {
       margin-top:0;
       @extend .flex-align-items-center;
@@ -16,6 +19,10 @@
     }
     .checkbox {
       margin-right: 10px;
+
+      &.empty {
+        margin-right:5px;
+      }
     }
     .checkbox:not(:last-of-type) {
       margin-right: 30px;

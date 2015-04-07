@@ -5,14 +5,14 @@
   cursor: pointer;
   border: none;
   background-color: $btnPrimaryColor;
-  padding: 11px 45px 10px;
+  padding:$btnPadding;
   border-radius: $globalRadius;
   color: $buttonColor;
   font-weight: bold;
   background-image:none;
   transition: background-color .2s ease, background-image 2s ease, color .2s ease;
-  background-size: 40px 40px;
-
+  background-size: $btnBackgroundSize;
+  font-size:$btnFontSize;
   will-change: background, background-image;
 
   // repeat, because some browser to not respect this settings on input elements
@@ -60,7 +60,7 @@
 
   &.small {
     font-size: $smallFontSize;
-    padding: 7px 30px 7px;
+    padding: $btnSmallPadding;
 
     &.action {
       padding-left: 7px;

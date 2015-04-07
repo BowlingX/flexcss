@@ -28,6 +28,8 @@ html {
 
 // Wrapper where all Content goes
 .content-wrapper {
+  // fixes flickering causing by tooltips apparently
+  transform:translateZ(0);
   display: flex;
   flex-direction: column;
 }

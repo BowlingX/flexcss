@@ -14,6 +14,10 @@ form {
     margin-bottom: 0;
     font-size: $copyTextFormsFontSize;
     line-height: $copyTextFormsLineHeight;
+
+    & + p {
+      margin-top: $copyTextFormsMultipleMarginTop;
+    }
   }
 
   .controls {
@@ -113,10 +117,12 @@ form.loading {
     text-overflow: ellipsis;
     word-wrap: break-word;
     height: auto;
+    padding: $uneditableInputPadding;
     min-height: $inputHeight;
   }
 
   &.uneditable-input,
+  &[disabled],
   &.disabled {
     background: $inputDisabledBg;
     color: $inputDisabledColor;
@@ -211,7 +217,7 @@ textarea {
 
 /* A third row for appended items*/
 form .append {
-  margin: $appendMargin 0 0 0;
+  margin: $appendMarginTopPositive 0 0 0;
 
   .checkbox {
     color: $grayColor;
@@ -634,7 +640,6 @@ input::-moz-range-track {
 
   }
 
-
   form:not(.wide) {
     .append {
       align-self: flex-start;
@@ -647,7 +652,7 @@ input::-moz-range-track {
         flex: 1;
       }
       &.break {
-        margin: $appendMargin 0 0 $labelWidthDesktop;
+        margin: $appendMarginTopPositive 0 0 $labelWidthDesktop;
         max-width: $formWidthControls;
         min-width: $formMinWidthControls;
       }
@@ -661,11 +666,10 @@ input::-moz-range-track {
 
 }
 
-
 .control-group:not(:last-of-type) .controls + .append {
-  margin-top: 0;
+  margin-top: $appendMarginTopNegative;
   &.break {
-    margin-bottom:$formMargin;
+    margin-bottom: $formMargin;
   }
 }
 

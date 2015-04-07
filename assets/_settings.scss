@@ -27,6 +27,9 @@ $overallPaddingLarge: 50px !default;
 // padding when in desktop state
 $paddingRightLeftDesktop:20px !default;
 
+
+// paragraphs:
+$paragraphMargin: 0 0 1rem 0;
 // some layout globals:
 $baseFontFamily: 'Open Sans', Arial, sans-serif !default;
 $baseFontSize: 14px !default;
@@ -108,9 +111,14 @@ $inputHeight:35px !default;
 $formMargin:30px !default;
 $formMinWidthControls:380px !default;
 $appendMargin:20px !default;
+// append Margins for different states (last-child etc.)
+$appendMarginTopNegative:-10px !default;
+$appendMarginTopPositive:10px !default;
+
 $controlMargin:20px !default;
 $formWidthControls:50% !default;
 $inputPadding: 8px 10px !default;
+$uneditableInputPadding: 8px 10px !default;
 $inputBoxShadow:none !default;
 $legendFontSize:$baseFontSize !default;
 $legendFontWeight: bold !default;
@@ -123,6 +131,7 @@ $checkRadioColor:$primaryColor !default;
 $labelTextAlign:right !default;
 $copyTextFormsFontSize:$smallFontSize!default;
 $copyTextFormsLineHeight:$smallFontSizeLineHeight !default;
+$copyTextFormsMultipleMarginTop: .5rem !default;
 $inputFontSize:$baseFontSize !default;
 $inputTransitions: background .5s ease !default;
 $checkboxMargin: 1px 0 0 28px;
@@ -133,7 +142,10 @@ $btnPrimaryColor: $actionColor !default;
 $btnSecondaryColor: #c3c3c3 !default;
 $btnDangerColor: $dangerColor !default;
 $btnAlternativeColor: $primaryColor !default;
-
+$btnFontSize:$baseFontSize !default;
+$btnPadding: 11px 45px 10px !default;
+$btnBackgroundSize:40px 40px !default;
+$btnSmallPadding:7px 30px 7px !default;
 // tabs
 $tabBottomLineHeight:2px !default;
 $tabsSmallPadding: 5px !default;
