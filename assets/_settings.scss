@@ -62,10 +62,12 @@ $globalRadius:3px !default;
 // breakpoints
 
 $breakpointLarge: 1000px !default;
+$breakpointInBetween: 900px !default;
 $breakpointDesktop:768px !default;
 
 $mediaDesktop: "all and (min-width: #{$breakpointDesktop})";
 $mediaLarge: "all and (min-width: #{$breakpointLarge})";
+$mediaInBetween: "all and (min-width: #{$breakpointInBetween})";
 $mediaSmall: "all and (max-width:  #{$breakpointDesktop - 1px})";
 $mediaLandscape: "only screen and (orientation: landscape)" !default;
 $mediaPortrait: "only screen and (orientation: portrait)" !default;
@@ -116,7 +118,8 @@ $appendMarginTopNegative:-10px !default;
 $appendMarginTopPositive:10px !default;
 
 $controlMargin:20px !default;
-$formWidthControls:50% !default;
+$formWidthControls:75% !default;
+$formWidthControlsBetween:50% !default;
 $inputPadding: 8px 10px !default;
 $uneditableInputPadding: 8px 10px !default;
 $inputBoxShadow:none !default;

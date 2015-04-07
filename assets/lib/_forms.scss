@@ -673,9 +673,14 @@ input::-moz-range-track {
   }
 }
 
-@media #{$mediaLarge} {
+@media #{$mediaInBetween} {
 
   form:not(.wide) {
+
+    .controls {
+      width: $formWidthControlsBetween;
+    }
+
     .append {
       flex: 1;
       &.break {
