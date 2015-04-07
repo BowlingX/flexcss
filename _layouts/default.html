@@ -28,7 +28,7 @@
         <ul class="main-nav">
             {% for p in pages %}
             <li {% if p.url == url %}class="active" {% endif %}>
-                <a href="{{ p.url }}">
+                <a href="{{ site.baseurl }}{{ p.url }}">
                     {{ p.title }}
                 </a>
             </li>
