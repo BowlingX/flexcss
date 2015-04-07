@@ -686,6 +686,7 @@ Form.globalRemoteValidationFunction = function () {
  * Handles custom error messages extracts custom message by default
  */
 Form.globalErrorMessageHandler = (field, validity) => {
+    "use strict";
     if (!validity.customError) {
         let customMsg = field.getAttribute(ATTR_DATA_CUSTOM_MESSAGE);
         if (customMsg) {
