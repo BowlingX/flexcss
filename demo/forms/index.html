@@ -32,21 +32,23 @@ FlexCss.Form.init('form', optionalOptions);
 </p>
 {% highlight javascript %}
 {
-    // if true creates tooltips above element, uses FlexCss Tooltips
-    createTooltips: true,
-    // if true appends error message after input element
-    appendError: false,
-    // type of ajax submit
-    ajaxSubmitType: 'POST',
-    // json content type if ajax method is set to json
-    ajaxJsonContentType: 'application/json; charset=utf-8',
-    // allow inline validation
-    inlineValidation: true
+// if true creates tooltips above element, uses FlexCss Tooltips
+createTooltips: true,
+// if true appends error message after input element
+appendError: false,
+// type of ajax submit
+ajaxSubmitType: 'POST',
+// json content type if ajax method is set to json
+ajaxJsonContentType: 'application/json; charset=utf-8',
+// allow inline validation
+inlineValidation: true
 }
 {% endhighlight%}
 <hr>
 <h3>Set options trough <code>data-attributes</code></h3>
-<p>All Options can be set per form instance via <code>data-attributes</code>:</p>
+<p>All Options can be set per form instance via <code>data-attributes</code> and will overwrite
+    options that may have been set before. Boolean values are set trough integer values with <code>1 = true</code> and
+    <code>0 = false</code> or just the attribute for <code>true</code> everything else is treated as <code>String</code>.</p>
 {% highlight html %}
 <form data-create-tooltips="0" data-ajax-submit-type="GET">
 
@@ -94,8 +96,13 @@ FlexCss.Form.init('form', optionalOptions);
         </div>
     </fieldset>
     <div class="form-actions">
-        <button class="button small" type="submit">validate</button>
+        <button class="button small" type="submit">login</button>
     </div>
 </form>
-
+<hr>
+{% highlight html %}
+<form data-append-error data-create-tooltips="0">
+    <!-- [...] -->
+</form>
+{% endhighlight%}
 
