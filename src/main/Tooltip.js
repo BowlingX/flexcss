@@ -57,7 +57,6 @@ class Tooltip {
      */
     createTooltip(target, text, removeTitle) {
         // abort if text is empty
-        var self = this;
         if (!text || text && text.trim() === '') {
             return;
         }
