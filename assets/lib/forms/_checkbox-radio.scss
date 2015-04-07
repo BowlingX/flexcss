@@ -9,6 +9,7 @@
     display: flex;
     > input {
       min-width:1px;
+      flex:1;
     }
     &.center {
       margin-top:0;
