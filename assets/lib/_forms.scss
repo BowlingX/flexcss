@@ -189,6 +189,7 @@ form.loading {
   }
 
   &.loading {
+    transition:background 0s ease;
     position: relative;
     @include loadingContainer(#ccc);
   }

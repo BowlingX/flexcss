@@ -13,7 +13,7 @@ const REMOTE = 'data-remote';
 const REMOTE_ACTION = 'data-remote-action';
 const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 const ATTR_VALIDATOR = 'data-validate';
-
+const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 
 /**
  * Triggered when form is fully initialized and handlers are binded
@@ -281,16 +281,16 @@ class Form {
                 }
             }
         }
-        return Promise.all(futures).then(function () {
-            var allFutures = arguments, l = allFutures.length;
-            var result = {
+        return Promise.all(futures).then(function (allFutures) {
+            let l = allFutures.length;
+            let result = {
                 checkedFields: checkedFields,
                 foundAnyError: false
             };
-
             for (var fI = 0; fI < l; fI++) {
                 if (!allFutures[fI]) {
                     result.foundAnyError = true;
+                    break;
                 }
             }
             return result;
@@ -325,9 +325,9 @@ class Form {
                     // Remove current errors:
                     this._removeElementErrors(parent);
                 }
-                var msg = field.validationMessage;
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
+                let msg = field.validationMessage;
                 field.classList.add('invalid');
                 field.setAttribute(ARIA_INVALID, 'true');
                 if (this.options.appendError) {
@@ -605,7 +605,7 @@ class Form {
                 form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
-                    self._handleSubmit(e);
+                   self._handleSubmit(e);
                 }
             });
         } else {
@@ -682,5 +682,14 @@ Form.globalValidators = [];
 Form.globalRemoteValidationFunction = function () {
 };
 
-Form.globalErrorMessageHandler = function () {
+/**
+ * Handles custom error messages extracts custom message by default
+ */
+Form.globalErrorMessageHandler = (field, validity) => {
+    if (!validity.customError) {
+        let customMsg = field.getAttribute(ATTR_DATA_CUSTOM_MESSAGE);
+        if (customMsg) {
+            field.setCustomValidity(customMsg);
+        }
+    }
 };

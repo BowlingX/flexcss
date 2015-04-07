@@ -48,7 +48,8 @@ inlineValidation: true
 <h3>Set options trough <code>data-attributes</code></h3>
 <p>All Options can be set per form instance via <code>data-attributes</code> and will overwrite
     options that may have been set before. Boolean values are set trough integer values with <code>1 = true</code> and
-    <code>0 = false</code> or just the attribute for <code>true</code> everything else is treated as <code>String</code>.</p>
+    <code>0 = false</code> or just the attribute for <code>true</code> everything else is treated as <code>String</code>.
+</p>
 {% highlight html %}
 <form data-create-tooltips="0" data-ajax-submit-type="GET">
 
@@ -105,4 +106,126 @@ inlineValidation: true
     <!-- [...] -->
 </form>
 {% endhighlight%}
+<hr>
+<h3>Custom Messages</h3>
+<p>By Default all error messages are provided by the browser. The Default <code>errorMessageHandler</code> supports
+    custom messages trough the <code>data-validation-message</code> attribute. You can provide your own Message handler
+    by using the following static class method:</p>
+{% highlight javascript %}
+FlexCss.Form.registerErrorMessageHandler(
+    function(field, validity){
+
+    }
+);
+{% endhighlight%}
+<hr>
+<p>The following form contains one field with a custom error message</p>
+<form>
+    <fieldset>
+        <div class="control-group">
+            <label for="email-field-custom">E-Mail</label>
+
+            <div class="controls">
+                <input required data-validation-message="Dude, E-Mail please!" type="email"
+                       id="email-field-custom">
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button class="button small" type="submit">subscribe</button>
+    </div>
+</form>
+<hr>
+<h4>Example</h4>
+{% highlight html %}
+<input required data-validation-message="Dude, E-Mail please!" type="email">
+{% endhighlight%}
+<hr>
+<h3>Custom Validation</h3>
+<p>Following form has custom validators registered. One will try to ask for a free username on the server.
+    A second one will make sure that the passwords are equal.
+    Before running custom validations, all default validators will be asked (like
+    <code>required</code>, <code>type</code> etc.).
+</p>
+<form>
+    <fieldset>
+        <legend>Register your Account</legend>
+        <div class="control-group">
+            <label for="username-field-custom">Username</label>
+
+            <div class="controls">
+                <input data-validate="inline-validate" required type="text"
+                       id="username-field-custom">
+                <p>Try "BowlingX", this user might be available ;)</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="password-field">Password</label>
+
+            <div class="controls">
+                <input required type="password" id="password-field">
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="password-field-confirm">Password again</label>
+
+            <div class="controls">
+                <input data-validate="equals" data-validate-equals="password-field" required type="password"
+                       id="password-field-confirm">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="checkbox no-label">
+                <input name="agb" type="checkbox" value="true" required>
+                <span class="checkbox-container">Yeah, please sign me up for the Newsletter</span>
+            </label>
+        </div>
+
+    </fieldset>
+    <div class="form-actions">
+        <button class="button small" type="submit">register</button>
+    </div>
+</form>
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        FlexCss.Form.registerValidator('inline-validate', function (field) {
+            return new Promise(function (r) {
+                setTimeout(function () {
+                    if(field.value !== 'BowlingX') {
+                        field.classList.remove('valid');
+                        field.setCustomValidity('The server could not validate your name, try "BowlingX".');
+                        r(false);
+                    } else {
+                        field.classList.add('valid');
+                        r(true);
+                    }
+                }, 500);
+            });
+        });
+
+        FlexCss.Form.registerValidator('equals', function (field) {
+            var fieldThatShouldBeEqual = field.getAttribute('data-validate-equals'),
+                    fieldValue = document.getElementById(fieldThatShouldBeEqual);
+            return new Promise(function (r) {
+                var equals = field.value === fieldValue.value;
+                if (!equals) {
+                    field.setCustomValidity('Passwords do not match.');
+                }
+                r(equals);
+            });
+        });
+    });
+</script>
+<hr>
+<p><code>FlexCss.Form</code> expects all <code>Validators</code> to return a promise with either
+    <strong><code>false</code></strong> for invalid or <strong><code>true</code></strong> for a valid
+    result. Registering a custom validator is easy like:</p>
+{% highlight javascript %}
+FlexCss.Form.registerValidator('inline-validate', function (field) {
+    return new Promise(function (resolve) {
+        resolve(true) // or resolve(false)
+    });
+});
+{% endhighlight%}
+<p>Validators can be set with the <code>data-validate</code> attribute.</p>
 
