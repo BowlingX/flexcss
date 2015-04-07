@@ -74,5 +74,28 @@ FlexCss.Form.init('form', optionalOptions);
         <button class="button small" type="submit">validate</button>
     </div>
 </form>
+<hr>
+<p>Another form, but with disabled tooltips and <code>appendError</code> set to true</p>
+<form data-append-error data-create-tooltips="0">
+    <fieldset>
+        <div class="control-group">
+            <label for="email-field-2">E-Mail</label>
+
+            <div class="controls">
+                <input required type="email" id="email-field-2">
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="text-field">Password</label>
+
+            <div class="controls">
+                <input required type="password" id="text-field">
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button class="button small" type="submit">validate</button>
+    </div>
+</form>
 
 
