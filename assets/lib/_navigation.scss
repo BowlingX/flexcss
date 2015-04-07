@@ -184,7 +184,7 @@
       font-weight: bold;
     }
 
-    &:last-of-type {
+    &:last-of-type:not(.trigger) {
       margin-right: 40px;
     }
   }

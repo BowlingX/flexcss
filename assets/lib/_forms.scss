@@ -218,7 +218,7 @@ textarea {
 /* A third row for appended items*/
 form .append {
   margin: $appendMarginTopPositive 0 0 0;
-
+  width:100%;
   .checkbox {
     color: $grayColor;
     font-size: $copyTextFormsFontSize;

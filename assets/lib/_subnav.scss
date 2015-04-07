@@ -12,7 +12,6 @@
   border-bottom:1px solid $globalBorderColor;
   height:$topbarHeight;
 
-
 }
 @media #{$mediaLarge} {
   .navbar-sub {
@@ -20,3 +19,85 @@
   }
 }
 
+/* A Slidebar */
+
+.slidebar {
+  > input {
+    display: none;
+  }
+  .trigger {
+    display: none;
+  }
+}
+
+@media #{$mediaSmall} {
+  .slidebar {
+    overflow: visible;
+    position: relative;
+    height: 100%;
+    margin-bottom: $topbarHeight;
+    z-index: 1;
+
+    > input {
+      display: none;
+      &:checked + .subnav {
+        transform: translate3d(0, 0, 0);
+        transition: transform .3s ease;
+        li.active {
+          order: 1;
+        }
+
+        li > label > i {
+          @extend .icon-up-open;
+        }
+
+      }
+      &:not(:checked) + .subnav {
+        .trigger {
+          width:100%;
+        }
+      }
+    }
+    .subnav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transform: translate3d(0, -100%, 0) translate3d(0, $topbarHeight, 0);
+      transition: transform 0s ease;
+      margin-bottom: -100%;
+      border-bottom: 1px solid $globalBorderColor;
+      li {
+        order: 1;
+        &.active {
+          order: 99;
+        }
+        &.trigger {
+          @include interface();
+          display: block;
+          position: absolute;
+          bottom: 0;
+          height: 100%;
+          text-indent: 0;
+          right: 0;
+          margin: 0 $overallPadding 0 0;
+          > label {
+            height: 100%;
+            margin: 0;
+            text-indent: 0;
+            padding: 0 16px;
+            cursor: pointer;
+            > i {
+              position: absolute;
+              bottom: 15px;
+              right: 9px;
+            }
+          }
+        }
+      }
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+}
