@@ -18,14 +18,11 @@
   margin: $topbarHeight auto 0 auto;
 }
 
-body {
-  -webkit-overflow-scrolling:touch;
-}
-
 html {
   &.modal-open {
     body {
       overflow-y: hidden;
+      -webkit-overflow-scrolling:touch;
     }
   }
 }
