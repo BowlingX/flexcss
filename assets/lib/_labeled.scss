@@ -1,0 +1,57 @@
+// Value/Data label lists
+.labeled {
+  display: flex;
+  flex-direction: column;
+  margin: $labeledSpacing 0 0 0;
+
+  dt {
+    color: $labelColor;
+    font-size: $labelFontSize;
+  }
+
+  dd {
+    margin: 0 0 $labeledSpacing 0;
+  }
+
+  border-bottom: 1px solid $globalBorderColor;
+
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: $labeledSpacing;
+  }
+}
+
+// Media specific
+@media #{$mediaDesktop} {
+  .labeled {
+    flex-direction: row;
+    dt {
+      width: $labelWidthDesktop;
+      min-width:0;
+      padding: $labelPaddingDesktop;
+      padding-top: 0;
+      margin-bottom: $labeledSpacing;
+    }
+    dd {
+      padding: $labelPaddingDesktop;
+      padding-top: 0;
+      width:$formWidthControls;
+    }
+
+    &.three-columns {
+      dd {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+@media #{$mediaInBetween} {
+  .labeled {
+    &.three-columns {
+      dd {
+        padding-right: $thirdColumnPaddingOffsetInBetween;
+      }
+    }
+  }
+}

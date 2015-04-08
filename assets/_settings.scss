@@ -103,12 +103,14 @@ $inputBorderInvalid: none !default;
 $inputBackgroundInvalid: lighten($alertColor, 40%) !default;
 $inputDisabledBg: #fafafa !default;
 $inputDisabledColor: #bababa !default;
+$inputDisabledBorder: #e0e0e0 !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
 $inputFocusBoxShadow: none !default;
 $labelWidthDesktop:25% !default;
 $labelMinWidth:0 !default;
 $labelColor: $baseColor !default;
 $labelFontSize: $smallFontSize !default;
+$labelPaddingDesktop:5px 1rem 0 0 !default;
 $inputHeight:35px !default;
 $formMargin:30px !default;
 $formMinWidthControls:380px !default;
@@ -116,6 +118,7 @@ $appendMargin:20px !default;
 // append Margins for different states (last-child etc.)
 $appendMarginTopNegative:-10px !default;
 $appendMarginTopPositive:10px !default;
+$thirdColumnPaddingOffsetInBetween:$labelWidthDesktop !default;
 
 $controlMargin:20px !default;
 $formWidthControls:75% !default;
@@ -183,3 +186,11 @@ $tooltipBg:#333 !default;
 $breadcrumbFontSize: 18px !default;
 $breadcrumbColor:#ccc !default;
 $breadcrumbSeparatorIcon:"\00B7 ";
+
+// labeled
+$labeledSpacing: 1rem;
+$labeledBorder: 1px solid $globalBorderColor;
+
+// icons:
+$iconSpacingButton:.3rem !default;
+$iconSpacing:.1rem !default;

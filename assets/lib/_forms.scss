@@ -127,7 +127,7 @@ form.loading {
     background: $inputDisabledBg;
     color: $inputDisabledColor;
     cursor: not-allowed;
-
+    border-color:$inputDisabledBorder;
     &:not(.copyable) {
       @include interface();
     }
@@ -533,6 +533,10 @@ input::-moz-range-track {
 // Desktop Version of Forms
 @media #{$mediaDesktop} {
 
+  .indent-label {
+    margin-left: $labelWidthDesktop;
+  }
+
   form:not(.wide) {
     .control-group {
       flex-direction: row;
@@ -542,7 +546,7 @@ input::-moz-range-track {
       min-width: $labelMinWidth;
       width: $labelWidthDesktop;
       text-align: $labelTextAlign;
-      padding: 5px 15px 0 0;
+      padding: $labelPaddingDesktop;
       position: relative;
       top: 5px;
       margin-bottom: 0;
@@ -571,9 +575,6 @@ input::-moz-range-track {
       margin-bottom: $formMargin;
     }
 
-    .indent-label {
-      margin-left: $labelWidthDesktop;
-    }
 
   }
   .multi-form {

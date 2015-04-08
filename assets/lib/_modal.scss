@@ -6,7 +6,7 @@
 // ios/webkit has problems with animations when this is prefixed and enabled
 .modal-container {
   /* autoprefixer: off */
-  perspective: 1000px;
+  @include perspective();
 }
 
 /* Container that contains all Modals of an instance */
