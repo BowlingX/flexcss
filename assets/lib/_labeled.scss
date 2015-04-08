@@ -2,6 +2,7 @@
 .labeled {
   display: flex;
   flex-direction: column;
+  flex-wrap:wrap;
   margin: $labeledSpacing 0 0 0;
 
   dt {
