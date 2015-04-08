@@ -139,10 +139,35 @@ small,
 .text-centered {
   text-align:center;
 }
+.text-right {
+  text-align:right;
+}
 
-ul {
+ol, ul {
   padding-left:$baseLineHeight * 1rem;
   margin-top:0;
+
+  &.plain {
+    padding:0;
+    list-style:none;
+  }
+
+  &.inline {
+    li {
+      display:inline;
+      &:not(:last-of-type):after {
+        content:', '
+      }
+    }
+  }
+
+  &.space {
+    li {
+      &:not(:first-of-type) {
+        margin-top:1rem;
+      }
+    }
+  }
 }
 
 .highlight-span span {
@@ -152,6 +177,16 @@ ul {
 
 .unbreakable {
   white-space: nowrap;
+}
+
+.tight {
+  margin-bottom:0;
+}
+.single-space {
+  margin-bottom:1rem;
+}
+.double-space {
+  margin-bottom:2rem;
 }
 
 kbd {

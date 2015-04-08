@@ -31,7 +31,7 @@
     display: inline-block;
     text-decoration: inherit;
     margin-right: .01em;
-    margin-left: .1em;
+    margin-left: $iconSpacing;
     text-align: center;
 
     /* For safety - reset parent styles, that can break glyph codes*/
@@ -49,8 +49,8 @@
   // icons in buttons:
   .button, .dropdown  {
     [class^="icon-"]:before, [class*=" icon-"]:before {
-      margin-right:.3em;
-      margin-left:.3em;
+      margin-right:$iconSpacingButton;
+      margin-left:$iconSpacingButton;
     }
   }
 

@@ -150,6 +150,7 @@
   input[disabled] + .checkbox-container {
     &::before, &::after {
       background: $inputDisabledBg;
+      border-color:$inputDisabledBorder;
       cursor: not-allowed;
       color: $inputDisabledColor !important;
     }

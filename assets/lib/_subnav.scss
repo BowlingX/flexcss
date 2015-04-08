@@ -10,7 +10,8 @@
   }
 
   border-bottom:1px solid $globalBorderColor;
-  height:$topbarHeight;
+  // +1 because we have the border:
+  height:$topbarHeight + 1px;
 
 }
 @media #{$mediaLarge} {
@@ -30,34 +31,46 @@
   }
 }
 
+.subnav-trigger {
+  display:none;
+}
+
 @media #{$mediaSmall} {
+  .subnav-trigger {
+
+    &:checked ~ .main .subnav-darkener {
+      display:block;
+      top:$topbarHeight;
+      z-index:1;
+      @include animate(darkenerFadeIn);
+    }
+
+    &:checked + .slidebar > .subnav {
+      transform: translate3d(0, 0, 0);
+      transition: transform .3s ease;
+      li.active {
+        order: 1;
+      }
+      li > label > i {
+        transform:rotate3d(0,0,1,180deg);
+      }
+
+    }
+    &:not(:checked) + .slidebar > .subnav {
+      .trigger {
+        width:100%;
+      }
+    }
+  }
+
   .slidebar {
     overflow: visible;
     position: relative;
     height: 100%;
     margin-bottom: $topbarHeight;
-    z-index: 1;
+    z-index: 2;
 
-    > input {
-      display: none;
-      &:checked + .subnav {
-        transform: translate3d(0, 0, 0);
-        transition: transform .3s ease;
-        li.active {
-          order: 1;
-        }
 
-        li > label > i {
-          @extend .icon-up-open;
-        }
-
-      }
-      &:not(:checked) + .subnav {
-        .trigger {
-          width:100%;
-        }
-      }
-    }
     .subnav {
       position: relative;
       display: flex;
@@ -86,7 +99,9 @@
             text-indent: 0;
             padding: 0 16px;
             cursor: pointer;
+            @include perspective();
             > i {
+              transition:transform .3s ease;
               position: absolute;
               bottom: 15px;
               right: 9px;

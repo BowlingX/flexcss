@@ -127,8 +127,10 @@ class OffCanvas {
                 Util.addEventOnce(Settings.CONST_TRANSITION_EVENT, navigationContainer, function () {
                     // add timeout because transition event fires a little to early
                     setTimeout(function () {
-                        bodyClass.remove(TOGGLE_CLASS);
-                        bodyClass.remove(DARKENER_CLASS_TOGGLE);
+                        requestAnimationFrame(function(){
+                            bodyClass.remove(TOGGLE_CLASS);
+                            bodyClass.remove(DARKENER_CLASS_TOGGLE);
+                        });
                     }, Settings.get().darkenerFadeDelay);
                 });
                 navigationContainer.classList.remove(OPEN_CLASS);
