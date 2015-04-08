@@ -22,8 +22,6 @@ html {
   &.modal-open {
     body {
       overflow-y: hidden;
-      -webkit-overflow-scrolling:touch;
-      -webkit-backface-visibility:hidden;
     }
   }
 }
