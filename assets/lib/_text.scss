@@ -46,7 +46,7 @@ a {
   cursor:pointer;
   text-decoration: none;
   color: $primaryColor;
-  transition: color .2s ease;
+  transition: color $globalShortEaseTime ease;
   font-weight: 600;
   &:hover {
     color: lighten($primaryColor, 10%);
@@ -97,6 +97,10 @@ pre > code {
   color:$primaryColor;
 }
 
+.color-base {
+  color:$baseColor;
+}
+
 // Font-Sizes:
 
 small,
@@ -106,15 +110,11 @@ small,
 }
 
 .fade-out {
-  color: $grayColor !important;
-  a {
-    color: $grayColor !important;
-    text-decoration: underline;
-    font-weight: normal;
-    &:hover {
-      color: darken($grayColor, 20) !important;
-    }
-  }
+  @include createColorSection($grayColor);
+}
+
+.unimportant {
+  @include createColorSection($lighterGrayColor);
 }
 
 .inherit-link {
@@ -204,4 +204,10 @@ kbd {
 
 .help {
   cursor:help;
+}
+
+@media #{$mediaDesktop} {
+  h1 {
+    font-size: $h1DesktopFontSize;
+  }
 }

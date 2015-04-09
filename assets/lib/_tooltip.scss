@@ -25,7 +25,7 @@
   border-radius: $globalRadius;
   padding: 7px 10px 7px;
   will-change: transform, opacity;
-  transition: opacity .4s ease, transform .4s ease;
+  transition: opacity $globalMediumEaseTime ease, transform $globalMediumEaseTime ease;
   font-size: $smallFontSize;
   font-weight: bold;
   transform: translate3d(0, -6px, 0);

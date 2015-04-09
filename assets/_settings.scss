@@ -36,19 +36,29 @@ $baseFontSize: 14px !default;
 $baseColor: #262626 !default;
 $baseLineHeight: 1.3 !default;
 
+// grid columns
+$columns: one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve;
+
 // A Base gray color where other gray tones are inhered from
 $grayColor:#999 !default;
 $lighterGrayColor: #ccc !default;
 
 // A base light gray color for surfaces
 $lightGrayColor:#f1f1f1 !default;
-
+$globalHoverColor:#f8f8f8 !default;
 // subnav
 $subnavBg: $lightGrayColor !default;
 
 $smallFontSize:12px !default;
 $smallFontSizeLineHeight:1.5 !default;
-$h1FontSize: 24px !default;
+$extraSmallFontSize:$smallFontSize !default;
+
+$globalShortEaseTime: .2s;
+$globalMediumEaseTime: .35s;
+$globalMenuEasing:ease;
+
+$h1FontSize: 20px !default;
+$h1DesktopFontSize:24px !default;
 $h1Color: $baseColor !default;
 $headingMargin: 0 0 1rem 0 !default;
 
@@ -194,3 +204,18 @@ $labeledBorder: 1px solid $globalBorderColor;
 // icons:
 $iconSpacingButton:.3rem !default;
 $iconSpacing:.1rem !default;
+
+// table
+$tableBorder: 1px solid $globalBorderColor;
+$tableSpacing: 10px;
+$tableSpacingLastAndFirst: $tableSpacing;
+$tableTransition:background .1s ease;
+
+// listings:
+$listingMinHeight:105px;
+$listingAvatarRowLarge:90px;
+$listingAvatarRow:90px;
+$listingAvatarRowSmall:36px;
+$listingOuterPadding: 10px;
+$listingSpaceRight: 30px;
+$listingSmallWidth: 30%;

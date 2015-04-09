@@ -152,7 +152,7 @@ class LightBox {
      * Registers events for delegate container
      */
     registerEvents(onOpen) {
-        this._delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, function (e) {
+        this._delegateContainer.addEventListener(Settings.getTabEvent(), function (e) {
             var target = e.target, parent = target.parentNode,
                 validTarget = target.hasAttribute(this._attributeSelector),
                 parentIsValid = parent && parent.hasAttribute(this._attributeSelector);
@@ -405,7 +405,7 @@ class LightBox {
                     if (self.options.registerPrevNextEvents) {
                         self._setupPrevNextStates();
                         // prev or next on touch/click
-                        self._imageContainer.addEventListener(Settings.CONST_TAB_EVENT, function (e) {
+                        self._imageContainer.addEventListener(Settings.getTabEvent(), function (e) {
                             if (self.isLoading()) {
                                 return;
                             }
@@ -436,7 +436,7 @@ class LightBox {
                         };
                         global.addEventListener('keydown', self._keyboardNextEvent);
                     } else {
-                        self._imageContainer.addEventListener(Settings.CONST_TAB_EVENT, function () {
+                        self._imageContainer.addEventListener(Settings.getTabEvent(), function () {
                             self._runOptionalClose();
                         });
                     }

@@ -151,7 +151,7 @@ class Modal {
 
         // close only on background if instance should
         if (!self.options.closeOnBackgroundClick && e &&
-            e.type === Settings.CONST_TAB_EVENT && !e.target.hasAttribute(ATTR_CLOSE)) {
+            e.type === Settings.getTabEvent() && !e.target.hasAttribute(ATTR_CLOSE)) {
             return false;
         }
 
@@ -290,7 +290,7 @@ class Modal {
             }
             Settings.get().scrollbarUpdateNodes.forEach(function (n) {
                 n.style.paddingRight = parseInt(global.getComputedStyle(n).paddingRight) +
-                Settings.CONST_SCROLLBAR_WIDTH + 'px';
+                Settings.getScrollbarWidth() + 'px';
             });
         }
     }
@@ -368,7 +368,7 @@ class Modal {
                 self.close(e);
             };
 
-            this.modalContainer.addEventListener(Settings.CONST_TAB_EVENT, closeModalFunction, false);
+            this.modalContainer.addEventListener(Settings.getTabEvent(), closeModalFunction, false);
 
             modalContainerClasses = this.modalContainer.classList;
             this.container.appendChild(this.modalContainer);
@@ -467,7 +467,7 @@ class Modal {
         self.eventFunction = function () {
             self.createWidget.apply(self, arguments);
         };
-        delegateContainer.addEventListener(Settings.CONST_TAB_EVENT, self.eventFunction, false);
+        delegateContainer.addEventListener(Settings.getTabEvent(), self.eventFunction, false);
 
         self.eventContainer = delegateContainer;
         return self;
@@ -505,7 +505,7 @@ class Modal {
         var self = this, modalContainer = this.modalContainer;
         // Remove event listener on destroy, do not remove DOM node
         if (self.eventContainer) {
-            self.eventContainer.removeEventListener(Settings.CONST_TAB_EVENT, self.eventFunction, true);
+            self.eventContainer.removeEventListener(Settings.getTabEvent(), self.eventFunction, true);
         }
 
         if (0 === modalContainer.childNodes.length) {

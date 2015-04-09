@@ -2,6 +2,7 @@
 .labeled {
   display: flex;
   flex-direction: column;
+  flex-wrap:wrap;
   margin: $labeledSpacing 0 0 0;
 
   dt {
@@ -12,6 +13,10 @@
   dd {
     margin: 0 0 $labeledSpacing 0;
   }
+  dd +dt {
+    margin-top:-$labeledSpacing/2;
+  }
+
 
   border-bottom: 1px solid $globalBorderColor;
 
@@ -25,6 +30,12 @@
 @media #{$mediaDesktop} {
   .labeled {
     flex-direction: row;
+
+    dd ~ dd,
+    dt ~ dt {
+      margin-top:-$labeledSpacing / 2;
+    }
+
     dt {
       width: $labelWidthDesktop;
       min-width:0;
