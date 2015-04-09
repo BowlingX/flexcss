@@ -121,7 +121,7 @@ class Dropdown {
      * @returns {Dropdown}
      */
     registerEvents() {
-        this.container.addEventListener(Settings.CONST_TAB_EVENT, this._delegateFunction.bind(this), true);
+        this.container.addEventListener(Settings.getTabEvent(), this._delegateFunction.bind(this), true);
         return this;
     }
 
@@ -130,7 +130,7 @@ class Dropdown {
      * @returns {Dropdown}
      */
     destroy() {
-        this.container.removeEventListener(Settings.CONST_TAB_EVENT, this._delegateFunction.bind(this), true);
+        this.container.removeEventListener(Settings.getTabEvent(), this._delegateFunction.bind(this), true);
         return this;
     }
 
@@ -174,7 +174,7 @@ class Dropdown {
 
         future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                Util.addEventOnce(Settings.CONST_TRANSITION_EVENT, currentOpen, function () {
+                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function () {
                     setTimeout(function () {
                         Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
                         // if a new dropdown has been opened in the meantime, do not remove darkener
@@ -182,7 +182,7 @@ class Dropdown {
                             return;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
-                        this.container.classList.remove(Settings.CONST_CANVAS_TOGGLE);
+                        this.container.classList.remove(Settings.get().canvasToggledClass);
                         resolve(true);
                     }.bind(this), Settings.get().darkenerFadeDelay);
                 }.bind(this));
@@ -284,7 +284,7 @@ class Dropdown {
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
-                this.container.classList.add(Settings.CONST_CANVAS_TOGGLE);
+                this.container.classList.add(Settings.get().canvasToggledClass);
                 // optionally get custom darkener container for target
                 var d = target.getAttribute(ATTR_DARKENER);
                 if (d) {

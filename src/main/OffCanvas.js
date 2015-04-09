@@ -101,7 +101,7 @@ class OffCanvas {
                         style.transform = 'translate3d(' + width + 'px,0,0)';
                         style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
 
-                        Util.addEventOnce(Settings.CONST_TRANSITION_EVENT, target, function () {
+                        Util.addEventOnce(Settings.getTransitionEvent(), target, function () {
                             // add timeout because transition event fires a little to early
                             setTimeout(function () {
                                 resetStyles(style);
@@ -124,7 +124,7 @@ class OffCanvas {
             e.preventDefault();
             var bodyClass = body.classList, darkenerClass = darkener.classList;
             if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                Util.addEventOnce(Settings.CONST_TRANSITION_EVENT, navigationContainer, function () {
+                Util.addEventOnce(Settings.getTransitionEvent(), navigationContainer, function () {
                     // add timeout because transition event fires a little to early
                     setTimeout(function () {
                         requestAnimationFrame(function(){
@@ -152,16 +152,16 @@ class OffCanvas {
             e.target.className = e.target.oldClassNames;
         });
 
-        toggler.addEventListener(Settings.CONST_TAB_EVENT, togglerF);
+        toggler.addEventListener(Settings.getTabEvent(), togglerF);
 
-        darkener.addEventListener(Settings.CONST_TAB_EVENT, (e) => {
+        darkener.addEventListener(Settings.getTabEvent(), (e) => {
             if (navigationContainer.classList.contains(OPEN_CLASS)) {
                 e.preventDefault();
                 togglerF(e);
             }
         });
 
-        navigationContainer.addEventListener(Settings.CONST_TAB_EVENT, (e) => {
+        navigationContainer.addEventListener(Settings.getTabEvent(), (e) => {
             if(e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
                 e.preventDefault();
                 togglerF(e);

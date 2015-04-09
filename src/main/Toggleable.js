@@ -90,7 +90,7 @@ class Toggleable {
      * @returns {Toggleable}
      */
     registerEvents() {
-        this.container.addEventListener(Settings.CONST_TAB_EVENT, this._listener.bind(this));
+        this.container.addEventListener(Settings.getTabEvent(), this._listener.bind(this));
         return this;
     }
 

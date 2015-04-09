@@ -116,6 +116,7 @@ html {
   background: #000;
   z-index: $indexDarkener;
   display: none;
+  cursor:pointer;
   &:not(.init) {
     @include animate(darkenerFadeOut);
   }

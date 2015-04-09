@@ -1,15 +1,39 @@
+/* */
 import Util from 'util/Util';
-/**
- * Global Settings
- */
-let GLOBAL_SETTINGS = {
-    // defined breakpoint for small devices < n
-    smallBreakpoint: 768,
-    // nodes that should be updated when no scrollbar is expected
-    scrollbarUpdateNodes: [global.document.body],
-    // additional Delay until darkener is fully hidden
-    darkenerFadeDelay: 100
-};
+
+// we attach global settings to global once because settings might be shared a lot of times trough the application
+// Maybe find a better way to handle that scenario
+
+if (!global.FLEXCSS_GLOBAL_SETTINGS) {
+    /**
+     * Global Settings
+     */
+    global.FLEXCSS_GLOBAL_SETTINGS = {
+        // defined breakpoint for small devices < n
+        smallBreakpoint: 768,
+        // nodes that should be updated when no scrollbar is expected
+        scrollbarUpdateNodes: [global.document.body],
+        // additional Delay until darkener is fully hidden
+        darkenerFadeDelay: 100,
+        // class that is added if canvas has been toggled
+        canvasToggledClass:'toggled-canvas'
+    };
+
+    // Measure scrollbar width
+    global.FLEXCSS_CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
+    // detect right transition end event
+    global.FLEXCSS_CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
+
+    global.FLEXCSS_CONST_TAB_EVENT = 'click';
+
+    global.FLEXCSS_CONST_IS_IOS = null;
+
+    global.FLEXCSS_CONST_IS_TOUCH = null;
+
+    global.FLEXCSS_CONST_CANVAS_TOGGLE = 'toggled-canvas';
+
+    global.FLEXCSS_CONST_IS_IE = null;
+}
 
 /**
  * Utility class that setups global settings
@@ -22,7 +46,7 @@ class Settings {
      * @param {Object} settings
      */
     static setup(settings) {
-        Object.assign(GLOBAL_SETTINGS, settings);
+        Object.assign(global.FLEXCSS_GLOBAL_SETTINGS, settings);
     }
 
     /**
@@ -30,7 +54,7 @@ class Settings {
      * @returns {Object}
      */
     static get() {
-        return GLOBAL_SETTINGS;
+        return global.FLEXCSS_GLOBAL_SETTINGS;
     }
 
     /**
@@ -38,11 +62,11 @@ class Settings {
      * @returns {boolean}
      */
     static isIosDevice() {
-        if (!Settings._CONST_IS_IOS) {
-            Settings._CONST_IS_IOS = global.navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
+        if (!global.FLEXCSS_CONST_IS_IOS) {
+            global.FLEXCSS_CONST_IS_IOS = global.navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
         }
 
-        return Settings._CONST_IS_IOS;
+        return global.FLEXCSS_CONST_IS_IOS;
     }
 
     /**
@@ -50,10 +74,10 @@ class Settings {
      * @returns {boolean}
      */
     static isTouchDevice() {
-        if (!Settings._CONST_IS_TOUCH) {
-            Settings._CONST_IS_TOUCH = 'ontouchstart' in window || !!(global.navigator.msMaxTouchPoints);
+        if (!global.FLEXCSS_CONST_IS_TOUCH) {
+            global.FLEXCSS_CONST_IS_TOUCH = 'ontouchstart' in window || !!(global.navigator.msMaxTouchPoints);
         }
-        return Settings._CONST_IS_TOUCH;
+        return global.FLEXCSS_CONST_IS_TOUCH;
     }
 
     /**
@@ -61,26 +85,28 @@ class Settings {
      * @returns {boolean|*}
      */
     static isIE() {
-        if (!Settings._CONST_IS_IE) {
-            Settings._CONST_IS_IE = "ActiveXObject" in window;
+        if (!global.FLEXCSS_CONST_IS_IE) {
+            global.FLEXCSS_CONST_IS_IE = "ActiveXObject" in window;
         }
-        return Settings._CONST_IS_IE;
+        return global.FLEXCSS_CONST_IS_IE;
+    }
+
+    /**
+     * @returns {String}
+     */
+    static getTransitionEvent() {
+        return global.FLEXCSS_CONST_TRANSITION_EVENT;
+    }
+    /**
+     * @returns {int}
+     */
+    static getScrollbarWidth() {
+        return global.FLEXCSS_CONST_SCROLLBAR_WIDTH;
+    }
+    /**
+     * @returns {String}
+     */
+    static getTabEvent() {
+        return global.FLEXCSS_CONST_TAB_EVENT;
     }
 }
-
-// Settings Statics, used by widgets
-
-// Measure scrollbar width
-Settings.CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
-// detect right transition end event
-Settings.CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
-
-Settings.CONST_TAB_EVENT = 'click';
-
-Settings._CONST_IS_IOS = null;
-
-Settings._CONST_IS_TOUCH = null;
-
-Settings.CONST_CANVAS_TOGGLE = 'toggled-canvas';
-
-Settings._CONST_IS_IE = null;
