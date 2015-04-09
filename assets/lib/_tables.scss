@@ -1,0 +1,52 @@
+/* Everything about tables */
+
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  margin: 1rem 0 1rem 0;
+
+  thead tr, tbody tr {
+    border-top: $tableBorder;
+  }
+
+  tbody tr:last-of-type {
+    border-bottom: $tableBorder;
+  }
+
+  th {
+    color: $primaryColor;
+    font-weight: normal;
+  }
+
+  th, td {
+    padding: $tableSpacing 0;
+    &:not(:first-of-type) {
+      padding-left: $tableSpacing;
+    }
+
+    &:last-of-type {
+      padding-right: $tableSpacingLastAndFirst;
+    }
+    &:first-of-type {
+      padding-left: $tableSpacingLastAndFirst;
+    }
+    transition: $tableTransition;
+  }
+
+  tr:hover {
+    td {
+      background: $globalHoverColor;
+    }
+  }
+
+  th, td {
+    @include generate-grid();
+  }
+
+  &.nowrap {
+    th, td {
+      @include ellipsis(10px);
+    }
+  }
+}

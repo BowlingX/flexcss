@@ -221,3 +221,28 @@
     @content;
   }
 }
+
+/**
+* Generates a grid
+*/
+@mixin generate-grid($columns:$columns) {
+  $gridSize: length($columns);
+  @for $i from 1 to $gridSize {
+    $class: nth($columns, $i);
+    &.#{$class} {
+      width: #{$i/$gridSize *100}%;
+    }
+  }
+}
+
+@mixin createColorSection($color) {
+  color: $color !important;
+  a {
+    color: $color !important;
+    text-decoration: underline;
+    font-weight: normal;
+    &:hover {
+      color: darken($color, 20) !important;
+    }
+  }
+}
