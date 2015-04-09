@@ -12,7 +12,7 @@
     padding: 4px 15px;
     color: $grayColor;
     border-radius: $globalRadius;
-    transition: background .3s ease;
+    transition: background $globalMediumEaseTime ease;
     will-change: background;
     background: $lightGrayColor;
 

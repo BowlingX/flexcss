@@ -5,7 +5,7 @@
   width: 100%;
   padding: $listingOuterPadding 0;
   border-bottom: 1px solid $globalBorderColor;
-  transition: background .1s ease;
+  transition: background $globalShortEaseTime ease;
   will-change: background;
   margin:0;
   &:hover:not(.editor) {
@@ -83,7 +83,8 @@
   }
 
   .actions {
-    margin-top:15px;
+    transition:opacity $globalShortEaseTime ease;
+    padding:1rem 0;
     display: flex;
     align-items:center;
     > * {
@@ -165,7 +166,11 @@
 
 html:not(.touch) {
   .listing:not(:hover) {
-    .control-row, .actions {
+
+    .actions  {
+      opacity:0;
+    }
+    .control-row, .transparent-actions {
       .button {
         background: transparent;
         color: $grayColor;

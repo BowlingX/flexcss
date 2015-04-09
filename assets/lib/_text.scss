@@ -46,7 +46,7 @@ a {
   cursor:pointer;
   text-decoration: none;
   color: $primaryColor;
-  transition: color .2s ease;
+  transition: color $globalShortEaseTime ease;
   font-weight: 600;
   &:hover {
     color: lighten($primaryColor, 10%);
@@ -204,4 +204,10 @@ kbd {
 
 .help {
   cursor:help;
+}
+
+@media #{$mediaDesktop} {
+  h1 {
+    font-size: $h1DesktopFontSize;
+  }
 }

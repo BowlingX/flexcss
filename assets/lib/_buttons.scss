@@ -1,16 +1,18 @@
 // Buttons:
-
+$disabledPrimaryBtnColor:lighten($btnPrimaryColor, 25%);
+$disabledSecondaryBtnColor:lighten($btnSecondaryColor, 15%);
+$disabledDangerBtnColor:lighten($btnDangerColor, 35%);
 .button {
   display: inline-block;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
   background-color: $btnPrimaryColor;
   padding:$btnPadding;
   border-radius: $globalRadius;
   color: $buttonColor;
   font-weight: bold;
   background-image:none;
-  transition: background-color .2s ease, background-image 2s ease, color .2s ease;
+  transition: background-color .2s ease, background-image 2s ease, color .2s ease, border .2s ease;
   background-size: $btnBackgroundSize;
   font-size:$btnFontSize;
   will-change: background, background-image;
@@ -18,6 +20,18 @@
   // repeat, because some browser to not respect this settings on input elements
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+  &.outline:not(:hover) {
+    background:transparent !important;
+    border-color:$btnPrimaryColor;
+    color:$btnPrimaryColor;
+
+    &.disabled {
+      border-color:$disabledPrimaryBtnColor;
+      color:$disabledPrimaryBtnColor;
+    }
+  }
 
   &:hover {
     color:$buttonColor;
@@ -89,7 +103,17 @@
     }
 
     &.disabled, [disabled] {
-      background-color: lighten($btnSecondaryColor, 15%);
+      background-color: $disabledSecondaryBtnColor;
+    }
+
+    &.outline:not(:hover) {
+      border-color:$btnSecondaryColor;
+      color:$btnSecondaryColor;
+
+      &.disabled {
+        border-color:$disabledSecondaryBtnColor;
+        color:$disabledSecondaryBtnColor;
+      }
     }
   }
 
@@ -108,7 +132,17 @@
     }
 
     &.disabled, [disabled] {
-      background-color: lighten($btnDangerColor, 35%);
+      background-color: $disabledDangerBtnColor;
+    }
+
+    &.outline:not(:hover) {
+      border-color:$btnDangerColor;
+      color:$btnDangerColor;
+
+      &.disabled {
+        border-color:$disabledDangerBtnColor;
+        color:$disabledDangerBtnColor;
+      }
     }
   }
 

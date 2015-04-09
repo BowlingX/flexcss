@@ -25,7 +25,7 @@ $maxSlide: 10;
   margin: 0;
   padding: 0;
   position: relative;
-  transition: transform .5s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform $globalMediumEaseTime cubic-bezier(0.77, 0, 0.175, 1);
   display: flex;
 }
 
@@ -40,7 +40,7 @@ $maxSlide: 10;
     font-size: $baseFontSize;
     color: lighten($grayColor, 30%);
     cursor: pointer;
-    transition: color .5s ease;
+    transition: color $globalMediumEaseTime ease;
     margin: 0 5px;
   }
 }

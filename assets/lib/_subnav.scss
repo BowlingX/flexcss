@@ -47,7 +47,7 @@
 
     &:checked + .slidebar > .subnav {
       transform: translate3d(0, 0, 0);
-      transition: transform .3s ease;
+      transition: transform $globalMediumEaseTime $globalMenuEasing;
       li.active {
         order: 1;
       }

@@ -8,6 +8,7 @@ table {
 
   thead tr, tbody tr {
     border-top: $tableBorder;
+    transition: $tableTransition;
   }
 
   tbody tr:last-of-type {
@@ -31,13 +32,10 @@ table {
     &:first-of-type {
       padding-left: $tableSpacingLastAndFirst;
     }
-    transition: $tableTransition;
   }
 
-  tr:hover {
-    td {
+  tbody > tr:hover {
       background: $globalHoverColor;
-    }
   }
 
   th, td {
