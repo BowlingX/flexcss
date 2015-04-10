@@ -43,7 +43,8 @@ class Tooltip {
          * Default Options
          */
         this.options = {
-            containerClass: ''
+            containerClass: '',
+            selectorAttribute:'data-tooltip'
         };
 
         Object.assign(this.options, options);
@@ -110,13 +111,13 @@ class Tooltip {
     registerEvents() {
         var self = this;
         this.container.addEventListener('mouseover', function (e) {
-            if (e.target.hasAttribute('data-tooltip')) {
+            if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.createTooltip(e.target, e.target.getAttribute('title'), true);
             }
         });
 
         this.container.addEventListener('mouseout', function (e) {
-            if (e.target.hasAttribute('data-tooltip')) {
+            if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.removeTooltip(e.target);
             }
         });

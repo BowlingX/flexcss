@@ -65,6 +65,7 @@ class Dropdown {
             DelegateContainer : doc.getElementById(DelegateContainer);
 
         this.currentOpen = null;
+        this.currentTarget = null;
         /**
          * @type {HTMLElement}
          */
@@ -85,11 +86,14 @@ class Dropdown {
      * @private
      */
     _delegateFunction(e) {
-        var currentOpen = this.currentOpen;
-        if (currentOpen && !Util.isPartOfNode(e.target, currentOpen)) {
+        var currentOpen = this.currentOpen,
+            targetIsCurrent = e.target === this.currentTarget;
+
+        if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
             this.close();
-            return this._delegateFunction(e);
+            return targetIsCurrent? false : this._delegateFunction(e);
         }
+
         var targetHas = e.target.hasAttribute(ATTR_NAME),
             parentHas = e.target.parentNode ?
                 e.target.parentNode.hasAttribute(ATTR_NAME) : false,
@@ -201,6 +205,7 @@ class Dropdown {
         }
 
         this.currentOpen = null;
+        this.currentTarget = null;
 
         if (this.destroyOnClose) {
             this.destroy();
@@ -271,12 +276,13 @@ class Dropdown {
             if (!target.flexCollisionContainer) {
                 var collisionC = target.getAttribute(ATTR_CC);
                 target.flexCollisionContainer = collisionC ?
-                doc.getElementById(collisionC) || document.body : document.body;
+                doc.getElementById(collisionC) || document.documentElement : document.documentElement;
             }
 
             dropdownContent.classList.toggle(CLS_OPEN);
             if (dropdownContent.classList.contains(CLS_OPEN)) {
                 this.currentOpen = dropdownContent;
+                this.currentTarget = target;
             }
             if (isAbsolute) {
                 // Check collision:
