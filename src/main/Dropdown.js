@@ -95,6 +95,9 @@ class Dropdown {
 
         if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
             this.close();
+            if(targetIsCurrent) {
+                e.preventDefault();
+            }
             return targetIsCurrent ? false : this._delegateFunction(e);
         }
 
