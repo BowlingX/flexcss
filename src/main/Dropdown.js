@@ -87,17 +87,16 @@ class Dropdown {
      */
     _delegateFunction(e) {
         var currentOpen = this.currentOpen,
-            targetIsCurrent = e.target === this.currentTarget;
+            targetHas = e.target.hasAttribute(ATTR_NAME),
+            parentHas = e.target.parentNode ?
+                e.target.parentNode.hasAttribute(ATTR_NAME) : false,
+            target = targetHas ? e.target : e.target.parentNode,
+            targetIsCurrent = target === this.currentTarget;
 
         if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
             this.close();
-            return targetIsCurrent? false : this._delegateFunction(e);
+            return targetIsCurrent ? false : this._delegateFunction(e);
         }
-
-        var targetHas = e.target.hasAttribute(ATTR_NAME),
-            parentHas = e.target.parentNode ?
-                e.target.parentNode.hasAttribute(ATTR_NAME) : false,
-            target = targetHas ? e.target : e.target.parentNode;
 
         if (targetHas || parentHas && !currentOpen) {
             e.preventDefault();

@@ -66,11 +66,11 @@
   // right collisions
   &.is-collision-right:not(.is-collision-bottom) {
     @include spaceTop();
-    @include arrow-top($tooltipBg, 93%);
+    @include arrow-top($tooltipBg, calc(100% - 15px));
   }
 
   &.is-collision-right.is-collision-bottom {
     @include spaceBottom();
-    @include arrow-bottom($tooltipBg, 93%);
+    @include arrow-bottom($tooltipBg, calc(100% - 15px));
   }
 }

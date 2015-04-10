@@ -208,13 +208,13 @@ $iconSpacing:.1rem !default;
 // table
 $tableBorder: 1px solid $globalBorderColor;
 $tableSpacing: 6px;
-$tableSpacingLastAndFirst: $tableSpacing;
+$tableSpacingLastAndFirst: 4px;
 $tableTransition:background .1s ease;
 
 // listings:
 $listingMinHeight:105px;
-$listingAvatarRowLarge:90px;
-$listingAvatarRow:90px;
+$listingAvatarRowLarge:84px;
+$listingAvatarRow:84px;
 $listingAvatarRowSmall:36px;
 $listingOuterPadding: 10px;
 $listingSpaceRight: 30px;

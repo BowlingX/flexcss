@@ -84,7 +84,7 @@
 
   .actions {
     transition:opacity $globalShortEaseTime ease;
-    padding:1rem 0;
+    padding:1.75rem 0 5px 0;
     display: flex;
     align-items:center;
     > * {
@@ -119,7 +119,6 @@
   flex-direction: column;
   > * {
     flex: 1;
-    margin-right: $listingSpaceRight;
     min-width: 0;
     > * {
       display: block;
@@ -216,6 +215,9 @@ html:not(.touch) {
 
   .equal-row {
     flex-direction: row;
+    > * {
+      margin-right: $listingSpaceRight;
+    }
   }
 
   .avatar-row {
@@ -228,7 +230,7 @@ html:not(.touch) {
 
   .equal-row {
     > .smaller {
-      max-width: calc(#{$listingSmallWidth} - #{$listingAvatarRowLarge - $listingSpaceRight*2});
+      max-width: calc(#{$listingSmallWidth} - #{$listingAvatarRowLarge - $listingSpaceRight*2 - $listingOuterPadding /2});
     }
   }
 }
