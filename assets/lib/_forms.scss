@@ -47,7 +47,7 @@ legend {
   margin-bottom: 2rem;
 }
 
-label:not(.checkbox) {
+.control-group > label:not(.checkbox) {
   font-size: $labelFontSize;
   color: $labelColor;
   margin-bottom: $labelMargin;
@@ -285,7 +285,7 @@ form:not(.wide) {
   &.center {
     @extend .flex-align-items-center;
   }
-  > div {
+  > * {
     margin-left: 10px;
     // all all equal size
     flex: 1;
@@ -296,7 +296,7 @@ form:not(.wide) {
 
   &.break {
     display: block;
-    > div {
+    > * {
       margin-left: 0px;
       &:not(:last-of-type) {
         margin-bottom: 10px;
@@ -543,7 +543,7 @@ input::-moz-range-track {
       flex-direction: row;
     }
 
-    label:not(.checkbox) {
+    .control-group > label:not(.checkbox) {
       min-width: $labelMinWidth;
       width: $labelWidthDesktop;
       text-align: $labelTextAlign;
