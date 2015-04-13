@@ -74,13 +74,13 @@
 <form>
     <fieldset>
         <div class="control-group">
-            <label>Birthday</label>
+            <label for="select-day">Birthday</label>
 
             <div class="controls">
                 <div class="multi-form">
                     <div class="select-day">
                         <div class="select-element">
-                            <select name="day" required>
+                            <select data-custom-label="select-day" id="select-day" name="day" required>
                                 <option value="">-</option>
                                 <option value="1">10</option>
                             </select>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="select-month">
                         <div class="select-element">
-                            <select name="month" required>
+                            <select data-custom-label="select-day" name="month" required>
                                 <option value="">-</option>
                                 <option value="1">October</option>
                             </select>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="select-year">
                         <div class="select-element">
-                            <select name="year" required>
+                            <select data-custom-label="select-day" name="year" required>
                                 <option value="">-</option>
                                 <option value="1">1985</option>
                             </select>
@@ -108,18 +108,18 @@
             </div>
         </div>
         <div class="control-group">
-            <label>Multiple Inputs</label>
+            <label for="first-input">Multiple Inputs</label>
             <div class="controls">
                 <div class="multi-form">
-                    <div><input type="text"/></div>
-                    <div><input required type="number"/></div>
+                    <div><input id="first-input" type="text"/></div>
+                    <div><input data-custom-label="first-input" required type="number"/></div>
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls no-label">
                 <div class="multi-form">
-                    <div><input required type="text"/></div>
+                    <div><input data-custom-label="first-input" required type="text"/></div>
                     <div><input type="range"/></div>
                     <div><input type="text"/></div>
                     <div><input type="number"/></div>
