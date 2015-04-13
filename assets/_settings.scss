@@ -142,7 +142,7 @@ $legendFontWeight: bold !default;
 $legendColor: $baseColor !default;
 $placeholderColor: lighten($grayColor, 10%) !default;
 $selectPickerColor:#a6a6a6 !default;
-$selectChooseBackgroundColor: lighten($inputFocusBorderColor, 5%) !default;
+$selectChooseBackgroundColor: transparent !default;
 $labelMargin:3px !default;
 $checkboxAndOptionHeight:20px !default;
 $checkRadioColor:$primaryColor !default;
