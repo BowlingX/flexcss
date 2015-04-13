@@ -99,6 +99,9 @@
             text-indent: 0;
             padding: 0 16px;
             cursor: pointer;
+            bottom: 0;
+            position: absolute;
+            right: 0;
             @include perspective();
             > i {
               transition:transform .3s ease;

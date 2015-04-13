@@ -58,7 +58,7 @@ fieldset {
   border: none;
   padding: 0 0 $formMargin 0;
   border-bottom: 1px solid $globalBorderColor;
-  margin-bottom: 22px;
+  margin-bottom: $formMargin;
   margin-left: 0;
   margin-right: 0;
   &:last-of-type {
@@ -287,9 +287,10 @@ form:not(.wide) {
   }
   > * {
     margin-left: 10px;
+    min-width: 0;
     // all all equal size
     flex: 1;
-    &:first-of-type {
+    &:first-child {
       margin-left: 0;
     }
   }
@@ -672,7 +673,7 @@ input::-moz-range-track {
 .control-group:not(:last-of-type) .controls + .append {
   margin-top: $appendMarginTopNegative;
   &.break {
-    margin-bottom: $formMargin;
+    margin-bottom: $controlMargin;
   }
 }
 
