@@ -108,6 +108,7 @@ form.loading {
 
   &:focus {
     background-color: $inputFocusColor;
+    border-color:$inputFocusBorderColor !important;
     box-shadow: $inputFocusBoxShadow !important;
     outline: none;
   }
@@ -233,39 +234,33 @@ form:not(.wide) {
   }
 }
 
-.select-element:after {
-  @include icon;
-  @extend .icon-down-open:before;
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  font-size: 70%;
-  line-height: $inputHeight;
-  padding: 0 11px 0 11px;
-  background: $inputBackground;
-  border: $inputBorder;
-  box-shadow: $inputBoxShadow;
-  color: $selectPickerColor;
-  height: 100%;
-  pointer-events: none;
-  border-radius: 0 $globalRadius $globalRadius 0;
-
-  &:focus, &:active {
-    background: $inputFocusColor;
+.select-element{
+  &:after {
+    @include icon;
+    @extend .icon-down-open:before;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    font-size: 70%;
+    line-height: $inputHeight;
+    padding: 0 11px 0 11px;
+    background: $selectChooseBackgroundColor;
+    color: $selectPickerColor;
+    height: calc(100% - 2px);
+    pointer-events: none;
+    border-radius: 0 $globalRadius $globalRadius 0;
+    &:focus, &:active {
+      background: $inputFocusColor;
+      border-color: $inputFocusBorderColor;
+    }
+    will-change: background, box-shadow;
+    transition: $inputTransitions;
   }
-  will-change: background, box-shadow;
-  transition: $inputTransitions;
 }
 
 .select-element {
   cursor: pointer;
   position: relative;
-
-  &:hover {
-    &:after {
-      background: $inputFocusColor;
-    }
-  }
 }
 
 .list-form {

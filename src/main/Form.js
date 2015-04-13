@@ -14,7 +14,7 @@ const REMOTE_ACTION = 'data-remote-action';
 const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 const ATTR_VALIDATOR = 'data-validate';
 const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
-
+const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -212,10 +212,10 @@ class Form {
      * @private
      */
     _handleLabels(el, invalid) {
-        let id = el.id;
+        let id = el.id, optionalDataLabel = el.getAttribute(ATTR_DATA_CUSTOM_LABEL);
+        id = id || optionalDataLabel;
         if(id) {
-            let labels = this.getForm().querySelectorAll('[for="' + id + '"]');
-            console.log(labels);
+            let labels = this.getForm().querySelectorAll('[for="' + (id || optionalDataLabel) + '"]');
             // remove
             if (labels.length) {
                 for (let labelsIndex = 0; labelsIndex < labels.length; labelsIndex++) {
