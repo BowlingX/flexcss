@@ -57,6 +57,11 @@
   }
 }
 
+// labeled inside a form
+form .labeled {
+  margin:0 0 $formMargin 0;
+}
+
 @media #{$mediaInBetween} {
   .labeled {
     &.three-columns {

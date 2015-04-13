@@ -1,0 +1,5 @@
+label.error, label.invalid {
+  font-weight:bold;
+
+  @include createColorSection($alertColor);
+}

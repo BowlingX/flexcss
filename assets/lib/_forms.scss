@@ -127,7 +127,7 @@ form.loading {
     background: $inputDisabledBg;
     color: $inputDisabledColor;
     cursor: not-allowed;
-    border-color:$inputDisabledBorder;
+    border-color: $inputDisabledBorder;
     &:not(.copyable) {
       @include interface();
     }
@@ -189,7 +189,7 @@ form.loading {
   }
 
   &.loading {
-    transition:background 0s ease;
+    transition: background 0s ease;
     position: relative;
     @include loadingContainer(#ccc);
   }
@@ -202,6 +202,7 @@ form.loading {
 
 @import 'forms/checkbox-radio';
 @import 'forms/append-button';
+@import 'forms/label-errors';
 
 // Styled select:
 /* Arrows for Select's*/
@@ -219,7 +220,7 @@ textarea {
 /* A third row for appended items*/
 form .append {
   margin: $appendMarginTopPositive 0 0 0;
-  width:100%;
+  width: 100%;
   .checkbox {
     color: $grayColor;
     font-size: $copyTextFormsFontSize;
@@ -347,7 +348,7 @@ form:not(.wide) {
 
   .right {
     flex: 0 1 auto;
-    order:1;
+    order: 1;
   }
 
   p {
@@ -576,7 +577,6 @@ input::-moz-range-track {
       padding: 0 0 $formMargin 0;
       margin-bottom: $formMargin;
     }
-
 
   }
   .multi-form {

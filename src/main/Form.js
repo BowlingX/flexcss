@@ -206,17 +206,42 @@ class Form {
     }
 
     /**
+     * Handles class labels for elements
+     * @param {HTMLElement} el
+     * @param {bool} invalid
+     * @private
+     */
+    _handleLabels(el, invalid) {
+        let id = el.id;
+        if(id) {
+            let labels = this.getForm().querySelectorAll('[for="' + id + '"]');
+            console.log(labels);
+            // remove
+            if (labels.length) {
+                for (let labelsIndex = 0; labelsIndex < labels.length; labelsIndex++) {
+                    if(invalid) {
+                        labels[labelsIndex].classList.add(INPUT_ERROR_CLASS);
+                    } else {
+                        labels[labelsIndex].classList.remove(INPUT_ERROR_CLASS);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * @param {HTMLElement} thisParent
      * @private
      */
     _removeElementErrors(thisParent) {
-        var errors = thisParent.querySelectorAll('.' + ERROR_CLASS_NAME), inputsWithErrorClasses =
+        let errors = thisParent.querySelectorAll('.' + ERROR_CLASS_NAME), inputsWithErrorClasses =
             thisParent.querySelectorAll('.' + INPUT_ERROR_CLASS);
-        for (var elementErrorIndex = 0; elementErrorIndex < errors.length; elementErrorIndex++) {
+        for (let elementErrorIndex = 0; elementErrorIndex < errors.length; elementErrorIndex++) {
             errors[elementErrorIndex].parentNode.removeChild(errors[elementErrorIndex]);
         }
-        for (var inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
-            inputsWithErrorClasses[inputErrorIndex].classList.remove(INPUT_ERROR_CLASS);
+        for (let inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
+            let el = inputsWithErrorClasses[inputErrorIndex];
+            el.classList.remove(INPUT_ERROR_CLASS);
             if (this.tooltips) {
                 this.tooltips.removeTooltip(inputsWithErrorClasses[inputErrorIndex]);
             }
@@ -317,10 +342,12 @@ class Form {
         }
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
-        for (var i = 0; i < fields.length; i++) {
-            var field = fields[i], parent = field.parentNode, validity = field.validity;
+        for (let i = 0; i < fields.length; i++) {
+            let field = fields[i], parent = field.parentNode,
+                validity = field.validity, isInvalid = validity && !validity.valid;
             field.flexFormsSavedValidity = JSON.parse(JSON.stringify(validity));
-            if (validity && !validity.valid) {
+            this._handleLabels(field, isInvalid);
+            if (isInvalid) {
                 if (!removeAllErrors) {
                     // Remove current errors:
                     this._removeElementErrors(parent);
@@ -328,7 +355,7 @@ class Form {
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
                 let msg = field.validationMessage;
-                field.classList.add('invalid');
+                field.classList.add(INPUT_ERROR_CLASS);
                 field.setAttribute(ARIA_INVALID, 'true');
                 if (this.options.appendError) {
                     parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
@@ -337,7 +364,7 @@ class Form {
                 }
                 field.flexFormsSavedValidationMessage = msg;
             } else {
-                field.classList.remove('invalid');
+                field.classList.remove(INPUT_ERROR_CLASS);
                 field.setAttribute(ARIA_INVALID, 'false');
 
                 this._removeElementErrors(parent);
@@ -605,7 +632,7 @@ class Form {
                 form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
-                   self._handleSubmit(e);
+                    self._handleSubmit(e);
                 }
             });
         } else {
