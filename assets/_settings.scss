@@ -55,6 +55,7 @@ $extraSmallFontSize:$smallFontSize !default;
 
 $globalShortEaseTime: .2s;
 $globalMediumEaseTime: .35s;
+$globalLongEaseTime: .8s;
 $globalMenuEasing:ease;
 
 $h1FontSize: 20px !default;
@@ -193,6 +194,8 @@ $lightboxImageBackground:black;
 
 // tooltips
 $tooltipBg:#333 !default;
+$tooltipFontSize: $smallFontSize !default;
+$alertTooltipColor:$tooltipBg !default;
 
 // breadcrumbs
 $breadcrumbFontSize: 18px !default;

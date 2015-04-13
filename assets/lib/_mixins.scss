@@ -27,8 +27,14 @@
     left: $left;
     margin-left: -5px;
   }
-
 }
+
+@mixin arrow-bottom-color($color) {
+  &:after {
+    border-top-color: $color;
+  }
+}
+
 // helper to fix flickering/blurry in different browsers
 @mixin perspectiveHelper($perspective:1000px) {
   perspective: $perspective;
@@ -65,10 +71,16 @@
   }
 
   &:after {
-    border-color: rgba($color, 0);
+    border-color: transparent;
     border-bottom-color: $color;
     border-width: 5px;
     margin-left: -5px;
+  }
+}
+
+@mixin arrow-top-color($color) {
+  &:after {
+    border-bottom-color: $color;
   }
 }
 
