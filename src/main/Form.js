@@ -335,7 +335,7 @@ class Form {
      */
     prepareErrors(fields, removeAllErrors) {
         if (removeAllErrors) {
-            removeErrors();
+            this.removeErrors();
         }
         let labelGroups = {};
 
