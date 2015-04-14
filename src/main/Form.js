@@ -207,26 +207,22 @@ class Form {
 
     /**
      * Handles class labels for elements
-     * @param {HTMLElement} el
-     * @param {bool} invalid
+     * @param {Object} fields
      * @private
      */
-    _handleLabels(el, invalid) {
-        let id = el.id, optionalDataLabel = el.getAttribute(ATTR_DATA_CUSTOM_LABEL);
-        id = id || optionalDataLabel;
-        if(id) {
-            let labels = this.getForm().querySelectorAll('[for="' + (id || optionalDataLabel) + '"]');
-            // remove
+    _handleLabels(fields) {
+        Object.keys(fields).forEach(function (id) {
+            let labels = this.getForm().querySelectorAll('[for="' + id + '"]'), invalid = fields[id];
             if (labels.length) {
                 for (let labelsIndex = 0; labelsIndex < labels.length; labelsIndex++) {
-                    if(invalid) {
+                    if (invalid) {
                         labels[labelsIndex].classList.add(INPUT_ERROR_CLASS);
                     } else {
                         labels[labelsIndex].classList.remove(INPUT_ERROR_CLASS);
                     }
                 }
             }
-        }
+        }.bind(this));
     }
 
     /**
@@ -340,13 +336,25 @@ class Form {
         if (removeAllErrors) {
             this._removeElementErrors(this.form);
         }
+        let labelGroups = {};
+
+        function handleAdditionalLabels(isInvalid, labelGroups, field) {
+            let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
+                field.id, group = labelGroups[additionalLabels];
+
+            if (additionalLabels) {
+                group = group ? group : isInvalid;
+                labelGroups[additionalLabels] = group;
+            }
+        }
+
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
             let field = fields[i], parent = field.parentNode,
                 validity = field.validity, isInvalid = validity && !validity.valid;
             field.flexFormsSavedValidity = JSON.parse(JSON.stringify(validity));
-            this._handleLabels(field, isInvalid);
+            handleAdditionalLabels(isInvalid, labelGroups, field);
             if (isInvalid) {
                 if (!removeAllErrors) {
                     // Remove current errors:
@@ -372,6 +380,20 @@ class Form {
             // We have to reset the custom validity here to allow native validations work again
             field.setCustomValidity('');
         }
+        // if validates a single field we need to check the linked fields to a label:
+        if (1 === fields.length) {
+            let field = fields[0];
+            let id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
+            if (id) {
+                let linkedFields = Array.from(
+                    this.getForm().querySelectorAll(`[${ATTR_DATA_CUSTOM_LABEL}="${id}"], #${id}`));
+                linkedFields.forEach(function (thisField) {
+                    let validity = thisField.validity, isInvalid = validity && !validity.valid;
+                    handleAdditionalLabels(isInvalid, labelGroups, thisField);
+                });
+            }
+        }
+        this._handleLabels(labelGroups);
     }
 
     /**

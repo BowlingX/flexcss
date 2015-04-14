@@ -47,11 +47,13 @@ legend {
   margin-bottom: 2rem;
 }
 
-.control-group > label:not(.checkbox) {
-  font-size: $labelFontSize;
-  color: $labelColor;
-  margin-bottom: $labelMargin;
-  display: block;
+.control-group > label, .control-group > .label{
+  &:not(.checkbox) {
+    font-size: $labelFontSize;
+    color: $labelColor;
+    margin-bottom: $labelMargin;
+    display: block;
+  }
 }
 
 fieldset {
@@ -540,15 +542,17 @@ input::-moz-range-track {
       flex-direction: row;
     }
 
-    .control-group > label:not(.checkbox) {
-      min-width: $labelMinWidth;
-      width: $labelWidthDesktop;
-      text-align: $labelTextAlign;
-      padding: $labelPaddingDesktop;
-      position: relative;
-      top: 5px;
-      margin-bottom: 0;
-      word-wrap: break-word;
+    .control-group > .label, .control-group >  label {
+      &:not(.checkbox) {
+        min-width: $labelMinWidth;
+        width: $labelWidthDesktop;
+        text-align: $labelTextAlign;
+        padding: $labelPaddingDesktop;
+        position: relative;
+        top: 5px;
+        margin-bottom: 0;
+        word-wrap: break-word;
+      }
     }
 
     .no-label {

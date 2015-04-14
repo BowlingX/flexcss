@@ -196,3 +196,12 @@
     }
   }
 }
+
+
+.animate-bounceIn {
+  @include animate(bounceIn);
+}
+
+.animate-fadeIn {
+  @include animate(fadeIn);
+}
