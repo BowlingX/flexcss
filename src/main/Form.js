@@ -238,6 +238,7 @@ class Form {
         for (let inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
             let el = inputsWithErrorClasses[inputErrorIndex];
             el.classList.remove(INPUT_ERROR_CLASS);
+            el.removeAttribute(ARIA_INVALID);
             if (this.tooltips) {
                 this.tooltips.removeTooltip(inputsWithErrorClasses[inputErrorIndex]);
             }
@@ -334,7 +335,7 @@ class Form {
      */
     prepareErrors(fields, removeAllErrors) {
         if (removeAllErrors) {
-            this._removeElementErrors(this.form);
+            removeErrors();
         }
         let labelGroups = {};
 
