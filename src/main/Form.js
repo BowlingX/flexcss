@@ -342,9 +342,10 @@ class Form {
         function handleAdditionalLabels(isInvalid, labelGroups, field) {
             let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
                 field.id, group = labelGroups[additionalLabels];
-
             if (additionalLabels) {
-                group = group ? group : isInvalid;
+                // check additionally if field is currently marked as invalid
+                // so the label is not marked as error if no field is marked as one
+                group = group ? group : isInvalid && field.classList.contains(INPUT_ERROR_CLASS);
                 labelGroups[additionalLabels] = group;
             }
         }
