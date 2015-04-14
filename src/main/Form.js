@@ -345,7 +345,7 @@ class Form {
             if (additionalLabels) {
                 // check additionally if field is currently marked as invalid
                 // so the label is not marked as error if no field is marked as one
-                group = group ? group : isInvalid && field.classList.contains(INPUT_ERROR_CLASS);
+                group = group ? group : isInvalid;
                 labelGroups[additionalLabels] = group;
             }
         }
@@ -390,7 +390,8 @@ class Form {
                 let linkedFields = Array.from(
                     this.getForm().querySelectorAll(`[${ATTR_DATA_CUSTOM_LABEL}="${id}"], #${id}`));
                 linkedFields.forEach(function (thisField) {
-                    let validity = thisField.validity, isInvalid = validity && !validity.valid;
+                    let validity = thisField.validity, isInvalid = validity && !validity.valid  &&
+                        thisField.classList.contains(INPUT_ERROR_CLASS);
                     handleAdditionalLabels(isInvalid, labelGroups, thisField);
                 });
             }
