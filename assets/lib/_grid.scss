@@ -48,6 +48,7 @@ html {
   z-index: 4;
   top: 0;
   width:100%;
+  backface-visibility: hidden;
 }
 
 .topbar {
