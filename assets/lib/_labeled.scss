@@ -63,7 +63,7 @@ form .labeled {
 }
 
 @media #{$mediaInBetween} {
-  .labeled {
+  .labeled:not(.wide) {
     &.three-columns {
       dd {
         padding-right: $thirdColumnPaddingOffsetInBetween;
