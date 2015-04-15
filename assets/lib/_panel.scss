@@ -1,0 +1,25 @@
+.panel {
+  width:100%;
+  padding:15px;
+  background: $panelBackground;
+  border-radius:$globalRadius;
+
+  &.alert {
+    background: lighten($alertColor, 40%);
+    @include createColorSection($alertColor);
+  }
+
+  &.inline-panel {
+    display: inline-block;
+    width:auto;
+  }
+
+  ul, ol {
+    margin:0;
+  }
+}
+
+.toggle-content + .panel {
+  margin-top:1.5rem;
+}
+
