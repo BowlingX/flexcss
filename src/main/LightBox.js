@@ -446,7 +446,7 @@ class LightBox {
             }).bind(this));
             this._future.then(function () {
                 self._calculateContainer(this.img);
-            });
+            }.bind(this));
             self._modalContainerDiv.addEventListener(EVENT_MODAL_CLOSED, function () {
                 // cleanup:
                 this._modalContainerDiv.parentNode.removeChild(this._modalContainerDiv);
