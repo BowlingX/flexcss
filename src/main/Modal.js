@@ -79,7 +79,8 @@ class Modal {
             classNames: 'modal',
             closeOnEscape: true,
             closeOnBackgroundClick: true,
-            destroyOnFinish: false
+            destroyOnFinish: false,
+            fixedContainer:true
         };
 
         Object.assign(this.options, options);
@@ -110,19 +111,22 @@ class Modal {
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
             if (0 === Modal._modalInstances.length) {
-                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-                Settings.get().scrollbarUpdateNodes.forEach(function (n) {
-                    // restore scrollPosition:
-                    if (self.dataMainPageContainer) {
-                        self.dataMainPageContainer.style.position = "static";
-                        self.dataMainPageContainer.style.top = "0px";
-                        // reset scrollTop
-                        document.documentElement.scrollTop = self.currentScrollTop;
-                        document.body.scrollTop = self.currentScrollTop;
-                    }
-                    n.style.paddingRight = '';
-                });
-
+                // restore scrollPosition:
+                if (self.dataMainPageContainer) {
+                    setTimeout(function(){
+                        if(self.options.fixedContainer) {
+                            self.dataMainPageContainer.style.position = "static";
+                            self.dataMainPageContainer.style.top = "0px";
+                            // reset scrollTop
+                            document.documentElement.scrollTop = self.currentScrollTop;
+                            document.body.scrollTop = self.currentScrollTop;
+                        }
+                        Settings.get().scrollbarUpdateNodes.forEach(function (n) {
+                            n.style.paddingRight = '';
+                        });
+                        HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
+                    },0);
+                }
             }
         }
     }
@@ -279,19 +283,21 @@ class Modal {
     handleScrollbar() {
         var self = this;
         if (0 === Modal._modalInstances.length) {
-            HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
             // save current scrollTop:
-            var scrollTop = global.pageYOffset,
-                c = self.dataMainPageContainer;
-            self.currentScrollTop = scrollTop;
-            if (c) {
-                c.style.top = scrollTop * -1 + 'px';
-                c.style.position = 'fixed';
+            if(self.options.fixedContainer) {
+                var scrollTop = global.pageYOffset,
+                    c = self.dataMainPageContainer;
+                self.currentScrollTop = scrollTop;
+                if (c) {
+                    c.style.top = scrollTop * -1 + 'px';
+                    c.style.position = 'fixed';
+                }
             }
             Settings.get().scrollbarUpdateNodes.forEach(function (n) {
                 n.style.paddingRight = parseInt(global.getComputedStyle(n).paddingRight) +
                 Settings.getScrollbarWidth() + 'px';
             });
+            HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
         }
     }
 
