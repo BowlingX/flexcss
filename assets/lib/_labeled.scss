@@ -28,7 +28,7 @@
 
 // Media specific
 @media #{$mediaDesktop} {
-  .labeled {
+  .labeled:not(.wide) {
     flex-direction: row;
 
     dd ~ dd,
