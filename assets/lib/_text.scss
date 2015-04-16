@@ -39,7 +39,11 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: $h1FontSize - 2px;
+}
+
+h3 {
+  font-size: $h1FontSize - 3px;
 }
 
 // basic link:
