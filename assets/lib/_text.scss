@@ -160,6 +160,12 @@ ol, ul {
         content:', '
       }
     }
+
+    &.separate {
+      li:not(:last-of-type):after {
+        content:' | '
+      }
+    }
   }
 
   &.space {
