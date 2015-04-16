@@ -284,13 +284,11 @@ class Modal {
         var self = this;
         if (0 === Modal._modalInstances.length) {
             // save current scrollTop:
-            if (self.options.fixedContainer) {
-                var scrollTop = global.pageYOffset,
+            let scrollTop, c;
+            if(self.options.fixedContainer) {
+                 scrollTop = global.pageYOffset;
                     c = self.dataMainPageContainer;
                 self.currentScrollTop = scrollTop;
-                if (c) {
-                    c.style.cssText += `top:${scrollTop * -1 + 'px'};position:fixed`;
-                }
             }
             // this causes reflow/paint and should be optimized
             // At lest we write in a batch later
@@ -302,6 +300,11 @@ class Modal {
             }).forEach(function (d) {
                 d.n.style.paddingRight = d.padding;
             });
+            if (self.options.fixedContainer) {
+                if (c) {
+                    c.style.cssText += `top:${scrollTop * -1 + 'px'};position:fixed`;
+                }
+            }
             HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
         }
     }
