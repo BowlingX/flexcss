@@ -241,9 +241,10 @@ class Util {
         classList.remove(COL_LEFT_CLASS);
         classList.remove(COL_BOTTOM_CLASS);
 
+        let calcTop, calcLeft;
         if (isCollisionLeft && !isCollisionRight) {
             // put element to left if collision with left
-            elementToPosition.style.left = (targetPosition.left - colRect.left - amountLeft) + 'px';
+            calcLeft = (targetPosition.left - colRect.left - amountLeft) + 'px';
             classList.add(COL_LEFT_CLASS);
         } else {
             // maybe center if no collision with either side
@@ -252,20 +253,22 @@ class Util {
                     (elementRect.width / 2) || 0) - colRect.left,
                 collisionCentered = (leftCentered + elementRect.width) > colRect.width;
             if (centerHorizontal && !collisionCentered) {
-                elementToPosition.style.left = leftCentered + 'px';
+                calcLeft = leftCentered + 'px';
             } else {
                 classList.add(COL_RIGHT_CLASS);
-                elementToPosition.style.left = rightPosition;
+                calcLeft = rightPosition;
             }
         }
 
         if (isCollisionBottom || (positionTop && !isCollisionTop)) {
             // Put Element on top if collision
-            elementToPosition.style.top = (targetTop - elementRect.height) - colRect.top + 'px';
+            calcTop = (targetTop - elementRect.height) - colRect.top + 'px';
             classList.add(COL_BOTTOM_CLASS);
         } else {
-            elementToPosition.style.top = (targetTop + targetPosition.height) - colRect.top + 'px';
+           calcTop = (targetTop + targetPosition.height) - colRect.top + 'px';
         }
+
+        elementToPosition.style.cssText += `top:${calcTop};left:${calcLeft}`;
 
         return elementToPosition;
     }
