@@ -268,7 +268,7 @@ class Util {
            calcTop = (targetTop + targetPosition.height) - colRect.top + 'px';
         }
 
-        elementToPosition.style.cssText += `top:${calcTop};left:${calcLeft};`;
+        elementToPosition.style.cssText = `top:${calcTop};left:${calcLeft};`;
 
         return elementToPosition;
     }
