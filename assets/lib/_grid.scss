@@ -91,7 +91,7 @@ html {
   width: $MainSidebarWidth;
   z-index: $indexSidebar;
   transform: translate3d(100%, 0, 0);
-  transition: transform .25s ease;
+  transition: transform $globalMediumEaseTime $globalMenuEasing;
   top: 0;
   right: 0px;
   &.open {
