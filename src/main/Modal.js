@@ -80,7 +80,7 @@ class Modal {
             closeOnEscape: true,
             closeOnBackgroundClick: true,
             destroyOnFinish: false,
-            fixedContainer:true
+            fixedContainer: true
         };
 
         Object.assign(this.options, options);
@@ -113,8 +113,8 @@ class Modal {
             if (0 === Modal._modalInstances.length) {
                 // restore scrollPosition:
                 if (self.dataMainPageContainer) {
-                    setTimeout(function(){
-                        if(self.options.fixedContainer) {
+                    setTimeout(function () {
+                        if (self.options.fixedContainer) {
                             self.dataMainPageContainer.style.position = "static";
                             self.dataMainPageContainer.style.top = "0px";
                             // reset scrollTop
@@ -125,7 +125,7 @@ class Modal {
                             n.style.paddingRight = '';
                         });
                         HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-                    },0);
+                    }, 0);
                 }
             }
         }
@@ -284,18 +284,23 @@ class Modal {
         var self = this;
         if (0 === Modal._modalInstances.length) {
             // save current scrollTop:
-            if(self.options.fixedContainer) {
+            if (self.options.fixedContainer) {
                 var scrollTop = global.pageYOffset,
                     c = self.dataMainPageContainer;
                 self.currentScrollTop = scrollTop;
                 if (c) {
-                    c.style.top = scrollTop * -1 + 'px';
-                    c.style.position = 'fixed';
+                    c.style.cssText += `top:${scrollTop * -1 + 'px'};position:fixed`;
                 }
             }
-            Settings.get().scrollbarUpdateNodes.forEach(function (n) {
-                n.style.paddingRight = parseInt(global.getComputedStyle(n).paddingRight) +
-                Settings.getScrollbarWidth() + 'px';
+            // this causes reflow/paint and should be optimized
+            // At lest we write in a batch later
+            Settings.get().scrollbarUpdateNodes.map(function (n) {
+                return {
+                    n: n, padding: parseInt(global.getComputedStyle(n).paddingRight) +
+                    Settings.getScrollbarWidth() + 'px'
+                };
+            }).forEach(function (d) {
+                d.n.style.paddingRight = d.padding;
             });
             HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
         }
