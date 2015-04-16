@@ -329,6 +329,10 @@ form:not(.wide) {
   border-top: 1px solid $globalBorderColor;
   padding-top: $formMargin;
 
+  &.right {
+    justify-content: flex-end;
+  }
+
   &.plain {
     border-top: none;
     padding-top: 0;
