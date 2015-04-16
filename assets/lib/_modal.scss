@@ -41,6 +41,7 @@
     left: calc(50% - 20px);
     top: calc(50% - 20px);
     z-index: 101;
+    @include animate(fadeIn);
   }
 
   &.loading {
