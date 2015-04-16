@@ -41,7 +41,7 @@
 
 
 .checkbox {
-  padding: $checkboxMarginTop 0 0 $checkboxMarginLeft;
+  padding: $checkboxMargin;
   position: relative;
   min-height:$checkboxAndOptionHeight;
   @include interface();
@@ -59,17 +59,14 @@
     box-shadow: none !important;
   }
   .checkbox-container {
-    height:$checkboxAndOptionHeight;
-    position:relative;
     line-height: $baseLineHeight;
-    display:inline-block;
     > span {
       color: $checkRadioColor;
     }
 
   }
 
-  $offsetLeft: -$checkboxMarginLeft;
+  $offsetLeft: 0;
 
   .checkbox-container::before {
     content: ' ';
@@ -82,6 +79,7 @@
     background: $inputBackground;
     border: $inputBorder;
     transition: background .5s ease;
+    top:0;
   }
 
   .checkbox-container::after {

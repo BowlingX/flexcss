@@ -153,8 +153,8 @@ $copyTextFormsLineHeight:$smallFontSizeLineHeight !default;
 $copyTextFormsMultipleMarginTop: .5rem !default;
 $inputFontSize:$baseFontSize !default;
 $inputTransitions: background .5s ease !default;
-$checkboxMarginLeft:28px;
-$checkboxMarginTop: 1px;
+$checkboxMargin: 1px 0 0 28px;
+
 // buttons
 $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;
