@@ -2,7 +2,7 @@
 .labeled {
   display: flex;
   flex-direction: column;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   margin: $labeledSpacing 0 0 0;
 
   dt {
@@ -13,16 +13,24 @@
   dd {
     margin: 0 0 $labeledSpacing 0;
   }
-  dd +dt {
-    margin-top:-$labeledSpacing/2;
+  dd + dt {
+    margin-top: -$labeledSpacing/2;
   }
-
 
   border-bottom: 1px solid $globalBorderColor;
 
   &:last-of-type {
     border-bottom: none;
     margin-bottom: $labeledSpacing;
+  }
+
+  &.alternate {
+    dt {
+      color: $baseColor;
+    }
+    dd {
+      color: $grayColor;
+    }
   }
 }
 
@@ -33,12 +41,12 @@
 
     dd ~ dd,
     dt ~ dt {
-      margin-top:-$labeledSpacing / 2;
+      margin-top: -$labeledSpacing / 2;
     }
 
     dt {
       width: $labelWidthDesktop;
-      min-width:0;
+      min-width: 0;
       padding: $labelPaddingDesktop;
       padding-top: 0;
       margin-bottom: $labeledSpacing;
@@ -46,7 +54,7 @@
     dd {
       padding: $labelPaddingDesktop;
       padding-top: 0;
-      width:$formWidthControls;
+      width: $formWidthControls;
     }
 
     &.three-columns {
@@ -59,7 +67,7 @@
 
 // labeled inside a form
 form .labeled {
-  margin:0 0 $formMargin 0;
+  margin: 0 0 $formMargin 0;
 }
 
 @media #{$mediaInBetween} {
