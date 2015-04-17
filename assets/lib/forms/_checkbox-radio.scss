@@ -151,10 +151,18 @@
 
   input[disabled] + .checkbox-container {
     &::before, &::after {
-      background: $inputDisabledBg;
       border-color:$inputDisabledBorder;
       cursor: not-allowed;
       color: $inputDisabledColor !important;
+    }
+    &::before {
+      background: $inputDisabledBg;
+    }
+  }
+
+  input[disabled][type="radio"] + .checkbox-container {
+    &::after {
+      background: $inputDisabledColor !important;
     }
   }
 
