@@ -5,15 +5,15 @@
   flex-wrap: wrap;
   margin: $labeledSpacing 0 0 0;
 
-  dt {
+  > dt {
     color: $labelColor;
     font-size: $labelFontSize;
   }
 
-  dd {
+  > dd {
     margin: 0 0 $labeledSpacing 0;
   }
-  dd + dt {
+  > dd + dt {
     margin-top: -$labeledSpacing/2;
   }
 
@@ -25,10 +25,10 @@
   }
 
   &.alternate {
-    dt {
+    > dt {
       color: $baseColor;
     }
-    dd {
+    > dd {
       color: $grayColor;
     }
   }
@@ -39,26 +39,26 @@
   .labeled:not(.wide) {
     flex-direction: row;
 
-    dd ~ dd,
-    dt ~ dt {
+    > dd ~ dd,
+    > dt ~ dt {
       margin-top: -$labeledSpacing / 2;
     }
 
-    dt {
+    > dt {
       width: $labelWidthDesktop;
       min-width: 0;
       padding: $labelPaddingDesktop;
       padding-top: 0;
       margin-bottom: $labeledSpacing;
     }
-    dd {
+    > dd {
       padding: $labelPaddingDesktop;
       padding-top: 0;
       width: $formWidthControls;
     }
 
     &.three-columns {
-      dd {
+      > dd {
         padding-right: 0;
       }
     }
@@ -73,7 +73,7 @@ form .labeled {
 @media #{$mediaInBetween} {
   .labeled:not(.wide) {
     &.three-columns {
-      dd {
+      > dd {
         padding-right: $thirdColumnPaddingOffsetInBetween;
       }
     }
