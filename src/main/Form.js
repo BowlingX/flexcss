@@ -15,6 +15,7 @@ const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
 const ATTR_VALIDATOR = 'data-validate';
 const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
+const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -390,7 +391,7 @@ class Form {
                 let linkedFields = Array.from(
                     this.getForm().querySelectorAll(`[${ATTR_DATA_CUSTOM_LABEL}="${id}"], #${id}`));
                 linkedFields.forEach(function (thisField) {
-                    let validity = thisField.validity, isInvalid = validity && !validity.valid  &&
+                    let validity = thisField.validity, isInvalid = validity && !validity.valid &&
                         thisField.classList.contains(INPUT_ERROR_CLASS);
                     handleAdditionalLabels(isInvalid, labelGroups, thisField);
                 });
@@ -420,6 +421,11 @@ class Form {
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
             if (!(n instanceof HTMLFieldSetElement)) {
+                if (n.getAttribute(ATTR_VALIDATE_VISIBILITY)) {
+                    if(!Util.isVisible(n)) {
+                        continue;
+                    }
+                }
                 arr.push(n);
             }
         }
@@ -498,22 +504,20 @@ class Form {
     _checkIsInvalid(e) {
         e.preventDefault();
         var invalidFields = this.getForm().querySelectorAll(":invalid"), self = this;
-        var arr = Form._createArrayFromInvalidFieldList(invalidFields);
-        // Prevent fire this N times:
-        if (arr.indexOf(e.target) > 0) {
-            return false;
-        }
-        // focus the first field:
-        if (arr.length > 0) {
-            setTimeout(function () {
-                arr[0].focus();
-                self.showAndOrCreateTooltip(arr[0]);
-            }, 0);
-        }
-
-        var validation = self.validateCustomFields();
+        var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
         this.prepareErrors(arr, true);
-        return validation;
+        // focus the first field:
+        if (isLocalInvalid) {
+            arr[0].focus();
+            self.showAndOrCreateTooltip(arr[0]);
+        }
+        var validation = self.validateCustomFields();
+        return validation.then(function (r) {
+            if (isLocalInvalid) {
+                r.foundAnyError = true;
+            }
+            return r;
+        });
     }
 
 
@@ -523,14 +527,23 @@ class Form {
     initFormValidation() {
         // Suppress the default bubbles
         var form = this.getForm(), invalidFormFired = false, self = this;
-        form.addEventListener("invalid", function (e) {
+        form.addEventListener('invalid', function (e) {
+            e.preventDefault();
+        }, true);
+        Util.addEventOnce("invalid", form, function handleInvalid(e) {
             var result = self._checkIsInvalid(e);
             if (result) {
-                this.currentValidationFuture = new Promise((resolve) => {
+                self.currentValidationFuture = new Promise((resolve) => {
                     result.then(function (r) {
+                        setTimeout(function () {
+                            Util.addEventOnce("invalid", form, handleInvalid, true);
+                        }, 0);
                         self.prepareErrors(r.checkedFields, false);
                         resolve(r);
                         invalidFormFired = false;
+                        if (!r.foundAnyError) {
+                            self._handleSubmit(e);
+                        }
                     });
                 });
             }

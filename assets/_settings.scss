@@ -66,8 +66,9 @@ $headingMargin: 0 0 1rem 0 !default;
 $primaryColor:#258db8 !default;
 $secondaryColor:#e6007e !default;
 $actionColor:#83ba5e !default;
-$alertColor: #d84c3d;
-$dangerColor:#f08201;
+$alertColor: #d84c3d !default;
+$dangerColor:#f08201 !default;
+$successColor:#43A047 !default;
 $globalRadius:3px !default;
 
 // breakpoints

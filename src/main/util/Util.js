@@ -144,13 +144,23 @@ class Util {
      * @param {String} ev
      * @param {HTMLElement} target
      * @param {Function} func
+     * @param {boolean} [capture]
      */
-    static addEventOnce(ev, target, func) {
+    static addEventOnce(ev, target, func, capture) {
         var thisFunction = function (event) {
-            func(event);
-            target.removeEventListener(ev, thisFunction);
+            func(event, func);
+            target.removeEventListener(ev, thisFunction, capture);
         };
-        return target.addEventListener(ev, thisFunction);
+        return target.addEventListener(ev, thisFunction, capture);
+    }
+
+    /**
+     * Checks if an element is visible
+     * @param {HTMLElement} element
+     * @returns bool
+     */
+    static isVisible(element) {
+       return element.offsetWidth > 0 && element.offsetHeight > 0;
     }
 
     /**

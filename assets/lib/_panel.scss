@@ -9,6 +9,11 @@
     @include createColorSection($alertColor);
   }
 
+  &.success {
+    background: lighten($successColor, 50%);
+    @include createColorSection($successColor);
+  }
+
   &.inline-panel {
     display: inline-block;
     width:auto;
