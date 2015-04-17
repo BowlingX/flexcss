@@ -3,8 +3,8 @@
 */
 
 // interface
-@mixin interface {
-  user-select: none;
+@mixin interface($case:none) {
+  user-select: $case;
 }
 
 // Creates an arrow at the bottom
@@ -247,12 +247,12 @@
   }
 }
 
-@mixin createColorSection($color) {
+@mixin createColorSection($color, $decoration:underline, $fontWeight:normal) {
   color: $color !important;
   a {
     color: $color !important;
-    text-decoration: underline;
-    font-weight: normal;
+    text-decoration: $decoration;
+    font-weight: $fontWeight;
     &:hover {
       color: darken($color, 20) !important;
     }

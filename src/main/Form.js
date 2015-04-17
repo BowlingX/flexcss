@@ -1,4 +1,4 @@
-/*global Form, HTMLFormElement, fetch, FormData*/
+/*global Form, HTMLFormElement, fetch, FormData, clearTimeout*/
 
 import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
@@ -16,6 +16,10 @@ const ATTR_VALIDATOR = 'data-validate';
 const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
 const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
+
+// keycodes:
+const CONST_TAB_KEYCODE = 9;
+const CONST_ENTER_KEYCODE = 13;
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -84,7 +88,13 @@ class Form {
             // json content type if ajax method is set to json
             ajaxJsonContentType: 'application/json; charset=utf-8',
             // allow inline validation
-            inlineValidation: true
+            inlineValidation: true,
+            // validate in realtime (on `realtimeEventKey` event)
+            realtime: true,
+            // timeout when realtime event should be captured
+            realtimeTimeout: 250,
+            // event that should be used for realtime
+            realtimeEventKey: 'keyup'
         };
 
         // overwrite default options
@@ -139,9 +149,6 @@ class Form {
             // submit
             return thisForm.submit();
         }
-
-        thisForm.classList.add(LOADING_CLASS);
-
         // prevent form from submit normally
         e.preventDefault();
         // support either JSON request payload or normal payload submission
@@ -356,6 +363,9 @@ class Form {
         for (let i = 0; i < fields.length; i++) {
             let field = fields[i], parent = field.parentNode,
                 validity = field.validity, isInvalid = validity && !validity.valid;
+            if (Form._shouldNotValidateField(field)) {
+                continue;
+            }
             field.flexFormsSavedValidity = JSON.parse(JSON.stringify(validity));
             handleAdditionalLabels(isInvalid, labelGroups, field);
             if (isInvalid) {
@@ -410,6 +420,16 @@ class Form {
     }
 
     /**
+     * Tests if a field should be validated
+     * @param {HTMLElement} field
+     * @returns {boolean}
+     * @private
+     */
+    static _shouldNotValidateField(field) {
+        return field.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(field);
+    }
+
+    /**
      * Creates an array from a node list with invalid items
      * On Firefox also Fieldset's seems to be invalid, remove them
      * @param list
@@ -421,10 +441,8 @@ class Form {
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
             if (!(n instanceof HTMLFieldSetElement)) {
-                if (n.getAttribute(ATTR_VALIDATE_VISIBILITY)) {
-                    if(!Util.isVisible(n)) {
-                        continue;
-                    }
+                if (Form._shouldNotValidateField(n)) {
+                    continue;
                 }
                 arr.push(n);
             }
@@ -542,6 +560,7 @@ class Form {
                         resolve(r);
                         invalidFormFired = false;
                         if (!r.foundAnyError) {
+                            form.classList.add(LOADING_CLASS);
                             self._handleSubmit(e);
                         }
                     });
@@ -549,18 +568,31 @@ class Form {
             }
         }, true);
 
+        // Timeout for keys:
+        var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
+
+        // helper to handle/remove tooltips
+        function _handleTooltipInline(target) {
+            if (self.tooltips) {
+                self.tooltips.removeTooltip(target);
+            }
+        }
+
+        form.addEventListener('reset', function(e){
+            this.removeErrors();
+        }.bind(this));
+
         // handle focus out for text elements
         // Will show an error if field was invalid the first time
-        form.addEventListener("blur", function (e) {
-            if (self.tooltips) {
-                self.tooltips.removeTooltip(e.target);
-            }
+        form.addEventListener('blur', function (e) {
             var target = e.target, hasError = false;
-
+            _handleTooltipInline(target);
+            // clear timeout so realtime can't fire
+            clearTimeout(TIMEOUT_KEYDOWN);
+            KEYDOWN_RUNNING = false;
             if (!_checkIsValidBlurFocusElement(target)) {
                 return;
             }
-
             if (target.classList.contains(INPUT_ERROR_CLASS)) {
                 hasError = true;
             }
@@ -573,6 +605,32 @@ class Form {
 
         }, true);
 
+        // setup custom realtime event if given
+        if (self.options.realtime) {
+            form.addEventListener(self.options.realtimeEventKey, function (e) {
+                var target = e.target;
+                // abort on tab or enter
+                if (KEYDOWN_RUNNING || CONST_TAB_KEYCODE === e.keyCode ||
+                    CONST_ENTER_KEYCODE === e.keyCode) {
+                    return;
+                }
+                clearTimeout(TIMEOUT_KEYDOWN);
+                TIMEOUT_KEYDOWN = setTimeout(() => {
+                    KEYDOWN_RUNNING = true;
+                    _handleTooltipInline(target);
+                    if (!_checkIsValidBlurFocusElement(target)) {
+                        return;
+                    }
+                    self._customValidationsForElements([target]).then(function () {
+                        self.prepareErrors([target], false);
+                        self.showAndOrCreateTooltip(e.target);
+                        // future must be resolved before another event can be started
+                        KEYDOWN_RUNNING = false;
+                    });
+                }, self.options.realtimeTimeout);
+            }, true);
+        }
+
         /**
          * Validates if target is a valid input field to check blur and focus events
          *
@@ -583,12 +641,13 @@ class Form {
             if (!self.options.inlineValidation) {
                 return false;
             }
-
-            var attr = target.getAttribute('type'), maybeDisableOnBlur = target.hasAttribute(ATTR_DISABLE_INLINE);
+            var attr = target.getAttribute('type'),
+                maybeDisableOnBlur = target.hasAttribute(ATTR_DISABLE_INLINE);
             if (maybeDisableOnBlur) {
                 return false;
             }
-            return !((attr === 'checkbox' || attr === 'option' || attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            return !((attr === 'checkbox' || attr === 'option' ||
+            attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 
@@ -667,7 +726,7 @@ class Form {
                 });
             });
             self.currentValidationFuture.then(function (r) {
-                form.classList.remove(LOADING_CLASS);
+                //form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
                     self._handleSubmit(e);

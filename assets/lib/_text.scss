@@ -107,7 +107,6 @@ pre > code {
 }
 
 // Font-Sizes:
-
 small,
 .small-font {
   font-size: $smallFontSize;
@@ -198,6 +197,10 @@ ol, ul {
 }
 .double-space {
   margin-bottom:2rem;
+}
+
+.weight-normal {
+  font-weight:normal !important;
 }
 
 kbd {

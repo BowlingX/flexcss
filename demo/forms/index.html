@@ -10,18 +10,18 @@ weight: 2
     <code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
     plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
     browser to support a <strong>consistent UI</strong> across all browsers and adds support for custom validators and
-    inline validation (on <code>blur</code>).
+    inline validation (on <code>blur</code> and optional in realtime with <code>keyup</code>).
 </p>
 <h3>Features</h3>
 <ul>
     <li>Plugin-In replacement for HTML5-Form-Validation</li>
-    <li>Inline-Validation</li>
+    <li>Inline-Validation <code>blur</code> or <code>realtime</code></li>
     <li>Custom-Validation/Validators</li>
     <li>Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)</li>
     <li>Beautiful validation UI (Tooltip or inline)</li>
     <li>Event System</li>
 </ul>
-<h3>Get-Started</h3>
+<h3>Getting started</h3>
 <p>Initialize the plugin for all forms on a page with the following line:</p>
 {% highlight javascript %}
 FlexCss.Form.init('form', optionalOptions);
@@ -41,7 +41,13 @@ ajaxSubmitType: 'POST',
 // json content type if ajax method is set to json
 ajaxJsonContentType: 'application/json; charset=utf-8',
 // allow inline validation
-inlineValidation: true
+inlineValidation: true,
+// validate in realtime (on `realtimeEventKey` event)
+realtime: true,
+// timeout when realtime event should be captured
+realtimeTimeout: 250,
+// event that should be used for realtime
+realtimeEventKey: 'keyup'
 }
 {% endhighlight%}
 <hr>
@@ -113,9 +119,9 @@ inlineValidation: true
     by using the following static class method:</p>
 {% highlight javascript %}
 FlexCss.Form.registerErrorMessageHandler(
-    function(field, validity){
+function(field, validity){
 
-    }
+}
 );
 {% endhighlight%}
 <hr>
@@ -156,6 +162,7 @@ FlexCss.Form.registerErrorMessageHandler(
             <div class="controls">
                 <input data-validate="inline-validate" required type="text"
                        id="username-field-custom">
+
                 <p>Try "BowlingX", this user might be available ;)</p>
             </div>
         </div>
@@ -191,7 +198,7 @@ FlexCss.Form.registerErrorMessageHandler(
         FlexCss.Form.registerValidator('inline-validate', function (field) {
             return new Promise(function (r) {
                 setTimeout(function () {
-                    if(field.value !== 'BowlingX') {
+                    if (field.value !== 'BowlingX') {
                         field.classList.remove('valid');
                         field.setCustomValidity('The server could not validate your name, try "BowlingX".');
                         r(false);
@@ -222,10 +229,76 @@ FlexCss.Form.registerErrorMessageHandler(
     result. Registering a custom validator is easy like:</p>
 {% highlight javascript %}
 FlexCss.Form.registerValidator('inline-validate', function (field) {
-    return new Promise(function (resolve) {
-        resolve(true) // or resolve(false)
-    });
+return new Promise(function (resolve) {
+resolve(true) // or resolve(false)
+});
 });
 {% endhighlight%}
 <p>Validators can be set with the <code>data-validate</code> attribute.</p>
+<hr>
+<h4>Setup Error-Messages in validator</h4>
+<p>Sample of <code>equals</code> validator. A field's error message can bet set with
+    <code>field.setCustomValidity</code></p>
 
+{% highlight javascript %}
+FlexCss.Form.registerValidator('equals', function (field) {
+var fieldThatShouldBeEqual = field.getAttribute('data-validate-equals'),
+fieldValue = document.getElementById(fieldThatShouldBeEqual);
+return new Promise(function (r) {
+var equals = field.value === fieldValue.value;
+if (!equals) {
+field.setCustomValidity('Passwords do not match.');
+}
+r(equals);
+});
+});
+{%endhighlight%}
+<hr>
+<h3>Exclude hidden fields</h3>
+<p>Due the dynamic of a form, it's sometimes necessary to check if a field is hidden and skip validation.
+    Because this check might be expansive we opt in for it with <code>data-validate-visibility</code> on <strong>each
+        field</strong> that
+    might be invisible in the future.</p>
+<h4>Example</h4>
+<p>The following form shows a toggleable Region that will be validated when visible</p>
+<hr>
+<form>
+    <fieldset class="toggle-hide" id="toggle-invisible">
+        <legend><a data-toggle="toggle-invisible">A Toggleable legend <i class="icon-right-open"></i></a>
+            <p class="small-font weight-normal">You should really open this, there might be Dragons behind ;)</p>
+        </legend>
+        <div class="toggle-container">
+            <div class="control-group">
+                <label for="hide-1">Username</label>
+
+                <div class="controls">
+                    <input id="hide-1" type="text" required data-validate-visibility/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="hide-2">About me</label>
+
+                <div class="controls">
+                    <textarea id="hide-2" required data-validate-visibility></textarea>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>User-Profile</legend>
+        <div class="control-group">
+            <label for="hide-3">Website</label>
+
+            <div class="controls">
+                <input id="hide-3" type="url" required/>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <div>
+            <button class="button indent-label small left">save</button>
+            <button class="button  small secondary" type="reset">reset form</button>
+        </div>
+    </div>
+</form>
+<hr>

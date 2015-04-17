@@ -136,16 +136,18 @@ class Toggleable {
 
         if (parent) {
             maybeToggleNode = Util.parentsUntil(target, function (n) {
-                return n.hasAttribute(ATTR_TOGGLE_LIST);
+                return n && n.hasAttribute && n.hasAttribute(ATTR_TOGGLE_LIST);
             });
 
             parentClassList = parent.classList;
             // Abort if element is already active and if is part of a toggle list
-            if (maybeToggleNode && !parentClassList.contains(ACTIVE_CLASS)) {
-                parentClassList.toggle(ACTIVE_CLASS);
-                parentClassList.add(LOADING_CLASS);
-            } else {
-                return;
+            if (maybeToggleNode) {
+                if (!parentClassList.contains(ACTIVE_CLASS)) {
+                    parentClassList.toggle(ACTIVE_CLASS);
+                    parentClassList.add(LOADING_CLASS);
+                } else {
+                    return;
+                }
             }
 
             if (maybeToggleNode) {
