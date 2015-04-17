@@ -229,9 +229,9 @@ function(field, validity){
     result. Registering a custom validator is easy like:</p>
 {% highlight javascript %}
 FlexCss.Form.registerValidator('inline-validate', function (field) {
-return new Promise(function (resolve) {
-resolve(true) // or resolve(false)
-});
+    return new Promise(function (resolve) {
+        resolve(true) // or resolve(false)
+    });
 });
 {% endhighlight%}
 <p>Validators can be set with the <code>data-validate</code> attribute.</p>
@@ -242,15 +242,15 @@ resolve(true) // or resolve(false)
 
 {% highlight javascript %}
 FlexCss.Form.registerValidator('equals', function (field) {
-var fieldThatShouldBeEqual = field.getAttribute('data-validate-equals'),
-fieldValue = document.getElementById(fieldThatShouldBeEqual);
-return new Promise(function (r) {
-var equals = field.value === fieldValue.value;
-if (!equals) {
-field.setCustomValidity('Passwords do not match.');
-}
-r(equals);
-});
+    var fieldThatShouldBeEqual = field.getAttribute('data-validate-equals'),
+        fieldValue = document.getElementById(fieldThatShouldBeEqual);
+        return new Promise(function (r) {
+            var equals = field.value === fieldValue.value;
+            if (!equals) {
+                field.setCustomValidity('Passwords do not match.');
+            }
+        r(equals);
+    });
 });
 {%endhighlight%}
 <hr>
