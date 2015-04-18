@@ -1,0 +1,45 @@
+/**
+* Everything for a Fullwidth layout (with top and subnavigation)
+*/
+
+$fullWidthContentPadding: 10px !default;
+header + .overall-wrapper > .content-wrapper .wrapper-center {
+  margin-top:$topbarHeight;
+}
+
+// if a subnavigation bar is present, recalculate min height (including border)
+header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper-center {
+  margin-top: 0;
+}
+
+.wrapper-center {
+  min-height: 0;
+  display:block;
+  margin:0 auto;
+}
+
+.overall-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+header ~ .navbar-sub + .overall-wrapper {
+  min-height: calc(100vh - #{$topbarHeight*2 + 1});
+}
+
+@media #{$mediaDesktop} {
+  .content {
+    padding: $fullWidthContentPadding;
+  }
+  .main > .content-wrapper .content {
+    background: #fff;
+    border-radius: $globalRadius;
+    border: 1px solid $globalBorderColor;
+  }
+
+  body {
+    background: $fullWidthContentPadding;
+  }
+}
