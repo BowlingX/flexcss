@@ -578,7 +578,7 @@ class Form {
             }
         }
 
-        form.addEventListener('reset', function(e){
+        form.addEventListener('reset', function(){
             this.removeErrors();
         }.bind(this));
 
@@ -726,10 +726,11 @@ class Form {
                 });
             });
             self.currentValidationFuture.then(function (r) {
-                //form.classList.remove(LOADING_CLASS);
                 if (!r.foundAnyError) {
                     // Handle submitting the form to server:
                     self._handleSubmit(e);
+                } else {
+                    form.classList.remove(LOADING_CLASS);
                 }
             });
         } else {
