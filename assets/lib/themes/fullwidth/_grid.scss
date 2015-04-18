@@ -2,7 +2,6 @@
 * Everything for a Fullwidth layout (with top and subnavigation)
 */
 
-$fullWidthContentPadding: 10px !default;
 header + .overall-wrapper > .content-wrapper .wrapper-center {
   margin-top:$topbarHeight;
 }
@@ -27,19 +26,4 @@ header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper-center {
 
 header ~ .navbar-sub + .overall-wrapper {
   min-height: calc(100vh - #{$topbarHeight*2 + 1});
-}
-
-@media #{$mediaDesktop} {
-  .content {
-    padding: $fullWidthContentPadding;
-  }
-  .main > .content-wrapper .content {
-    background: #fff;
-    border-radius: $globalRadius;
-    border: 1px solid $globalBorderColor;
-  }
-
-  body {
-    background: $fullWidthContentPadding;
-  }
 }
