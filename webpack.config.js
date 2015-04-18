@@ -24,11 +24,16 @@ module.exports = {
         root: [path.join(__dirname, "bower_components"),
             path.join(__dirname, 'src/main')]
     },
+    entry: {
+        'form': ['modules/Form'],
+        'modal': ['modules/Modal'],
+        'flexcss': ['modules/All']
+    },
     output: {
-        filename: 'flexcss.js',
+        filename: '[name].min.js',
         libraryTarget: 'umd',
         library: 'FlexCss',
-        sourceMapFilename: 'flexcss.map'
+        sourceMapFilename: '[name].min.map'
     },
     plugins: [
         new webpack.ResolverPlugin(
