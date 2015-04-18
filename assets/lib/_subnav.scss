@@ -107,7 +107,7 @@
             > i {
               transition:transform .3s ease;
               position: absolute;
-              bottom: 15px;
+              bottom: ($topbarHeight - $baseFontSize) / 2 - 2px;
               right: 9px;
             }
           }
