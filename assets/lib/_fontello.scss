@@ -166,6 +166,7 @@
   .icon-bookmark:before { content: '🔖'; } /* '\1f516' */
   .icon-search:before { content: '🕝'; } /* '\1f55d' */
   .icon-block:before { content: '🚫'; } /* '\1f6ab' */
+  .icon-download-cloud:before { content: '\e847'; } /* '' */
 }
 
 @if $includeFontello == true {

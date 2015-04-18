@@ -253,6 +253,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "f5999a012fc3752386635ec02a858447",
+      "css": "download-cloud",
+      "code": 59463,
+      "src": "fontawesome"
+    },
+    {
       "uid": "de2fc7a5c986ab8c622f63455d7cf814",
       "css": "upload-cloud",
       "code": 59455,
