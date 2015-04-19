@@ -16,7 +16,7 @@ const ATTR_VALIDATOR = 'data-validate';
 const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
 const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
-
+const CONST_USE_JSON = 'json';
 // keycodes:
 const CONST_TAB_KEYCODE = 9;
 const CONST_ENTER_KEYCODE = 13;
@@ -135,7 +135,7 @@ class Form {
         var shouldUseAjax = thisForm.getAttribute(REMOTE), ajaxPostUrl =
                 thisForm.getAttribute(REMOTE_ACTION) ||
                 thisForm.getAttribute('action') || window.location.href,
-            useJson = 'json' === shouldUseAjax, self = this;
+            useJson = CONST_USE_JSON === shouldUseAjax, self = this;
 
         var ev = Event.dispatch(thisForm, EVENT_FORM_SUBMIT).withOriginal(e).fire();
 
@@ -486,7 +486,6 @@ class Form {
      * @param {Boolean} [remove]
      */
     showAndOrCreateTooltip(target, remove) {
-
         var self = this;
         if (!this.tooltips && this.options.createTooltips) {
             this.tooltips = new Tooltip(this.getForm(), {
@@ -498,19 +497,17 @@ class Form {
             return;
         }
 
-        setTimeout(function () {
-            if (!target.flexFormsSavedValidity) {
-                return;
+        if (!target.flexFormsSavedValidity) {
+            return;
+        }
+        if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
+            self.tooltips.createTooltip(target,
+                Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+        } else {
+            if (remove) {
+                self.tooltips.removeTooltip(target);
             }
-            if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-                self.tooltips.createTooltip(target,
-                    Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
-            } else {
-                if (remove) {
-                    self.tooltips.removeTooltip(target);
-                }
-            }
-        }, 0);
+        }
     }
 
     /**
@@ -578,7 +575,7 @@ class Form {
             }
         }
 
-        form.addEventListener('reset', function(){
+        form.addEventListener('reset', function () {
             this.removeErrors();
         }.bind(this));
 

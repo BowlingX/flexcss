@@ -119,14 +119,14 @@ $inputDisabledBorder: #e0e0e0 !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
 $inputFocusBorderColor:none !default;
 $inputFocusBoxShadow: none !default;
-$labelWidthDesktop:25% !default;
+$labelWidthDesktop: calc(25% + .375rem) !default;
 $labelMinWidth:0 !default;
 $labelColor: $baseColor !default;
 $labelFontSize: $smallFontSize !default;
 $labelPaddingDesktop:5px 1rem 0 0 !default;
 $inputHeight:35px !default;
 $formMargin:30px !default;
-$formMinWidthControls:380px !default;
+$formMinWidthControls:330px !default;
 $appendMargin:20px !default;
 // append Margins for different states (last-child etc.)
 $appendMarginTopNegative:-10px !default;
@@ -134,8 +134,8 @@ $appendMarginTopPositive:10px !default;
 $thirdColumnPaddingOffsetInBetween:$labelWidthDesktop !default;
 
 $controlMargin:20px !default;
-$formWidthControls:75% !default;
-$formWidthControlsBetween:50% !default;
+$formWidthControlsBetween: calc(50% - .75rem) !default;
+$formWidthControls: calc(75% - .5rem) !default;
 $inputPadding: 8px 10px !default;
 $uneditableInputPadding: 8px 10px !default;
 $inputBoxShadow:none !default;
@@ -213,8 +213,8 @@ $iconSpacing:.1rem !default;
 
 // table
 $tableBorder: 1px solid $globalBorderColor;
-$tableSpacing: 6px;
-$tableSpacingLastAndFirst: 4px;
+$tableSpacing: 6px 1rem 6px 0;
+$tableSpacingLastAndFirst: 5px;
 $tableTransition:background .1s ease;
 
 // listings:

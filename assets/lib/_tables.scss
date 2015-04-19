@@ -22,7 +22,7 @@ table {
   }
 
   th, td {
-    padding: $tableSpacing 0;
+    padding: $tableSpacing;
     &:not(:first-of-type) {
       padding-left: $tableSpacingLastAndFirst;
     }

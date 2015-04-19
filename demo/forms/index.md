@@ -4,54 +4,37 @@ title: Forms
 weight: 2
 ---
 
-<h1>Forms</h1>
-<h2>Form-Validation</h2>
-<p>
-    <code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
-    plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
-    browser to support a <strong>consistent UI</strong> across all browsers and adds support for custom validators and
-    inline validation (on <code>blur</code> and optional in realtime with <code>keyup</code>).
-</p>
-<h3>Features</h3>
-<ul>
-    <li>Plugin-In replacement for HTML5-Form-Validation</li>
-    <li>Inline-Validation <code>blur</code> or <code>realtime</code></li>
-    <li>Custom-Validation/Validators</li>
-    <li>Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)</li>
-    <li>Beautiful validation UI (Tooltip or inline)</li>
-    <li>Event System</li>
-</ul>
-<h3>Compatibility</h3>
-<table class="nowrap">
-    <thead>
-    <tr>
-        <th class="six">Browser</th>
-        <th class="six">Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>IE 10 & 11</td>
-        <td><i class="icon-ok"></i></td>
-    </tr>
-    <tr>
-        <td>Chrome (latest)</td>
-        <td><i class="icon-ok"></i></td>
-    </tr>
-    <tr>
-        <td>Firefox (latest)</td>
-        <td><i class="icon-ok"></i></td>
-    </tr>
-    <tr>
-        <td>Safari (latest)</td>
-        <td><i class="icon-ok"></i></td>
-    </tr>
-    <tr>
-        <td>Mobile (Android Chrome and iOS Safari)</td>
-        <td><i class="icon-ok"></i></td>
-    </tr>
-    </tbody>
-</table>
+# Forms
+
+## Form-Validation
+
+<code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
+plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
+browser to support a <strong>consistent UI</strong> across all browsers and adds support for custom validators and
+inline validation (on <code>blur</code> and optional in realtime with <code>keyup</code>).
+
+### Features
+
+- Plugin-In replacement for HTML5-Form-Validation
+    - Zero-Configuration for build-in input-types, patterns and required fields
+    - Fully I18n support trough build-in Browser-Support
+- Inline-Validation <code>blur</code> or <code>realtime</code>
+- Custom-Validation/Validators
+- Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)
+- Beautiful validation UI (Tooltip or inline)
+- Event System
+
+### Compatibility
+
+|Browser|Support|
+|----|----------:|
+|IE 6, 7, 8|<i class="icon-cancel"></i>
+|IE 10 & 11|<i class="icon-ok"></i>
+|Chrome (latest)|<i class="icon-ok"></i>
+|Firefox (latest)|<i class="icon-ok"></i>
+|Safari (latest)|<i class="icon-ok"></i>
+|Mobile (Android Chrome and iOS Safari)|<i class="icon-ok"></i>
+
 <p>A Detailed list can be found on <a href="http://caniuse.com/#feat=form-validation">caniuse.com</a>. Luckily, iOS and
     the Safari Browser are fully supported by <code>FlexCss.Form</code>.</p>
 <hr>
@@ -78,7 +61,7 @@ ajaxJsonContentType: 'application/json; charset=utf-8',
 inlineValidation: true,
 // validate in realtime (on `realtimeEventKey` event)
 realtime: true,
-// timeout when realtime event should be captured
+// timeout when realtime event should be captured (throttling)
 realtimeTimeout: 250,
 // event that should be used for realtime
 realtimeEventKey: 'keyup'
@@ -336,3 +319,146 @@ FlexCss.Form.registerValidator('equals', function (field) {
     </div>
 </form>
 <hr>
+
+### Disable inline-validation for single Fields
+
+Sometimes your user might be feel uncomfortable with a field being inline validated (and just validate in on submit).
+You can disable inline-validation on field by field basis with `data-disable-inline-validation`.
+
+#### Example
+
+----
+
+<form>
+    <fieldset>
+        <div class="control-group">
+            <label for="textarea-field-custom">My Journey</label>
+
+            <div class="controls">
+                <textarea data-disable-inline-validation required data-validation-message="Please fill this field!" type="email"
+                       id="textarea-field-custom"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+      <div>
+                  <button class="button indent-label small">save</button>
+                  <button class="button  small secondary" type="reset">reset form</button>
+      </div>
+    </div>
+</form>
+
+----
+
+### Group Inputs to one label
+
+It may be a requirement to group multiple input invalid-states to one label.
+
+The following example demonstrates that with 3 Select-Widgets defining a birthday field.
+To archive this behaviour it's possible to define a `label` that should be set to `invalid` with the attribute
+`data-custom-label`. It will only be valid if all referenced widgets are valid.
+<hr>
+<form>
+<fieldset>
+<div class="control-group">
+    <label for="select-day">Birthday</label>
+    <div class="controls">
+        <div class="multi-form">
+            <div class="select-day">
+                <div class="select-element">
+                    <select data-custom-label="select-day" id="select-day" name="day" required>
+                        <option value="">-</option>
+                        <option value="1">10</option>
+                    </select>
+                </div>
+            </div>
+            <div class="select-month">
+                <div class="select-element">
+                    <select data-custom-label="select-day" name="month" required>
+                        <option value="">-</option>
+                        <option value="1">October</option>
+                    </select>
+                </div>
+            </div>
+            <div class="select-year">
+                <div class="select-element">
+                    <select data-custom-label="select-day" name="year" required>
+                        <option value="">-</option>
+                        <option value="1">1985</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <p class="help-block">please provide your birthday, we will not publish your age...</p>
+    </div>
+</div>
+</fieldset>
+<div class="form-actions">
+        <div>
+            <button class="button indent-label small left">save</button>
+            <button class="button  small secondary" type="reset">reset form</button>
+        </div>
+    </div>
+</form>
+
+-----------
+
+### Events
+
+`FlexCss.Form` has some build in event's that are fired as **`CustomEvent`** and are
+catchable with `document.addEventListener(name)`.
+
+|Name|Function|
+|----|--------|
+|`flexcss.form.ready`| Fires after form event's have been bind.
+|`flexcss.form.submit`|Fires if a form has been submitted (and though successfully passed validation), the event is cancelable with `preventDefault()`.
+|`flexcss.form.afterAjaxSubmit`| Fires right after the form has been submitted as XHR.
+|`flexcss.form.ajaxCompleted`| Fires right after the ajax call has been completed (either successful or unsuccessful).
+
+### Remote / XHR
+
+It's possible to submit your form as XHR Request.
+
+To enable that you just need to add an data-attribute
+`data-remote` and optional `data-remote-action` to specify where to `POST` (default) the form.
+You may also specify if the form should be submitted as `FormData` or as a `JSON` payload with either just `data-remote` or `data-remote="json"`
+
+### Remote Validation
+
+You may register a remote validation handler with
+
+`FlexCss.Form.registerGlobalRemoteValidationFunction((request) => {})`
+
+The instance of the form is bind to the callback function, so you can use the internal API.
+
+#### API
+
+- `this.prepareErrors(fields, removeAllErrors)` - will check the given fields validity and renders errors and classes
+- `this.showAndOrCreateTooltip(field)` - will add a tooltip to the given field (if enabled)
+
+#### Example
+
+{% highlight javascript %}
+FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {
+ // TODO: .. code to extract error messages from server response
+
+ // TODO: .. code to extract the fields that have an error
+ // A field is marked as invalid with the following HTML5-API:
+ field.setCustomValidity('Invalid field state');
+
+ var fieldsThatHaveErrorsArray = [/*[...]*/],
+     firstErrorField = fieldsThatHaveErrorsArray[0];
+
+ // Prepare errors, highlight fields (array of HTMLElement)
+ this.prepareErrors(fieldsThatHaveErrorsArray, true);
+
+ // focus the field
+ firstErrorField.focus();
+ // eventually show a tooltip on given field:
+ this.showAndOrCreateTooltip(firstErrorField);
+
+});
+{% endhighlight %}
+
+--------
