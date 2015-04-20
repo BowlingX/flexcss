@@ -433,9 +433,7 @@ You may register a remote validation handler with
 The instance of the form is bind to the callback function, so you can use the internal API.
 
 #### API
-
-- `this.prepareErrors(fields, removeAllErrors)` - will check the given fields validity and renders errors and classes
-- `this.showAndOrCreateTooltip(field)` - will add a tooltip to the given field (if enabled)
+- `this.handleValidation(fieldsThatHaveErrorsArray, optionalFocus)` will validate the given fields and eventually focus the first error
 
 #### Example
 
