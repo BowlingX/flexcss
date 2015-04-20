@@ -83,10 +83,23 @@ form.loading {
   }
 }
 
-// Basic form and input types
-@include inputs() {
+@mixin input-style() {
   background-color: $inputBackground;
   border: $inputBorder;
+  box-shadow: $inputBoxShadow;
+  border-radius: $globalRadius;
+}
+
+@mixin focus-input-style() {
+  background-color: $inputFocusColor;
+  border-color:$inputFocusBorderColor !important;
+  box-shadow: $inputFocusBoxShadow !important;
+  outline: none;
+}
+
+// Basic form and input types
+@include inputs() {
+  @include input-style();
   font-size: $inputFontSize;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -95,24 +108,18 @@ form.loading {
   appearance: none;
   -o-appearance: none;
   -moz-appearance: none;
-
-  border-radius: $globalRadius;
+  padding: $inputPadding;
   color: $baseColor;
   display: block;
-  padding: $inputPadding;
   width: 100%;
   max-width: 100%;
   will-change: background-color, box-shadow;
   text-overflow: ellipsis;
   height: $inputHeight;
-  box-shadow: $inputBoxShadow;
   transition: $inputTransitions;
 
   &:focus {
-    background-color: $inputFocusColor;
-    border-color:$inputFocusBorderColor !important;
-    box-shadow: $inputFocusBoxShadow !important;
-    outline: none;
+    @include focus-input-style();
   }
 
   &.uneditable-input {
@@ -215,7 +222,7 @@ select {
   border-bottom-right-radius: 5px;
   cursor: pointer;
   appearance: none;
-
+  padding-right: $baseFontSize * 2;
   &::-ms-expand {
     display:none;
   }
