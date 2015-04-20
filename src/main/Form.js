@@ -229,6 +229,10 @@ class Form {
     _handleValidation(invalidFields, focus) {
         var self = this;
         var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
+        // focus must appear in the same frame for iOS devices
+        if(isLocalInvalid && focus) {
+            arr[0].focus();
+        }
         var validation = self.validateCustomFields();
         return validation.then((r) => {
             if (isLocalInvalid) {
