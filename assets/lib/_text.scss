@@ -34,8 +34,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: $h1FontSize;
-  color:$h1Color;
-  line-height:1.1;
+  color: $h1Color;
+  line-height: 1.1;
 }
 
 h2 {
@@ -48,7 +48,7 @@ h3 {
 
 // basic link:
 a {
-  cursor:pointer;
+  cursor: pointer;
   text-decoration: none;
   color: $primaryColor;
   transition: color $globalShortEaseTime ease;
@@ -64,19 +64,20 @@ a {
 
 code {
   background: lighten($grayColor, 35%);
-  padding:3px;
-  word-break:break-all;
+  padding: 3px;
+  word-break: break-all;
   word-break: break-word;
 }
 
 pre > code {
-  display:block;
+  display: block;
   font-family: monospace;
-  padding:20px;
-  border-radius:$globalRadius;
-  border-bottom:2px solid lighten($grayColor, 20%);
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
+  padding: 20px;
+  border-radius: $globalRadius;
+  border-bottom: 2px solid lighten($grayColor, 20%);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  word-break: normal;
 }
 
 .badge {
@@ -97,22 +98,22 @@ pre > code {
 }
 
 .color-warning {
-  color:$alertColor;
+  color: $alertColor;
 }
 
 .color-primary {
-  color:$primaryColor;
+  color: $primaryColor;
 }
 
 .color-base {
-  color:$baseColor;
+  color: $baseColor;
 }
 
 // Font-Sizes:
 small,
 .small-font {
   font-size: $smallFontSize;
-  line-height:$smallFontSizeLineHeight;
+  line-height: $smallFontSizeLineHeight;
 }
 
 .fade-out {
@@ -143,32 +144,33 @@ small,
 }
 
 .text-centered {
-  text-align:center;
+  text-align: center;
 }
+
 .text-right {
-  text-align:right;
+  text-align: right;
 }
 
 ol, ul {
-  padding-left:$baseLineHeight * 1rem;
-  margin-top:0;
+  padding-left: $baseLineHeight * 1rem;
+  margin-top: 0;
 
   &.plain {
-    padding:0;
-    list-style:none;
+    padding: 0;
+    list-style: none;
   }
 
   &.inline {
     li {
-      display:inline;
+      display: inline;
       &:not(:last-of-type):after {
-        content:', '
+        content: ', '
       }
     }
 
     &.separate {
       li:not(:last-of-type):after {
-        content:' | '
+        content: ' | '
       }
     }
   }
@@ -176,15 +178,15 @@ ol, ul {
   &.space {
     li {
       &:not(:first-of-type) {
-        margin-top:1rem;
+        margin-top: 1rem;
       }
     }
   }
 }
 
 .highlight-span span {
-  color:$primaryColor;
-  font-weight:bold;
+  color: $primaryColor;
+  font-weight: bold;
 }
 
 .unbreakable {
@@ -192,34 +194,35 @@ ol, ul {
 }
 
 .tight {
-  margin-bottom:0;
+  margin-bottom: 0;
 }
+
 .single-space {
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
+
 .double-space {
-  margin-bottom:2rem;
+  margin-bottom: 2rem;
 }
 
 .weight-normal {
-  font-weight:normal !important;
+  font-weight: normal !important;
 }
 
 kbd {
   background: $lightGrayColor;
-  padding:2px;
+  padding: 2px;
   display: inline-block;
-  border-radius:$globalRadius;
+  border-radius: $globalRadius;
 }
 
-
 ::selection {
-  background: lighten($primaryColor,25%);
-  color:white;
+  background: lighten($primaryColor, 25%);
+  color: white;
 }
 
 .help {
-  cursor:help;
+  cursor: help;
 }
 
 @media #{$mediaDesktop} {
