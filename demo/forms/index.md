@@ -450,13 +450,8 @@ FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {
  var fieldsThatHaveErrorsArray = [/*[...]*/],
      firstErrorField = fieldsThatHaveErrorsArray[0];
 
- // Prepare errors, highlight fields (array of HTMLElement)
- this.prepareErrors(fieldsThatHaveErrorsArray, true);
-
- // focus the field
- firstErrorField.focus();
- // eventually show a tooltip on given field:
- this.showAndOrCreateTooltip(firstErrorField);
+ // handle validation for fields, (second parameter focuses first error)
+ this.handleValidation(fieldsThatHaveErrorsArray, true);
 
 });
 {% endhighlight %}

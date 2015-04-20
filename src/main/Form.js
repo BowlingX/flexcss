@@ -204,6 +204,50 @@ class Form {
     }
 
     /**
+     * Handles the chain of validation on given fields
+     *
+     * @param {HTMLElement|Array|NodeList} field
+     * @param [focus] optional focus first error
+     * @returns {Promise}
+     */
+    handleValidation(field, focus) {
+        var fields = (field instanceof Array || field instanceof NodeList)? field : [field];
+        return this._handleValidation(fields, focus).then(((r) => {
+            if (!r.foundAnyError) {
+                this.tooltips.removeTooltip(this._findErrorTarget(r.checkedFields[0]));
+            }
+        }).bind(this));
+    }
+
+    /**
+     * Handles errors on given node list
+     * @param {NodeList} invalidFields
+     * @param {boolean} focus
+     * @returns {Promise}
+     * @private
+     */
+    _handleValidation(invalidFields, focus) {
+        var self = this;
+        var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
+        var validation = self.validateCustomFields();
+        return validation.then((r) => {
+            if (isLocalInvalid) {
+                r.checkedFields.push(arr[0]);
+                r.foundAnyError = true;
+            }
+            let invalidFields = self.prepareErrors(r.checkedFields, false),
+                firstInvalidField = invalidFields[0];
+            if (firstInvalidField) {
+                if (focus) {
+                    firstInvalidField.focus();
+                }
+                self.showAndOrCreateTooltip(firstInvalidField);
+            }
+            return r;
+        });
+    }
+
+    /**
      * @param {HTMLElement} field
      * @param {ValidityState} validity
      * @returns {*}
@@ -302,7 +346,7 @@ class Form {
             var field = fields[iVal], validationRef = field.getAttribute(ATTR_VALIDATOR), validity = field.validity;
             if (this._validators[validationRef]) {
                 // use local validation first and then continue with custom validations
-                if (validity && !validity.customError && !validity.valid) {
+                if (Form._shouldNotValidateField(field) || (validity && !validity.customError && !validity.valid)) {
                     continue;
                 }
                 checkedFields.push(field);
@@ -444,7 +488,7 @@ class Form {
         var arr = [];
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
-            if (!(n instanceof HTMLFieldSetElement)) {
+            if (!(n instanceof HTMLFieldSetElement) && n.validity && !n.validity.valid) {
                 if (Form._shouldNotValidateField(n)) {
                     continue;
                 }
@@ -492,8 +536,8 @@ class Form {
      */
     _findErrorTarget(target) {
         var el = target.getAttribute(ATTR_ERROR_TARGET_ID) || target,
-        foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
-        if(!foundTarget) {
+            foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
+        if (!foundTarget) {
             throw 'Given error target did not exsits:' + target;
         }
         return foundTarget;
@@ -537,23 +581,9 @@ class Form {
      */
     _checkIsInvalid(e) {
         e.preventDefault();
-        var invalidFields = this.getForm().querySelectorAll(":invalid"), self = this;
-        var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
-        this.prepareErrors(arr, true);
-        var validation = self.validateCustomFields();
-        // iOS will only focus if focus is called in the same frame where the event happened
-        if(isLocalInvalid) {
-            arr[0].focus();
-        }
-        return validation.then(function (r) {
-            if (isLocalInvalid) {
-                r.checkedFields.push(arr[0]);
-                r.foundAnyError = true;
-            }
-            return r;
-        });
+        var invalidFields = this.getForm().querySelectorAll(":invalid");
+        return this._handleValidation(invalidFields, true);
     }
-
 
     /**
      * Initializes validation for a given form, registers event handlers
@@ -572,18 +602,11 @@ class Form {
                         setTimeout(function () {
                             Util.addEventOnce("invalid", form, handleInvalid, true);
                         }, 0);
-                        let invalidFields = self.prepareErrors(r.checkedFields, false),
-                            firstInvalidField = invalidFields[0];
                         resolve(r);
                         invalidFormFired = false;
                         if (!r.foundAnyError) {
                             form.classList.add(LOADING_CLASS);
                             self._handleSubmit(e);
-                        } else {
-                            if(firstInvalidField) {
-                                firstInvalidField.focus();
-                                self.showAndOrCreateTooltip(firstInvalidField);
-                            }
                         }
                     });
                 });
@@ -684,8 +707,8 @@ class Form {
          * @private
          */
         function _checkIsValidRealtimeElement(target) {
-          return !target.hasAttribute(ATTR_DISABLE_REALTIME) &&
-              _checkIsValidBlurFocusElement(target);
+            return !target.hasAttribute(ATTR_DISABLE_REALTIME) &&
+                _checkIsValidBlurFocusElement(target);
         }
 
         // handle focus on input elements
