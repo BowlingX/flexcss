@@ -541,6 +541,10 @@ class Form {
         var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
         this.prepareErrors(arr, true);
         var validation = self.validateCustomFields();
+        // iOS will only focus if focus is called in the same frame where the event happened
+        if(isLocalInvalid) {
+            arr[0].focus();
+        }
         return validation.then(function (r) {
             if (isLocalInvalid) {
                 r.checkedFields.push(arr[0]);
