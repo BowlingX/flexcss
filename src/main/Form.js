@@ -636,11 +636,12 @@ class Form {
                 clearTimeout(TIMEOUT_KEYDOWN);
                 TIMEOUT_KEYDOWN = setTimeout(() => {
                     KEYDOWN_RUNNING = true;
-                    let errorTarget = self._findErrorTarget(target);
-                    _handleTooltipInline(errorTarget);
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
+                    let errorTarget = self._findErrorTarget(target);
+                    _handleTooltipInline(errorTarget);
+
                     self._customValidationsForElements([target]).then(function () {
                         self.prepareErrors([target], false);
                         self.showAndOrCreateTooltip(e.target);
