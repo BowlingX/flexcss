@@ -236,7 +236,8 @@ class Form {
         var validation = self.validateCustomFields();
         return validation.then((r) => {
             if (isLocalInvalid) {
-                r.checkedFields.push(arr[0]);
+                // combine browser and custom validators
+                r.checkedFields = r.checkedFields.concat(arr);
                 r.foundAnyError = true;
             }
             let invalidFields = self.prepareErrors(r.checkedFields, false),
