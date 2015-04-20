@@ -12,10 +12,12 @@ const ARIA_INVALID = 'aria-invalid';
 const REMOTE = 'data-remote';
 const REMOTE_ACTION = 'data-remote-action';
 const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
+const ATTR_DISABLE_REALTIME = 'data-disable-realtime-validation';
 const ATTR_VALIDATOR = 'data-validate';
 const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
 const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
+const ATTR_ERROR_TARGET_ID = 'data-error-target';
 const CONST_USE_JSON = 'json';
 // keycodes:
 const CONST_TAB_KEYCODE = 9;
@@ -300,7 +302,7 @@ class Form {
             var field = fields[iVal], validationRef = field.getAttribute(ATTR_VALIDATOR), validity = field.validity;
             if (this._validators[validationRef]) {
                 // use local validation first and then continue with custom validations
-                if (!validity.customError && !validity.valid) {
+                if (validity && !validity.customError && !validity.valid) {
                     continue;
                 }
                 checkedFields.push(field);
@@ -345,7 +347,7 @@ class Form {
         if (removeAllErrors) {
             this.removeErrors();
         }
-        let labelGroups = {};
+        let labelGroups = {}, invalidFields = [];
 
         function handleAdditionalLabels(isInvalid, labelGroups, field) {
             let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
@@ -361,7 +363,7 @@ class Form {
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
-            let field = fields[i], parent = field.parentNode,
+            let field = fields[i], errorTarget = this._findErrorTarget(field), parent = errorTarget.parentNode,
                 validity = field.validity, isInvalid = validity && !validity.valid;
             if (Form._shouldNotValidateField(field)) {
                 continue;
@@ -376,16 +378,17 @@ class Form {
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
                 let msg = field.validationMessage;
-                field.classList.add(INPUT_ERROR_CLASS);
+                errorTarget.classList.add(INPUT_ERROR_CLASS);
                 field.setAttribute(ARIA_INVALID, 'true');
                 if (this.options.appendError) {
                     parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
                     msg +
                     "</div>");
                 }
+                invalidFields.push(field);
                 field.flexFormsSavedValidationMessage = msg;
             } else {
-                field.classList.remove(INPUT_ERROR_CLASS);
+                errorTarget.classList.remove(INPUT_ERROR_CLASS);
                 field.setAttribute(ARIA_INVALID, 'false');
 
                 this._removeElementErrors(parent);
@@ -408,6 +411,7 @@ class Form {
             }
         }
         this._handleLabels(labelGroups);
+        return invalidFields;
     }
 
     /**
@@ -481,6 +485,21 @@ class Form {
     }
 
     /**
+     * Tries to find a custom error target on given target
+     * @param target
+     * @returns {HTMLElement}
+     * @private
+     */
+    _findErrorTarget(target) {
+        var el = target.getAttribute(ATTR_ERROR_TARGET_ID) || target,
+        foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
+        if(!foundTarget) {
+            throw 'Given error target did not exsits:' + target;
+        }
+        return foundTarget;
+    }
+
+    /**
      * Creates a tooltip at given element, will only create a new instance if not created
      * @param {HTMLElement} target
      * @param {Boolean} [remove]
@@ -492,7 +511,6 @@ class Form {
                 containerClass: 'error-tooltip'
             });
         }
-
         if (!this.options.createTooltips) {
             return;
         }
@@ -500,12 +518,13 @@ class Form {
         if (!target.flexFormsSavedValidity) {
             return;
         }
-        if (!target.flexFormsSavedValidity.valid && target.classList.contains(INPUT_ERROR_CLASS)) {
-            self.tooltips.createTooltip(target,
+        var errorTarget = this._findErrorTarget(target);
+        if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
+            self.tooltips.createTooltip(errorTarget,
                 Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
         } else {
             if (remove) {
-                self.tooltips.removeTooltip(target);
+                self.tooltips.removeTooltip(errorTarget);
             }
         }
     }
@@ -521,14 +540,10 @@ class Form {
         var invalidFields = this.getForm().querySelectorAll(":invalid"), self = this;
         var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
         this.prepareErrors(arr, true);
-        // focus the first field:
-        if (isLocalInvalid) {
-            arr[0].focus();
-            self.showAndOrCreateTooltip(arr[0]);
-        }
         var validation = self.validateCustomFields();
         return validation.then(function (r) {
             if (isLocalInvalid) {
+                r.checkedFields.push(arr[0]);
                 r.foundAnyError = true;
             }
             return r;
@@ -553,12 +568,18 @@ class Form {
                         setTimeout(function () {
                             Util.addEventOnce("invalid", form, handleInvalid, true);
                         }, 0);
-                        self.prepareErrors(r.checkedFields, false);
+                        let invalidFields = self.prepareErrors(r.checkedFields, false),
+                            firstInvalidField = invalidFields[0];
                         resolve(r);
                         invalidFormFired = false;
                         if (!r.foundAnyError) {
                             form.classList.add(LOADING_CLASS);
                             self._handleSubmit(e);
+                        } else {
+                            if(firstInvalidField) {
+                                firstInvalidField.focus();
+                                self.showAndOrCreateTooltip(firstInvalidField);
+                            }
                         }
                     });
                 });
@@ -582,15 +603,16 @@ class Form {
         // handle focus out for text elements
         // Will show an error if field was invalid the first time
         form.addEventListener('blur', function (e) {
-            var target = e.target, hasError = false;
-            _handleTooltipInline(target);
+            var target = e.target, hasError = false,
+                errorTarget = self._findErrorTarget(target);
+            _handleTooltipInline(errorTarget);
             // clear timeout so realtime can't fire
             clearTimeout(TIMEOUT_KEYDOWN);
             KEYDOWN_RUNNING = false;
             if (!_checkIsValidBlurFocusElement(target)) {
                 return;
             }
-            if (target.classList.contains(INPUT_ERROR_CLASS)) {
+            if (errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
                 hasError = true;
             }
             self._customValidationsForElements([e.target]).then(function () {
@@ -614,8 +636,9 @@ class Form {
                 clearTimeout(TIMEOUT_KEYDOWN);
                 TIMEOUT_KEYDOWN = setTimeout(() => {
                     KEYDOWN_RUNNING = true;
-                    _handleTooltipInline(target);
-                    if (!_checkIsValidBlurFocusElement(target)) {
+                    let errorTarget = self._findErrorTarget(target);
+                    _handleTooltipInline(errorTarget);
+                    if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
                     self._customValidationsForElements([target]).then(function () {
@@ -633,6 +656,7 @@ class Form {
          *
          * @param {HTMLElement} target
          * @returns {boolean}
+         * @private
          */
         function _checkIsValidBlurFocusElement(target) {
             if (!self.options.inlineValidation) {
@@ -646,6 +670,17 @@ class Form {
             return !((attr === 'checkbox' || attr === 'option' ||
             attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
+        }
+
+        /**
+         * Validates if is valid realtime element
+         * @param {HTMLElement} target
+         * @returns {boolean}
+         * @private
+         */
+        function _checkIsValidRealtimeElement(target) {
+          return !target.hasAttribute(ATTR_DISABLE_REALTIME) &&
+              _checkIsValidBlurFocusElement(target);
         }
 
         // handle focus on input elements
