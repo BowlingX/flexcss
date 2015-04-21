@@ -6,6 +6,9 @@ weight: 2
 
 # Forms
 
+* Table of Contents
+{:toc}
+
 ## Form-Validation
 
 <code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
@@ -38,7 +41,7 @@ inline validation (on <code>blur</code> and optional in realtime with <code>keyu
 <p>A Detailed list can be found on <a href="http://caniuse.com/#feat=form-validation">caniuse.com</a>. Luckily, iOS and
     the Safari Browser are fully supported by <code>FlexCss.Form</code>.</p>
 <hr>
-<h2>Getting started</h2>
+## Getting started
 <p>Initialize the plugin for all forms on a page with the following line:</p>
 {% highlight javascript %}
 FlexCss.Form.init('form', optionalOptions);
@@ -68,7 +71,7 @@ realtimeEventKey: 'keyup'
 }
 {% endhighlight%}
 <hr>
-<h3>Set options trough <code>data-attributes</code></h3>
+### Set options trough <code>data-attributes</code>
 <p>All Options can be set per form instance via <code>data-attributes</code> and will overwrite
     options that may have been set before. Boolean values are set trough integer values with <code>1 = true</code> and
     <code>0 = false</code> or just the attribute for <code>true</code> everything else is treated as <code>String</code>.
@@ -79,7 +82,7 @@ realtimeEventKey: 'keyup'
 </form>
 {% endhighlight%}
 <hr>
-<h3>A Simple form with E-Mail-Validation</h3>
+### A Simple form with E-Mail-Validation
 <p>The following form has an HTML5 <code>email</code> input type defined, the input field is also <code>required</code>.
 </p>
 {% highlight html %}
@@ -130,7 +133,7 @@ realtimeEventKey: 'keyup'
 </form>
 {% endhighlight%}
 <hr>
-<h3>Custom Messages</h3>
+### Custom Messages
 <p>By Default all error messages are provided by the browser. The Default <code>errorMessageHandler</code> supports
     custom messages trough the <code>data-validation-message</code> attribute. You can provide your own Message handler
     by using the following static class method:</p>
@@ -159,12 +162,12 @@ FlexCss.Form.registerErrorMessageHandler(
     </div>
 </form>
 <hr>
-<h4>Example</h4>
+#### Example
 {% highlight html %}
 <input required data-validation-message="Dude, E-Mail please!" type="email">
 {% endhighlight%}
 <hr>
-<h3>Custom Validation</h3>
+### Custom Validation
 <p>Following form has custom validators registered. One will try to ask for a free username on the server.
     A second one will make sure that the passwords are equal.
     Before running custom validations, all default validators will be asked (like
@@ -253,7 +256,8 @@ FlexCss.Form.registerValidator('inline-validate', function (field) {
 {% endhighlight%}
 <p>Validators can be set with the <code>data-validate</code> attribute.</p>
 <hr>
-<h4>Setup Error-Messages in validator</h4>
+#### Setup Error-Messages in validator
+
 <p>Sample of <code>equals</code> validator. A field's error message can bet set with
     <code>field.setCustomValidity</code></p>
 
@@ -271,12 +275,15 @@ FlexCss.Form.registerValidator('equals', function (field) {
 });
 {%endhighlight%}
 <hr>
-<h3>Exclude hidden fields</h3>
+
+### Exclude hidden fields
+
 <p>Due the dynamic of a form, it's sometimes necessary to check if a field is hidden and skip validation.
     Because this check might be expansive we opt in for it with <code>data-validate-visibility</code> on <strong>each
         field</strong> that
     might be invisible in the future.</p>
-<h4>Example</h4>
+#### Example
+
 <p>The following form shows a toggleable Region that will be validated when visible</p>
 <hr>
 <form>
