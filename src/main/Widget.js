@@ -16,6 +16,11 @@ class Widget {
          */
         this.asyncContent = null;
 
+        /**
+         * @type {boolean}
+         */
+        this._isWidget = true;
+
         if (element) {
             /**
              * @type {HTMLElement}
@@ -96,6 +101,15 @@ class Widget {
      */
     static findWidget(element) {
         return element? element.hfWidgetInstance : undefined;
+    }
+
+    /**
+     * Checks if a
+     * @param self
+     * @returns {boolean|Function|setAsync|*|getAsync}
+     */
+    static isWidget(self) {
+        return self instanceof Widget || typeof self === 'object' && self.hasOwnProperty('_isWidget');
     }
 
 }

@@ -332,7 +332,7 @@ class Modal {
             }
         }
         var targetContent, future, widget, target, hasTarget = true,
-            isHtmlElement = e instanceof HTMLElement, isWidget = e instanceof Widget;
+            isHtmlElement = e instanceof HTMLElement, isWidget = Widget.isWidget(e);
         if (isHtmlElement || isWidget) {
             if (isHtmlElement) {
                 targetContent = e;
