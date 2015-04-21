@@ -1,4 +1,4 @@
-/*global Form, HTMLFormElement, fetch, FormData, clearTimeout*/
+/*global Form, HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
 
 import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
@@ -18,10 +18,13 @@ const ATTR_DATA_CUSTOM_MESSAGE = 'data-validation-message';
 const ATTR_DATA_CUSTOM_LABEL = 'data-custom-label';
 const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
 const ATTR_ERROR_TARGET_ID = 'data-error-target';
+const ATTR_DEPENDS = 'data-depends-selector';
 const CONST_USE_JSON = 'json';
+
 // keycodes:
 const CONST_TAB_KEYCODE = 9;
 const CONST_ENTER_KEYCODE = 13;
+
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -603,6 +606,20 @@ class Form {
     }
 
     /**
+     * Will query dependent fields (by selector) that should be validated with given field
+     * @param field
+     * @returns {NodeList|[]}
+     * @private
+     */
+    _getDependentFields(field) {
+       let fieldSelector = field.getAttribute(ATTR_DEPENDS), base = [field];
+        if(fieldSelector) {
+            base.push.apply(base, Array.prototype.slice.apply(this.getForm().querySelectorAll(fieldSelector)));
+        }
+       return base;
+    }
+
+    /**
      * Initializes validation for a given form, registers event handlers
      */
     initFormValidation() {
@@ -664,8 +681,9 @@ class Form {
             if (errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
                 hasError = true;
             }
-            self._customValidationsForElements([e.target]).then(function () {
-                self.prepareErrors([e.target], false);
+            let dependentFields = self._getDependentFields(target);
+            self._customValidationsForElements(dependentFields).then(function () {
+                self.prepareErrors(dependentFields, false);
                 if (!hasError) {
                     self.showAndOrCreateTooltip(e.target);
                 }
@@ -693,9 +711,9 @@ class Form {
                     }
                     let errorTarget = self._findErrorTarget(target);
                     _handleTooltipInline(errorTarget);
-
-                    self._customValidationsForElements([target]).then(function () {
-                        self.prepareErrors([target], false);
+                    let dependentFields = self._getDependentFields(target);
+                    self._customValidationsForElements(dependentFields).then(function () {
+                        self.prepareErrors(dependentFields, false);
                         self.showAndOrCreateTooltip(e.target);
                         // future must be resolved before another event can be started
                         KEYDOWN_RUNNING = false;
@@ -754,6 +772,10 @@ class Form {
             var name = e.target.getAttribute('name');
             if (name) {
                 var inputs = form.querySelectorAll('[name="' + name + '"]');
+                // we only support dependent fields for a single widgets right now
+                if(1 === inputs.length) {
+                    inputs = self._getDependentFields(e.target);
+                }
                 self._customValidationsForElements(inputs).then(function () {
                     self.prepareErrors(inputs, false);
                     self.showAndOrCreateTooltip(e.target, true);
