@@ -143,7 +143,7 @@ class Form {
 
         // abort execution is event was prevented
         if (ev.defaultPrevented) {
-            thisForm.classList.remove(LOADING_CLASS);
+            self._formStopLoading();
             return false;
         }
 
@@ -173,7 +173,7 @@ class Form {
 
             Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail(r).fire();
             // always remove error class
-            thisForm.classList.remove(LOADING_CLASS);
+            self._formStopLoading();
         });
     }
 
@@ -237,9 +237,9 @@ class Form {
         return validation.then((r) => {
             if (isLocalInvalid) {
                 // combine browser and custom validators
-                r.checkedFields = r.checkedFields.concat(arr);
                 r.foundAnyError = true;
             }
+            r.checkedFields = self._getInvalidElements();
             let invalidFields = self.prepareErrors(r.checkedFields, false),
                 firstInvalidField = invalidFields[0];
             if (firstInvalidField) {
@@ -282,6 +282,17 @@ class Form {
                 }
             }
         }.bind(this));
+    }
+
+    /**
+     * A List of invalid elements (:invalid)
+     * @returns {Array}
+     * @private
+     */
+    _getInvalidElements() {
+       return Array.prototype.filter.call(this.getForm().querySelectorAll(":invalid"), function(r){
+           return !(r instanceof HTMLFieldSetElement);
+       });
     }
 
     /**
@@ -408,7 +419,6 @@ class Form {
                 labelGroups[additionalLabels] = group;
             }
         }
-
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
@@ -494,9 +504,6 @@ class Form {
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
             if (!(n instanceof HTMLFieldSetElement) && n.validity && !n.validity.valid) {
-                if (Form._shouldNotValidateField(n)) {
-                    continue;
-                }
                 arr.push(n);
             }
         }
@@ -600,6 +607,7 @@ class Form {
             e.preventDefault();
         }, true);
         Util.addEventOnce("invalid", form, function handleInvalid(e) {
+            self._formLoading();
             var result = self._checkIsInvalid(e);
             if (result) {
                 self.currentValidationFuture = new Promise((resolve) => {
@@ -608,9 +616,10 @@ class Form {
                             Util.addEventOnce("invalid", form, handleInvalid, true);
                         }, 0);
                         resolve(r);
+                        self._formStopLoading();
                         invalidFormFired = false;
                         if (!r.foundAnyError) {
-                            form.classList.add(LOADING_CLASS);
+                            self._formLoading();
                             self._handleSubmit(e);
                         }
                     });
@@ -635,6 +644,9 @@ class Form {
         // handle focus out for text elements
         // Will show an error if field was invalid the first time
         form.addEventListener('blur', function (e) {
+            if(self._formIsLoading()) {
+                return;
+            }
             var target = e.target, hasError = false,
                 errorTarget = self._findErrorTarget(target);
             _handleTooltipInline(errorTarget);
@@ -659,6 +671,9 @@ class Form {
         // setup custom realtime event if given
         if (self.options.realtime) {
             form.addEventListener(self.options.realtimeEventKey, function (e) {
+                if(self._formIsLoading()) {
+                    return;
+                }
                 var target = e.target;
                 // abort on tab or enter
                 if (KEYDOWN_RUNNING || CONST_TAB_KEYCODE === e.keyCode ||
@@ -719,6 +734,9 @@ class Form {
         // handle focus on input elements
         // will show an error if field is invalid
         form.addEventListener("focus", function (e) {
+            if(self._formIsLoading()) {
+                return;
+            }
             // do not track errors for checkbox and radios on focus:
             if (!_checkIsValidBlurFocusElement(e.target)) {
                 return;
@@ -747,6 +765,20 @@ class Form {
         Event.dispatchAndFire(form, EVENT_FORM_READY);
     }
 
+    /* Loading states, unfortunately we can't check if a promise is pending :/*/
+    /* TODO: Maybe wrap promise to extend this functionality */
+
+    _formLoading() {
+        this.getForm().classList.add(LOADING_CLASS);
+    }
+
+    _formStopLoading() {
+        this.getForm().classList.remove(LOADING_CLASS);
+    }
+
+    _formIsLoading() {
+        return this.getForm().classList.contains(LOADING_CLASS);
+    }
     /**
      * Listener that is executed on form submit
      * @param e
@@ -758,12 +790,11 @@ class Form {
 
         var form = this.getForm(), self = this;
 
-        if (form.classList.contains(LOADING_CLASS)) {
+        if (this._formIsLoading()) {
             e.preventDefault();
             return false;
         }
-
-        form.classList.add(LOADING_CLASS);
+        this._formLoading();
         form.removeEventListener("submit", submitListener);
         this.removeErrors();
         e.preventDefault();
@@ -774,8 +805,9 @@ class Form {
             self.currentValidationFuture = new Promise((resolve) => {
                 var validation = self.validateCustomFields();
                 validation.then(function (r) {
-                    // focus first invalid field:
-                    var errors = self.prepareErrors(r.checkedFields, false), firstError = errors[0];
+                    // because custom validators may mark multiple fields as invalid, we get all of them in the form
+                    var fields = self._getInvalidElements(),
+                        errors = self.prepareErrors(fields, false), firstError = errors[0];
                     if(firstError) {
                         self.showAndOrCreateTooltip(firstError, true);
                         firstError.focus();
@@ -788,11 +820,11 @@ class Form {
                     // Handle submitting the form to server:
                     self._handleSubmit(e);
                 } else {
-                    form.classList.remove(LOADING_CLASS);
+                    self._formStopLoading();
                 }
             });
         } else {
-            form.classList.remove(LOADING_CLASS);
+            self._formStopLoading();
             form.addEventListener("submit", submitListener);
         }
     }
