@@ -95,7 +95,7 @@ class Widget {
     }
 
     /**
-     * Will find a widget on a Element
+     * Will find a widget on an Element
      * @param {HTMLElement} element
      * @returns {Widget|undefined}
      */
@@ -104,9 +104,9 @@ class Widget {
     }
 
     /**
-     * Checks if a
-     * @param self
-     * @returns {boolean|Function|setAsync|*|getAsync}
+     * Checks if a given object is an instance
+     * @param {Object} self
+     * @returns {boolean}
      */
     static isWidget(self) {
         return self instanceof Widget || typeof self === 'object' && self.hasOwnProperty('_isWidget');

@@ -285,9 +285,9 @@ class Modal {
         if (0 === Modal._modalInstances.length) {
             // save current scrollTop:
             let scrollTop, c;
-            if(self.options.fixedContainer) {
-                 scrollTop = global.pageYOffset;
-                    c = self.dataMainPageContainer;
+            if (self.options.fixedContainer) {
+                scrollTop = global.pageYOffset;
+                c = self.dataMainPageContainer;
                 self.currentScrollTop = scrollTop;
             }
             // this causes reflow/paint and should be optimized
@@ -443,7 +443,7 @@ class Modal {
         Event.dispatchAndFire(target, EVENT_MODAL_INIT);
 
         return future.then(function (el) {
-            el.hfContainerInstance = self;
+            el.hfWidgetInstance = self;
             self.modalContainer.appendChild(el);
             modalContainerClasses.remove('loading');
             self.loading = false;
@@ -557,7 +557,7 @@ global.addEventListener('keydown', function (e) {
     if (27 === e.keyCode) {
         var lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
         if (lastModal) {
-            lastModal.hfContainerInstance.close(e);
+            Widget.findWidget(lastModal).close(e);
         }
     }
 });
