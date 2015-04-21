@@ -212,7 +212,7 @@ class Form {
      */
     handleValidation(field, focus) {
         var fields = (field instanceof Array || field instanceof NodeList)? field : [field];
-        return this._handleValidation(fields, focus).then(((r) => {
+        return this._handleValidation(fields, focus, true).then(((r) => {
             if (!r.foundAnyError) {
                 this.tooltips.removeTooltip(this._findErrorTarget(r.checkedFields[0]));
             }
@@ -223,24 +223,27 @@ class Form {
      * Handles errors on given node list
      * @param {NodeList} invalidFields
      * @param {boolean} focus
+     * @param {boolean} scoped if true, will only validate the fields `invalidFields`
      * @returns {Promise}
      * @private
      */
-    _handleValidation(invalidFields, focus) {
+    _handleValidation(invalidFields, focus, scoped) {
         var self = this;
         var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
         // focus must appear in the same frame for iOS devices
         if(isLocalInvalid && focus) {
             arr[0].focus();
         }
-        var validation = self.validateCustomFields();
+        var validation = scoped ? this._customValidationsForElements(invalidFields) : self.validateCustomFields();
         return validation.then((r) => {
             if (isLocalInvalid) {
                 // combine browser and custom validators
                 r.foundAnyError = true;
+                arr.push.apply(arr, r.checkedFields);
+            } else {
+                arr = r.checkedFields;
             }
-            r.checkedFields = self._getInvalidElements();
-            let invalidFields = self.prepareErrors(r.checkedFields, false),
+            let invalidFields = self.prepareErrors(arr, false),
                 firstInvalidField = invalidFields[0];
             if (firstInvalidField) {
                 if (focus) {
@@ -494,7 +497,7 @@ class Form {
 
     /**
      * Creates an array from a node list with invalid items
-     * On Firefox also Fieldset's seems to be invalid, remove them
+     * This Method expicitly checks if field should not be validated so it can be used to foucs a field
      * @param list
      * @returns {Array}
      * @private
@@ -504,7 +507,9 @@ class Form {
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
             if (!(n instanceof HTMLFieldSetElement) && n.validity && !n.validity.valid) {
-                arr.push(n);
+                if(!Form._shouldNotValidateField(n)) {
+                    arr.push(n);
+                }
             }
         }
         return arr;
@@ -594,7 +599,7 @@ class Form {
     _checkIsInvalid(e) {
         e.preventDefault();
         var invalidFields = this.getForm().querySelectorAll(":invalid");
-        return this._handleValidation(invalidFields, true);
+        return this._handleValidation(invalidFields, true, false);
     }
 
     /**
