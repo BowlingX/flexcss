@@ -765,28 +765,21 @@ class Form {
 
         form.classList.add(LOADING_CLASS);
         form.removeEventListener("submit", submitListener);
-        this._removeElementErrors(form);
+        this.removeErrors();
         e.preventDefault();
         // reset:
         if (form.checkValidity()) {
             form.addEventListener("submit", submitListener);
-            // Custom validations did never pass
+            // It's possible that the form is valid but the custom validations need to be checked again:
             self.currentValidationFuture = new Promise((resolve) => {
-
                 var validation = self.validateCustomFields();
                 validation.then(function (r) {
                     // focus first invalid field:
-                    for (var i = 0; i < r.checkedFields.length; i++) {
-                        var f = r.checkedFields[i];
-                        if (!f.validity.valid) {
-                            // Focus element and show tooltip, we explicitly showing tooltip here, because
-                            // element might have focus already
-                            self.showAndOrCreateTooltip(f, true);
-                            f.focus();
-                            break;
-                        }
+                    var errors = self.prepareErrors(r.checkedFields, false), firstError = errors[0];
+                    if(firstError) {
+                        self.showAndOrCreateTooltip(firstError, true);
+                        firstError.focus();
                     }
-                    self.prepareErrors(r.checkedFields, false);
                     resolve(r);
                 });
             });
