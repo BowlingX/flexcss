@@ -45,7 +45,7 @@
         </ul>
     </nav>
     <div class="darkener" id="Darkener"></div>
-
+    <div class="darkener" id="TocDarkener"></div>
 </header>
 <div class="content-wrapper" id="AllContentWrapper">
     <div class="wrapper wrapper-center" id="main" role="document">
@@ -112,6 +112,9 @@
             // Create of canvas navigation
             new FlexCss.OffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
             new FlexCss.OffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+            if(document.getElementById('markdown-toc')) {
+                new FlexCss.OffCanvas('markdown-toc', 'ToggleTocSidebar', 'TocDarkener', 1);
+            }
 
             // init toggleable
             new FlexCss.Toggleable('SiteBody').registerEvents();

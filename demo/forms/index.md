@@ -6,6 +6,8 @@ weight: 2
 
 # Forms
 
+<button class="button small outline" id="ToggleTocSidebar"><i class="icon-menu"></i> TOC</button>
+
 * Table of Contents
 {:toc}
 
@@ -15,6 +17,8 @@ weight: 2
 plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
 browser to support a <strong>consistent UI</strong> across all browsers and adds support for custom validators and
 inline validation (on <code>blur</code> and optional in realtime with <code>keyup</code>).
+
+----
 
 ### Features
 
@@ -26,6 +30,9 @@ inline validation (on <code>blur</code> and optional in realtime with <code>keyu
 - Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)
 - Beautiful validation UI (Tooltip or inline)
 - Event System
+
+
+----
 
 ### Compatibility
 

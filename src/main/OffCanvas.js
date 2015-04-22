@@ -46,6 +46,7 @@ class OffCanvas {
                 ToggleNavigationId : doc.getElementById(ToggleNavigationId),
             darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener),
             DARKENER_CLASS_TOGGLE = 'toggle-' + darkener.id || 'darkener',
+            DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`,
             resetStyles = function (s) {
                 s.transform = '';
                 s.transition = '';
@@ -135,8 +136,9 @@ class OffCanvas {
                 });
                 navigationContainer.classList.remove(OPEN_CLASS);
                 darkener.classList.remove(INIT_CLASS);
-
+                bodyClass.remove(DARKENER_CLASS_INSTANT_TOGGLE);
             } else {
+                bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
                 bodyClass.add(TOGGLE_CLASS);
                 bodyClass.add(DARKENER_CLASS_TOGGLE);
                 darkenerClass.add(INIT_CLASS);
