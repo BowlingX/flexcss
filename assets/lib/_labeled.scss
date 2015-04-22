@@ -21,7 +21,7 @@
 
   &:last-of-type {
     border-bottom: none;
-    margin-bottom: $labeledSpacing;
+    margin-bottom: 0;
   }
 
   &.alternate {
@@ -55,6 +55,12 @@
       padding: $labelPaddingDesktop;
       padding-top: 0;
       width: $formWidthControls;
+    }
+
+    &:last-of-type {
+      dt {
+        margin-bottom:0;
+      }
     }
 
     &.three-columns {
