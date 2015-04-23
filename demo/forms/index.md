@@ -6,8 +6,6 @@ weight: 2
 
 # Forms
 
-<button class="button small outline" id="ToggleTocSidebar"><i class="icon-menu"></i> TOC</button>
-
 * Table of Contents
 {:toc}
 
