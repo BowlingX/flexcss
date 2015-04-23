@@ -217,37 +217,39 @@ class Form {
         var fields = (field instanceof Array || field instanceof NodeList)? field : [field];
         return this._handleValidation(fields, focus, true).then(((r) => {
             if (!r.foundAnyError) {
-                this.tooltips.removeTooltip(this._findErrorTarget(r.checkedFields[0]));
+                // remove all tooltips from fields
+                Array.prototype.forEach.call(fields, ((field) => {
+                    if(this.tooltips) {
+                        this.tooltips.removeTooltip(this._findErrorTarget(field));
+                    }
+                }).bind(this));
             }
         }).bind(this));
     }
 
     /**
      * Handles errors on given node list
-     * @param {NodeList} invalidFields
+     * @param {NodeList} toValidateFields
      * @param {boolean} focus
      * @param {boolean} scoped if true, will only validate the fields `invalidFields`
      * @returns {Promise}
      * @private
      */
-    _handleValidation(invalidFields, focus, scoped) {
+    _handleValidation(toValidateFields, focus, scoped) {
         var self = this;
-        var arr = Form._createArrayFromInvalidFieldList(invalidFields), isLocalInvalid = arr.length > 0;
+        var arr = Form._createArrayFromInvalidFieldList(toValidateFields), isLocalInvalid = arr.length > 0;
         // focus must appear in the same frame for iOS devices
         if(isLocalInvalid && focus) {
             arr[0].focus();
         }
-        var validation = scoped ? this._customValidationsForElements(invalidFields) : self.validateCustomFields();
+        var validation = scoped ? this._customValidationsForElements(toValidateFields) : self.validateCustomFields();
         return validation.then((r) => {
             if (isLocalInvalid) {
                 // combine browser and custom validators
                 r.foundAnyError = true;
-                arr.push.apply(arr, r.checkedFields);
-            } else {
-                arr = r.checkedFields;
             }
-            let invalidFields = self.prepareErrors(arr, false),
-                firstInvalidField = invalidFields[0];
+            let foundInvalidFields = self.prepareErrors(toValidateFields, false),
+                firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
                 if (focus) {
                     firstInvalidField.focus();
@@ -495,7 +497,7 @@ class Form {
      * @private
      */
     static _shouldNotValidateField(field) {
-        return field.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(field);
+        return field instanceof HTMLFieldSetElement || (field.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(field));
     }
 
     /**
@@ -509,7 +511,7 @@ class Form {
         var arr = [];
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
-            if (!(n instanceof HTMLFieldSetElement) && n.validity && !n.validity.valid) {
+            if (n.validity && !n.validity.valid) {
                 if(!Form._shouldNotValidateField(n)) {
                     arr.push(n);
                 }
