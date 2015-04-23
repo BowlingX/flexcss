@@ -12,5 +12,9 @@
   .button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    // needed for link-tags (a) to center text, height excludes the border
+    line-height:$inputHeight - 2px;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
   }
 }
