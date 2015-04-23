@@ -91,9 +91,12 @@ class Tooltip {
 
     /**
      * Removes a Tooltip on given target
-     * @param {HTMLElement} target
+     * @param {HTMLElement} [target], if not given will remove current open tooltip on this instance
      */
     removeTooltip(target) {
+        if(!target && this.tooltipContainer) {
+            target = this.tooltipContainer.flexTooltipCurrentTarget;
+        }
         if (this.tooltipContainer) {
             if (this.tooltipContainer.flexTooltipCurrentTarget !== target) {
                 return;

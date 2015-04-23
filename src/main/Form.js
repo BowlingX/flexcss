@@ -217,12 +217,10 @@ class Form {
         var fields = (field instanceof Array || field instanceof NodeList)? field : [field];
         return this._handleValidation(fields, focus, true).then(((r) => {
             if (!r.foundAnyError) {
-                // remove all tooltips from fields
-                Array.prototype.forEach.call(fields, ((field) => {
+                    // remove tooltips
                     if(this.tooltips) {
-                        this.tooltips.removeTooltip(this._findErrorTarget(field));
+                        this.tooltips.removeTooltip();
                     }
-                }).bind(this));
             }
         }).bind(this));
     }
@@ -318,7 +316,7 @@ class Form {
             el.classList.remove(INPUT_ERROR_CLASS);
             el.removeAttribute(ARIA_INVALID);
             if (this.tooltips) {
-                this.tooltips.removeTooltip(inputsWithErrorClasses[inputErrorIndex]);
+                this.tooltips.removeTooltip();
             }
         }
     }
@@ -590,7 +588,7 @@ class Form {
                 Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
         } else {
             if (remove) {
-                self.tooltips.removeTooltip(errorTarget);
+                self.tooltips.removeTooltip();
             }
         }
     }
@@ -657,7 +655,7 @@ class Form {
         // helper to handle/remove tooltips
         function _handleTooltipInline(target) {
             if (self.tooltips) {
-                self.tooltips.removeTooltip(target);
+                self.tooltips.removeTooltip();
             }
         }
 
