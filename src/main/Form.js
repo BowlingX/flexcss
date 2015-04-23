@@ -428,7 +428,7 @@ class Form {
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
-            let field = fields[i], errorTarget = this._findErrorTarget(field), parent = errorTarget.parentNode,
+            let field = fields[i], errorTarget = Form._findErrorTarget(field), parent = errorTarget.parentNode,
                 validity = field.validity, isInvalid = validity && !validity.valid;
             if (Form._shouldNotValidateField(field)) {
                 continue;
@@ -495,7 +495,9 @@ class Form {
      * @private
      */
     static _shouldNotValidateField(field) {
-        return field instanceof HTMLFieldSetElement || (field.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(field));
+        var target = Form._findErrorTarget(field);
+        return target instanceof HTMLFieldSetElement ||
+            (target.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(target));
     }
 
     /**
@@ -554,7 +556,7 @@ class Form {
      * @returns {HTMLElement}
      * @private
      */
-    _findErrorTarget(target) {
+    static _findErrorTarget(target) {
         var el = target.getAttribute(ATTR_ERROR_TARGET_ID) || target,
             foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
         if (!foundTarget) {
@@ -582,7 +584,7 @@ class Form {
         if (!target.flexFormsSavedValidity) {
             return;
         }
-        var errorTarget = this._findErrorTarget(target);
+        var errorTarget = Form._findErrorTarget(target);
         if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
             self.tooltips.createTooltip(errorTarget,
                 Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
@@ -670,7 +672,7 @@ class Form {
                 return;
             }
             var target = e.target, hasError = false,
-                errorTarget = self._findErrorTarget(target);
+                errorTarget = Form._findErrorTarget(target);
             _handleTooltipInline(errorTarget);
             // clear timeout so realtime can't fire
             clearTimeout(TIMEOUT_KEYDOWN);
@@ -709,7 +711,7 @@ class Form {
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
-                    let errorTarget = self._findErrorTarget(target);
+                    let errorTarget = Form._findErrorTarget(target);
                     _handleTooltipInline(errorTarget);
                     let dependentFields = self._getDependentFields(target);
                     self._customValidationsForElements(dependentFields).then(function () {
