@@ -342,6 +342,9 @@ class Modal {
             }
         } else {
             target = e.target;
+            if(!target) {
+                throw 'Could not find target, did you pass an event, a HTMLElement or an Widget?';
+            }
             hasTarget = target.hasAttribute(ATTR_NAME);
             targetContent = target.getAttribute(ATTR_NAME);
             widget = Widget.findWidget(target);
