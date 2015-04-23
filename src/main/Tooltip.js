@@ -103,7 +103,7 @@ class Tooltip {
             }
             this.tooltipContainer.classList.remove(CLASS_NAMES_OPEN);
         }
-        if (target.oldTitle) {
+        if (target && target.oldTitle) {
             target.setAttribute('title', target.oldTitle);
         }
     }

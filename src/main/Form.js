@@ -246,7 +246,8 @@ class Form {
                 // combine browser and custom validators
                 r.foundAnyError = true;
             }
-            let foundInvalidFields = self.prepareErrors(toValidateFields, false),
+            let thisToValidateFields = Array.from(toValidateFields).concat(r.checkedFields);
+            let foundInvalidFields = self.prepareErrors(thisToValidateFields, false),
                 firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
                 if (focus) {
@@ -414,7 +415,6 @@ class Form {
             this.removeErrors();
         }
         let labelGroups = {}, invalidFields = [];
-
         function handleAdditionalLabels(isInvalid, labelGroups, field) {
             let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
                 field.id, group = labelGroups[additionalLabels];
