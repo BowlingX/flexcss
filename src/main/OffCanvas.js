@@ -5,6 +5,11 @@ import Util from 'util/Util';
  * @type {string}
  */
 const ATTR_CLOSE_SIDEBAR = 'data-close-sidebar';
+
+/**
+ * @type {string}
+ */
+const ATTR_TARGET = 'data-offcanvas';
 /**
  * @type {string}
  */
@@ -37,13 +42,11 @@ class OffCanvas {
      * @param {bool} [disableTouch] if true all touch events are disabled
      * @constructor
      */
-    constructor(NavigationId, ToggleNavigationId, Darkener, factor, disableTouch) {
+    constructor(NavigationId, Darkener, factor, disableTouch) {
 
         var doc = global.document, touched = 0, body = doc.body,
             navigationContainer = NavigationId instanceof HTMLElement ?
                 NavigationId : doc.getElementById(NavigationId),
-            toggler = ToggleNavigationId instanceof HTMLElement ?
-                ToggleNavigationId : doc.getElementById(ToggleNavigationId),
             darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener),
             DARKENER_CLASS_TOGGLE = 'toggle-' + darkener.id || 'darkener',
             DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`,
@@ -56,6 +59,23 @@ class OffCanvas {
             shouldNotTouch = function () {
                 return window.innerWidth >= Settings.get().smallBreakpoint;
             };
+
+        if (!darkener || !navigationContainer) {
+            throw 'Could not find needed elements (Darkener and/or NavigationId)';
+        }
+
+        this.darkener = darkener;
+        this.DARKENER_CLASS_TOGGLE = DARKENER_CLASS_TOGGLE;
+        this.DARKENER_CLASS_INSTANT_TOGGLE = DARKENER_CLASS_INSTANT_TOGGLE;
+
+        this.navigationContainer = navigationContainer;
+        this.navigationContainerId = navigationContainer.id;
+
+        // create id if id does not exist
+        if (!this.navigationContainerId) {
+            this.navigationContainerId = Util.guid();
+            navigationContainer.id = this.navigationContainerId;
+        }
 
         if (!disableTouch) {
             navigationContainer.addEventListener('touchstart', function (e) {
@@ -76,7 +96,8 @@ class OffCanvas {
                 if (shouldNotTouch()) {
                     return;
                 }
-                var x = e.touches[0].clientX, target = navigationContainer, style = target.style, calc = touched - x,
+                var x = e.touches[0].clientX, target = navigationContainer,
+                    style = target.style, calc = touched - x,
                     bounds = target.getBoundingClientRect(),
                     compare = factor > 0 ? calc <= 0 : calc >= 0;
                 if (compare) {
@@ -121,54 +142,65 @@ class OffCanvas {
                 });
             });
         }
-        var togglerF = function (e) {
-            e.preventDefault();
-            var bodyClass = body.classList, darkenerClass = darkener.classList;
-            if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                Util.addEventOnce(Settings.getTransitionEvent(), navigationContainer, function () {
-                    // add timeout because transition event fires a little to early
-                    setTimeout(function () {
-                        requestAnimationFrame(function(){
-                            bodyClass.remove(TOGGLE_CLASS);
-                            bodyClass.remove(DARKENER_CLASS_TOGGLE);
-                        });
-                    }, Settings.get().darkenerFadeDelay);
-                });
-                navigationContainer.classList.remove(OPEN_CLASS);
-                darkener.classList.remove(INIT_CLASS);
-                bodyClass.remove(DARKENER_CLASS_INSTANT_TOGGLE);
+    }
+
+    /**
+     * Toggles a an off-canvas element
+     * @param e
+     * @private
+     */
+    _toggle(e) {
+        e.preventDefault();
+        var bodyClass = global.document.body.classList, darkenerClass = this.darkener.classList,
+            DARKENER_CLASS_TOGGLE = this.DARKENER_CLASS_TOGGLE,
+            DARKENER_CLASS_INSTANT_TOGGLE = this.DARKENER_CLASS_INSTANT_TOGGLE,
+            navigationControllerClassList = this.navigationContainer.classList;
+        if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
+            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function () {
+                // add timeout because transition event fires a little to early
+                setTimeout(function () {
+                    requestAnimationFrame(function () {
+                        bodyClass.remove(TOGGLE_CLASS);
+                        bodyClass.remove(DARKENER_CLASS_TOGGLE);
+                        OffCanvas.currentOpen = null;
+                    });
+                }, Settings.get().darkenerFadeDelay);
+            });
+            navigationControllerClassList.remove(OPEN_CLASS);
+            this.darkener.classList.remove(INIT_CLASS);
+            bodyClass.remove(DARKENER_CLASS_INSTANT_TOGGLE);
+        } else {
+            OffCanvas.currentOpen = this;
+            bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
+            bodyClass.add(TOGGLE_CLASS);
+            bodyClass.add(DARKENER_CLASS_TOGGLE);
+            darkenerClass.add(INIT_CLASS);
+            navigationControllerClassList.add(OPEN_CLASS);
+        }
+    }
+
+    /**
+     * Register events
+     * @param [delegate]
+     */
+    registerEvents(delegate) {
+        delegate = delegate || global.document;
+        delegate.addEventListener(Settings.getTabEvent(), function (e) {
+            if(OffCanvas.currentOpen && OffCanvas.currentOpen !== this) {
+                return;
+            }
+            let id = this.navigationContainerId, validTarget = e.target.getAttribute(ATTR_TARGET) === id;
+            if (!Util.isPartOfNode(e.target, this.navigationContainer)) {
+                if (validTarget || e.target === this.darkener) {
+                    this._toggle(e);
+                }
             } else {
-                bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-                bodyClass.add(TOGGLE_CLASS);
-                bodyClass.add(DARKENER_CLASS_TOGGLE);
-                darkenerClass.add(INIT_CLASS);
-                navigationContainer.classList.add(OPEN_CLASS);
+                if (e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
+                    this._toggle(e);
+                }
             }
-        };
-        toggler.addEventListener('touchstart', function (e) {
-            e.target.oldClassNames = e.target.className;
-            e.target.className = 'active ' + e.target.oldClassNames;
-        });
-
-        toggler.addEventListener('touchend', function (e) {
-            e.target.className = e.target.oldClassNames;
-        });
-
-        toggler.addEventListener(Settings.getTabEvent(), togglerF);
-
-        darkener.addEventListener(Settings.getTabEvent(), (e) => {
-            if (navigationContainer.classList.contains(OPEN_CLASS)) {
-                e.preventDefault();
-                togglerF(e);
-            }
-        });
-
-        navigationContainer.addEventListener(Settings.getTabEvent(), (e) => {
-            if(e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
-                e.preventDefault();
-                togglerF(e);
-            }
-        });
-
+        }.bind(this));
     }
 }
+
+OffCanvas.currentOpen = null;

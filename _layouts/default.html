@@ -13,10 +13,10 @@
 <body id="SiteBody">
 <header class="header" id="Header">
     <div class="topbar" id="TopBar">
-        <a id="ToggleMainNavigation" class="icon-menu topbar-action navigation-toggler"><span
+        <a data-offcanvas="MainNavigation" class="icon-menu topbar-action navigation-toggler"><span
                 id="TitleText">FlexCss</span></a>
         <a href="https://github.com/BowlingX/flexcss" class="right topbar-action"><i class="icon-github-circled"></i> fork</a>
-        <a id="ToggleSidebar" class="right icon-th-list topbar-action"></a>
+        <a data-offcanvas="markdown-toc" class="right icon-th-list topbar-action"></a>
     </div>
     <nav class="navbar-main" id="MainNavigation" role="navigation">
         <div class="home">
@@ -41,7 +41,7 @@
                     </a>
             </li>
             <li class="flex-align-center hide-small">
-                <button class="button mini outline action" id="ToggleTocSidebar"><i class="icon-menu"></i> TOC</button>
+                <button class="button mini outline action" data-offcanvas="markdown-toc"><i class="icon-menu"></i> TOC</button>
             </li>
         </ul>
     </nav>
@@ -111,10 +111,10 @@
             new FlexCss.Modal(document.body).registerEvents();
 
             // Create of canvas navigation
-            new FlexCss.OffCanvas('MainNavigation', 'ToggleMainNavigation', 'Darkener', -1);
-            new FlexCss.OffCanvas('Sidebar', 'ToggleSidebar', 'Darkener', 1);
+            new FlexCss.OffCanvas('MainNavigation', 'Darkener', -1).registerEvents();
+            new FlexCss.OffCanvas('Sidebar', 'Darkener', 1).registerEvents();
             if(document.getElementById('markdown-toc')) {
-                new FlexCss.OffCanvas('markdown-toc', 'ToggleTocSidebar', 'TocDarkener', 1);
+                new FlexCss.OffCanvas('markdown-toc', 'TocDarkener', 1).registerEvents();
             }
 
             // init toggleable

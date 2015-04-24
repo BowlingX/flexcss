@@ -655,7 +655,7 @@ class Form {
         var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
 
         // helper to handle/remove tooltips
-        function _handleTooltipInline(target) {
+        function _handleTooltipInline() {
             if (self.tooltips) {
                 self.tooltips.removeTooltip();
             }
