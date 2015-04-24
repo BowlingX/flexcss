@@ -40,7 +40,7 @@ I prepared a set of ready-to-use files that you find under `build` in the source
 
 |Browser|Support|
 |----|----------:|
-|IE 6, 7, 8|<i class="icon-cancel"></i>
+|IE 6, 7, 8, 9|<i class="icon-cancel"></i>
 |IE 10 & 11|<i class="icon-ok"></i>
 |Chrome (latest)|<i class="icon-ok"></i>
 |Firefox (latest)|<i class="icon-ok"></i>
