@@ -105,8 +105,8 @@ $globalBorderColor:$lightGrayColor !default;
 // Modal Settings:
 $modalAlertWidthDesktop:320px !default;
 $modalWidthSmall:360px !default;
-$modalAnimateName:appear !default;
-$modalAnimateDuration:1s !default;
+$modalAnimateName:bounceIn !default;
+$modalAnimateDuration:.6s !default;
 
 $minWidthModalDesktop:640px !default;
 

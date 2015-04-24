@@ -90,12 +90,6 @@
   }
 }
 
-@-moz-document url-prefix() {
-  .modal.modal-anim-end {
-    animation-name: $modalAnimateName !important;
-  }
-}
-
 // setup z-index just when in container
 .modal-container {
   .modal.current {
