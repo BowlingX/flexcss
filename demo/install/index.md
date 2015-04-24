@@ -46,6 +46,3 @@ I prepared a set of ready-to-use files that you find under `build` in the source
 |Firefox (latest)|<i class="icon-ok"></i>
 |Safari (latest)|<i class="icon-ok"></i>
 |Mobile (Android Chrome and iOS Safari)|<i class="icon-ok"></i>
-
-A Detailed list can be found on <a href="http://caniuse.com/#feat=form-validation">caniuse.com</a>. Luckily, iOS and
-    the Safari Browser are fully supported by <code>FlexCss.Form</code>.</p>
