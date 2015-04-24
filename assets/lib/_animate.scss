@@ -30,30 +30,62 @@
   }
 }
 
+// thanks http://bouncejs.com/ :)
+@include keyframes(appear) {
+  0% {
+    opacity:0;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 500, 0, 1);
+  }
+  4.1% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 209.854, 0, 1);
+  }
+  8.11% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 52.745, 0, 1);
+  }
+  12.11% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -9.217, 0, 1);
+  }
+  16.12% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -21.678, 0, 1);
+  }
+  27.23% {
+    opacity:1;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -3.919, 0, 1);
+  }
+  38.34% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0.518, 0, 1);
+  }
+  60.56% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -0.012, 0, 1);
+  }
+  82.78% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+}
+
 /**
 * Creates a small bounce effect
 */
 @include keyframes(bounceIn) {
   0%, 40%, 100% {
-    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
     transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
   }
 
   0% {
     opacity: 0;
-    -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
 
   40% {
     opacity: 1;
-    -webkit-transform: scale3d(1.03, 1.03, 1.03);
     transform: scale3d(1.03, 1.03, 1.03);
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
   }
 }
@@ -63,7 +95,6 @@
 */
 @include keyframes(fadeIn) {
   0%, 100% {
-    -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
   }
   0% {
@@ -76,7 +107,6 @@
 
 @include keyframes(darkenerFadeIn) {
   0%, 100% {
-    -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
   }
   0% {
@@ -89,7 +119,6 @@
 
 @include keyframes(darkenerFadeOut) {
   0%, 100% {
-    -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
   }
   0% {
@@ -106,7 +135,6 @@
 @include keyframes(spin) {
   100% {
     transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
   }
 }
 
@@ -117,12 +145,10 @@
   0% {
     opacity: 0;
     transform: translate3d(0, 100%, 0);
-    -webkit-transform: translate3d(0, 100%, 0);
   }
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
   }
 }
 
@@ -196,7 +222,6 @@
     }
   }
 }
-
 
 .animate-bounceIn {
   @include animate(bounceIn);

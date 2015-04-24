@@ -97,13 +97,16 @@ $indexTooltip:31 !default;
 $indexMainNavigation: $indexDarkener + 1 !default;
 $indexSidebar: $indexDarkener + 1 !default;
 $indexModalCurrent:10 !default;
-// Box Shadows:
 
+// Box Shadows:
 $globalBoxShadow: 0px 0px 3px rgba(#000,.7) !default;
 $globalBorderColor:$lightGrayColor !default;
+
 // Modal Settings:
-$alertWidthDesktop:320px !default;
+$modalAlertWidthDesktop:320px !default;
 $modalWidthSmall:360px !default;
+$modalAnimateName:appear !default;
+$modalAnimateDuration:1s !default;
 
 $minWidthModalDesktop:640px !default;
 

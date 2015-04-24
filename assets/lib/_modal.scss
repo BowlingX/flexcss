@@ -7,6 +7,7 @@
 .modal-container {
   /* autoprefixer: off */
   @include perspective();
+  backface-visibility: hidden;
 }
 
 /* Container that contains all Modals of an instance */
@@ -66,7 +67,7 @@
   align-self: flex-start;
   &.current {
     display: block;
-    @include animate(bounceIn);
+    @include animate($modalAnimateName, $modalAnimateDuration, 1, linear);
   }
 
   &.current ~ .loader-container {
@@ -86,6 +87,12 @@
     &.modal-anim-end {
       display: none;
     }
+  }
+}
+
+@-moz-document url-prefix() {
+  .modal.modal-anim-end {
+    animation-name: $modalAnimateName !important;
   }
 }
 
@@ -168,7 +175,7 @@
     min-width: 0;
     box-shadow: $globalBoxShadow;
     position: relative;
-    width: $alertWidthDesktop;
+    width: $modalAlertWidthDesktop;
     &.current {
       @include animate(bounceIn);
     }
