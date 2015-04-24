@@ -4,6 +4,9 @@ title: Install
 weight: 3
 ---
 
+* Table of Contents
+{:toc}
+
 # Install
 
 You have different options to install `FlexCss`. Die easiest way is trough [npm](https://www.npmjs.com/package/flexcss)
@@ -30,3 +33,19 @@ If you just want to try out this framework or have never heard about
 I prepared a set of ready-to-use files that you find under `build` in the source directory.
 
 <a href="{{site.downloadLink}}" class="button small secondary"><i class="icon-download"></i> Download FlexCss {{site.flexcssVersion}}</a>
+
+----
+
+## Compatibility
+
+|Browser|Support|
+|----|----------:|
+|IE 6, 7, 8|<i class="icon-cancel"></i>
+|IE 10 & 11|<i class="icon-ok"></i>
+|Chrome (latest)|<i class="icon-ok"></i>
+|Firefox (latest)|<i class="icon-ok"></i>
+|Safari (latest)|<i class="icon-ok"></i>
+|Mobile (Android Chrome and iOS Safari)|<i class="icon-ok"></i>
+
+A Detailed list can be found on <a href="http://caniuse.com/#feat=form-validation">caniuse.com</a>. Luckily, iOS and
+    the Safari Browser are fully supported by <code>FlexCss.Form</code>.</p>

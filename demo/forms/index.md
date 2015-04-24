@@ -32,29 +32,18 @@ inline validation (on <code>blur</code> and optional in realtime with <code>keyu
 
 ----
 
-### Compatibility
-
-|Browser|Support|
-|----|----------:|
-|IE 6, 7, 8|<i class="icon-cancel"></i>
-|IE 10 & 11|<i class="icon-ok"></i>
-|Chrome (latest)|<i class="icon-ok"></i>
-|Firefox (latest)|<i class="icon-ok"></i>
-|Safari (latest)|<i class="icon-ok"></i>
-|Mobile (Android Chrome and iOS Safari)|<i class="icon-ok"></i>
-
-<p>A Detailed list can be found on <a href="http://caniuse.com/#feat=form-validation">caniuse.com</a>. Luckily, iOS and
-    the Safari Browser are fully supported by <code>FlexCss.Form</code>.</p>
-<hr>
 ## Getting started
-<p>Initialize the plugin for all forms on a page with the following line:</p>
+
+Initialize the plugin for all forms on a page with the following line:
+
 {% highlight javascript %}
 FlexCss.Form.init('form', optionalOptions);
 {% endhighlight%}
-<p>The first param <code>form</code> may be a selector defined by <code>Document.querySelector()</code>.
+
+The first param <code>form</code> may be a selector defined by <code>Document.querySelector()</code>.
     The second one allows to overwrite <code>defaultOptions</code> for each form. All Options may be set trough a
     <code>data</code> attribute.
-</p>
+
 {% highlight javascript %}
 {
 // if true creates tooltips above element, uses FlexCss Tooltips
