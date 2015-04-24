@@ -127,6 +127,7 @@ class OffCanvas {
                             // add timeout because transition event fires a little to early
                             setTimeout(function () {
                                 resetStyles(style);
+                                OffCanvas.currentOpen = null;
                                 body.classList.remove(TOGGLE_CLASS);
                                 body.classList.remove(DARKENER_CLASS_TOGGLE);
                             }, Settings.get().darkenerFadeDelay);
