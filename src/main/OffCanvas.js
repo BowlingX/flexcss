@@ -4,7 +4,7 @@ import Util from 'util/Util';
 /**
  * @type {string}
  */
-const ATTR_CLOSE_SIDEBAR = 'data-close-sidebar';
+const ATTR_CLOSE_SIDEBAR = 'data-close-offcanvas';
 
 /**
  * @type {string}
@@ -36,7 +36,6 @@ class OffCanvas {
     /**
      * Creates an off-canvas navigation
      * @param {HTMLElement|String} NavigationId
-     * @param {HTMLElement|String} ToggleNavigationId
      * @param {HTMLElement|String} Darkener
      * @param {int} factor positive will expect right sidebar, positive left
      * @param {bool} [disableTouch] if true all touch events are disabled
@@ -65,8 +64,8 @@ class OffCanvas {
         }
 
         this.darkener = darkener;
-        this.DARKENER_CLASS_TOGGLE = DARKENER_CLASS_TOGGLE;
-        this.DARKENER_CLASS_INSTANT_TOGGLE = DARKENER_CLASS_INSTANT_TOGGLE;
+        this.darkenerClassToggle = DARKENER_CLASS_TOGGLE;
+        this.darkenerClassToggleInstant = DARKENER_CLASS_INSTANT_TOGGLE;
 
         this.navigationContainer = navigationContainer;
         this.navigationContainerId = navigationContainer.id;
@@ -108,7 +107,6 @@ class OffCanvas {
                 }
             });
             navigationContainer.addEventListener('touchend', function () {
-
                 requestAnimationFrame(function () {
                     if (shouldNotTouch()) {
                         return;
@@ -125,24 +123,29 @@ class OffCanvas {
 
                         Util.addEventOnce(Settings.getTransitionEvent(), target, function () {
                             // add timeout because transition event fires a little to early
-                            setTimeout(function () {
+                           this.darkenerTimeout = setTimeout(function () {
                                 resetStyles(style);
-                                OffCanvas.currentOpen = null;
-                                body.classList.remove(TOGGLE_CLASS);
-                                body.classList.remove(DARKENER_CLASS_TOGGLE);
-                            }, Settings.get().darkenerFadeDelay);
-                        });
-
+                               this._remove(body);
+                            }.bind(this), Settings.get().darkenerFadeDelay);
+                        }.bind(this));
                         target.classList.remove(OPEN_CLASS);
                         darkener.classList.remove(INIT_CLASS);
-
-
                     } else {
                         resetStyles(style);
                     }
                 });
-            });
+            }.bind(this));
         }
+    }
+
+    /**
+     * @private
+     */
+    _remove() {
+        let body = global.document.body;
+        OffCanvas.currentOpen = null;
+        body.classList.remove(TOGGLE_CLASS);
+        body.classList.remove(this.darkenerClassToggle);
     }
 
     /**
@@ -153,24 +156,22 @@ class OffCanvas {
     _toggle(e) {
         e.preventDefault();
         var bodyClass = global.document.body.classList, darkenerClass = this.darkener.classList,
-            DARKENER_CLASS_TOGGLE = this.DARKENER_CLASS_TOGGLE,
-            DARKENER_CLASS_INSTANT_TOGGLE = this.DARKENER_CLASS_INSTANT_TOGGLE,
+            DARKENER_CLASS_TOGGLE = this.darkenerClassToggle,
+            DARKENER_CLASS_INSTANT_TOGGLE = this.darkenerClassToggleInstant,
             navigationControllerClassList = this.navigationContainer.classList;
         if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function () {
                 // add timeout because transition event fires a little to early
-                setTimeout(function () {
+                this.darkenerTimeout = setTimeout(function () {
                     requestAnimationFrame(function () {
-                        bodyClass.remove(TOGGLE_CLASS);
-                        bodyClass.remove(DARKENER_CLASS_TOGGLE);
-                        OffCanvas.currentOpen = null;
-                    });
-                }, Settings.get().darkenerFadeDelay);
-            });
+                        this._remove();
+                    }.bind(this));
+                }.bind(this), Settings.get().darkenerFadeDelay);
+            }.bind(this));
             navigationControllerClassList.remove(OPEN_CLASS);
             this.darkener.classList.remove(INIT_CLASS);
             bodyClass.remove(DARKENER_CLASS_INSTANT_TOGGLE);
-        } else {
+        } else if(!OffCanvas.currentOpen) {
             OffCanvas.currentOpen = this;
             bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
             bodyClass.add(TOGGLE_CLASS);
