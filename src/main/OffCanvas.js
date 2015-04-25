@@ -119,14 +119,9 @@ class OffCanvas {
 
                         style.transform = 'translate3d(' + width + 'px,0,0)';
                         style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
-
-                        Util.addEventOnce(Settings.getTransitionEvent(), target, function () {
-                            // add timeout because transition event fires a little to early
-                           setTimeout(function () {
-                                resetStyles(style);
-                               this._remove();
-                            }.bind(this), Settings.get().darkenerFadeDelay);
-                        }.bind(this));
+                        this._remove(() => {
+                            resetStyles(style);
+                        });
                         this._removeInstant();
                     } else {
                         resetStyles(style);
@@ -139,11 +134,21 @@ class OffCanvas {
     /**
      * @private
      */
-    _remove() {
-        let body = global.document.body;
-        OffCanvas.currentOpen = null;
-        body.classList.remove(TOGGLE_CLASS);
-        body.classList.remove(this.darkenerClassToggle);
+    _remove(callback) {
+        Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function () {
+            // add timeout because transition event fires a little to early
+            setTimeout(function () {
+                requestAnimationFrame(function () {
+                    let body = global.document.body;
+                    OffCanvas.currentOpen = null;
+                    body.classList.remove(TOGGLE_CLASS);
+                    body.classList.remove(this.darkenerClassToggle);
+                    if(callback) {
+                        callback();
+                    }
+                }.bind(this));
+            }.bind(this), Settings.get().darkenerFadeDelay);
+        }.bind(this));
     }
 
     /**
@@ -167,15 +172,7 @@ class OffCanvas {
             DARKENER_CLASS_INSTANT_TOGGLE = this.darkenerClassToggleInstant,
             navigationControllerClassList = this.navigationContainer.classList;
         if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
-            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function () {
-                // add timeout because transition event fires a little to early
-                setTimeout(function () {
-                    requestAnimationFrame(function () {
-                        this._remove();
-                    }.bind(this));
-                }.bind(this), Settings.get().darkenerFadeDelay);
-            }.bind(this));
-
+            this._remove();
             this._removeInstant(navigationControllerClassList);
         } else if(!OffCanvas.currentOpen) {
             OffCanvas.currentOpen = this;
@@ -199,7 +196,7 @@ class OffCanvas {
             }
             let id = this.navigationContainerId, validTarget = e.target.getAttribute(ATTR_TARGET) === id;
             if (!Util.isPartOfNode(e.target, this.navigationContainer)) {
-                if (validTarget || e.target === this.darkener) {
+                if (validTarget || (OffCanvas.currentOpen === this && e.target === this.darkener)) {
                     this._toggle(e);
                 }
             } else {
