@@ -25,7 +25,7 @@ const OPEN_CLASS = 'open';
 /**
  * @type {number}
  */
-const HIDE_FACTOR = 7;
+const HIDE_FACTOR = 3;
 
 /**
  * A OffCanvas Implementation
@@ -43,7 +43,7 @@ class OffCanvas {
      */
     constructor(NavigationId, Darkener, factor, disableTouch) {
 
-        var doc = global.document, touched = 0, body = doc.body,
+        var doc = global.document, touched = 0,
             navigationContainer = NavigationId instanceof HTMLElement ?
                 NavigationId : doc.getElementById(NavigationId),
             darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener),
@@ -112,7 +112,6 @@ class OffCanvas {
                         return;
                     }
                     var target = navigationContainer, style = target.style;
-
                     if (target.mustHide) {
                         var width = target.getBoundingClientRect().width * factor;
                         style.transition = 'transform .2s ease';
@@ -123,17 +122,16 @@ class OffCanvas {
 
                         Util.addEventOnce(Settings.getTransitionEvent(), target, function () {
                             // add timeout because transition event fires a little to early
-                           this.darkenerTimeout = setTimeout(function () {
+                           setTimeout(function () {
                                 resetStyles(style);
-                               this._remove(body);
+                               this._remove();
                             }.bind(this), Settings.get().darkenerFadeDelay);
                         }.bind(this));
-                        target.classList.remove(OPEN_CLASS);
-                        darkener.classList.remove(INIT_CLASS);
+                        this._removeInstant();
                     } else {
                         resetStyles(style);
                     }
-                });
+                }.bind(this));
             }.bind(this));
         }
     }
@@ -146,6 +144,15 @@ class OffCanvas {
         OffCanvas.currentOpen = null;
         body.classList.remove(TOGGLE_CLASS);
         body.classList.remove(this.darkenerClassToggle);
+    }
+
+    /**
+     * @private
+     */
+    _removeInstant() {
+        this.navigationContainer.classList.remove(OPEN_CLASS);
+        global.document.body.classList.remove(this.darkenerClassToggleInstant);
+        this.darkener.classList.remove(INIT_CLASS);
     }
 
     /**
@@ -162,15 +169,14 @@ class OffCanvas {
         if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function () {
                 // add timeout because transition event fires a little to early
-                this.darkenerTimeout = setTimeout(function () {
+                setTimeout(function () {
                     requestAnimationFrame(function () {
                         this._remove();
                     }.bind(this));
                 }.bind(this), Settings.get().darkenerFadeDelay);
             }.bind(this));
-            navigationControllerClassList.remove(OPEN_CLASS);
-            this.darkener.classList.remove(INIT_CLASS);
-            bodyClass.remove(DARKENER_CLASS_INSTANT_TOGGLE);
+
+            this._removeInstant(navigationControllerClassList);
         } else if(!OffCanvas.currentOpen) {
             OffCanvas.currentOpen = this;
             bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
