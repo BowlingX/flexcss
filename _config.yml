@@ -3,5 +3,5 @@ permalink:        pretty
 
 exclude: ['src', 'scripts', 'assets', 'node_modules', 'bower_components', 'coverage','examples']
 baseurl: '/flexcss'
-flexcssVersion: 'v0.4.4'
-downloadLink: 'https://github.com/BowlingX/flexcss/archive/v.0.4.4.zip'
+flexcssVersion: 'v0.4.5'
+downloadLink: 'https://github.com/BowlingX/flexcss/archive/v.0.4.5.zip'
