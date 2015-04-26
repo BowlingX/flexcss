@@ -1,7 +1,18 @@
-<h2>Forms</h2>
-<p>Forms are <strong>fully responsive</strong> and include styles for common <code>HTML</code> widgets (input, select,
-    checkbox) </p>
-<hr>
+## Forms
+
+Forms are <strong>fully responsive</strong> and include styles for common `HTML` widgets (`input`, `select`,
+    `checkbox`). They behave to an internal grid without extra markup that is 3 columns on wide-screen and falls back to
+    1 column on small devices. I tried to follow best practices to make it as easy as possible for Users
+    AND Developers to use/create a form.
+
+All Examples have validation enabled with `FlexCss.Form`.
+
+----
+
+### Example form with HTML5 validation
+
+A simple Login-Form...
+
 <form>
     <fieldset>
         <legend>Please login</legend>
@@ -27,12 +38,13 @@
         </div>
 
         <div class="form-actions">
-            <button class="button small right" type="submit">Login</button>
+            <button class="button small indent-label" type="submit">Login</button>
         </div>
     </fieldset>
 </form>
-<hr>
-<h3>Example form with HTML5 validation</h3>
+
+----
+
 {% highlight html %}
 <form>
     <fieldset>
@@ -61,16 +73,21 @@
         </div>
 
         <div class="form-actions">
-            <button class="button small right" type="submit">Login</button>
+            <button class="button small indent-label" type="submit">Login</button>
         </div>
     </fieldset>
 </form>
 
 {% endhighlight%}
-<hr>
-<h3>Complex form Examples</h3>
-<p>Forms can be quite complex, flexcss has multiple options to display widgets</p>
-<h4>Multiple fields in one row</h4>
+
+----
+
+### Complex form Examples
+
+Forms can be quite complex, `FlexCss` has multiple options to display widgets.
+
+#### Multiple fields in one row
+
 <form>
     <fieldset>
         <div class="control-group">
@@ -151,28 +168,67 @@
                 </div>
             </div>
         </div>
+        </fieldset>
+       <fieldset class="toggle-hide" id="toggle-invisible">
+           <legend><a data-toggle="toggle-invisible">A Toggleable legend <i class="icon-right-open"></i></a>
+               <p class="small-font weight-normal">You should really open this, there might be Dragons behind ;)</p>
+           </legend>
+           <div class="toggle-container">
+               <div class="control-group">
+                   <label for="hide-1">Username</label>
+                   <div class="controls">
+                       <input id="hide-1" type="text" required data-validate-visibility/>
+                   </div>
+               </div>
+               <div class="control-group">
+                   <label for="hide-2">About me</label>
+
+                   <div class="controls">
+                       <textarea id="hide-2" required data-validate-visibility></textarea>
+                   </div>
+               </div>
+           </div>
+       </fieldset>
+       <fieldset>
+        <legend>Sliders</legend>
+        <div class="control-group">
+            <label>Range-Control</label>
+            <div class="controls">
+               <input type="range"/>
+           </div>
+       </div>
+       <div class="control-group">
+                   <label class="fade-out">Disabled Range-Control
+                   <i data-tooltip title="You can't use this control!" class="icon-help-circled"></i></label>
+                   <div class="controls">
+                      <input value="20" disabled type="range"/>
+                  </div>
+              </div>
+       </fieldset>
         <div class="form-actions">
-            <button class="button small" type="submit">save</button>
+            <button class="button small indent-label" type="submit">save</button>
         </div>
-    </fieldset>
 </form>
+
 <hr>
-<h3>Example with multiple inputs in one row</h3>
-<p>Use <code>.multi-form</code> to group inputs in one row</p>
+
+Use <code>multi-form</code> to group inputs / widgets in one row, `no-label` on `constrols` can be used if no label is present.
 {% highlight html %}
 <div class="control-group">
     <div class="controls no-label">
         <div class="multi-form">
-            <div><input type="text"/></div>
-            <div><input type="text"/></div>
+            <input type="text"/>
+            <input type="text"/>
             <!-- [...] -->
         </div>
     </div>
 </div>
 {% endhighlight %}
 <hr>
-<h3>A <code>.wide</code> form</h3>
-<p><code>.wide</code> forms will stay in widescreen mode and the label is always on top</p>
+### A `wide` form
+
+`wide` forms will stay in widescreen mode and the label is always on top
+
 <form class="wide">
     <fieldset>
         <div class="control-group">
@@ -198,8 +254,10 @@
     </fieldset>
 </form>
 <hr>
-<h3>Uneditable inputs</h3>
-<p>To let simple elements look like an input field, add <code>.input</code></p>
+### Uneditable and disabled inputs
+
+To let simple elements look like an input field, add `.input`
+
 <form class="saveRemember ajxForm form-horizontal" method="POST" data-remote="json">
     <fieldset>
         <div class="control-group">
@@ -216,15 +274,39 @@
                 <span class="input">BowlingX</span>
             </div>
         </div>
+        <div class="control-group">
+          <label>An disabled field</label>
+
+          <div class="controls">
+              <input type="text" disabled/>
+          </div>
+         </div>
+         <div class="control-group">
+           <label>An disabled select</label>
+
+           <div class="controls">
+                <div class="select-element disabled">
+                    <select disabled></select>
+               </div>
+           </div>
+         </div>
     </fieldset>
 </form>
 <hr>
 {%highlight html %}
 <span class="input">Value</span>
+
 <span class="input uneditable-input">Uneditable</span>
+
+<div class="select-element disabled">
+   <select disabled></select>
+</div>
 {%endhighlight%}
+
 <hr>
-<h3>Checkboxes and Radios</h3>
+
+### Checkboxes and Radios
+
 <form>
     <fieldset>
         <div class="control-group">
@@ -243,7 +325,6 @@
         </div>
         <div class="control-group">
             <label>Select your favorite language</label>
-
             <div class="controls multi-select-field">
                 <label class="checkbox">
                     <input required type="radio" name="radio" value="S"/>
@@ -259,10 +340,30 @@
                 </label>
             </div>
         </div>
+        <div class="control-group">
+            <label>Displayed in one row</label>
+            <div class="controls multi-select-field multi-row">
+              <label class="checkbox">
+                  <input required type="radio" name="radio" value="S"/>
+                  <span class="checkbox-container">Scala</span>
+              </label>
+              <label class="checkbox">
+                  <input required type="radio" name="radio" value="J"/>
+                  <span class="checkbox-container">Java</span>
+              </label>
+              <label class="checkbox">
+                  <input disabled required checked type="radio" name="radio" value="X"/>
+                  <span class="checkbox-container">PHP (disabled)</span>
+              </label>
+            </div>
+        </div>
     </fieldset>
 </form>
-<hr>
-<h4>Example radio (we always use <code>.checkbox</code>)</h4>
+
+----
+
+To render a checkbox or radio we use a wrapper element, the class is always `checkbox`.
+
 {% highlight html %}
 <div class="controls multi-select-field">
     <label class="checkbox">

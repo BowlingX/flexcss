@@ -44,10 +44,11 @@ legend {
   font-size: $legendFontSize;
   font-weight: $legendFontWeight;
   color: $legendColor;
-  margin-bottom: 2rem;
+  margin-bottom: $legendMargin;
 }
 
-.control-group > label, .control-group > .label{
+.multi-form label:not(.checkbox),
+.control-group > label, .control-group > .label {
   &:not(.checkbox) {
     font-size: $labelFontSize;
     color: $labelColor;
@@ -92,7 +93,7 @@ form.loading {
 
 @mixin focus-input-style() {
   background-color: $inputFocusColor;
-  border-color:$inputFocusBorderColor !important;
+  border-color: $inputFocusBorderColor !important;
   box-shadow: $inputFocusBoxShadow !important;
   outline: none;
 }
@@ -224,7 +225,7 @@ select {
   appearance: none;
   padding-right: $baseFontSize * 2;
   &::-ms-expand {
-    display:none;
+    display: none;
   }
 }
 
@@ -248,7 +249,7 @@ form:not(.wide) {
   }
 }
 
-.select-element{
+.select-element {
   &:after {
     @include icon;
     @extend .icon-down-open:before;
@@ -269,6 +270,10 @@ form:not(.wide) {
     }
     will-change: background, box-shadow;
     transition: $inputTransitions;
+  }
+
+  &.disabled:after {
+    color:$inputDisabledBorder;
   }
 }
 
@@ -369,8 +374,10 @@ form:not(.wide) {
   }
 
   .button, button, input[type="submit"] {
-    margin-bottom: 1rem;
+      margin-bottom: 1rem;
   }
+
+
 
   .left {
     > label {
@@ -440,6 +447,22 @@ input[type="range"] {
     background: darken($primaryColor, 10%);
   }
 }
+@mixin slider-thumb-disabled {
+  cursor:not-allowed;
+  &:hover {
+    background: $disabledThumbColor;
+    transform: scale3d(1, 1, 1);
+  }
+  background: $disabledThumbColor;
+
+  &:focus, &:active {
+    background: $disabledThumbColor;
+  }
+}
+
+@mixin slider-track-disabled {
+  background:$inputDisabledBorder;
+}
 
 input[type="range"]::-webkit-slider-thumb {
   z-index: 1;
@@ -449,7 +472,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-moz-range-thumb {
-  z-index: 10;
+  z-index: 1;
   @include slider-thumb;
 }
 
@@ -458,7 +481,17 @@ input[type="range"]::-ms-thumb {
   @include slider-thumb;
 }
 
-input::-webkit-slider-runnable-track {
+input[type="range"][disabled]::-ms-thumb {
+  @include slider-thumb-disabled();
+}
+input[type="range"][disabled]::-moz-range-thumb {
+  @include slider-thumb-disabled();
+}
+input[type="range"][disabled]::-webkit-slider-thumb {
+  @include slider-thumb-disabled();
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
   height: 3px;
   background: $lighterGrayColor;
   position: relative;
@@ -490,25 +523,20 @@ input::-moz-range-track {
   border: 0;
 }
 
-.multiple-range-input {
-  input:last-of-type::-moz-range-track {
-    -moz-appearance: none;
-    background: none transparent;
-    border: 0;
-  }
-  input:last-of-type {
-    &::-ms-fill-lower {
-      background: none transparent;
-    }
-
-    &::-ms-fill-upper {
-      background: none transparent;
-    }
-    &::-ms-track {
-      background: none transparent;
-    }
-  }
-
+input[type="range"][disabled]::-ms-fill-lower   {
+  @include slider-track-disabled();
+}
+input[type="range"][disabled]::-ms-fill-upper   {
+  @include slider-track-disabled();
+}
+input[type="range"][disabled]::-moz-range-track   {
+  @include slider-track-disabled();
+}
+input[type="range"][disabled]::-ms-track  {
+  @include slider-track-disabled();
+}
+input[type="range"][disabled]::-webkit-slider-runnable-track {
+  @include slider-track-disabled();
 }
 
 // input that has an icon beforehand
@@ -558,7 +586,7 @@ input::-moz-range-track {
       flex-direction: row;
     }
 
-    .control-group > .label, .control-group >  label {
+    .control-group > .label, .control-group > label {
       &:not(.checkbox) {
         min-width: $labelMinWidth;
         width: $labelWidthDesktop;

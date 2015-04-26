@@ -4,8 +4,12 @@ title: Playground
 weight: 1
 ---
 
-<h1>Demo-Page</h1>
-<p>This is FlexCss, a pattern library built for <a href="https://hellofellow.com">hellofellow.com</a></p>
+# Playground
+
+* Table of Contents
+{:toc}
+
+
 <a class="button" href="https://github.com/BowlingX/flexcss"><i class="icon-github-circled"></i> <span
         class="hide-small">Fork me</span></a>
 <a href="https://twitter.com/bowlingx" class="button color-twitter"><i class="icon-twitter"></i> <span
@@ -14,28 +18,62 @@ weight: 1
     <i class="icon-download-cloud"></i>
     <span
             class="hide-small">{{site.flexcssVersion}}</span></a>
-<br><br>
-{% include text.html %}
-<hr>
-{% include slider.html %}
-<hr>
-{% include buttons.html %}
-<hr>
-{% include forms.html %}
-<hr>
-{% include modals.html %}
-<hr>
-{% include tabs.html %}
-<hr>
-{% include navigation.html %}
-<hr>
-{% include dropdowns.html %}
-<hr>
+
+This is FlexCss, a full-featured pattern library built for [hellofellow.com](https://hellofellow.com) with
+
+- low-footprint Javascript components (just ~67kb minified and **~20kB** compressed) that rock
+- build with ES6 and sass
+- modular
+- zero-dependencies
+
+> I created `FlexCss` from scratch because the current web-frameworks available lack my use case of being
+    **lightweight** and still solve real-world problems™.
+
+Feel free to drop me [some comments](#disqus_thread).
+
+
+----
+
+{% include text.md %}
+
+----
+
+{% include slider.md %}
+
+----
+{% include buttons.md %}
+
+----
+
+{% include forms.md %}
+
+----
+
+{% include modals.md %}
+
+----
+
+{% include tabs.md %}
+
+----
+
+{% include navigation.md %}
+
+----
+
+{% include dropdowns.md %}
+
+----
+
+{% include tooltips.md %}
+
+----
 
 <script type="application/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         // Some async widgets
-        new FlexCss.Widget('SecondModal').setAsync(function () {
+
+        new FlexCss.Widget('AsyncModal').setAsync(function () {
             return new Promise(function (s) {
                 setTimeout(function () {
                     s(document.getElementById('async-modal'));

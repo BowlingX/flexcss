@@ -1,6 +1,4 @@
 /* Everything about tables */
-
-
 table {
   width: 100%;
   border-spacing: 0;
@@ -39,6 +37,7 @@ table {
       background: $globalHoverColor;
   }
 
+  // a basic grid for tables
   th, td {
     @include generate-grid();
   }

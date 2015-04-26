@@ -1,14 +1,13 @@
-<h2>Modals</h2>
+## Modals
 
-<p>A Default Modal with a <code>.wide</code> form inside. Besides this, if you add
+A Default Modal with a <code>.wide</code> form inside. Besides this, if you add
     <code>.center</code>
     to a modal it will be truly centered on Desktop size.
-</p>
-<p>
-    Modals are <strong>stackable</strong> (try <code>attach-image</code>) and may also replace an existing one
-    (try <code>?</code> next to <code>new topic</code>).
-    <br>
-    All Modals will be appended to a dedicated Container Element <code>.modal-container</code>.</p>
+
+Modals are <strong>stackable</strong> (try <code>attach-image</code>) and may also replace an existing one
+(try <code>?</code> next to <code>new topic</code>).
+<br>
+All Modals will be appended to a dedicated Container Element <code>.modal-container</code>.
 
 <div class="showcase">
     <a class="button small secondary" data-modal="content-modal">open</a>
@@ -22,9 +21,8 @@
             <fieldset>
                 <div class="control-group">
                     <div class="multi-form break">
-                        <div class="double-field">
+                        <div>
                             <label for="language_id">Language of your post</label>
-
                             <div class="controls">
                                 <div class="select-element">
                                     <select id="language_id">
@@ -35,9 +33,8 @@
                             </div>
 
                         </div>
-                        <div class="double-field">
+                        <div>
                             <label for="category_id">Category</label>
-
                             <div class="controls">
                                 <div class="select-element">
                                     <select id="category_id">
@@ -73,7 +70,7 @@
                                                           placeholder="Please be nice and do not post anything awkward"
                                                           id="post_content"></textarea>
 
-                        <p><a id="SecondModal" data-new-instance data-modal="second-modal"><i
+                        <p><a  data-new-instance data-modal="async-modal"><i
                                 class="icon-picture"></i>
                             attach image (launches a dedicated modal)</a></p>
                     </div>
@@ -110,7 +107,8 @@
     <button class="button block secondary small" data-close-modal>thanks, got it</button>
 </div>
 <hr>
-<h3>Alerts</h3>
+
+### Alerts
 
 <p>If you add <code>.alert</code> to a modal, it becomes a handy alert box with a fixed width. On
     smaller screens there
@@ -133,12 +131,13 @@
     </div>
 </div>
 <hr>
-<h3>Example</h3>
+
+### Minimal Markup Example
+
 {% highlight html%}
 <button data-modal="a-modal">open a modal</button>
 <div id="a-modal" class="modal">
     <i data-close-modal class="modal-close icon-cancel-1"></i>
-
     <p>Modal-Content</p>
 </div>
 {% endhighlight %}
@@ -159,3 +158,11 @@
         </div>
     </form>
 </div>
+
+----
+
+### Async
+
+Modals may be loaded async.
+
+<button class="button" data-modal id="AsyncModal">open an async modal</button>

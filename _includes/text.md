@@ -1,34 +1,33 @@
+## Text
+
+Some very basic Headlines
+
+<h1>h1. heading</h1>
 <h2>h2. heading</h2>
 <h3>h3. heading</h3>
 <h4>h4. heading</h4>
 <h5>h5. heading</h5>
 <h6>h6. heading</h6>
 
-<h2>Copy text</h2>
+This is an example copy text with
+    <a data-tooltip title="A simple example tooltip" href="#">a link (hover over it to show a tooltip)</a>
+    and some <strong>bold</strong> text in it.
 
-<p>Pellentesque <a data-tooltip title="A Tooltip" href="">habitant morbi
-    tristique
-    senectus</a> et
-    netus et malesuada fames ac turpis egestas.
-    Vestibulum
-    tortor quam,
-    <a data-tooltip
-       title="http://www.iamareallylongwebaddressthatmayneverbreakandsoon.de">feugiat
-    </a>
-    vitae, <a data-tooltip title="test">ultricies eget</a>, tempor sit amet, ante. Donec eu libero
-    sit amet quam egestas
-    semper. Aenean <strong>ultricies</strong> mi vitae est. Mauris placerat eleifend leo.</p>
+<p class="fade-out">We may <code>fade-out</code> text that is less important.
+A <a data-tooltip title="Where is this link going to?">link to something</a> would also be different.</p>
 
-<h2>Badges</h2>
+{% highlight html %}
+<p class="fade-out">A less important text</p>
+{% endhighlight %}
 
-<p><span class="badge">A simple Badge</span> or just a number <span class="badge">10</span></p>
+----
 
-<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-    egestas. Vestibulum
-    tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-    egestas
-    semper. Aenean ultricies mi <span class="badge">vitae est</span>. Mauris placerat eleifend leo.
-</p>
+### Badges
+
+Badges add meta-information to elements. Checkout this
+<span class="badge">simple Badge</span> or just this number <span class="badge">10</span>.
+
+They work nicely in Navigation bars or even lists:
 
 <ul>
     <li>A list with <span class="badge">Badge</span> <span class="badge">5</span> <span
@@ -41,7 +40,11 @@
 <span class="badge">5</span>
 {% endhighlight %}
 
-<h2>Breadcrumbs</h2>
+----
+
+### Breadcrumbs
+
+Breadcrumbs show a specific path of the current page, they will be truncated to the first and last item on small screens.
 
 <div>
     <ul class="breadcrumb">
@@ -59,8 +62,6 @@
         <li><a href="#">This is a very long child that may break later or gets cut of</a></li>
     </ul>
 </div>
-<hr>
-<h3>Example</h3>
 {% highlight html %}
 <ul class="breadcrumb">
     <li><a href="#">Root</a></li>
@@ -68,7 +69,11 @@
 </ul>
 {% endhighlight %}
 <hr>
-<h2>Pagination</h2>
+
+### Pagination
+
+Different types of pagination, on small screens only arrows (next and prev) are visible.
+
 <div>
     <ul class="paginator">
         <li class="arrow item"><a><i class="icon-left-open"></i></a></li>
@@ -106,8 +111,6 @@
         <li class="arrow item"><a><i class="icon-right-open"></i></a></li>
     </ul>
 </div>
-<hr>
-<h3>Example</h3>
 
 {% highlight html %}
 <ul class="paginator">

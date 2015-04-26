@@ -3,7 +3,7 @@
 */
 
 // interface
-@mixin interface($case:none) {
+@mixin interface($case: none) {
   user-select: $case;
 }
 
@@ -36,24 +36,24 @@
 }
 
 // helper to fix flickering/blurry in different browsers
-@mixin perspectiveHelper($perspective:1000px) {
+@mixin perspectiveHelper($perspective: 1000px) {
   perspective: $perspective;
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
 
-@mixin perspective($perspective:1000px) {
+@mixin perspective($perspective: 1000px) {
   perspective: $perspective;
 }
 
 // a central loader
 @mixin centralLoader() {
-  left:calc(50% - #{$loaderSize - 10px});
-  top:calc(50% - #{$loaderSize - 10px});
-  background:#fff;
-  padding:10px;
-  border-radius:$globalRadius;
-  box-shadow:$globalBoxShadow;
+  left: calc(50% - #{$loaderSize - 10px});
+  top: calc(50% - #{$loaderSize - 10px});
+  background: #fff;
+  padding: 10px;
+  border-radius: $globalRadius;
+  box-shadow: $globalBoxShadow;
 }
 
 // creates an arrow at top
@@ -98,7 +98,7 @@
   }
 }
 
-// keyframes
+// keyframes helper for different vendors
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
     @content;
@@ -153,11 +153,11 @@
 }
 
 // small helper for ellipsis
-@mixin ellipsis($max-width:300px){
+@mixin ellipsis($max-width: 300px) {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width:$max-width;
+  max-width: $max-width;
 }
 
 /**
@@ -216,9 +216,14 @@
 * Mixin to clear floats
 */
 @mixin clearfix() {
-  *zoom:1;
-  &:before, &:after { content: " "; display: table; }
-  &:after { clear: both; }
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }
 
 /**
@@ -235,9 +240,9 @@
 }
 
 /**
-* Generates a grid
+* Mixin that generates a simple grid
 */
-@mixin generate-grid($columns:$columns) {
+@mixin generate-grid($columns: $columns) {
   $gridSize: length($columns);
   @for $i from 1 to $gridSize {
     $class: nth($columns, $i);
@@ -247,7 +252,10 @@
   }
 }
 
-@mixin createColorSection($color, $decoration:underline, $fontWeight:normal) {
+/**
+ * Mixin that creates a colored section that may include links
+ */
+@mixin createColorSection($color, $decoration: underline, $fontWeight: normal) {
   color: $color !important;
   a {
     color: $color !important;

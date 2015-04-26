@@ -1,5 +1,9 @@
-<h2>Dropdowns</h2>
-<p>Checkout what happens if you use dropdowns with a small device (or shrink the browser window).</p>
+## Dropdowns
+
+Dropdowns in generals try always to fit in the current viewport and behave totally different on small devices.
+
+Shrink down your browser to see what happens.
+
 <button data-dropdown="dropdown-test" class="button small">a simple dropdown <i class="icon-down-dir"></i></button>
 
 <div class="showcase">
@@ -12,6 +16,7 @@
     </div>
 </div>
 <hr>
+
 <p>Dropdowns can be loaded async.</p>
 <button id="async-dropdown-target" data-dropdown class="button small">An async dropdown</button>
 <hr>
@@ -22,7 +27,7 @@
         <li><a href="#"><i class="icon-attach"></i>Dropdown Sample Link</a></li>
     </ul>
 </div>
-<h3>Example code</h3>
+
 {% highlight html %}
 <button data-dropdown="dropdown-test" class="button small">A dropdown</button>
 <div id="dropdown-test" class="dropdown">

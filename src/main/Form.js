@@ -655,9 +655,9 @@ class Form {
         var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
 
         // helper to handle/remove tooltips
-        function _handleTooltipInline() {
+        function _handleTooltipInline(target) {
             if (self.tooltips) {
-                self.tooltips.removeTooltip();
+                self.tooltips.removeTooltip(target);
             }
         }
 
@@ -766,7 +766,9 @@ class Form {
             if (!_checkIsValidBlurFocusElement(e.target)) {
                 return;
             }
-            self.showAndOrCreateTooltip(e.target);
+            setTimeout(() => {
+                self.showAndOrCreateTooltip(e.target);
+            },0);
         }, true);
 
         // Handle change for checkbox, radios and selects

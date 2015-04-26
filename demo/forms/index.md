@@ -9,7 +9,7 @@ weight: 2
 * Table of Contents
 {:toc}
 
-## Form-Validation
+# Form-Validation
 
 <code>FlexCss</code> contains a comprehensive form library with a solid JavaScript
 plugin that utilises HTML5 Form-Validation. <code>FlexCss.Form</code> overwrites the default behaviour of the
@@ -18,11 +18,12 @@ inline validation (on <code>blur</code> and optional in realtime with <code>keyu
 
 ----
 
-### Features
+## Features
 
 - Plugin-In replacement for HTML5-Form-Validation
     - Zero-Configuration for build-in input-types, patterns and required fields
     - Fully I18n support trough build-in Browser-Support
+- Standalone just **~14kB**  compressed
 - Inline-Validation <code>blur</code> or <code>realtime</code>
 - Custom-Validation/Validators
 - Submitting and Validating a form via XHR (<code>json</code> or <code>form</code> encoded)
@@ -65,6 +66,7 @@ realtimeEventKey: 'keyup'
 }
 {% endhighlight%}
 <hr>
+
 ### Set options trough <code>data-attributes</code>
 <p>All Options can be set per form instance via <code>data-attributes</code> and will overwrite
     options that may have been set before. Boolean values are set trough integer values with <code>1 = true</code> and
@@ -76,7 +78,8 @@ realtimeEventKey: 'keyup'
 </form>
 {% endhighlight%}
 <hr>
-### A Simple form with E-Mail-Validation
+
+## A Simple form with E-Mail-Validation
 <p>The following form has an HTML5 <code>email</code> input type defined, the input field is also <code>required</code>.
 </p>
 {% highlight html %}
@@ -127,7 +130,7 @@ realtimeEventKey: 'keyup'
 </form>
 {% endhighlight%}
 <hr>
-### Custom Messages
+## Custom Messages
 <p>By Default all error messages are provided by the browser. The Default <code>errorMessageHandler</code> supports
     custom messages trough the <code>data-validation-message</code> attribute. You can provide your own Message handler
     by using the following static class method:</p>
@@ -156,12 +159,12 @@ FlexCss.Form.registerErrorMessageHandler(
     </div>
 </form>
 <hr>
-#### Example
+### Example
 {% highlight html %}
 <input required data-validation-message="Dude, E-Mail please!" type="email">
 {% endhighlight%}
 <hr>
-### Custom Validation
+## Custom Validation
 <p>Following form has custom validators registered. One will try to ask for a free username on the server.
     A second one will make sure that the passwords are equal.
     Before running custom validations, all default validators will be asked (like
@@ -250,7 +253,7 @@ FlexCss.Form.registerValidator('inline-validate', function (field) {
 {% endhighlight%}
 <p>Validators can be set with the <code>data-validate</code> attribute.</p>
 <hr>
-#### Setup Error-Messages in validator
+### Setup Error-Messages in validator
 
 <p>Sample of <code>equals</code> validator. A field's error message can bet set with
     <code>field.setCustomValidity</code></p>
@@ -270,13 +273,13 @@ FlexCss.Form.registerValidator('equals', function (field) {
 {%endhighlight%}
 <hr>
 
-### Exclude hidden fields
+## Exclude hidden fields
 
 <p>Due the dynamic of a form, it's sometimes necessary to check if a field is hidden and skip validation.
     Because this check might be expansive we opt in for it with <code>data-validate-visibility</code> on <strong>each
         field</strong> that
     might be invisible in the future.</p>
-#### Example
+### Example
 
 <p>The following form shows a toggleable Region that will be validated when visible</p>
 <hr>
@@ -321,12 +324,12 @@ FlexCss.Form.registerValidator('equals', function (field) {
 </form>
 <hr>
 
-### Disable inline-validation for single Fields
+## Disable inline-validation for single Fields
 
 Sometimes your user might be feel uncomfortable with a field being inline validated (and just validate in on submit).
 You can disable inline-validation on field by field basis with `data-disable-inline-validation`.
 
-#### Example
+### Example
 
 ----
 
@@ -351,7 +354,7 @@ You can disable inline-validation on field by field basis with `data-disable-inl
 
 ----
 
-### Group Inputs to one label
+## Group Inputs to one label
 
 It may be a requirement to group multiple input invalid-states to one label.
 
@@ -405,7 +408,7 @@ To archive this behaviour it's possible to define a `label` that should be set t
 
 -----------
 
-### Events
+## Events
 
 `FlexCss.Form` has some build in event's that are fired as **`CustomEvent`** and are
 catchable with `document.addEventListener(name)`.
@@ -417,7 +420,9 @@ catchable with `document.addEventListener(name)`.
 |`flexcss.form.afterAjaxSubmit`| Fires right after the form has been submitted as XHR.
 |`flexcss.form.ajaxCompleted`| Fires right after the ajax call has been completed (either successful or unsuccessful).
 
-### Remote / XHR
+----
+
+## Remote / XHR
 
 It's possible to submit your form as XHR Request.
 
@@ -425,7 +430,10 @@ To enable that you just need to add an data-attribute
 `data-remote` and optional `data-remote-action` to specify where to `POST` (default) the form.
 You may also specify if the form should be submitted as `FormData` or as a `JSON` payload with either just `data-remote` or `data-remote="json"`
 
-### Remote Validation
+----
+
+
+## Remote Validation
 
 You may register a remote validation handler with
 
@@ -433,10 +441,15 @@ You may register a remote validation handler with
 
 The instance of the form is bind to the callback function, so you can use the internal API.
 
-#### API
+----
+
+
+### API
 - `this.handleValidation(fieldsThatHaveErrorsArray, optionalFocus)` will validate the given fields and eventually focus the first error
 
-#### Example
+----
+
+### Example
 
 {% highlight javascript %}
 FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {

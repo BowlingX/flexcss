@@ -1,0 +1,12 @@
+/* Base File that contains all dependencies (mixins, vars etc.)*/
+
+// global settings
+@import "settings";
+// mixins used by components
+@import "lib/mixins";
+// animations
+@import "lib/animate";
+// bundled normalize library
+@import "lib/normalize";
+// bundled fonts
+@import "lib/fontello";

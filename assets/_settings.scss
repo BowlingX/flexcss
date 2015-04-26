@@ -59,6 +59,9 @@ $globalLongEaseTime: .8s;
 $globalMenuEasing:ease;
 
 $h1FontSize: 18px !default;
+$h2FontSize: $h1FontSize - 1px !default;
+$h3FontSize: $h1FontSize - 3px !default;
+
 $h1DesktopFontSize:20px !default;
 $h1Color: $baseColor !default;
 $headingMargin: 0 0 1rem 0 !default;
@@ -140,6 +143,7 @@ $controlMargin:20px !default;
 $formWidthControlsBetween: calc(50% - .75rem) !default;
 $formWidthControls: calc(75% - .5rem) !default;
 $inputPadding: 8px 10px !default;
+$legendMargin: 2rem !default;
 $uneditableInputPadding: 8px 10px !default;
 $inputBoxShadow:none !default;
 $legendFontSize:$baseFontSize !default;
@@ -158,6 +162,7 @@ $copyTextFormsMultipleMarginTop: .5rem !default;
 $inputFontSize:$baseFontSize !default;
 $inputTransitions: background .5s ease !default;
 $checkboxMargin: 1px 0 0 28px;
+$disabledThumbColor: lighten($lighterGrayColor, 10%);
 
 // buttons
 $buttonColor: #fff !default;

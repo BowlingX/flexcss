@@ -2,6 +2,7 @@
 $disabledPrimaryBtnColor:lighten($btnPrimaryColor, 25%);
 $disabledSecondaryBtnColor:lighten($btnSecondaryColor, 15%);
 $disabledDangerBtnColor:lighten($btnDangerColor, 35%);
+$disabledBtnAlternativeColor: lighten($btnAlternativeColor, 10%);
 .button {
   display: inline-block;
   cursor: pointer;
@@ -161,7 +162,17 @@ $disabledDangerBtnColor:lighten($btnDangerColor, 35%);
     }
 
     &.disabled, [disabled] {
-      background-color: lighten($btnAlternativeColor, 15%);
+      background-color: $disabledBtnAlternativeColor;
+    }
+
+    &.outline:not(:hover) {
+      border-color:$btnAlternativeColor;
+      color:$btnAlternativeColor;
+
+      &.disabled {
+        border-color:$disabledBtnAlternativeColor;
+        color:$disabledBtnAlternativeColor;
+      }
     }
   }
 

@@ -1,6 +1,6 @@
-<h2>Tabs and Navigation</h2>
+## Tabs and Navigation
 
-<p>Tabs allow content to be separated under different topics.</p>
+Tabs allow content to be separated under different topics.
 
 <div class="overflow-container">
     <ul class="tabs" data-toggle-list>
@@ -29,11 +29,9 @@
     <p>About myself</p>
 </div>
 <hr>
-<h3>Small Tabs</h3>
-<ul class="tabs small-font tabs-small">
-    <li class="no-hover"><span class="tab-item">A Tab but not clickable</span></li>
-</ul>
-<br>
+
+### Small Tabs
+
 <ul class="tabs small-font tabs-small" data-toggle-list>
     <li class="active"><a data-toggle="tab-content-all" href="">a tab</a></li>
     <li><a data-toggle="tab-content-countrymen" href="#">a second tab</a></li>

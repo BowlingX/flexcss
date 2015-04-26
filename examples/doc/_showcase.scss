@@ -17,6 +17,14 @@ hr {
   margin: 2rem 0;
 }
 
+.position-static {
+  position: static !important;
+}
+
+.more-space {
+  padding: 3rem;
+}
+
 .dropdown-sample {
   position: static !important;
   width: auto;
@@ -64,7 +72,7 @@ hr {
 
 @media #{$mediaDesktop} {
   #markdown-toc {
-    width:300px;
+    width: 300px;
   }
 }
 
@@ -84,3 +92,51 @@ hr {
   display: block;
 }
 
+blockquote {
+  max-width: 80%;
+  border-left: .5rem solid #f8f8f8;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+#markdown-toc {
+  margin: 0;
+  list-style: none;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin-bottom: .5rem;
+    }
+    li a {
+      padding-left: 1rem;
+    }
+    ul {
+      margin: 0 0 .5rem 0;
+      li {
+        margin-bottom:0;
+        a {
+          font-size: $smallFontSize;
+          padding: 5px 10px 5px 2rem;
+          color: $grayColor;
+        }
+      }
+      ul {
+        li a {
+          padding-left: 3rem;
+        }
+      }
+    }
+  }
+
+  a {
+    padding: 5px 2px;
+    display: block;
+    transition: background $globalMediumEaseTime ease, color $globalMediumEaseTime ease;
+    &:hover {
+      background: $lightGrayColor;
+    }
+  }
+}
