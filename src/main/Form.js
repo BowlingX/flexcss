@@ -768,7 +768,7 @@ class Form {
             }
             setTimeout(() => {
                 self.showAndOrCreateTooltip(e.target);
-            },0);
+            },1);
         }, true);
 
         // Handle change for checkbox, radios and selects
