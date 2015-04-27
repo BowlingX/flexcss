@@ -668,9 +668,9 @@ class Form {
         var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
 
         // helper to handle/remove tooltips
-        function _handleTooltipInline(target) {
+        function _handleTooltipInline() {
             if (self.tooltips) {
-                self.tooltips.removeTooltip(target);
+                self.tooltips.removeTooltip();
             }
         }
 
@@ -686,7 +686,7 @@ class Form {
             }
             var target = e.target, hasError = false,
                 errorTarget = Form._findErrorTarget(target);
-            _handleTooltipInline(errorTarget);
+            _handleTooltipInline();
             // clear timeout so realtime can't fire
             clearTimeout(TIMEOUT_KEYDOWN);
             KEYDOWN_RUNNING = false;
@@ -724,8 +724,7 @@ class Form {
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
-                    let errorTarget = Form._findErrorTarget(target);
-                    _handleTooltipInline(errorTarget);
+                    _handleTooltipInline();
                     let dependentFields = self._getDependentFields(target);
                     self._customValidationsForElements(dependentFields).then(function () {
                         self.prepareErrors(dependentFields, false);
