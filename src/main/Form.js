@@ -257,7 +257,7 @@ class Form {
                 // combine browser and custom validators
                 r.foundAnyError = true;
             }
-            let thisToValidateFields = Array.from(toValidateFields).concat(r.checkedFields);
+            let thisToValidateFields = Array.from(arr).concat(r.checkedFields);
             let foundInvalidFields = self.prepareErrors(thisToValidateFields, false),
                 firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
