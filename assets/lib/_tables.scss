@@ -34,7 +34,7 @@ table {
   }
 
   tbody > tr:hover {
-      background: $globalHoverColor;
+    background: $globalHoverColor;
   }
 
   // a basic grid for tables
@@ -45,6 +45,14 @@ table {
   &.nowrap {
     th, td {
       @include ellipsis(10px);
+    }
+  }
+}
+
+@media #{$mediaSmall} {
+  table.break {
+    tr, td, th {
+      display:block;
     }
   }
 }

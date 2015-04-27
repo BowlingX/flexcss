@@ -451,20 +451,22 @@ The instance of the form is bind to the callback function, so you can use the in
 
 ### Example
 
+Consult the [fetch-api](https://github.com/github/fetch) for more information how to handle a request promise
+
 {% highlight javascript %}
 FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {
  // TODO: .. code to extract error messages from server response
+ req.text().then(function (responseText) {
+     // TODO: .. code to extract the fields that have an error
+     // A field is marked as invalid with the following HTML5-API:
+     field.setCustomValidity('Invalid field state');
 
- // TODO: .. code to extract the fields that have an error
- // A field is marked as invalid with the following HTML5-API:
- field.setCustomValidity('Invalid field state');
+     var fieldsThatHaveErrorsArray = [/*[...]*/],
+         firstErrorField = fieldsThatHaveErrorsArray[0];
 
- var fieldsThatHaveErrorsArray = [/*[...]*/],
-     firstErrorField = fieldsThatHaveErrorsArray[0];
-
- // handle validation for fields, (second parameter focuses first error)
- this.handleValidation(fieldsThatHaveErrorsArray, true);
-
+     // handle validation for fields, (second parameter focuses first error)
+     this.handleValidation(fieldsThatHaveErrorsArray, true);
+ }.bind(this));
 });
 {% endhighlight %}
 

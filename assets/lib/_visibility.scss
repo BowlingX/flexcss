@@ -1,10 +1,14 @@
 /**
 * General visibility classes
+* We can't use initial because IE10 needs to be supported
 */
+
 .visible-large {
   display: none;
 }
 
+.visible-inline-block-small,
+.visible-block-small,
 .visible-small {
   display: none;
 }
@@ -18,12 +22,18 @@
 }
 
 @media #{$mediaSmall} {
+
+  .visible-block-small,
   .visible-small {
     display: block !important;
   }
 
-  span.visible-small {
+  span.visible-small:not(.visible-block-small):not(.visible-inline-block-small) {
     display: inline !important;
+  }
+
+  .visible-inline-block-small {
+    display: inline-block !important;
   }
 
   .hide-small {

@@ -156,18 +156,29 @@ class Form {
         }
         // prevent form from submit normally
         e.preventDefault();
-        // support either JSON request payload or normal payload submission
-        var serverCall = useJson ? fetch(ajaxPostUrl, {
-            headers: {
-                'Content-Type': this.options.ajaxJsonContentType
-            },
-            method: this.options.ajaxSubmitType,
-            body: JSON.stringify(this.serialize())
-        }) : fetch(ajaxPostUrl, {
-            method: this.options.ajaxSubmitType,
-            body: new FormData(thisForm)
-        });
 
+        // add information that this is an XMLHttpRequest request (used by some frameworks)
+        let defaultHeaders = {
+            'X-Requested-With': 'XMLHttpRequest'
+        };
+
+        // setup default headers
+        if (useJson) {
+            Object.assign(defaultHeaders, {
+                'Content-Type': this.options.ajaxJsonContentType
+            });
+        }
+        let defaultOptions = {
+            headers: defaultHeaders,
+            method: this.options.ajaxSubmitType,
+            credentials: 'include'
+        };
+        // support either JSON request payload or normal payload submission
+        var serverCall = useJson ? fetch(ajaxPostUrl, Object.assign(defaultOptions, {
+            body: JSON.stringify(this.serialize())
+        })) : fetch(ajaxPostUrl, Object.assign(defaultOptions, {
+            body: new FormData(thisForm)
+        }));
 
         Event.dispatch(thisForm, EVENT_FORM_AFTER_AJAX_SUBMIT).withOriginal(e).fire();
 
@@ -214,13 +225,13 @@ class Form {
      * @returns {Promise}
      */
     handleValidation(field, focus) {
-        var fields = (field instanceof Array || field instanceof NodeList)? field : [field];
+        var fields = (field instanceof Array || field instanceof NodeList) ? field : [field];
         return this._handleValidation(fields, focus, true).then(((r) => {
             if (!r.foundAnyError) {
-                    // remove tooltips
-                    if(this.tooltips) {
-                        this.tooltips.removeTooltip();
-                    }
+                // remove tooltips
+                if (this.tooltips) {
+                    this.tooltips.removeTooltip();
+                }
             }
         }).bind(this));
     }
@@ -237,7 +248,7 @@ class Form {
         var self = this;
         var arr = Form._createArrayFromInvalidFieldList(toValidateFields), isLocalInvalid = arr.length > 0;
         // focus must appear in the same frame for iOS devices
-        if(isLocalInvalid && focus) {
+        if (isLocalInvalid && focus) {
             arr[0].focus();
         }
         var validation = scoped ? this._customValidationsForElements(toValidateFields) : self.validateCustomFields();
@@ -297,9 +308,9 @@ class Form {
      * @private
      */
     _getInvalidElements() {
-       return Array.prototype.filter.call(this.getForm().querySelectorAll(":invalid"), function(r){
-           return !(r instanceof HTMLFieldSetElement);
-       });
+        return Array.prototype.filter.call(this.getForm().querySelectorAll(":invalid"), function (r) {
+            return !(r instanceof HTMLFieldSetElement);
+        });
     }
 
     /**
@@ -415,6 +426,7 @@ class Form {
             this.removeErrors();
         }
         let labelGroups = {}, invalidFields = [];
+
         function handleAdditionalLabels(isInvalid, labelGroups, field) {
             let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
                 field.id, group = labelGroups[additionalLabels];
@@ -425,6 +437,7 @@ class Form {
                 labelGroups[additionalLabels] = group;
             }
         }
+
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
@@ -512,7 +525,7 @@ class Form {
         for (var i = 0; i < list.length; ++i) {
             var n = list[i];
             if (n.validity && !n.validity.valid) {
-                if(!Form._shouldNotValidateField(n)) {
+                if (!Form._shouldNotValidateField(n)) {
                     arr.push(n);
                 }
             }
@@ -614,11 +627,11 @@ class Form {
      * @private
      */
     _getDependentFields(field) {
-       let fieldSelector = field.getAttribute(ATTR_DEPENDS), base = [field];
-        if(fieldSelector) {
+        let fieldSelector = field.getAttribute(ATTR_DEPENDS), base = [field];
+        if (fieldSelector) {
             base.push.apply(base, Array.prototype.slice.apply(this.getForm().querySelectorAll(fieldSelector)));
         }
-       return base;
+        return base;
     }
 
     /**
@@ -668,7 +681,7 @@ class Form {
         // handle focus out for text elements
         // Will show an error if field was invalid the first time
         form.addEventListener('blur', function (e) {
-            if(self._formIsLoading()) {
+            if (self._formIsLoading()) {
                 return;
             }
             var target = e.target, hasError = false,
@@ -696,7 +709,7 @@ class Form {
         // setup custom realtime event if given
         if (self.options.realtime) {
             form.addEventListener(self.options.realtimeEventKey, function (e) {
-                if(self._formIsLoading()) {
+                if (self._formIsLoading()) {
                     return;
                 }
                 var target = e.target;
@@ -759,7 +772,7 @@ class Form {
         // handle focus on input elements
         // will show an error if field is invalid
         form.addEventListener("focus", function (e) {
-            if(self._formIsLoading()) {
+            if (self._formIsLoading()) {
                 return;
             }
             // do not track errors for checkbox and radios on focus:
@@ -768,7 +781,7 @@ class Form {
             }
             setTimeout(() => {
                 self.showAndOrCreateTooltip(e.target);
-            },1);
+            }, 1);
         }, true);
 
         // Handle change for checkbox, radios and selects
@@ -777,7 +790,7 @@ class Form {
             if (name) {
                 var inputs = form.querySelectorAll('[name="' + name + '"]');
                 // we only support dependent fields for a single widgets right now
-                if(1 === inputs.length) {
+                if (1 === inputs.length) {
                     inputs = self._getDependentFields(e.target);
                 }
                 self._customValidationsForElements(inputs).then(function () {
@@ -810,6 +823,7 @@ class Form {
     _formIsLoading() {
         return this.getForm().classList.contains(LOADING_CLASS);
     }
+
     /**
      * Listener that is executed on form submit
      * @param e
@@ -839,7 +853,7 @@ class Form {
                     // because custom validators may mark multiple fields as invalid, we get all of them in the form
                     var fields = self._getInvalidElements(),
                         errors = self.prepareErrors(fields, false), firstError = errors[0];
-                    if(firstError) {
+                    if (firstError) {
                         self.showAndOrCreateTooltip(firstError, true);
                         firstError.focus();
                     }
