@@ -33,7 +33,7 @@ table {
     }
   }
 
-  tbody > tr:hover {
+  &:not(.no-hover) tbody > tr:hover {
     background: $globalHoverColor;
   }
 
@@ -47,12 +47,20 @@ table {
       @include ellipsis(10px);
     }
   }
+
+  &.plain {
+    tr {
+      border:none !important;
+    }
+  }
+
 }
 
 @media #{$mediaSmall} {
   table.break {
     tr, td, th {
       display:block;
+      width:100%;
     }
   }
 }
