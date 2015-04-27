@@ -327,9 +327,6 @@ class Form {
             let el = inputsWithErrorClasses[inputErrorIndex];
             el.classList.remove(INPUT_ERROR_CLASS);
             el.removeAttribute(ARIA_INVALID);
-            if (this.tooltips) {
-                this.tooltips.removeTooltip();
-            }
         }
     }
 
@@ -413,6 +410,9 @@ class Form {
      */
     removeErrors() {
         this._removeElementErrors(this.form);
+        if (this.tooltips) {
+            this.tooltips.removeTooltip();
+        }
         return this;
     }
 
@@ -599,8 +599,8 @@ class Form {
         }
         var errorTarget = Form._findErrorTarget(target);
         if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
-            self.tooltips.createTooltip(errorTarget,
-                Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+                self.tooltips.createTooltip(errorTarget,
+                    Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
         } else {
             if (remove) {
                 self.tooltips.removeTooltip();
@@ -632,6 +632,15 @@ class Form {
             base.push.apply(base, Array.prototype.slice.apply(this.getForm().querySelectorAll(fieldSelector)));
         }
         return base;
+    }
+
+    /**
+     * @private
+     */
+    _handleTooltipInline() {
+        if (this.tooltips) {
+           this.tooltips.removeTooltip();
+        }
     }
 
     /**
@@ -667,13 +676,6 @@ class Form {
         // Timeout for keys:
         var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
 
-        // helper to handle/remove tooltips
-        function _handleTooltipInline() {
-            if (self.tooltips) {
-                self.tooltips.removeTooltip();
-            }
-        }
-
         form.addEventListener('reset', function () {
             this.removeErrors();
         }.bind(this));
@@ -686,7 +688,7 @@ class Form {
             }
             var target = e.target, hasError = false,
                 errorTarget = Form._findErrorTarget(target);
-            _handleTooltipInline();
+            self._handleTooltipInline();
             // clear timeout so realtime can't fire
             clearTimeout(TIMEOUT_KEYDOWN);
             KEYDOWN_RUNNING = false;
@@ -713,18 +715,18 @@ class Form {
                     return;
                 }
                 var target = e.target;
+                clearTimeout(TIMEOUT_KEYDOWN);
                 // abort on tab or enter
                 if (KEYDOWN_RUNNING || CONST_TAB_KEYCODE === e.keyCode ||
                     CONST_ENTER_KEYCODE === e.keyCode) {
                     return;
                 }
-                clearTimeout(TIMEOUT_KEYDOWN);
                 TIMEOUT_KEYDOWN = setTimeout(() => {
                     KEYDOWN_RUNNING = true;
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
-                    _handleTooltipInline();
+                    self._handleTooltipInline();
                     let dependentFields = self._getDependentFields(target);
                     self._customValidationsForElements(dependentFields).then(function () {
                         self.prepareErrors(dependentFields, false);
@@ -778,9 +780,7 @@ class Form {
             if (!_checkIsValidBlurFocusElement(e.target)) {
                 return;
             }
-            setTimeout(() => {
-                self.showAndOrCreateTooltip(e.target);
-            }, 1);
+            self.showAndOrCreateTooltip(e.target);
         }, true);
 
         // Handle change for checkbox, radios and selects
