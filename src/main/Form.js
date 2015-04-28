@@ -252,13 +252,17 @@ class Form {
         if (isLocalInvalid && focus) {
             arr[0].focus();
         }
-        var validation = scoped ? this._customValidationsForElements(toValidateFields) : self.validateCustomFields();
+        var validation = scoped ? this._customValidationsForElements(toValidateFields) :
+            self.validateCustomFields();
         return validation.then((r) => {
             if (isLocalInvalid) {
                 // combine browser and custom validators
                 r.foundAnyError = true;
             }
-            let thisToValidateFields = Array.from(toValidateFields).concat(r.checkedFields);
+            // get a unique field list of all fields that need to be checked and rendered
+            // it's possible that we have duplicates in non scoped mode
+            let thisToValidateFields = scoped ? toValidateFields :
+                Array.from(arr).concat(r.checkedFields);
             r.checkedFields = thisToValidateFields;
             let foundInvalidFields = self.prepareErrors(thisToValidateFields, false),
                 firstInvalidField = foundInvalidFields[0];
