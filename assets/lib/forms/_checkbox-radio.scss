@@ -30,7 +30,6 @@
     }
   }
   .checkbox {
-    display: block;
     margin-bottom: 10px;
 
     &:last-of-type {
@@ -46,6 +45,7 @@
   min-height:$checkboxAndOptionHeight;
   @include interface();
   cursor: pointer;
+  display: block;
   > input {
     z-index: -1;
     position: absolute;
