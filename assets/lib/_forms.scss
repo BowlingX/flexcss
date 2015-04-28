@@ -11,7 +11,7 @@ form {
   flex-direction: column;
 
   p {
-    margin-bottom: 0;
+    margin: $labelMargin 0 0 0;
     font-size: $copyTextFormsFontSize;
     line-height: $copyTextFormsLineHeight;
 
@@ -24,7 +24,6 @@ form {
     margin-bottom: $controlMargin;
     position: relative;
     p {
-      margin: $labelMargin 0 0 0;
       font-size: $copyTextFormsFontSize;
       color: $grayColor;
       a {
@@ -273,7 +272,7 @@ form:not(.wide) {
   }
 
   &.disabled:after {
-    color:$inputDisabledBorder;
+    color: $inputDisabledBorder;
   }
 }
 
@@ -374,10 +373,8 @@ form:not(.wide) {
   }
 
   .button, button, input[type="submit"] {
-      margin-bottom: 1rem;
+    margin-bottom: 1rem;
   }
-
-
 
   .left {
     > label {
@@ -447,8 +444,9 @@ input[type="range"] {
     background: darken($primaryColor, 10%);
   }
 }
+
 @mixin slider-thumb-disabled {
-  cursor:not-allowed;
+  cursor: not-allowed;
   &:hover {
     background: $disabledThumbColor;
     transform: scale3d(1, 1, 1);
@@ -461,7 +459,7 @@ input[type="range"] {
 }
 
 @mixin slider-track-disabled {
-  background:$inputDisabledBorder;
+  background: $inputDisabledBorder;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -484,9 +482,11 @@ input[type="range"]::-ms-thumb {
 input[type="range"][disabled]::-ms-thumb {
   @include slider-thumb-disabled();
 }
+
 input[type="range"][disabled]::-moz-range-thumb {
   @include slider-thumb-disabled();
 }
+
 input[type="range"][disabled]::-webkit-slider-thumb {
   @include slider-thumb-disabled();
 }
@@ -523,18 +523,22 @@ input::-moz-range-track {
   border: 0;
 }
 
-input[type="range"][disabled]::-ms-fill-lower   {
+input[type="range"][disabled]::-ms-fill-lower {
   @include slider-track-disabled();
 }
-input[type="range"][disabled]::-ms-fill-upper   {
+
+input[type="range"][disabled]::-ms-fill-upper {
   @include slider-track-disabled();
 }
-input[type="range"][disabled]::-moz-range-track   {
+
+input[type="range"][disabled]::-moz-range-track {
   @include slider-track-disabled();
 }
-input[type="range"][disabled]::-ms-track  {
+
+input[type="range"][disabled]::-ms-track {
   @include slider-track-disabled();
 }
+
 input[type="range"][disabled]::-webkit-slider-runnable-track {
   @include slider-track-disabled();
 }
@@ -693,16 +697,9 @@ input[type="range"][disabled]::-webkit-slider-runnable-track {
       &.center {
         align-self: center;
       }
-      margin: 0 0 0 $appendMargin;
-
-      &:not(.break) {
-        flex: 1;
-      }
-      &.break {
-        margin: $appendMarginTopPositive 0 0 $labelWidthDesktop;
-        max-width: $formWidthControls;
-        min-width: $formMinWidthControls;
-      }
+      margin: $appendMarginTopPositive 0 0 $labelWidthDesktop;
+      max-width: $formWidthControls;
+      min-width: $formMinWidthControls;
 
     }
     .control-group {
@@ -715,9 +712,7 @@ input[type="range"][disabled]::-webkit-slider-runnable-track {
 
 .control-group:not(:last-of-type) .controls + .append {
   margin-top: $appendMarginTopNegative;
-  &.break {
-    margin-bottom: $controlMargin;
-  }
+  margin-bottom: $controlMargin;
 }
 
 @media #{$mediaInBetween} {
@@ -730,10 +725,8 @@ input[type="range"][disabled]::-webkit-slider-runnable-track {
 
     .append {
       flex: 1;
-      &.break {
-        min-width: 0;
-        margin: 0 0 0 $appendMargin;
-      }
+      min-width: 0;
+      margin: 0 0 0 $appendMargin;
     }
   }
 
