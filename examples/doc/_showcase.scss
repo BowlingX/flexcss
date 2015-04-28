@@ -93,10 +93,15 @@ hr {
 }
 
 blockquote {
-  max-width: 80%;
   border-left: .5rem solid #f8f8f8;
   margin: 0;
   padding-left: 1rem;
+}
+
+@media #{$mediaDesktop} {
+  blockquote {
+    max-width:80%;
+  }
 }
 
 #markdown-toc {

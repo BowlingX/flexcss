@@ -1,0 +1,54 @@
+/**
+* Action bar for forms
+*/
+
+.form-actions {
+  text-align: left;
+  margin-top: $formMargin;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-top: 1px solid $globalBorderColor;
+  padding-top: $formMargin;
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  &.plain {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  > div {
+    flex: 1;
+
+    > * {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .right {
+    flex: 0 1 auto;
+    order: 1;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .button, button, input[type="submit"] {
+    margin-bottom: 1rem;
+  }
+
+  .left {
+    > label {
+
+      .checkbox-container {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+}

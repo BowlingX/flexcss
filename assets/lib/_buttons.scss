@@ -1,70 +1,34 @@
-// Buttons:
-$disabledPrimaryBtnColor:lighten($btnPrimaryColor, 25%);
-$disabledSecondaryBtnColor:lighten($btnSecondaryColor, 15%);
-$disabledDangerBtnColor:lighten($btnDangerColor, 35%);
-$disabledBtnAlternativeColor: lighten($btnAlternativeColor, 10%);
+/**
+* Buttons
+*/
 .button {
   display: inline-block;
   cursor: pointer;
   border: 1px solid transparent;
-  background-color: $btnPrimaryColor;
-  padding:$btnPadding;
+  padding: $btnPadding;
   border-radius: $globalRadius;
-  color: $buttonColor;
   font-weight: bold;
-  background-image:none;
+  background-image: none;
   transition: background-color .2s ease, background-image 2s ease, color .2s ease, border .2s ease;
   background-size: $btnBackgroundSize;
-  font-size:$btnFontSize;
+  font-size: $btnFontSize;
   will-change: background, background-image;
-
-  // repeat, because some browser to not respect this settings on input elements
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-
-  &.outline:not(:hover) {
-    background:transparent !important;
-    border-color:$btnPrimaryColor;
-    color:$btnPrimaryColor;
-
-    &.disabled {
-      border-color:$disabledPrimaryBtnColor;
-      color:$disabledPrimaryBtnColor;
-    }
+  &:active, &:focus {
+    outline: none;
   }
-
-  &:hover {
-    color:$buttonColor;
-    background-color: lighten($btnPrimaryColor, 10%);
-    &.loading {
-      background-color: $btnPrimaryColor;
-    }
-  }
-
   > * {
     pointer-events: none;
   }
 
-  &:active, &:focus {
-    color:$buttonColor;
-    outline: none;
-  }
+  // repeat, because some browser to not respect this settings on input elements
+  @include font-smoothing();
 
-  &:active, &:focus {
-    transition: none;
-    background-color: darken($btnPrimaryColor, 10%);
-  }
-
-  &.disabled, [disabled] {
-    background-color: lighten($btnPrimaryColor, 25%);
-    cursor: not-allowed;
-  }
+  @include button-style($buttonColor, $btnPrimaryColor);
 
   &.block {
     text-align: center;
     display: block;
-    width:100%;
+    width: 100%;
   }
 
   &.action {
@@ -90,90 +54,15 @@ $disabledBtnAlternativeColor: lighten($btnAlternativeColor, 10%);
 
   // Other colors:
   &.secondary {
-    background-color: $btnSecondaryColor;
-
-    &:hover {
-      background-color: lighten($btnSecondaryColor, 10%);
-      &.loading {
-        background-color: $btnSecondaryColor;
-      }
-    }
-
-    &:active, &:focus {
-      background-color: darken($btnSecondaryColor, 10%);
-    }
-
-    &.disabled, [disabled] {
-      background-color: $disabledSecondaryBtnColor;
-    }
-
-    &.outline:not(:hover) {
-      border-color:$btnSecondaryColor;
-      color:$btnSecondaryColor;
-
-      &.disabled {
-        border-color:$disabledSecondaryBtnColor;
-        color:$disabledSecondaryBtnColor;
-      }
-    }
+    @include button-style($buttonColor, $btnSecondaryColor);
   }
 
   &.danger {
-    background-color: $btnDangerColor;
-
-    &:hover {
-      background-color: lighten($btnDangerColor, 10%);
-      &.loading {
-        background-color: $btnDangerColor;
-      }
-    }
-
-    &:active, &:focus {
-      background-color: darken($btnDangerColor, 5%);
-    }
-
-    &.disabled, [disabled] {
-      background-color: $disabledDangerBtnColor;
-    }
-
-    &.outline:not(:hover) {
-      border-color:$btnDangerColor;
-      color:$btnDangerColor;
-
-      &.disabled {
-        border-color:$disabledDangerBtnColor;
-        color:$disabledDangerBtnColor;
-      }
-    }
+    @include button-style($buttonColor, $btnDangerColor);
   }
 
   &.alternative {
-    background-color: $btnAlternativeColor;
-
-    &:hover {
-      background-color: lighten($btnAlternativeColor, 10%);
-      &.loading {
-        background-color: $btnAlternativeColor;
-      }
-    }
-
-    &:active, &:focus {
-      background-color: darken($btnAlternativeColor, 10%);
-    }
-
-    &.disabled, [disabled] {
-      background-color: $disabledBtnAlternativeColor;
-    }
-
-    &.outline:not(:hover) {
-      border-color:$btnAlternativeColor;
-      color:$btnAlternativeColor;
-
-      &.disabled {
-        border-color:$disabledBtnAlternativeColor;
-        color:$disabledBtnAlternativeColor;
-      }
-    }
+    @include button-style($buttonColor, $btnAlternativeColor);
   }
 
   &.loading {
@@ -182,9 +71,9 @@ $disabledBtnAlternativeColor: lighten($btnAlternativeColor, 10%);
   }
 
   &.loadMoreButton {
-    margin-top:2rem;
+    margin-top: 2rem;
     padding-right: 85px;
-    padding-left:85px;
+    padding-left: 85px;
   }
 
   @include interface();

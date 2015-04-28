@@ -1,5 +1,7 @@
+/**
+* Layout in Large state
+*/
 @media #{$mediaLarge} {
-
   // visibility classes
   .hide-large {
     display: none;
@@ -46,7 +48,8 @@
 
   .wrapper-full-width {
     .header {
-      padding: 0 $overallPaddingLarge + $paddingRightLeftDesktop 0 $overallPaddingLarge + $paddingRightLeftDesktop;
+      padding: 0 $overallPaddingLarge + $paddingRightLeftDesktop 0 $overallPaddingLarge
+        + $paddingRightLeftDesktop;
 
       .navbar-main {
         padding: 0;

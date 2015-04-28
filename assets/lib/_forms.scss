@@ -1,11 +1,20 @@
-// Fixme: Split this file
 /**
-* Forms
+* Form Base Component
 */
+// form components:
+@import 'forms/checkbox-radio';
+@import 'forms/append-button';
+@import 'forms/label-errors';
+@import 'forms/legend-toggle';
+@import 'forms/range-control';
+@import 'forms/select-control';
+@import 'forms/form-actions';
+
 form {
   position: relative;
 }
 
+// control-group that contains controls and label
 .control-group {
   display: flex;
   flex-direction: column;
@@ -71,30 +80,9 @@ fieldset {
 }
 
 form.loading {
-  button[type="submit"], input[type="submit"] {
+  [type="submit"] {
     @include loadingContainer();
   }
-}
-
-@mixin inputs() {
-  .input, select, textarea,
-  input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
-    @content;
-  }
-}
-
-@mixin input-style() {
-  background-color: $inputBackground;
-  border: $inputBorder;
-  box-shadow: $inputBoxShadow;
-  border-radius: $globalRadius;
-}
-
-@mixin focus-input-style() {
-  background-color: $inputFocusColor;
-  border-color: $inputFocusBorderColor !important;
-  box-shadow: $inputFocusBoxShadow !important;
-  outline: none;
 }
 
 // Basic form and input types
@@ -181,7 +169,8 @@ form.loading {
     font-weight: normal;
   }
 
-  // validation
+  // validation states
+
   &.invalid {
     background: $inputBackgroundInvalid;
     // Firefox will render a boxshadow
@@ -192,7 +181,7 @@ form.loading {
     }
   }
 
-  // remove default states
+  // remove default validation states
   &:invalid {
     box-shadow: $inputBoxShadow;
     border: $inputBorder;
@@ -205,27 +194,10 @@ form.loading {
   }
 }
 
+/* Error Container */
 .form-error {
   color: $alertColor;
   font-size: $smallFontSize;
-}
-
-@import 'forms/checkbox-radio';
-@import 'forms/append-button';
-@import 'forms/label-errors';
-@import 'forms/legend-toggle';
-// Styled select:
-/* Arrows for Select's*/
-
-select {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  cursor: pointer;
-  appearance: none;
-  padding-right: $baseFontSize * 2;
-  &::-ms-expand {
-    display: none;
-  }
 }
 
 textarea {
@@ -248,39 +220,6 @@ form:not(.wide) {
   }
 }
 
-.select-element {
-  &:after {
-    @include icon;
-    @extend .icon-down-open:before;
-    position: absolute;
-    top: 1px;
-    right: 1px;
-    font-size: 70%;
-    line-height: $inputHeight;
-    padding: 0 11px 0 11px;
-    background: $selectChooseBackgroundColor;
-    color: $selectPickerColor;
-    height: calc(100% - 2px);
-    pointer-events: none;
-    border-radius: 0 $globalRadius $globalRadius 0;
-    &:focus, &:active {
-      background: $inputFocusColor;
-      border-color: $inputFocusBorderColor;
-    }
-    will-change: background, box-shadow;
-    transition: $inputTransitions;
-  }
-
-  &.disabled:after {
-    color: $inputDisabledBorder;
-  }
-}
-
-.select-element {
-  cursor: pointer;
-  position: relative;
-}
-
 .list-form {
   width: 100%;
 }
@@ -294,6 +233,7 @@ form:not(.wide) {
 }
 
 // Multiple elements in one row
+
 .multi-form {
   display: flex;
   &.center {
@@ -309,6 +249,7 @@ form:not(.wide) {
     }
   }
 
+  // will break it to one column
   &.break {
     display: block;
     > * {
@@ -319,72 +260,6 @@ form:not(.wide) {
     }
     flex-direction: column;
   }
-}
-
-// A Date selector:
-.select-day {
-  flex: 1;
-  max-width: 75px;
-}
-
-.select-month {
-  flex: 3;
-}
-
-.select-year {
-  flex: 2;
-  max-width: 100px;
-}
-
-.form-actions {
-  text-align: left;
-  margin-top: $formMargin;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  border-top: 1px solid $globalBorderColor;
-  padding-top: $formMargin;
-
-  &.right {
-    justify-content: flex-end;
-  }
-
-  &.plain {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  > div {
-    flex: 1;
-
-    > * {
-      width: 100%;
-      text-align: center;
-    }
-  }
-
-  .right {
-    flex: 0 1 auto;
-    order: 1;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .button, button, input[type="submit"] {
-    margin-bottom: 1rem;
-  }
-
-  .left {
-    > label {
-
-      .checkbox-container {
-        margin-bottom: 1rem;
-      }
-    }
-  }
-
 }
 
 .toolbar-form {
@@ -398,149 +273,6 @@ form:not(.wide) {
   input {
     padding-left: 2px !important;
   }
-}
-
-input[type="range"] {
-  background-color: transparent !important;
-  padding: 0 !important;
-}
-
-.multiple-range-input {
-  overflow: hidden;
-  position: relative;
-  height: $inputHeight;
-}
-
-// Range Controls
-.multiple-range-input input {
-  pointer-events: none;
-  position: absolute;
-  overflow: hidden;
-  left: 0;
-  top: 0;
-  outline: none;
-}
-
-@mixin slider-thumb {
-  pointer-events: all;
-  position: relative;
-  background: $primaryColor;
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  border: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  transition: background .3s ease, transform .2s ease;
-  cursor: pointer;
-  transform: scale3d(1, 1, 1);
-  &:hover {
-    background: lighten($primaryColor, 10%);
-    transform: scale3d(1.2, 1.2, 1.2);
-  }
-
-  &:focus, &:active {
-    background: darken($primaryColor, 10%);
-  }
-}
-
-@mixin slider-thumb-disabled {
-  cursor: not-allowed;
-  &:hover {
-    background: $disabledThumbColor;
-    transform: scale3d(1, 1, 1);
-  }
-  background: $disabledThumbColor;
-
-  &:focus, &:active {
-    background: $disabledThumbColor;
-  }
-}
-
-@mixin slider-track-disabled {
-  background: $inputDisabledBorder;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  z-index: 1;
-  outline: 0;
-  @include slider-thumb;
-  margin-top: -9px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  z-index: 1;
-  @include slider-thumb;
-}
-
-input[type="range"]::-ms-thumb {
-  z-index: 1;
-  @include slider-thumb;
-}
-
-input[type="range"][disabled]::-ms-thumb {
-  @include slider-thumb-disabled();
-}
-
-input[type="range"][disabled]::-moz-range-thumb {
-  @include slider-thumb-disabled();
-}
-
-input[type="range"][disabled]::-webkit-slider-thumb {
-  @include slider-thumb-disabled();
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 3px;
-  background: $lighterGrayColor;
-  position: relative;
-}
-
-input[type="range"]::-ms-track {
-  height: 3px;
-  background: $lighterGrayColor;
-  position: relative;
-  border-color: transparent;
-  color: transparent;
-  z-index: -1;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: $lighterGrayColor;
-  border-radius: 0;
-}
-
-input[type=range]::-ms-fill-upper {
-  background: $lighterGrayColor;
-  border-radius: 0;
-}
-
-input::-moz-range-track {
-  position: relative;
-  z-index: -1;
-  background-color: $lighterGrayColor;
-  border: 0;
-}
-
-input[type="range"][disabled]::-ms-fill-lower {
-  @include slider-track-disabled();
-}
-
-input[type="range"][disabled]::-ms-fill-upper {
-  @include slider-track-disabled();
-}
-
-input[type="range"][disabled]::-moz-range-track {
-  @include slider-track-disabled();
-}
-
-input[type="range"][disabled]::-ms-track {
-  @include slider-track-disabled();
-}
-
-input[type="range"][disabled]::-webkit-slider-runnable-track {
-  @include slider-track-disabled();
 }
 
 // input that has an icon beforehand
@@ -569,6 +301,7 @@ input[type="range"][disabled]::-webkit-slider-runnable-track {
   }
 }
 
+// forms in subnav
 .subnav {
   // fixes navbar searchform in firefox
   .form {
@@ -715,6 +448,7 @@ input[type="range"][disabled]::-webkit-slider-runnable-track {
   margin-bottom: $controlMargin;
 }
 
+// forms in between state
 @media #{$mediaInBetween} {
 
   form:not(.wide) {

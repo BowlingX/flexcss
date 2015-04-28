@@ -7,6 +7,11 @@
   user-select: $case;
 }
 
+@mixin font-smoothing() {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 // Creates an arrow at the bottom
 @mixin arrow-bottom($color: black, $left: 50%) {
 
@@ -164,7 +169,7 @@
 * Creates an icon, by default uses fontello
 * Nested spans are no icons anymore
 */
-@mixin icon($font: fontello) {
+@mixin icon($font: $iconFontName) {
   font-family: $font;
   font-weight: normal !important;
   font-style: normal;
@@ -264,5 +269,88 @@
     &:hover {
       color: darken($color, 20) !important;
     }
+  }
+}
+
+
+/* Form Mixins */
+
+/**
+* Inputs
+*/
+@mixin inputs() {
+  .input, select, textarea,
+  input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]) {
+    @content;
+  }
+}
+
+/**
+* Base Input Style
+*/
+@mixin input-style() {
+  background-color: $inputBackground;
+  border: $inputBorder;
+  box-shadow: $inputBoxShadow;
+  border-radius: $globalRadius;
+}
+/**
+* Input style when focused
+*/
+@mixin focus-input-style() {
+  background-color: $inputFocusColor;
+  border-color: $inputFocusBorderColor !important;
+  box-shadow: $inputFocusBoxShadow !important;
+  outline: none;
+}
+
+
+/**
+* Mixin to create a button style
+*/
+@mixin button-style($color, $background) {
+  background-color: $background;
+  border-color: transparent;
+  color: $color;
+
+  $disabledColor: rgba($background, .4);
+  $disabledOutlineColor: rgba($background, .2);
+  &.outline {
+    background-color: transparent;
+    border-color: $background;
+    color: $background;
+
+    &:hover {
+      background-color: $background;
+      color: $color;
+    }
+
+    &.disabled, &[disabled] {
+      background-color: transparent;
+      color: $disabledOutlineColor;
+      border-color: $disabledOutlineColor;
+    }
+  }
+
+  &:hover {
+    color: $color;
+    background-color: lighten($background, 10%);
+    &.loading {
+      background-color: $background;
+    }
+  }
+
+  &:active, &:focus, &.outline:active, &.outline:focus {
+    &:not(.disabled):not([disabled]) {
+      transition: none;
+      color: $buttonColor;
+      background-color: darken($background, 10%);
+      border-color: transparent;
+    }
+  }
+
+  &.disabled, [disabled] {
+    background-color: $disabledColor;
+    cursor: not-allowed;
   }
 }

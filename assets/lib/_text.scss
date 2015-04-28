@@ -2,11 +2,10 @@
 html {
   font-family: $baseFontFamily;
   font-size: $baseFontSize;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
   color: $baseColor;
   line-height: $baseLineHeight;
+  @include font-smoothing();
 }
 
 // fix problems with fullscreen (disable hardware acceleration):

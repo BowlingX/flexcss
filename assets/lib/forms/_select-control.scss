@@ -1,0 +1,59 @@
+/**
+* Normalized / Styled select-control
+*/
+
+select {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  appearance: none;
+  padding-right: $baseFontSize * 2;
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+.select-element {
+  cursor: pointer;
+  position: relative;
+  &:after {
+    @include icon;
+    // important: requires fontello or another icon-font to be included
+    @extend .icon-down-open:before;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    font-size: 70%;
+    line-height: $inputHeight;
+    padding: 0 11px 0 11px;
+    background: $selectChooseBackgroundColor;
+    color: $selectPickerColor;
+    height: calc(100% - 2px);
+    pointer-events: none;
+    border-radius: 0 $globalRadius $globalRadius 0;
+    &:focus, &:active {
+      background: $inputFocusColor;
+      border-color: $inputFocusBorderColor;
+    }
+    will-change: background, box-shadow;
+    transition: $inputTransitions;
+  }
+  &.disabled:after {
+    color: $inputDisabledBorder;
+  }
+}
+
+// A Date selector:
+.select-day {
+  flex: 1;
+  max-width: 75px;
+}
+
+.select-month {
+  flex: 3;
+}
+
+.select-year {
+  flex: 2;
+  max-width: 100px;
+}
