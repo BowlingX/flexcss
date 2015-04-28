@@ -471,3 +471,20 @@ FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {
 {% endhighlight %}
 
 --------
+
+## Other Frameworks
+
+`FlexCss.Form` is a pure JavaScript solution and does not depend on a specific markup.
+However I make the following assumptions:
+
+- Invalid fields (and related labels) will get the class `invalid`.
+- Elements should be nested in a wrapper div if you are using `appendError` (otherwise random things might happen).
+- The `appendError` container has the class `form-error`
+
+### Bootstrap
+
+The following shows a sample implementation with Bootstrap
+ (with both `createTooltips` and `appendError` enabled for demonstration)
+
+{% include pens/form_bootstrap.html %}
+
