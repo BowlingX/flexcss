@@ -191,6 +191,10 @@ class Util {
                 let s = Util.dashToCamelCase(attr.nodeName.replace('data-', '')),
                     val = attr.nodeValue;
                 if (base.hasOwnProperty(s)) {
+                    // skip functions
+                    if('function' === typeof base[s]) {
+                        continue;
+                    }
                     if ('boolean' === typeof base[s]) {
                         base[s] = 1 === parseInt(val || 1);
                     } else {

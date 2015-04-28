@@ -20,11 +20,7 @@ const ATTR_VALIDATE_VISIBILITY = 'data-validate-visibility';
 const ATTR_ERROR_TARGET_ID = 'data-error-target';
 const ATTR_DEPENDS = 'data-depends-selector';
 const CONST_USE_JSON = 'json';
-
-// keycodes:
-const CONST_TAB_KEYCODE = 9;
-const CONST_ENTER_KEYCODE = 13;
-
+const CONST_REALTIME_EVENT = 'input';
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -94,12 +90,14 @@ class Form {
             ajaxJsonContentType: 'application/json; charset=utf-8',
             // allow inline validation
             inlineValidation: true,
-            // validate in realtime (on `realtimeEventKey` event)
+            // validate in realtime (on `input` event)
             realtime: true,
             // timeout when realtime event should be captured
             realtimeTimeout: 250,
-            // event that should be used for realtime
-            realtimeEventKey: 'keyup'
+            // formatting method for an error
+            formatErrorTooltip: (error) => {
+                return '<i class="icon-attention"></i> ' + error;
+            }
         };
 
         // overwrite default options
@@ -565,8 +563,8 @@ class Form {
      * @returns {String}
      * @private
      */
-    static _formatErrorTooltip(error) {
-        return '<i class="icon-attention"></i> ' + error;
+     _formatErrorTooltip(error) {
+        return this.options.formatErrorTooltip.apply(this, [error]);
     }
 
     /**
@@ -606,7 +604,7 @@ class Form {
         var errorTarget = Form._findErrorTarget(target);
         if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
                 self.tooltips.createTooltip(errorTarget,
-                    Form._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+                    self._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
         } else {
             if (remove) {
                 self.tooltips.removeTooltip();
@@ -635,7 +633,8 @@ class Form {
     _getDependentFields(field) {
         let fieldSelector = field.getAttribute(ATTR_DEPENDS), base = [field];
         if (fieldSelector) {
-            base.push.apply(base, Array.prototype.slice.apply(this.getForm().querySelectorAll(fieldSelector)));
+            base.push.apply(base, Array.prototype.slice.apply(
+                this.getForm().querySelectorAll(fieldSelector)));
         }
         return base;
     }
@@ -716,15 +715,13 @@ class Form {
 
         // setup custom realtime event if given
         if (self.options.realtime) {
-            form.addEventListener(self.options.realtimeEventKey, function (e) {
+            form.addEventListener(CONST_REALTIME_EVENT, function (e) {
                 if (self._formIsLoading()) {
                     return;
                 }
                 var target = e.target;
                 clearTimeout(TIMEOUT_KEYDOWN);
-                // abort on tab or enter
-                if (KEYDOWN_RUNNING || CONST_TAB_KEYCODE === e.keyCode ||
-                    CONST_ENTER_KEYCODE === e.keyCode) {
+                if (KEYDOWN_RUNNING) {
                     return;
                 }
                 TIMEOUT_KEYDOWN = setTimeout(() => {
@@ -761,7 +758,8 @@ class Form {
                 return false;
             }
             return !((attr === 'checkbox' || attr === 'option' ||
-            attr === 'submit' || !(target instanceof HTMLSelectElement || target instanceof HTMLInputElement ||
+            attr === 'submit' || !(target instanceof HTMLSelectElement ||
+            target instanceof HTMLInputElement ||
             target instanceof HTMLTextAreaElement)));
         }
 

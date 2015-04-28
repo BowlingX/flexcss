@@ -1,6 +1,6 @@
 {
   "name": "flexcss",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "main": [
     "build/js/flexcss.min.js",
     "assets/_layout.scss",

@@ -47,22 +47,24 @@ The first param <code>form</code> may be a selector defined by <code>Document.qu
 
 {% highlight javascript %}
 {
-// if true creates tooltips above element, uses FlexCss Tooltips
-createTooltips: true,
-// if true appends error message after input element
-appendError: false,
-// type of ajax submit
-ajaxSubmitType: 'POST',
-// json content type if ajax method is set to json
-ajaxJsonContentType: 'application/json; charset=utf-8',
-// allow inline validation
-inlineValidation: true,
-// validate in realtime (on `realtimeEventKey` event)
-realtime: true,
-// timeout when realtime event should be captured (throttling)
-realtimeTimeout: 250,
-// event that should be used for realtime
-realtimeEventKey: 'keyup'
+  // if true creates tooltips above element, uses FlexCss Tooltips
+  createTooltips: true,
+  // if true appends error message after input element
+  appendError: false,
+  // type of ajax submit
+  ajaxSubmitType: 'POST',
+  // json content type if ajax method is set to json
+  ajaxJsonContentType: 'application/json; charset=utf-8',
+  // allow inline validation
+  inlineValidation: true,
+  // validate in realtime (on `input` event)
+  realtime: true,
+  // timeout when realtime event should be captured
+  realtimeTimeout: 250,
+  // formatting method for an error tooltip
+  formatErrorTooltip: (error) => {
+      return '<i class="icon-attention"></i> ' + error;
+  }
 }
 {% endhighlight%}
 <hr>
