@@ -233,6 +233,7 @@ class Form {
                     this.tooltips.removeTooltip();
                 }
             }
+            return r;
         }).bind(this));
     }
 
@@ -258,6 +259,7 @@ class Form {
                 r.foundAnyError = true;
             }
             let thisToValidateFields = Array.from(arr).concat(r.checkedFields);
+            r.checkedFields = thisToValidateFields;
             let foundInvalidFields = self.prepareErrors(thisToValidateFields, false),
                 firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
