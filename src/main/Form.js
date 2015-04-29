@@ -5,10 +5,8 @@ export * from 'isomorphic-fetch';
 import Event from 'util/Event';
 import Util from 'util/Util';
 
-const ERROR_CLASS_NAME = 'form-error';
-const INPUT_ERROR_CLASS = 'invalid';
 const LOADING_CLASS = 'loading';
-const ARIA_INVALID = 'aria-invalid';
+const DATA_ELEMENT_INVALID = 'data-flexcss-invalid';
 const REMOTE = 'data-remote';
 const REMOTE_ACTION = 'data-remote-action';
 const ATTR_DISABLE_INLINE = 'data-disable-inline-validation';
@@ -97,7 +95,11 @@ class Form {
             // formatting method for an error
             formatErrorTooltip: (error) => {
                 return '<i class="icon-attention"></i> ' + error;
-            }
+            },
+            // the class that will be put on the element to mark it failed validation
+            inputErrorClass: 'invalid',
+            // the container class for error messages below an element
+            containerErrorClass: 'form-error'
         };
 
         // overwrite default options
@@ -296,14 +298,34 @@ class Form {
             let labels = this.getForm().querySelectorAll('[for="' + id + '"]'), invalid = fields[id];
             if (labels.length) {
                 for (let labelsIndex = 0; labelsIndex < labels.length; labelsIndex++) {
+                    let labelEl = labels[labelsIndex];
+                    // we can't use toggle attribute, not supported in IE
                     if (invalid) {
-                        labels[labelsIndex].classList.add(INPUT_ERROR_CLASS);
+                        this._markElementInvalid(labelEl);
                     } else {
-                        labels[labelsIndex].classList.remove(INPUT_ERROR_CLASS);
+                        this._markElementValid(labelEl);
                     }
                 }
             }
         }.bind(this));
+    }
+
+    /**
+     * @param el
+     * @private
+     */
+    _markElementInvalid(el) {
+        el.setAttribute(DATA_ELEMENT_INVALID, "true");
+        el.classList.add(this.options.inputErrorClass);
+    }
+
+    /**
+     * @param el
+     * @private
+     */
+    _markElementValid(el) {
+        el.removeAttribute(DATA_ELEMENT_INVALID);
+        el.classList.remove(this.options.inputErrorClass);
     }
 
     /**
@@ -322,15 +344,14 @@ class Form {
      * @private
      */
     _removeElementErrors(thisParent) {
-        let errors = thisParent.querySelectorAll('.' + ERROR_CLASS_NAME), inputsWithErrorClasses =
-            thisParent.querySelectorAll('.' + INPUT_ERROR_CLASS);
+        let errors = thisParent.querySelectorAll('.' + this.options.containerErrorClass), inputsWithErrorClasses =
+            thisParent.querySelectorAll(`[${DATA_ELEMENT_INVALID}]`);
         for (let elementErrorIndex = 0; elementErrorIndex < errors.length; elementErrorIndex++) {
             errors[elementErrorIndex].parentNode.removeChild(errors[elementErrorIndex]);
         }
         for (let inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
             let el = inputsWithErrorClasses[inputErrorIndex];
-            el.classList.remove(INPUT_ERROR_CLASS);
-            el.removeAttribute(ARIA_INVALID);
+            this._markElementValid(el);
         }
     }
 
@@ -460,19 +481,26 @@ class Form {
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
                 let msg = field.validationMessage;
-                errorTarget.classList.add(INPUT_ERROR_CLASS);
-                field.setAttribute(ARIA_INVALID, 'true');
+
+                // mark fields as invalid
+                this._markElementInvalid(errorTarget);
+                this._markElementInvalid(field);
+
                 if (this.options.appendError) {
-                    parent.insertAdjacentHTML("beforeend", '<div class="' + ERROR_CLASS_NAME + '">' +
-                    msg +
-                    "</div>");
+                    parent.insertAdjacentHTML("beforeend",
+                        `<div class="${this.options.containerErrorClass}">${msg}</div>`);
                 }
                 invalidFields.push(field);
                 field.flexFormsSavedValidationMessage = msg;
             } else {
-                errorTarget.classList.remove(INPUT_ERROR_CLASS);
-                field.setAttribute(ARIA_INVALID, 'false');
+                // restore invalid fields
+                this._markElementValid(errorTarget);
+                this._markElementValid(field);
+
+                // cleanup
                 delete field.flexFormsSavedValidationMessage;
+
+                // remove error markup
                 this._removeElementErrors(parent);
             }
             // We have to reset the custom validity here to allow native validations work again
@@ -487,9 +515,9 @@ class Form {
                     this.getForm().querySelectorAll(`[${ATTR_DATA_CUSTOM_LABEL}="${id}"], #${id}`));
                 linkedFields.forEach(function (thisField) {
                     let validity = thisField.validity, isInvalid = validity && !validity.valid &&
-                        thisField.classList.contains(INPUT_ERROR_CLASS);
+                        this._isElementInvalidElement(thisField);
                     handleAdditionalLabels(isInvalid, labelGroups, thisField);
-                });
+                }.bind(this));
             }
         }
         this._handleLabels(labelGroups);
@@ -602,7 +630,7 @@ class Form {
             return false;
         }
         var errorTarget = Form._findErrorTarget(target);
-        if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
+        if (!target.flexFormsSavedValidity.valid && self._isElementInvalidElement(errorTarget)) {
             self.tooltips.createTooltip(errorTarget,
                 self._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
             return true;
@@ -612,6 +640,16 @@ class Form {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if element is marked as invalid
+     * @param {HTMLElement} el
+     * @returns {boolean}
+     * @private
+     */
+    _isElementInvalidElement(el) {
+        return el.hasAttribute(DATA_ELEMENT_INVALID);
     }
 
     /**
@@ -765,14 +803,26 @@ class Form {
             return !target.hasAttribute(ATTR_DISABLE_INLINE);
         }
 
-        // handle focus out for text elements
-        // Will show an error if field was invalid the first time
         form.addEventListener('blur', function (e) {
-            if(!e.target.flexcssKeepTooltips) {
+            // do not hide tooltip after change event
+            if (!e.target.flexcssKeepTooltips) {
                 self._handleTooltipInline();
             }
             delete e.target.flexcssKeepTooltips;
         }, true);
+
+        // this defines the logic after a change event
+        // A Click somewhere will just un-focus the field, the second click will check
+        // if target is not an invalid element and remove tooltip then.
+        function _handleTooltipHideClickAfterChange() {
+            Util.addEventOnce('click', document.body, function () {
+                Util.addEventOnce('click', document.body, function (e) {
+                    if (!self._isElementInvalidElement(e.target)) {
+                        self._handleTooltipInline();
+                    }
+                });
+            }, false);
+        }
 
         // handle focus on input elements
         // will show an error if field is invalid
@@ -804,12 +854,12 @@ class Form {
                     }
                     self._customValidationsForElements(inputs).then(function () {
                         self.prepareErrors(inputs, false);
-                        target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
+                        e.target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
+                        _handleTooltipHideClickAfterChange();
                     });
                 }
             });
         }
-
         // prevent default if form is invalid
         var submitListener = function (e) {
             self._submitListener(e, submitListener);
@@ -866,8 +916,8 @@ class Form {
                     var fields = self._getInvalidElements(),
                         errors = self.prepareErrors(fields, false), firstError = errors[0];
                     if (firstError) {
-                        self.showAndOrCreateTooltip(firstError, true);
                         firstError.focus();
+                        self.showAndOrCreateTooltip(firstError, true);
                     }
                     resolve(r);
                 });

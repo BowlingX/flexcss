@@ -61,10 +61,14 @@ The first param <code>form</code> may be a selector defined by <code>Document.qu
   realtime: true,
   // timeout when realtime event should be captured
   realtimeTimeout: 250,
-  // formatting method for an error tooltip
+  // formatting method for an error
   formatErrorTooltip: (error) => {
       return '<i class="icon-attention"></i> ' + error;
-  }
+  },
+  // the class that will be put on the element to mark it failed validation
+  inputErrorClass: 'invalid',
+  // the container class for error messages below an element
+  containerErrorClass: 'form-error'
 }
 {% endhighlight%}
 <hr>
@@ -479,9 +483,10 @@ FlexCss.Form.registerGlobalRemoteValidationFunction(function(req) {
 `FlexCss.Form` is a pure JavaScript solution and does not depend on a specific markup.
 However I make the following assumptions:
 
-- Invalid fields (and related labels) will get the class `invalid`.
+- Invalid fields (and related labels) will get the class `invalid` (configurable).
 - Elements should be nested in a wrapper div if you are using `appendError` (otherwise random things might happen).
-- The `appendError` container has the class `form-error`
+    - Errors are appended on this wrapper div.
+- The `appendError` container has the class `form-error` (configurable)
 
 ### Bootstrap
 
