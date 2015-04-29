@@ -653,18 +653,22 @@ class Form {
      */
     initFormValidation() {
         // Suppress the default bubbles
-        var form = this.getForm(), invalidFormFired = false, self = this;
-        form.addEventListener('invalid', function (e) {
+        var form             = this.getForm(),
+            invalidFormFired = false,
+            self             = this,
+            invalidEvent     = 'invalid';
+
+        form.addEventListener(invalidEvent, function (e) {
             e.preventDefault();
         }, true);
-        Util.addEventOnce("invalid", form, function handleInvalid(e) {
+        Util.addEventOnce(invalidEvent, form, function handleInvalid(e) {
             self._formLoading();
             var result = self._checkIsInvalid(e);
             if (result) {
                 self.currentValidationFuture = new Promise((resolve) => {
                     result.then(function (r) {
                         setTimeout(function () {
-                            Util.addEventOnce("invalid", form, handleInvalid, true);
+                            Util.addEventOnce(invalidEvent, form, handleInvalid, true);
                         }, 0);
                         resolve(r);
                         self._formStopLoading();
@@ -836,19 +840,21 @@ class Form {
      */
     _submitListener(e, submitListener) {
 
-        var form = this.getForm(), self = this;
+        var form        = this.getForm(),
+            self        = this,
+            submitEvent = 'submit';
 
         if (this._formIsLoading()) {
             e.preventDefault();
             return false;
         }
         this._formLoading();
-        form.removeEventListener("submit", submitListener);
+        form.removeEventListener(submitEvent, submitListener);
         this.removeErrors();
         e.preventDefault();
         // reset:
         if (form.checkValidity()) {
-            form.addEventListener("submit", submitListener);
+            form.addEventListener(submitEvent, submitListener);
             // It's possible that the form is valid but the custom validations need to be checked again:
             self.currentValidationFuture = new Promise((resolve) => {
                 var validation = self.validateCustomFields();
@@ -873,7 +879,7 @@ class Form {
             });
         } else {
             self._formStopLoading();
-            form.addEventListener("submit", submitListener);
+            form.addEventListener(submitEvent, submitListener);
         }
     }
 
