@@ -563,7 +563,7 @@ class Form {
      * @returns {String}
      * @private
      */
-     _formatErrorTooltip(error) {
+    _formatErrorTooltip(error) {
         return this.options.formatErrorTooltip.apply(this, [error]);
     }
 
@@ -595,21 +595,23 @@ class Form {
             });
         }
         if (!this.options.createTooltips) {
-            return;
+            return false;
         }
 
         if (!target.flexFormsSavedValidity) {
-            return;
+            return false;
         }
         var errorTarget = Form._findErrorTarget(target);
         if (!target.flexFormsSavedValidity.valid && errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
-                self.tooltips.createTooltip(errorTarget,
-                    self._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+            self.tooltips.createTooltip(errorTarget,
+                self._formatErrorTooltip(target.flexFormsSavedValidationMessage), false);
+            return true;
         } else {
             if (remove) {
                 self.tooltips.removeTooltip();
             }
         }
+        return false;
     }
 
     /**
@@ -644,7 +646,7 @@ class Form {
      */
     _handleTooltipInline() {
         if (this.tooltips) {
-           this.tooltips.removeTooltip();
+            this.tooltips.removeTooltip();
         }
     }
 
@@ -653,14 +655,15 @@ class Form {
      */
     initFormValidation() {
         // Suppress the default bubbles
-        var form             = this.getForm(),
+        var form = this.getForm(),
             invalidFormFired = false,
-            self             = this,
-            invalidEvent     = 'invalid';
+            self = this,
+            invalidEvent = 'invalid';
 
         form.addEventListener(invalidEvent, function (e) {
             e.preventDefault();
         }, true);
+
         Util.addEventOnce(invalidEvent, form, function handleInvalid(e) {
             self._formLoading();
             var result = self._checkIsInvalid(e);
@@ -682,40 +685,19 @@ class Form {
             }
         }, true);
 
-        // Timeout for keys:
-        var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
-
         form.addEventListener('reset', function () {
             this.removeErrors();
         }.bind(this));
 
-        // handle focus out for text elements
-        // Will show an error if field was invalid the first time
-        form.addEventListener('blur', function (e) {
-            if (self._formIsLoading()) {
-                return;
-            }
-            var target = e.target, hasError = false,
-                errorTarget = Form._findErrorTarget(target);
-            self._handleTooltipInline();
-            // clear timeout so realtime can't fire
-            clearTimeout(TIMEOUT_KEYDOWN);
-            KEYDOWN_RUNNING = false;
-            if (!_checkIsValidBlurFocusElement(target)) {
-                return;
-            }
-            if (errorTarget.classList.contains(INPUT_ERROR_CLASS)) {
-                hasError = true;
-            }
-            let dependentFields = self._getDependentFields(target);
-            self._customValidationsForElements(dependentFields).then(function () {
-                self.prepareErrors(dependentFields, false);
-                if (!hasError) {
-                    self.showAndOrCreateTooltip(e.target);
-                }
-            });
 
-        }, true);
+        // Timeout for keys:
+        var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
+
+        // resets keydown events
+        function clearKeyDownTimeout() {
+            KEYDOWN_RUNNING = false;
+            clearTimeout(TIMEOUT_KEYDOWN);
+        }
 
         // setup custom realtime event if given
         if (self.options.realtime) {
@@ -729,15 +711,20 @@ class Form {
                     return;
                 }
                 TIMEOUT_KEYDOWN = setTimeout(() => {
-                    KEYDOWN_RUNNING = true;
+                    let isStillTarget = document.activeElement === e.target;
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
-                    self._handleTooltipInline();
+                    if (isStillTarget) {
+                        self._handleTooltipInline();
+                    }
+                    KEYDOWN_RUNNING = true;
                     let dependentFields = self._getDependentFields(target);
                     self._customValidationsForElements(dependentFields).then(function () {
                         self.prepareErrors(dependentFields, false);
-                        self.showAndOrCreateTooltip(e.target);
+                        if (isStillTarget) {
+                            self.showAndOrCreateTooltip(e.target);
+                        }
                         // future must be resolved before another event can be started
                         KEYDOWN_RUNNING = false;
                     });
@@ -753,19 +740,10 @@ class Form {
          * @private
          */
         function _checkIsValidBlurFocusElement(target) {
-            if (!self.options.inlineValidation) {
-                return false;
-            }
-            var attr = target.getAttribute('type'),
-                maybeDisableOnBlur = target.hasAttribute(ATTR_DISABLE_INLINE);
-            if (maybeDisableOnBlur) {
-                return false;
-            }
-            return !((attr === 'checkbox' || attr === 'option' ||
-            attr === 'submit' || !(target instanceof HTMLSelectElement ||
-            target instanceof HTMLInputElement ||
-            target instanceof HTMLTextAreaElement)));
+            let attr = target.getAttribute("type");
+            return (attr !== "radio" && attr !== "checkbox" && attr !== "submit");
         }
+
 
         /**
          * Validates if is valid realtime element
@@ -774,9 +752,27 @@ class Form {
          * @private
          */
         function _checkIsValidRealtimeElement(target) {
-            return !target.hasAttribute(ATTR_DISABLE_REALTIME) &&
-                _checkIsValidBlurFocusElement(target);
+            return !target.hasAttribute(ATTR_DISABLE_REALTIME) && !target.hasAttribute(ATTR_DISABLE_INLINE);
         }
+
+        /**
+         * Validates if is valid inline-check element
+         * @param {HTMLElement} target
+         * @returns {boolean}
+         * @private
+         */
+        function _checkIsValidInlineCheckElement(target) {
+            return !target.hasAttribute(ATTR_DISABLE_INLINE);
+        }
+
+        // handle focus out for text elements
+        // Will show an error if field was invalid the first time
+        form.addEventListener('blur', function (e) {
+            if(!e.target.flexcssKeepTooltips) {
+                self._handleTooltipInline();
+            }
+            e.target.flexcssKeepTooltips = false;
+        }, true);
 
         // handle focus on input elements
         // will show an error if field is invalid
@@ -791,21 +787,28 @@ class Form {
             self.showAndOrCreateTooltip(e.target);
         }, true);
 
-        // Handle change for checkbox, radios and selects
-        form.addEventListener("change", function (e) {
-            var name = e.target.getAttribute('name');
-            if (name) {
-                var inputs = form.querySelectorAll('[name="' + name + '"]');
-                // we only support dependent fields for a single widgets right now
-                if (1 === inputs.length) {
-                    inputs = self._getDependentFields(e.target);
+        if (self.options.inlineValidation) {
+            // Handle change for checkbox, radios and selects
+            form.addEventListener("change", function (e) {
+                let target = e.target;
+                if (self._formIsLoading() || !_checkIsValidInlineCheckElement(target)) {
+                    return;
                 }
-                self._customValidationsForElements(inputs).then(function () {
-                    self.prepareErrors(inputs, false);
-                    self.showAndOrCreateTooltip(e.target, true);
-                });
-            }
-        });
+                clearKeyDownTimeout();
+                var name = target.getAttribute('name');
+                if (name) {
+                    var inputs = form.querySelectorAll('[name="' + name + '"]');
+                    // we only support dependent fields for a single widgets right now
+                    if (1 === inputs.length) {
+                        inputs = self._getDependentFields(e.target);
+                    }
+                    self._customValidationsForElements(inputs).then(function () {
+                        self.prepareErrors(inputs, false);
+                        target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
+                    });
+                }
+            });
+        }
 
         // prevent default if form is invalid
         var submitListener = function (e) {
@@ -840,8 +843,8 @@ class Form {
      */
     _submitListener(e, submitListener) {
 
-        var form        = this.getForm(),
-            self        = this,
+        var form = this.getForm(),
+            self = this,
             submitEvent = 'submit';
 
         if (this._formIsLoading()) {
