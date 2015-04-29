@@ -472,7 +472,7 @@ class Form {
             } else {
                 errorTarget.classList.remove(INPUT_ERROR_CLASS);
                 field.setAttribute(ARIA_INVALID, 'false');
-
+                delete field.flexFormsSavedValidationMessage;
                 this._removeElementErrors(parent);
             }
             // We have to reset the custom validity here to allow native validations work again
@@ -771,7 +771,7 @@ class Form {
             if(!e.target.flexcssKeepTooltips) {
                 self._handleTooltipInline();
             }
-            e.target.flexcssKeepTooltips = false;
+            delete e.target.flexcssKeepTooltips;
         }, true);
 
         // handle focus on input elements
