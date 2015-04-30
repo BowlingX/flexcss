@@ -90,6 +90,13 @@ class Tooltip {
     }
 
     /**
+     * @returns {HTMLElement|null}
+     */
+    getCurrentTarget() {
+        return this.tooltipContainer ? this.tooltipContainer.flexTooltipCurrentTarget : null;
+    }
+
+    /**
      * Removes a Tooltip on given target
      * @param {HTMLElement} [target], if not given will remove current open tooltip on this instance
      */
@@ -102,6 +109,7 @@ class Tooltip {
                 return;
             }
             this.tooltipContainer.classList.remove(CLASS_NAMES_OPEN);
+            delete this.tooltipContainer.flexTooltipCurrentTarget;
         }
         if (target && target.oldTitle) {
             target.setAttribute('title', target.oldTitle);

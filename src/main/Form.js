@@ -811,21 +811,19 @@ class Form {
             delete e.target.flexcssKeepTooltips;
         }, true);
 
-        // this defines the logic after a change event
-        // A Click somewhere will (maybe) just un-focus the field (if active), the second click will check
-        // if target is not an invalid element and remove tooltip then.
+        // this defines the logic after a change event when a tooltip is shown
+        // because we call this method inside the change event, the click would be immeditally executed with the change
+        // event when not using setTimeout(). There might be another solution for this...
         function _handleTooltipHideClickAfterChange() {
-            Util.addEventOnce('click', document.body, function (t) {
-                if(!self._isElementInvalidElement(t.target)) {
-                    self._handleTooltipInline();
-                } else {
-                    Util.addEventOnce('click', document.body, function (e) {
-                        if (!self._isElementInvalidElement(e.target)) {
+            if (self.options.createTooltips) {
+                setTimeout(function () {
+                    Util.addEventOnce('click', document.body, function (t) {
+                        if (!self._isElementInvalidElement(t.target)) {
                             self._handleTooltipInline();
                         }
                     });
-                }
-            });
+                }, 150);
+            }
         }
 
         // handle focus on input elements
@@ -854,12 +852,14 @@ class Form {
                     var inputs = form.querySelectorAll('[name="' + name + '"]');
                     // we only support dependent fields for a single widgets right now
                     if (1 === inputs.length) {
-                        inputs = self._getDependentFields(e.target);
+                        inputs = self._getDependentFields(target);
                     }
                     self._customValidationsForElements(inputs).then(function () {
                         self.prepareErrors(inputs, false);
-                        e.target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
-                        _handleTooltipHideClickAfterChange();
+                        target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
+                        if (target.flexcssKeepTooltips) {
+                            _handleTooltipHideClickAfterChange();
+                        }
                     });
                 }
             });
