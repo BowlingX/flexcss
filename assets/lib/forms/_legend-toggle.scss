@@ -1,34 +1,40 @@
-fieldset {
-  &.toggle-hide {
-    legend {
-      @include createColorSection($grayColor, none, $legendFontWeight);
-    }
-    padding-bottom: 0 !important;
-    .toggle-container {
-      display: none;
-    }
-    &.active {
-      padding-bottom: $formMargin !important;
-      .toggle-container {
-        display: block;
-        @include animate(fadeIn);
-      }
-    }
-
-    &:last-of-type {
-        margin-bottom: -$legendMargin;
-    }
+/**
+* A general toggle element with less-class markup for forms
+*/
+.toggle-hide {
+  legend {
+    @include createColorSection($grayColor, none, $legendFontWeight);
   }
 
-  legend > a[data-toggle] {
+  .toggle-trigger, a[data-toggle] {
     @include interface();
     i:before {
       margin-left: 3px;
       transition: transform $globalShortEaseTime ease;
+      vertical-align: middle;
     }
     &.active > i:before {
       transform: rotate(90deg);
     }
   }
+  padding-bottom: 0 !important;
+  .toggle-container {
+    display: none;
+  }
 
+  &.active {
+    .toggle-container {
+      display: block;
+      @include animate(fadeIn);
+    }
+  }
+}
+
+fieldset.toggle-hide  {
+  &.active {
+    padding-bottom: $formMargin !important;
+  }
+  &:last-of-type {
+    margin-bottom: -$legendMargin;
+  }
 }
