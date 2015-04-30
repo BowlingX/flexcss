@@ -812,16 +812,20 @@ class Form {
         }, true);
 
         // this defines the logic after a change event
-        // A Click somewhere will just un-focus the field, the second click will check
+        // A Click somewhere will (maybe) just un-focus the field (if active), the second click will check
         // if target is not an invalid element and remove tooltip then.
         function _handleTooltipHideClickAfterChange() {
-            Util.addEventOnce('click', document.body, function () {
-                Util.addEventOnce('click', document.body, function (e) {
-                    if (!self._isElementInvalidElement(e.target)) {
-                        self._handleTooltipInline();
-                    }
-                });
-            }, false);
+            Util.addEventOnce('click', document.body, function (t) {
+                if(!self._isElementInvalidElement(t.target)) {
+                    self._handleTooltipInline();
+                } else {
+                    Util.addEventOnce('click', document.body, function (e) {
+                        if (!self._isElementInvalidElement(e.target)) {
+                            self._handleTooltipInline();
+                        }
+                    });
+                }
+            });
         }
 
         // handle focus on input elements
