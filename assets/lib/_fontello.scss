@@ -167,6 +167,10 @@
   .icon-search:before { content: '🕝'; } /* '\1f55d' */
   .icon-block:before { content: '🚫'; } /* '\1f6ab' */
   .icon-download-cloud:before { content: '\e847'; } /* '' */
+  .icon-angle-right:before { content: '\e848'; } /* '' */
+  .icon-angle-left:before { content: '\e849'; } /* '' */
+  .icon-angle-up:before { content: '\e84a'; } /* '' */
+  .icon-angle-down:before { content: '\e84b'; } /* '' */
 }
 
 @if $includeFontello == true {
