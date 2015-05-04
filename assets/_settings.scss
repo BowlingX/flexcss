@@ -154,6 +154,7 @@ $placeholderColor: lighten($grayColor, 10%) !default;
 $selectPickerColor:#a6a6a6 !default;
 $selectChooseBackgroundColor: transparent !default;
 $labelMargin:3px !default;
+$formParagraphMargin: $appendMarginTopPositive !default;
 $checkboxAndOptionHeight:20px !default;
 $checkRadioColor:$primaryColor !default;
 $labelTextAlign:right !default;

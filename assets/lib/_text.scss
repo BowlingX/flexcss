@@ -52,6 +52,9 @@ a {
   color: $primaryColor;
   transition: color $globalShortEaseTime ease;
   font-weight: 600;
+  &.thin {
+    font-weight: normal;
+  }
   &:hover {
     color: lighten($primaryColor, 10%);
   }

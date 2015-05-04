@@ -20,7 +20,7 @@ form {
   flex-direction: column;
 
   p {
-    margin: $labelMargin 0 0 0;
+    margin: $formParagraphMargin 0 0 0;
     font-size: $copyTextFormsFontSize;
     line-height: $copyTextFormsLineHeight;
 
@@ -212,6 +212,10 @@ form .append {
   .checkbox {
     color: $grayColor;
     font-size: $copyTextFormsFontSize;
+  }
+
+  p:first-of-type {
+    margin-top:0;
   }
 }
 
