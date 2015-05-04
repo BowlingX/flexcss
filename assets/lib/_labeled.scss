@@ -8,6 +8,10 @@
   flex-wrap: wrap;
   margin: $labeledSpacing 0 0 0;
 
+  &:first-of-type {
+    margin-top:0;
+  }
+
   > dt {
     color: $labelColor;
     font-size: $labelFontSize;
@@ -34,6 +38,10 @@
     }
     > dd {
       color: $grayColor;
+    }
+
+    > dd + dt {
+      margin-top: 0;
     }
   }
 }

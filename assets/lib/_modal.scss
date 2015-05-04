@@ -57,7 +57,7 @@
 
 // The Modal itself
 .modal {
-  @include interface(auto);
+  @include interface(text);
   width: 100%;
   position: relative;
   background: #fff;
