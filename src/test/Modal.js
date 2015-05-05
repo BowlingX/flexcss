@@ -1,4 +1,4 @@
-import Modal from 'Modal';
+import Modal, {EVENT_MODAL_OPENED} from 'Modal';
 import setup_jasmine from 'setup_jasmine';
 import $ from 'jquery';
 import Widget from 'Widget';
@@ -21,4 +21,26 @@ describe("Open a Modal Element", () => {
         var modal = new Modal(document.createElement('body'));
         modal.fromWidget(new Widget(document.createElement('div')))
     });
+});
+
+describe("Expect Events to be correctly fired when open programmatically", () => {
+    let didOpen, originalEvent;
+
+    beforeEach(done => {
+        const el = document.createElement('div');
+        var modal = new Modal(document.createElement('body'));
+        modal.fromWidget(new Widget(el));
+
+        el.addEventListener(EVENT_MODAL_OPENED, (e) => {
+            didOpen = true;
+            originalEvent = e.originalEvent;
+            done();
+        })
+    });
+
+    it("should fire open event", () => {
+        expect(didOpen).toBe(true);
+        // because we open the modal programmatically, there should be no inherit event
+        expect(originalEvent).toBe(undefined);
+    })
 });

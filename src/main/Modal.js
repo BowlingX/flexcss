@@ -184,7 +184,7 @@ class Modal {
             }
 
             // finally trigger closed event
-            Event.dispatchAndFire(self.currentOpen, EVENT_MODAL_CLOSED);
+            Event.dispatch(self.currentOpen, EVENT_MODAL_CLOSED).withOriginal(e).fire();
 
         }
         self._removeModalFromStack(self.currentOpen);
@@ -452,7 +452,7 @@ class Modal {
             self.loading = false;
             toggleLoader(false);
 
-            self.open(el, true);
+            self.open(el, true, e);
 
             return el;
         });
@@ -462,8 +462,9 @@ class Modal {
      * Open's an already rendered modal
      * @param {HTMLElement} modal
      * @param {Boolean} [internal], set to true to prevent container management
+     * @param {Boolean} [maybeEvent], optional event-object that triggered open
      */
-    open(modal, internal) {
+    open(modal, internal, maybeEvent) {
 
 
         if (!internal) {
@@ -472,7 +473,7 @@ class Modal {
         }
         this.switchModals(modal, this.currentOpen);
 
-        Event.dispatchAndFire(modal, EVENT_MODAL_OPENED);
+        Event.dispatch(modal, EVENT_MODAL_OPENED).withOriginal(maybeEvent).fire();
     }
 
 
