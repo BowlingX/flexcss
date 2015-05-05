@@ -59,8 +59,10 @@
     outline: none !important;
     box-shadow: none !important;
   }
+
   .checkbox-container {
     line-height: $baseLineHeight;
+    display:block;
   }
 
   $offsetLeft: 0;
@@ -76,7 +78,7 @@
     background: $inputBackground;
     border: $inputBorder;
     transition: background .5s ease;
-    top:0;
+    top:0px;
   }
 
   .checkbox-container::after {
@@ -90,7 +92,7 @@
     text-align: center;
     color: $checkRadioColor !important;
     transition: transform .3s ease;
-    top:0;
+    top:0px;
   }
 
   &:active {
