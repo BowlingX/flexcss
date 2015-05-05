@@ -21,7 +21,6 @@ void function () {
         global.CustomEvent = CustomEvent;
     }
 }();
-
 /**
  * Simpler Event dispatching
  */
@@ -53,20 +52,26 @@ class EventHandler {
     }
 
     /**
+     * Call with the originalEvent
      * @param {Event} e
      * @returns {EventHandler}
      */
     withOriginal(e) {
-        this.defaultOptions.originalEvent = e;
-        return this;
+        return this.withDetail({
+            originalEvent:e
+        });
     }
 
     /**
-     * @param {*} o
+     * Extends the detail part of the event
+     * @param {Object} o
      * @returns {EventHandler}
      */
     withDetail(o) {
-        this.defaultOptions.detail = o;
+        if(!this.defaultOptions.detail) {
+            this.defaultOptions.detail = {};
+        }
+        Object.assign(this.defaultOptions.detail, o);
         return this;
     }
 
