@@ -23,7 +23,7 @@
 
   .item {
     margin: 0 10px 0 0;
-    &.current a, span {
+    &.current a, &.current span {
       background: $actionColor;
       color: #fff;
     }
@@ -36,7 +36,7 @@
 // hover states only for non touch devices
 html:not(.touch) {
   .paginator {
-    a, span {
+    a {
       background: transparent;
       &:hover {
         background: $lightGrayColor;
