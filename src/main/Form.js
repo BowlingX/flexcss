@@ -19,6 +19,8 @@ const ATTR_ERROR_TARGET_ID = 'data-error-target';
 const ATTR_DEPENDS = 'data-depends-selector';
 const CONST_USE_JSON = 'json';
 const CONST_REALTIME_EVENT = 'input';
+const FOCUS_TOOLTIP_DELAY = 20;
+const CLICK_TOOLTIP_DELAY = 150;
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}
@@ -681,10 +683,11 @@ class Form {
 
     /**
      * @private
+     * @param {HTMLElement} [target]
      */
-    _handleTooltipInline() {
+    _handleTooltipInline(target) {
         if (this.tooltips) {
-            this.tooltips.removeTooltip();
+            this.tooltips.removeTooltip(target);
         }
     }
 
@@ -806,7 +809,7 @@ class Form {
         form.addEventListener('blur', function (e) {
             // do not hide tooltip after change event
             if (!e.target.flexcssKeepTooltips) {
-                self._handleTooltipInline();
+                self._handleTooltipInline(e.target);
             }
             delete e.target.flexcssKeepTooltips;
         }, true);
@@ -822,7 +825,7 @@ class Form {
                             self._handleTooltipInline();
                         }
                     });
-                }, 150);
+                }, CLICK_TOOLTIP_DELAY);
             }
         }
 
@@ -836,36 +839,38 @@ class Form {
             if (!_checkIsValidBlurFocusElement(e.target)) {
                 return;
             }
-            self.showAndOrCreateTooltip(e.target);
+            // we need to delay this a little, because Firefox and Safari do not show a tooltip after it
+            // just have been hidden (on blur). Maybe fix this with a queue later
+            setTimeout(function () {
+                self.showAndOrCreateTooltip(e.target);
+            }, FOCUS_TOOLTIP_DELAY);
         }, true);
 
         if (self.options.inlineValidation) {
             // Handle change for checkbox, radios and selects
             form.addEventListener("change", function (e) {
-                let target = e.target;
+                const target = e.target;
                 if (self._formIsLoading() || !_checkIsValidInlineCheckElement(target)) {
                     return;
                 }
                 clearKeyDownTimeout();
-                var name = target.getAttribute('name');
-                if (name) {
-                    var inputs = form.querySelectorAll('[name="' + name + '"]');
-                    // we only support dependent fields for a single widgets right now
-                    if (1 === inputs.length) {
-                        inputs = self._getDependentFields(target);
-                    }
-                    self._customValidationsForElements(inputs).then(function () {
-                        self.prepareErrors(inputs, false);
-                        target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
-                        if (target.flexcssKeepTooltips) {
-                            _handleTooltipHideClickAfterChange();
-                        }
-                    });
+                const name = target.getAttribute('name');
+                let inputs = name ? form.querySelectorAll('[name="' + name + '"]') : [target];
+                // we only support dependent fields for a single widgets right now
+                if (1 === inputs.length) {
+                    inputs = self._getDependentFields(target);
                 }
+                self._customValidationsForElements(inputs).then(function () {
+                    self.prepareErrors(inputs, false);
+                    target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
+                    if (target.flexcssKeepTooltips) {
+                        _handleTooltipHideClickAfterChange();
+                    }
+                });
             });
         }
         // prevent default if form is invalid
-        var submitListener = function (e) {
+        const submitListener = function (e) {
             self._submitListener(e, submitListener);
         };
         form.addEventListener("submit", submitListener);
@@ -897,7 +902,7 @@ class Form {
      */
     _submitListener(e, submitListener) {
 
-        var form = this.getForm(),
+        const form = this.getForm(),
             self = this,
             submitEvent = 'submit';
 
