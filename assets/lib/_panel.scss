@@ -6,12 +6,12 @@
 
   &.alert {
     background: lighten($alertColor, 40%);
-    @include createColorSection($alertColor);
+    @include create-color-section($alertColor);
   }
 
   &.success {
     background: lighten($successColor, 50%);
-    @include createColorSection($successColor);
+    @include create-color-section($successColor);
   }
 
   &.inline-panel {

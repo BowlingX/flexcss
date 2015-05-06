@@ -260,14 +260,14 @@
 /**
  * Mixin that creates a colored section that may include links
  */
-@mixin createColorSection($color, $decoration: underline, $fontWeight: normal) {
+@mixin create-color-section($color, $decoration: underline, $fontWeight: normal, $hoverColor:  darken($color, 20) ) {
   color: $color !important;
   a {
     color: $color !important;
     text-decoration: $decoration;
     font-weight: $fontWeight;
     &:hover {
-      color: darken($color, 20) !important;
+      color: $hoverColor !important;
     }
   }
 }

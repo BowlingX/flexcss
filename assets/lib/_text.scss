@@ -119,11 +119,11 @@ small,
 }
 
 .fade-out {
-  @include createColorSection($grayColor);
+  @include create-color-section($grayColor);
 }
 
 .unimportant {
-  @include createColorSection($lighterGrayColor);
+  @include create-color-section($lighterGrayColor);
 }
 
 .inherit-link {

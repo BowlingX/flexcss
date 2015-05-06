@@ -3,7 +3,7 @@
 */
 .toggle-hide {
   legend {
-    @include createColorSection($grayColor, none, $legendFontWeight);
+    @include create-color-section($grayColor, none, $legendFontWeight);
   }
 
   .toggle-trigger, a[data-toggle] {
