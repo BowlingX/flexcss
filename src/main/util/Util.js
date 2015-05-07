@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 const PFX = ["webkit", "moz", "MS", "o", ""];
 
 const COL_LEFT_CLASS = 'is-collision-left';
@@ -7,7 +31,7 @@ const COL_RIGHT_CLASS = 'is-collision-right';
 const COL_BOTTOM_CLASS = 'is-collision-bottom';
 
 /**
- * Provides some shared Util functions
+ * Provides shared DOM-Utility functions
  */
 export default
 class Util {
@@ -19,7 +43,7 @@ class Util {
      * @param callback
      */
     static prefixedAnimateEvent(element, type, callback) {
-        var thisFunction = function (e) {
+        const thisFunction = function (e) {
             callback.apply(element, [e, thisFunction]);
         };
 
@@ -36,7 +60,8 @@ class Util {
      * @private
      */
     static whichTransitionEndEvent() {
-        var t, el = document.createElement('fakeelement');
+        let t;
+        const el = document.createElement('fake');
 
         var transitions = {
             'transition': 'transitionend',
@@ -62,7 +87,7 @@ class Util {
         if (!target || !parent) {
             return false;
         }
-        var now = target;
+        let now = target;
         while (now !== parent && now !== null) {
             if (now === parent) {
                 break;
@@ -76,13 +101,13 @@ class Util {
      * Walks the tree until func returns true for given argument
      * @param target
      * @param func
-     * @returns {HTMLElement}
+     * @returns {boolean|HTMLElement}
      */
     static parentsUntil(target, func) {
         if (!target) {
             return false;
         }
-        var now = target;
+        let now = target;
         while (!func(now) && now !== null) {
             now = now.parentNode;
         }
@@ -112,11 +137,11 @@ class Util {
      */
     static getScrollBarWidth() {
 
-        var doc = global.document, inner = doc.createElement('p');
+        const doc = global.document, inner = doc.createElement('p');
         inner.style.width = "100%";
         inner.style.height = "200px";
 
-        var outer = doc.createElement('div');
+        const outer = doc.createElement('div');
         outer.style.position = "absolute";
         outer.style.top = "0px";
         outer.style.left = "0px";
@@ -127,9 +152,9 @@ class Util {
         outer.appendChild(inner);
 
         doc.body.appendChild(outer);
-        var w1 = inner.offsetWidth;
+        const w1 = inner.offsetWidth;
         outer.style.overflow = 'scroll';
-        var w2 = inner.offsetWidth;
+        let w2 = inner.offsetWidth;
         if (w1 === w2) {
             w2 = outer.clientWidth;
         }
@@ -147,7 +172,7 @@ class Util {
      * @param {boolean} [capture]
      */
     static addEventOnce(ev, target, func, capture) {
-        var thisFunction = function (event) {
+        const thisFunction = function (event) {
             func(event, func);
             target.removeEventListener(ev, thisFunction, capture);
         };
@@ -224,7 +249,7 @@ class Util {
     static setupPositionNearby(target, elementToPosition, collisionContainer, centerHorizontal, positionTop) {
 
         // determine relative offsets
-        var amountTop = 0, amountLeft = 0;
+        let amountTop = 0, amountLeft = 0;
         Util.parentsUntil(target.parentNode, function (el) {
             if (!(el instanceof HTMLElement)) {
                 return false;
@@ -241,7 +266,7 @@ class Util {
             }
         });
 
-        var targetPosition = target.getBoundingClientRect(),
+        const targetPosition = target.getBoundingClientRect(),
             elementRect = elementToPosition.getBoundingClientRect(),
             colRect = collisionContainer.getBoundingClientRect(),
             targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
