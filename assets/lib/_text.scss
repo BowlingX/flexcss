@@ -227,8 +227,12 @@ kbd {
   color: white;
 }
 
-.help {
-  cursor: help;
+.cursor-help {
+  cursor: help !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 @media #{$mediaDesktop} {

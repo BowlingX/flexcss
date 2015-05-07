@@ -26,7 +26,7 @@
   will-change: transform, opacity;
   transition: opacity $globalMediumEaseTime ease, transform $globalMediumEaseTime ease;
   font-size: $tooltipFontSize;
-  font-weight: bold;
+  font-weight: $tooltipFontWeight;
   transform: translate3d(0, -6px, 0);
   background: $tooltipBg;
   word-wrap: break-word;

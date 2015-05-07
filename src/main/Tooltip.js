@@ -8,7 +8,15 @@ const CLASS_NAMES_TOOLTIP = 'tooltip-container';
  */
 const CLASS_NAMES_OPEN = 'open';
 
-var doc = global.document;
+/**
+ * @type {string}
+ */
+const ATTR_DATA_CLASSNAME = 'data-class';
+
+/**
+ * @type {HTMLDocument}
+ */
+const doc = global.document;
 
 /**
  * Simple Tooltip
@@ -61,11 +69,11 @@ class Tooltip {
         if (!text || text && text.trim() === '') {
             return;
         }
-        var tooltipContainer = this.tooltipContainer;
+        let tooltipContainer = this.tooltipContainer;
 
         if (!tooltipContainer) {
             tooltipContainer = doc.createElement('div');
-            this._restoreClassNames(tooltipContainer);
+            this._restoreClassNames(tooltipContainer, target);
             this.container.appendChild(tooltipContainer);
             this.tooltipContainer = tooltipContainer;
         }
@@ -84,8 +92,14 @@ class Tooltip {
 
     }
 
-    _restoreClassNames(container) {
-        container.className = [CLASS_NAMES_TOOLTIP, this.options.containerClass].join(" ");
+    _restoreClassNames(container, target) {
+        // allow additional classname per tooltip on target element
+        const classNames = [CLASS_NAMES_TOOLTIP, this.options.containerClass],
+            maybeTargetClass = target.getAttribute(ATTR_DATA_CLASSNAME);
+        if(maybeTargetClass) {
+            classNames.push(maybeTargetClass);
+        }
+        container.className = classNames.join(" ");
         return this;
     }
 
@@ -120,7 +134,7 @@ class Tooltip {
      * Initilizes mouse events on container element
      */
     registerEvents() {
-        var self = this;
+        const self = this;
         this.container.addEventListener('mouseover', function (e) {
             if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.createTooltip(e.target, e.target.getAttribute('title'), true);
