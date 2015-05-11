@@ -51,7 +51,7 @@ a {
   text-decoration: none;
   color: $primaryColor;
   transition: color $globalShortEaseTime ease;
-  font-weight: 600;
+  font-weight: $linkFontWeight;
   &.thin {
     font-weight: normal;
   }

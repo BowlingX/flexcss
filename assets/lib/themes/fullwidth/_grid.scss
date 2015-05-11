@@ -27,3 +27,15 @@ header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper-center {
 header ~ .navbar-sub + .overall-wrapper {
   min-height: calc(100vh - #{$topbarHeight*2 + 1});
 }
+
+@media #{$mediaDesktop} {
+
+  header + .overall-wrapper > .content-wrapper .wrapper-center {
+    margin-top: $topbarHeightDesktop;
+  }
+
+  header ~ .navbar-sub + .overall-wrapper {
+    min-height: calc(100vh - #{$topbarHeightDesktop*2 + 1});
+  }
+
+}

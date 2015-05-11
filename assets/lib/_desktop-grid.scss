@@ -136,4 +136,25 @@
       margin-left: $overallPadding;
     }
   }
+
+  // Topbar specific stuff
+
+  .wrapper {
+    min-height: calc(100vh - #{$topbarHeightDesktop});
+    margin-top: $topbarHeightDesktop;
+  }
+
+  .wrapper-center {
+    margin: $topbarHeightDesktop auto 0 auto;
+  }
+
+  .header {
+    height: $topbarHeightDesktop;
+  }
+
+  .navigation-toggler {
+    &:before {
+      line-height:$topbarHeightDesktop;
+    }
+  }
 }

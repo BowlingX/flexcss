@@ -10,6 +10,7 @@ $subnavColor: #616161 !default;
 
 // height of topbar
 $topbarHeight: 43px !default;
+$topbarHeightDesktop: 43px !default;
 $tabHeight: 40px !default;
 $topbarBg:#333333 !default;
 $topbarColor:#aaa !default;
@@ -225,20 +226,23 @@ $iconSpacingButton:.3rem !default;
 $iconSpacing:.1rem !default;
 
 // table
-$tableBorder: 1px solid $globalBorderColor;
-$tableSpacing: 10px 1rem 10px 0;
-$tableSpacingBreak: 6px 1rem 6px 0;
-$tableSpacingLastAndFirst: 5px;
-$tableTransition:background .1s ease;
+$tableBorder: 1px solid $globalBorderColor !default;
+$tableSpacing: 10px 1rem 10px 0 !default;
+$tableSpacingBreak: 6px 1rem 6px 0 !default;
+$tableSpacingLastAndFirst: 5px !default;
+$tableTransition:background .1s ease !default;
 
 // listings:
-$listingMinHeight:105px;
-$listingAvatarRowLarge:84px;
-$listingAvatarRow:84px;
-$listingAvatarRowSmall:36px;
-$listingOuterPadding: 10px;
-$listingSpaceRight: 30px;
-$listingSmallWidth: 30%;
+$listingMinHeight:105px !default;
+$listingAvatarRowLarge:84px !default;
+$listingAvatarRow:84px !default;
+$listingAvatarRowSmall:36px !default;
+$listingOuterPadding: 10px !default;
+$listingSpaceRight: 30px !default;
+$listingSmallWidth: 30% !default;
 
 // panel
-$panelBackground: $lightGrayColor;
+$panelBackground: $lightGrayColor !default;
+
+// links:
+$linkFontWeight: 600 !default;
