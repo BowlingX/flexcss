@@ -218,8 +218,8 @@ $breadcrumbColor:#ccc !default;
 $breadcrumbSeparatorIcon:"\00B7 ";
 
 // labeled
-$labeledSpacing: 1rem;
-$labeledBorder: 1px solid $globalBorderColor;
+$labeledSpacing: 1rem !default;
+$labeledBorder: 1px solid $globalBorderColor !default;
 
 // icons:
 $iconSpacingButton:.3rem !default;
