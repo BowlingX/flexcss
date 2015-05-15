@@ -56,7 +56,8 @@ html:not(.touch) {
       margin-left:10px;
     }
     .item {
-      margin:0;
+      // add a little space between next and prev
+      margin: 0 10px 0 0;
       &.arrow {
         width: 100%;
         text-align: center;
