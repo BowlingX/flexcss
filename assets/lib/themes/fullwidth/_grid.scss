@@ -2,12 +2,12 @@
 * Everything for a Fullwidth layout (with top and subnavigation)
 */
 
-header + .overall-wrapper > .content-wrapper .wrapper-center {
+header + .overall-wrapper > .content-wrapper .wrapper {
   margin-top:$topbarHeight;
 }
 
 // if a subnavigation bar is present, recalculate min height (including border)
-header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper-center {
+header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper {
   margin-top: 0;
 }
 
@@ -30,7 +30,7 @@ header ~ .navbar-sub + .overall-wrapper {
 
 @media #{$mediaDesktop} {
 
-  header + .overall-wrapper > .content-wrapper .wrapper-center {
+  header + .overall-wrapper > .content-wrapper .wrapper {
     margin-top: $topbarHeightDesktop;
   }
 
