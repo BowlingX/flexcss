@@ -66,10 +66,8 @@
   .slidebar {
     overflow: visible;
     position: relative;
-    height: 100%;
-    margin-bottom: $topbarHeight;
+    height: $topbarHeight;
     z-index: 2;
-
 
     .subnav {
       position: relative;
