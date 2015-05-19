@@ -245,7 +245,7 @@ form:not(.wide) {
     @extend .flex-align-items-center;
   }
   > * {
-    margin-left: 10px;
+    margin-left: $inputMultiFormSpacing;
     min-width: 0;
     // all all equal size
     flex: 1;
@@ -258,7 +258,7 @@ form:not(.wide) {
   &.break {
     display: block;
     > * {
-      margin-left: 0px;
+      margin-left: 0;
       &:not(:last-of-type) {
         margin-bottom: 10px;
       }
@@ -368,12 +368,12 @@ form:not(.wide) {
     &.break {
       display: flex;
       > div:not(:first-of-type) {
-        margin-left: 20px;
+        margin-left: $inputMultiFormSpacing;
 
       }
       > div {
         &:not(:last-of-type) {
-          margin-bottom: 0px;
+          margin-bottom: 0;
         }
       }
       flex-direction: row;
