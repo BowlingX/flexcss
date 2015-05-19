@@ -301,6 +301,12 @@ class Form {
             if (firstInvalidField) {
                 if (focus) {
                     firstInvalidField.focus();
+                    // if element could not be focused:
+                    if(document.activeElement !== firstInvalidField) {
+                        self._handleTooltipHideClickAfterChange();
+                    }
+                } else {
+                    self._handleTooltipHideClickAfterChange();
                 }
                 self.showAndOrCreateTooltip(firstInvalidField);
             }
@@ -844,21 +850,6 @@ class Form {
             delete e.target.flexcssKeepTooltips;
         }, true);
 
-        // this defines the logic after a change event when a tooltip is shown
-        // because we call this method inside the change event, the click would be immeditally executed with the change
-        // event when not using setTimeout(). There might be another solution for this...
-        function _handleTooltipHideClickAfterChange() {
-            if (self.options.createTooltips) {
-                setTimeout(function () {
-                    Util.addEventOnce('click', document.body, function (t) {
-                        if (!self._isElementInvalidElement(t.target)) {
-                            self._handleTooltipInline();
-                        }
-                    });
-                }, CLICK_TOOLTIP_DELAY);
-            }
-        }
-
         // handle focus on input elements
         // will show an error if field is invalid
         form.addEventListener("focus", function (e) {
@@ -894,7 +885,7 @@ class Form {
                     self.prepareErrors(inputs, false);
                     target.flexcssKeepTooltips = self.showAndOrCreateTooltip(target, true);
                     if (target.flexcssKeepTooltips) {
-                        _handleTooltipHideClickAfterChange();
+                        self._handleTooltipHideClickAfterChange();
                     }
                 });
             });
@@ -921,6 +912,22 @@ class Form {
 
     _formIsLoading() {
         return this.getForm().classList.contains(LOADING_CLASS);
+    }
+
+    // this defines the logic after a change event when a tooltip is shown
+    // because we call this method inside the change event, the click would be immeditally executed with the change
+    // event when not using setTimeout(). There might be another solution for this...
+    _handleTooltipHideClickAfterChange() {
+        const self = this;
+        if (this.options.createTooltips) {
+            setTimeout(function () {
+                Util.addEventOnce(Settings.getTabEvent(), global.document.body, function (t) {
+                    if (!self._isElementInvalidElement(t.target)) {
+                        self._handleTooltipInline();
+                    }
+                });
+            }, CLICK_TOOLTIP_DELAY);
+        }
     }
 
     /**

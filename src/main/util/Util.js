@@ -167,7 +167,7 @@ class Util {
     /**
      * Run an event once
      * @param {String} ev
-     * @param {HTMLElement} target
+     * @param {HTMLElement|HTMLDocument} target
      * @param {Function} func
      * @param {boolean} [capture]
      */
