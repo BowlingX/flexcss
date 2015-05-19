@@ -34,6 +34,7 @@ import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
 import Event from 'util/Event';
 import Util from 'util/Util';
+import Settings from 'util/Settings';
 
 const LOADING_CLASS = 'loading';
 const DATA_ELEMENT_INVALID = 'data-flexcss-invalid';
