@@ -55,6 +55,7 @@
 
 @media #{$mediaDesktop} {
  .form-actions {
+   margin-top: $formMarginDesktop;
    padding-top: $formActionsPaddingDesktop;
  }
 }
