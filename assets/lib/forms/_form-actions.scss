@@ -9,7 +9,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   border-top: 1px solid $globalBorderColor;
-  padding-top: $formMargin;
+  padding-top: $formActionsPadding;
 
   &.right {
     justify-content: flex-end;
@@ -51,4 +51,10 @@
     }
   }
 
+}
+
+@media #{$mediaDesktop} {
+ .form-actions {
+   padding-top: $formActionsPaddingDesktop;
+ }
 }

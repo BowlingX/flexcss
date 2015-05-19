@@ -36,7 +36,7 @@ html {
 }
 
 .page-content {
-  padding: $overallPadding*2.5 $overallPadding;
+  padding: $overallPaddingTopBottom $overallPadding;
 
   .page-content {
     padding:0 $overallPadding;

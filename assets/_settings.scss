@@ -24,6 +24,7 @@ $overallMaxWidth:1200px !default;
 
 // a base padding, used by various components
 $overallPadding:10px !default;
+$overallPaddingTopBottom: 25px !default;
 $overallPaddingLarge: 50px !default;
 // padding when in desktop state
 $paddingRightLeftDesktop:20px !default;
@@ -133,6 +134,9 @@ $labelFontSize: $smallFontSize !default;
 $labelPaddingDesktop:5px 1rem 0 0 !default;
 $inputHeight:35px !default;
 $formMargin:30px !default;
+$formMarginDesktop: 30px !default;
+$formActionsPadding: 40px !default;
+$formActionsPaddingDesktop:60px !default;
 $formMinWidthControls:330px !default;
 $appendMargin:20px !default;
 // append Margins for different states (last-child etc.)

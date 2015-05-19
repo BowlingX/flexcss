@@ -359,8 +359,8 @@ form:not(.wide) {
     }
 
     fieldset:not(:last-of-type) {
-      padding: 0 0 $formMargin 0;
-      margin-bottom: $formMargin;
+      padding: 0 0 $formMarginDesktop 0;
+      margin-bottom: $formMarginDesktop;
     }
 
   }
