@@ -131,8 +131,6 @@
 
 .content-row {
   flex: 1;
-  padding-right: $listingOuterPadding;
-  padding-left:$listingOuterPadding;
   min-width: 0;
 }
 
@@ -203,7 +201,8 @@ html:not(.touch) {
 
   .content-row {
     max-width: 100%;
-
+    padding-right: $listingOuterPadding;
+    padding-left:$listingOuterPadding;
   }
 
   .listing {
