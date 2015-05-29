@@ -1,15 +1,17 @@
-# FlexCss
+FlexCss
+===
+
 [![Circle CI](https://circleci.com/gh/BowlingX/flexcss.svg?style=svg)](https://circleci.com/gh/BowlingX/flexcss)
 ![Dependencies](https://img.shields.io/david/bowlingx/flexcss.svg)
 [![Code Climate](https://codeclimate.com/github/BowlingX/flexcss/badges/gpa.svg)](https://codeclimate.com/github/BowlingX/flexcss)
 
-A lightweight Flexbox based mobile-first CSS/Javascript pattern-library created by [David Heidrich](https://github.com/BowlingX),
-build for [hellofellow.com](https://hellofellow.com).
+**A lightweight Flexbox based mobile-first CSS/Javascript pattern-library created by [David Heidrich](https://github.com/BowlingX),
+build for [hellofellow.com](https://hellofellow.com).**
 
 - [Real-World-Example](https://hellofellow.com)
 - [Demo-Page](http://bowlingx.github.io/flexcss)
 
-## Install-Instructions
+## Installation
 
 Feel free to use my patterns in your project
 
