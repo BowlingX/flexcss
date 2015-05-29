@@ -6,3 +6,4 @@ scripts/min
 node_modules
 coverage
 _site
+test_out
