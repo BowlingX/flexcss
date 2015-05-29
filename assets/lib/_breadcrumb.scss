@@ -35,13 +35,13 @@
   li:first-of-type:before {
     content: " ";
   }
-  font-size: $breadcrumbFontSize - 3px;
+  font-size: $breadcrumbFontSize;
   margin: 0;
 }
 
 @media #{$mediaLarge} {
   .breadcrumb {
-    font-size: $breadcrumbFontSize;
+    font-size: $breadcrumbFontSizeLarge;
   }
 }
 

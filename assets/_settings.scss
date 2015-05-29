@@ -217,7 +217,8 @@ $alertTooltipColor:$tooltipBg !default;
 $tooltipFontWeight:600 !default;
 
 // breadcrumbs
-$breadcrumbFontSize: 18px !default;
+$breadcrumbFontSize: $baseFontSize !default;
+$breadcrumbFontSizeLarge: 18px !default;
 $breadcrumbColor:#ccc !default;
 $breadcrumbSeparatorIcon:"\00B7 ";
 
