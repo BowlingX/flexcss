@@ -1,0 +1,6 @@
+languages:
+  JavaScript: true
+exclude_paths:
+- "webpack.config.js"
+- "gulp.js"
+- "webpack.test.config.js"
