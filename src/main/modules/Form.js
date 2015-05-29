@@ -1,3 +1,5 @@
+'use strict';
+
 import Form from 'Form';
 import Tooltip from 'Tooltip';
 import Settings from 'util/Settings';
@@ -5,6 +7,6 @@ import Settings from 'util/Settings';
 // default export as component object
 export default {
     Form: Form,
-    Settings:Settings,
-    Tooltip:Tooltip
+    Settings: Settings,
+    Tooltip: Tooltip
 };

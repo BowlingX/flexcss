@@ -28,6 +28,8 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
 import Settings from 'util/Settings';
 import Widget from 'Widget';
 import Util from 'util/Util';
@@ -165,8 +167,8 @@ class Toggleable {
         });
 
         if (parent) {
-            maybeToggleNode = Util.parentsUntil(target, function (n) {
-                return n && n.hasAttribute && n.hasAttribute(ATTR_TOGGLE_LIST);
+            maybeToggleNode = Util.parentsUntil(target, function (node) {
+                return node && node.hasAttribute && node.hasAttribute(ATTR_TOGGLE_LIST);
             });
 
             parentClassList = parent.classList;
@@ -215,8 +217,6 @@ class Toggleable {
             Toggleable._handleLoaded(target);
             console.warn(reason);
         });
-
-        return this;
     }
 
     /**

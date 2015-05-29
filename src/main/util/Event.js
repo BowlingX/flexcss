@@ -23,19 +23,20 @@
  */
 /*global CustomEvent*/
 
+'use strict';
+
 // polyfill for custom events to make thinks work in IE
 // The needed polyfill is so small that I embedded it here
 void function () {
-    "use strict";
     if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
         var CustomEvent;
         CustomEvent = function (event, params) {
             var evt;
             params = params || {
-                bubbles: false,
-                cancelable: false,
-                detail: undefined
-            };
+                    bubbles: false,
+                    cancelable: false,
+                    detail: undefined
+                };
             evt = document.createEvent("CustomEvent");
             evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
             return evt;
@@ -81,7 +82,7 @@ class EventHandler {
      */
     withOriginal(e) {
         return this.withDetail({
-            originalEvent:e
+            originalEvent: e
         });
     }
 
@@ -91,7 +92,7 @@ class EventHandler {
      * @returns {EventHandler}
      */
     withDetail(o) {
-        if(!this.defaultOptions.detail) {
+        if (!this.defaultOptions.detail) {
             this.defaultOptions.detail = {};
         }
         Object.assign(this.defaultOptions.detail, o);

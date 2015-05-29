@@ -28,6 +28,8 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
 /* global Image, TouchEvent*/
 
 import Modal from 'Modal';
@@ -505,7 +507,9 @@ class LightBox {
                     return self;
                 });
             });
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
 }

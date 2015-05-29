@@ -28,6 +28,8 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
 import Util from 'util/Util';
 /**
  * @type {string}
@@ -82,7 +84,7 @@ class Tooltip {
          */
         this.options = {
             containerClass: '',
-            selectorAttribute:'data-tooltip'
+            selectorAttribute: 'data-tooltip'
         };
 
         Object.assign(this.options, options);
@@ -126,7 +128,7 @@ class Tooltip {
         // allow additional classname per tooltip on target element
         const classNames = [CLASS_NAMES_TOOLTIP, this.options.containerClass],
             maybeTargetClass = target.getAttribute(ATTR_DATA_CLASSNAME);
-        if(maybeTargetClass) {
+        if (maybeTargetClass) {
             classNames.push(maybeTargetClass);
         }
         container.className = classNames.join(" ");
@@ -145,7 +147,7 @@ class Tooltip {
      * @param {HTMLElement} [target], if not given will remove current open tooltip on this instance
      */
     removeTooltip(target) {
-        if(!target && this.tooltipContainer) {
+        if (!target && this.tooltipContainer) {
             target = this.tooltipContainer.flexTooltipCurrentTarget;
         }
         if (this.tooltipContainer) {

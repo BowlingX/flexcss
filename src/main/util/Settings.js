@@ -21,7 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+'use strict';
+
 import Util from 'util/Util';
+
 
 // we attach global settings to global once because settings might be shared a lot of times trough the application
 // Maybe find a better way to handle that scenario
@@ -38,7 +41,7 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
         // additional Delay until darkener is fully hidden
         darkenerFadeDelay: 100,
         // class that is added if canvas has been toggled
-        canvasToggledClass:'toggled-canvas'
+        canvasToggledClass: 'toggled-canvas'
     };
 
     // Measure scrollbar width
@@ -119,12 +122,14 @@ class Settings {
     static getTransitionEvent() {
         return global.FLEXCSS_CONST_TRANSITION_EVENT;
     }
+
     /**
      * @returns {int}
      */
     static getScrollbarWidth() {
         return global.FLEXCSS_CONST_SCROLLBAR_WIDTH;
     }
+
     /**
      * @returns {String}
      */

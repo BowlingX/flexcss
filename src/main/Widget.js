@@ -28,6 +28,8 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
 /**
  * A Widget provides async content on a specific target (e.g. a modal link)
  */
@@ -83,7 +85,7 @@ class Widget {
     }
 
     /**
-     * @param {() => Promise} async
+     * @param {Function.<Promise>} async
      * @returns {Widget}
      */
     setAsync(async) {
@@ -97,6 +99,7 @@ class Widget {
     getFinalContent() {
         return this.finalContent;
     }
+
     /**
      * @param {HTMLElement} element
      * @returns {Widget}
@@ -130,7 +133,7 @@ class Widget {
      * @returns {Widget|undefined}
      */
     static findWidget(element) {
-        return element? element.hfWidgetInstance : undefined;
+        return element ? element.hfWidgetInstance : undefined;
     }
 
     /**
@@ -141,5 +144,4 @@ class Widget {
     static isWidget(self) {
         return self instanceof Widget || typeof self === 'object' && self.hasOwnProperty('_isWidget');
     }
-
 }

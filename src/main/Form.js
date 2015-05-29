@@ -28,7 +28,10 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-/*global Form, HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
+'use strict';
+
+
+/*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
 
 import Tooltip from 'Tooltip';
 export * from 'isomorphic-fetch';
@@ -183,7 +186,7 @@ class Form {
             return false;
         }
 
-        if (null === shouldUseAjax) {
+        if (shouldUseAjax === null) {
             // submit
             return thisForm.submit();
         }
@@ -303,7 +306,7 @@ class Form {
                 if (focus) {
                     firstInvalidField.focus();
                     // if element could not be focused:
-                    if(document.activeElement !== firstInvalidField) {
+                    if (document.activeElement !== firstInvalidField) {
                         self._handleTooltipHideClickAfterChange();
                     }
                 } else {
@@ -491,14 +494,14 @@ class Form {
         }
         let labelGroups = {}, invalidFields = [];
 
-        function handleAdditionalLabels(isInvalid, labelGroups, field) {
+        function handleAdditionalLabels(isInvalid, thisLabelGroup, field) {
             let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) ||
-                field.id, group = labelGroups[additionalLabels];
+                field.id, group = thisLabelGroup[additionalLabels];
             if (additionalLabels) {
                 // check additionally if field is currently marked as invalid
                 // so the label is not marked as error if no field is marked as one
                 group = group ? group : isInvalid;
-                labelGroups[additionalLabels] = group;
+                thisLabelGroup[additionalLabels] = group;
             }
         }
 
@@ -546,7 +549,7 @@ class Form {
             field.setCustomValidity('');
         }
         // if validates a single field we need to check the linked fields to a label:
-        if (1 === fields.length) {
+        if (fields.length === 1) {
             let field = fields[0];
             let id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
             if (id) {
@@ -734,7 +737,6 @@ class Form {
     initFormValidation() {
         // Suppress the default bubbles
         var form = this.getForm(),
-            invalidFormFired = false,
             self = this,
             invalidEvent = 'invalid';
 
@@ -753,7 +755,6 @@ class Form {
                         }, 0);
                         resolve(r);
                         self._formStopLoading();
-                        invalidFormFired = false;
                         if (!r.foundAnyError) {
                             self._formLoading();
                             self._handleSubmit(e);
@@ -879,7 +880,7 @@ class Form {
                 const name = target.getAttribute('name');
                 let inputs = name ? form.querySelectorAll('[name="' + name + '"]') : [target];
                 // we only support dependent fields for a single widgets right now
-                if (1 === inputs.length) {
+                if (inputs.length === 1) {
                     inputs = self._getDependentFields(target);
                 }
                 self._customValidationsForElements(inputs).then(function () {
@@ -1006,13 +1007,15 @@ class Form {
      * Initialize forms for a specific selector
      * @param {String} selector
      * @param {Object} [options]
+     * @return {array.<Form>}
      */
     static init(selector, options) {
         var forms = selector instanceof HTMLElement ? selector.querySelectorAll('form') :
-            document.querySelectorAll(selector);
+            document.querySelectorAll(selector), instances = [];
         for (var i = 0; i < forms.length; i++) {
-            new Form(forms[i], options);
+            instances.push(new Form(forms[i], options));
         }
+        return instances;
     }
 
 
@@ -1055,7 +1058,6 @@ Form.globalRemoteValidationFunction = function () {
  * Handles custom error messages extracts custom message by default
  */
 Form.globalErrorMessageHandler = (field, validity) => {
-    "use strict";
     if (!validity.customError) {
         let customMsg = field.getAttribute(ATTR_DATA_CUSTOM_MESSAGE);
         if (customMsg) {

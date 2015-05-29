@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+'use strict';
+
 const PFX = ["webkit", "moz", "MS", "o", ""];
 
 const COL_LEFT_CLASS = 'is-collision-left';
@@ -48,7 +50,9 @@ class Util {
         };
 
         for (var p = 0; p < PFX.length; p++) {
-            if (!PFX[p]) type = type.toLowerCase();
+            if (!PFX[p]) {
+                type = type.toLowerCase();
+            }
             var name = PFX[p] + type;
             element.addEventListener(name, thisFunction, true);
         }
@@ -94,7 +98,7 @@ class Util {
             }
             now = now.parentNode;
         }
-        return null !== now;
+        return now !== null;
     }
 
     /**
@@ -185,7 +189,7 @@ class Util {
      * @returns bool
      */
     static isVisible(element) {
-       return element.offsetWidth > 0 && element.offsetHeight > 0;
+        return element.offsetWidth > 0 && element.offsetHeight > 0;
     }
 
     /**
@@ -209,19 +213,19 @@ class Util {
         if (!element) {
             return base;
         }
-        let attrs = element.attributes;
-        for (let i = 0; i<attrs.length; i++) {
+        const attrs = element.attributes;
+        for (let i = 0; i < attrs.length; i++) {
             let attr = attrs[i];
-            if(attr) {
+            if (attr) {
                 let s = Util.dashToCamelCase(attr.nodeName.replace('data-', '')),
                     val = attr.nodeValue;
                 if (base.hasOwnProperty(s)) {
                     // skip functions
-                    if('function' === typeof base[s]) {
+                    if (typeof base[s] === 'function') {
                         continue;
                     }
-                    if ('boolean' === typeof base[s]) {
-                        base[s] = 1 === parseInt(val || 1);
+                    if (typeof base[s] === 'boolean') {
+                        base[s] = parseInt(val || 1) === 1;
                     } else {
                         base[s] = val;
                     }
@@ -270,7 +274,7 @@ class Util {
             elementRect = elementToPosition.getBoundingClientRect(),
             colRect = collisionContainer.getBoundingClientRect(),
             targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
-            isCollisionTop = 0 >= (targetTop - elementRect.height),
+            isCollisionTop = (targetTop - elementRect.height) <= 0,
             isCollisionBottom = window.innerHeight < (targetTop + amountTop + targetPosition.height + elementRect.height),
             isCollisionLeft = targetRight < elementRect.width, targetLeft = targetPosition.left,
             isCollisionRight = (targetLeft + elementRect.width) > colRect.width,
@@ -304,7 +308,7 @@ class Util {
             calcTop = (targetTop - elementRect.height) - colRect.top + 'px';
             classList.add(COL_BOTTOM_CLASS);
         } else {
-           calcTop = (targetTop + targetPosition.height) - colRect.top + 'px';
+            calcTop = (targetTop + targetPosition.height) - colRect.top + 'px';
         }
 
         elementToPosition.style.cssText = `top:${calcTop};left:${calcLeft};`;

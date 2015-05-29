@@ -28,6 +28,8 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
 import Util from 'util/Util';
 import Settings from 'util/Settings';
 import Event from 'util/Event';
@@ -112,7 +114,7 @@ class Dropdown {
     /**
      * Method that handles delegation events for dropdowns
      * @param e
-     * @returns {*}
+     * @returns {boolean}
      * @private
      */
     _delegateFunction(e) {
@@ -136,7 +138,7 @@ class Dropdown {
             e.stopImmediatePropagation();
 
             if (target.isLoading) {
-                return;
+                return false;
             }
             this.createDropdown(target);
         } else {
@@ -214,8 +216,8 @@ class Dropdown {
                     setTimeout(function () {
                         Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
                         // if a new dropdown has been opened in the meantime, do not remove darkener
-                        if (null !== this.currentOpen) {
-                            return;
+                        if (this.currentOpen !== null) {
+                            return false;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
                         this.container.classList.remove(Settings.get().canvasToggledClass);

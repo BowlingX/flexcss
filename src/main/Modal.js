@@ -28,6 +28,9 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
+'use strict';
+
+
 /*global KeyboardEvent*/
 
 import Settings from 'util/Settings';
@@ -36,7 +39,7 @@ import Util from 'util/Util';
 import Widget from 'Widget';
 
 const HTML_ELEMENT = global.document.documentElement;
-
+const KEY_ESC = 27;
 /* Attribute Names */
 const ATTR_CREATE_NEW = 'data-new-instance';
 const ATTR_CLOSE = 'data-close-modal';
@@ -52,6 +55,7 @@ const CLS_MODAL_CONTAINER = 'modal-container';
 const CLS_ANIM_END = 'modal-anim-end';
 const CLS_LOADER_CONTAINER = 'loader-container';
 const CLS_LOADER = 'loader';
+
 /* Events */
 
 /**
@@ -140,7 +144,7 @@ class Modal {
         var t = Modal._modalInstances.indexOf(n), self = this;
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
-            if (0 === Modal._modalInstances.length) {
+            if (Modal._modalInstances.length === 0) {
                 // restore scrollPosition:
                 if (self.dataMainPageContainer) {
                     setTimeout(function () {
@@ -151,8 +155,8 @@ class Modal {
                             document.documentElement.scrollTop = self.currentScrollTop;
                             document.body.scrollTop = self.currentScrollTop;
                         }
-                        Settings.get().scrollbarUpdateNodes.forEach(function (n) {
-                            n.style.paddingRight = '';
+                        Settings.get().scrollbarUpdateNodes.forEach(function (node) {
+                            node.style.paddingRight = '';
                         });
                         HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
                     }, 0);
@@ -312,7 +316,7 @@ class Modal {
 
     handleScrollbar() {
         var self = this;
-        if (0 === Modal._modalInstances.length) {
+        if (Modal._modalInstances.length === 0) {
             // save current scrollTop:
             let scrollTop, c;
             if (self.options.fixedContainer) {
@@ -372,7 +376,7 @@ class Modal {
             }
         } else {
             target = e.target;
-            if(!target) {
+            if (!target) {
                 throw 'Could not find target, did you pass an event, a HTMLElement or an Widget?';
             }
             hasTarget = target.hasAttribute(ATTR_NAME);
@@ -397,22 +401,22 @@ class Modal {
             return false;
         }
 
-        var modalContainerClasses = this.modalContainer ? this.modalContainer.classList : [];
+        let modalContainerClasses = this.modalContainer ? this.modalContainer.classList : [];
 
         // lazy create modal container
         if (!this.modalContainer) {
             this.modalContainer = global.document.createElement('div');
             this.modalContainer.className = CLS_MODAL_CONTAINER + ' ' + CLS_OPEN;
-            var closeModalFunction = function (e) {
+            const closeModalFunction = function (ce) {
                 if (self.loading) {
                     return false;
                 }
-                if (Util.isPartOfNode(e.target, self.currentOpen)) {
-                    if (!e.target.hasAttribute(ATTR_CLOSE)) {
+                if (Util.isPartOfNode(ce.target, self.currentOpen)) {
+                    if (!ce.target.hasAttribute(ATTR_CLOSE)) {
                         return false;
                     }
                 }
-                self.close(e);
+                self.close(ce);
             };
 
             this.modalContainer.addEventListener(Settings.getTabEvent(), closeModalFunction, false);
@@ -424,7 +428,7 @@ class Modal {
             modalContainerClasses.add(CLS_OPEN);
         }
 
-        var loader, doc = global.document, toggleLoader = function (show) {
+        let loader, doc = global.document, toggleLoader = function (show) {
             if (show) {
                 loader = doc.createElement('div');
                 loader.className = CLS_LOADER_CONTAINER;
@@ -475,16 +479,16 @@ class Modal {
 
         Event.dispatchAndFire(target, EVENT_MODAL_INIT);
 
-        return future.then(function (el) {
-            el.hfWidgetInstance = self;
-            self.modalContainer.appendChild(el);
+        return future.then((thisEl) => {
+            thisEl.hfWidgetInstance = self;
+            self.modalContainer.appendChild(thisEl);
             modalContainerClasses.remove('loading');
             self.loading = false;
             toggleLoader(false);
 
-            self.open(el, true, e);
+            self.open(thisEl, true, e);
 
-            return el;
+            return thisEl;
         });
     }
 
@@ -550,13 +554,14 @@ class Modal {
      * Will use fast MutationObserver if available, otherwise falls back to DOMNodeRemoved event
      */
     destroy() {
-        var self = this, modalContainer = this.modalContainer;
+        let self = this, modalContainer = this.modalContainer;
+        const isEmptyContainer = modalContainer.childNodes.length === 0;
         // Remove event listener on destroy, do not remove DOM node
         if (self.eventContainer) {
             self.eventContainer.removeEventListener(Settings.getTabEvent(), self.eventFunction, true);
         }
 
-        if (0 === modalContainer.childNodes.length) {
+        if (isEmptyContainer) {
             if (modalContainer.parentNode) {
                 modalContainer.parentNode.removeChild(modalContainer);
             }
@@ -564,7 +569,7 @@ class Modal {
         if (global.MutationObserver) {
             var observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function () {
-                    if (0 === modalContainer.childNodes.length) {
+                    if (isEmptyContainer) {
                         modalContainer.parentNode.removeChild(modalContainer);
                         observer.disconnect();
                     }
@@ -573,7 +578,7 @@ class Modal {
             observer.observe(modalContainer, {childList: true});
         } else {
             modalContainer.addEventListener('DOMNodeRemoved', function (e) {
-                if (e.target !== modalContainer && 0 === (modalContainer.childNodes.length - 1)) {
+                if (e.target !== modalContainer && (modalContainer.childNodes.length - 1) === 0) {
                     modalContainer.parentNode.removeChild(modalContainer);
                 }
             });
@@ -587,8 +592,7 @@ Modal._modalInstances = [];
 
 // Global keydown listener for modal
 global.addEventListener('keydown', function (e) {
-    "use strict";
-    if (27 === e.keyCode) {
+    if (e.keyCode === KEY_ESC) {
         var lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
         if (lastModal) {
             Widget.findWidget(lastModal).close(e);

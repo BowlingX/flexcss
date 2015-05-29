@@ -10,6 +10,13 @@ module.exports = {
                 loader: 'babel-loader?optional=runtime&sourceMap=inline'
             }
         ],
+        preLoaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/, // exclude any and all files in the node_modules folder
+                loader: "eslint-loader"
+            }
+        ],
         postLoaders: [{ //
             test: /\.js$/,
             exclude: /(test|node_modules|bower_components|test_helpers)\//,
