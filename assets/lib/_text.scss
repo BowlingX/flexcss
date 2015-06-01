@@ -63,24 +63,6 @@ a {
   }
 }
 
-code {
-  background: lighten($grayColor, 35%);
-  padding: 3px;
-  word-break: break-all;
-  word-break: break-word;
-}
-
-pre > code {
-  display: block;
-  font-family: monospace;
-  padding: 20px;
-  border-radius: $globalRadius;
-  border-bottom: 2px solid lighten($grayColor, 20%);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  word-break: normal;
-}
-
 .badge {
   display: inline-block;
   font-size: $smallFontSize;
