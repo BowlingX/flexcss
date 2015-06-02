@@ -94,7 +94,7 @@ class Tooltip {
      * Creates and shows a tooltip
      * @param {HTMLElement} target where is this tooltip positioned
      * @param {String} text text content in tooltip, will be NOT escaped
-     * @param {Boolean} removeTitle removes title element if given
+     * @param {Boolean} [removeTitle] removes title element if given
      */
     createTooltip(target, text, removeTitle) {
         // abort if text is empty
