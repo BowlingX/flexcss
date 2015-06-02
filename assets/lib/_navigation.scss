@@ -45,7 +45,7 @@
       &.active {
         a {
           background: rgba(#000, .2);
-          font-weight: bold;
+          font-weight: $topbarNavActiveFontWeight;
           color: #fff;
         }
       }
@@ -103,7 +103,7 @@
   cursor: pointer;
   display: inline-block;
   padding: 0 3px;
-  font-weight: bold;
+  font-weight: $topbarActionFontWeight;
   color: $topbarColor;
 
   &:hover {
@@ -181,7 +181,7 @@
     }
 
     &.active a {
-      font-weight: bold;
+      font-weight: $subnavActiveFontWeight;
     }
 
     &:last-of-type:not(.trigger) {

@@ -7,7 +7,7 @@ $MainNavigationWidth: 250px !default;
 $MainSidebarWidth: 265px !default;
 $MainNavigationBg: #4a4a4a !default;
 $subnavColor: #616161 !default;
-
+$subnavActiveFontWeight: bold !default;
 // height of topbar
 $topbarHeight: 43px !default;
 $topbarHeightDesktop: 43px !default;
@@ -16,6 +16,8 @@ $topbarBg:#333333 !default;
 $topbarColor:#aaa !default;
 $topBarFontSize:18px !default;
 $topbarColorWide:#aaa !default;
+$topbarActionFontWeight:bold !default;
+$topbarNavActiveFontWeight: bold !default;
 // Minimal footer height:
 $footerHeight:100px !default;
 
