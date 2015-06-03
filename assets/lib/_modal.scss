@@ -18,7 +18,7 @@
   height: 100%;
   width: 100%;
   overflow-x:hidden;
-  background: rgba(#000, $darkenerFadeOpacity);
+  background: rgba($darkenerColor, $darkenerFadeOpacity);
   @include animate(backgroundFadeIn, .25s);
   z-index: $indexModalContainer;
   &.front {
@@ -60,7 +60,7 @@
   @include interface(text);
   width: 100%;
   position: relative;
-  background: #fff;
+  background: $modalBackground;
   display: none;
   padding: 30px 12px 25px;
   align-self: flex-start;
@@ -72,7 +72,7 @@
   &.current ~ .loader-container {
     @include centralLoader();
   }
-  box-shadow: $globalBoxShadow;
+  box-shadow: $modalBoxShadow;
 
   &.modal-anim-end {
     animation-name:none !important;

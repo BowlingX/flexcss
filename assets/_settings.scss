@@ -114,7 +114,8 @@ $modalAlertWidthDesktop:320px !default;
 $modalWidthSmall:360px !default;
 $modalAnimateName:bounceIn !default;
 $modalAnimateDuration:.6s !default;
-
+$modalBackground:#fff !default;
+$modalBoxShadow: $globalBoxShadow !default;
 $minWidthModalDesktop:640px !default;
 
 //forms
@@ -183,7 +184,7 @@ $btnFontSize:$baseFontSize !default;
 $btnPadding: 11px 45px 10px !default;
 $btnBackgroundSize:40px 40px !default;
 $btnSmallPadding:7px 30px 7px !default;
-
+$btnFontWeight:bold !default;
 // tabs
 $tabBottomLineHeight:2px !default;
 $tabsSmallPadding: 5px !default;
@@ -203,7 +204,8 @@ $fontelloFontPath:'../fonts/fontello' !default;
 $iconFontName:'fontello';
 
 // Effects:
-$darkenerFadeOpacity: .35;
+$darkenerFadeOpacity: .35 !default;
+$darkenerColor:#000 !default;
 
 // dropdowns:
 $dropdownBorderColor:lighten($grayColor, 20%) !default;
