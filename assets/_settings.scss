@@ -207,6 +207,10 @@ $iconFontName:'fontello';
 $darkenerFadeOpacity: .35 !default;
 $darkenerColor:#000 !default;
 
+// darkener when using background-color (e.g. in modals)
+$backgroundDarkenerFadeOpacity: .35 !default;
+$backgroundDarkenerColor:#000 !default;
+
 // dropdowns:
 $dropdownBorderColor:lighten($grayColor, 20%) !default;
 $dropdownMaxHeight:300px !default;

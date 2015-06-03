@@ -13,10 +13,10 @@
 
 @include keyframes(backgroundFadeIn) {
   from {
-    background: rgba($darkenerColor, 0);
+    background: rgba($backgroundDarkenerColor, 0);
   }
   to {
-    background: rgba($darkenerColor, $darkenerFadeOpacity);
+    background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
   }
 }
 
