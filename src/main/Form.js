@@ -135,7 +135,11 @@ class Form {
             // the class that will be put on the element to mark it failed validation
             inputErrorClass: 'invalid',
             // the container class for error messages below an element
-            containerErrorClass: 'form-error'
+            containerErrorClass: 'form-error',
+            // additional options for fetch
+            fetchOptions: {
+                credentials:'include'
+            }
         };
 
         // overwrite default options
@@ -204,11 +208,11 @@ class Form {
                 'Content-Type': this.options.ajaxJsonContentType
             });
         }
-        let defaultOptions = {
+        let defaultOptions = Object.assign(this.options.fetchOptions, {
             headers: defaultHeaders,
-            method: this.options.ajaxSubmitType,
-            credentials: 'include'
-        };
+            method: this.options.ajaxSubmitType
+        });
+
         // support either JSON request payload or normal payload submission
         var serverCall = useJson ? fetch(ajaxPostUrl, Object.assign(defaultOptions, {
             body: JSON.stringify(this.serialize())
