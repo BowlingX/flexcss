@@ -35,16 +35,26 @@ pre > code {
   border-top-left-radius: 0;
 }
 
+
 .highlighttable {
   width: 100%;
   display: flex;
   tbody {
     width:100%;
+    display:block;
   }
   tr {
     display: flex;
   }
   .code {
-    flex: 1;
+    min-width:0;
+    display:flex;
+    flex:1;
+    width:100%;
+  }
+
+  .highlight {
+    min-width:0;
+    width:100%;
   }
 }
