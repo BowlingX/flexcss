@@ -326,7 +326,7 @@ class Util {
         // optionally use a additional scrollDif
         if (optionalOffset) {
             if (typeof optionalOffset === 'function') {
-                optionalOffset = optionalOffset(this);
+                optionalOffset = optionalOffset();
             }
             if (optionalOffset > 0) {
                 const scrolledY = window.scrollY || window.pageYOffset;
