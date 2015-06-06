@@ -59,7 +59,9 @@
     height: auto;
     transform: none;
     transition: none;
-    z-index: 0;
+    z-index: auto;
+    overflow-y: visible;
+
   }
 
   // Hide Navigation Topbar:
