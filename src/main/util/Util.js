@@ -316,4 +316,25 @@ class Util {
         return elementToPosition;
     }
 
+    /**
+     * Brings a given element into viewport
+     * @param {HTMLElement} el
+     * @param {int|function}[optionalOffset]
+     */
+    static scrollToElement(el, optionalOffset) {
+        el.scrollIntoView();
+        // optionally use a additional scrollDif
+        if (optionalOffset) {
+            if (typeof optionalOffset === 'function') {
+                optionalOffset = optionalOffset(this);
+            }
+            if (optionalOffset > 0) {
+                const scrolledY = window.scrollY;
+                if (scrolledY) {
+                    window.scroll(0, scrolledY - optionalOffset);
+                }
+            }
+        }
+    }
+
 }

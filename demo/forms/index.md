@@ -47,28 +47,34 @@ The first param <code>form</code> may be a selector defined by <code>Document.qu
 
 {% highlight javascript %}
 {
-  // if true creates tooltips above element, uses FlexCss Tooltips
-  createTooltips: true,
-  // if true appends error message after input element
-  appendError: false,
-  // type of ajax submit
-  ajaxSubmitType: 'POST',
-  // json content type if ajax method is set to json
-  ajaxJsonContentType: 'application/json; charset=utf-8',
-  // allow inline validation
-  inlineValidation: true,
-  // validate in realtime (on `input` event)
-  realtime: true,
-  // timeout when realtime event should be captured
-  realtimeTimeout: 250,
-  // formatting method for an error
-  formatErrorTooltip: (error) => {
-      return '<i class="icon-attention"></i> ' + error;
-  },
-  // the class that will be put on the element to mark it failed validation
-  inputErrorClass: 'invalid',
-  // the container class for error messages below an element
-  containerErrorClass: 'form-error'
+    // if true creates tooltips above element, uses FlexCss Tooltips
+    createTooltips: true,
+    // if true appends error message after input element
+    appendError: false,
+    // type of ajax submit
+    ajaxSubmitType: 'POST',
+    // json content type if ajax method is set to json
+    ajaxJsonContentType: 'application/json; charset=utf-8',
+    // allow inline validation
+    inlineValidation: true,
+    // validate in realtime (on `input` event)
+    realtime: true,
+    // timeout when realtime event should be captured
+    realtimeTimeout: 250,
+    // formatting method for an error
+    formatErrorTooltip: (error) => {
+        return '<i class="icon-attention"></i> ' + error;
+    },
+    // the class that will be put on the element to mark it failed validation
+    inputErrorClass: 'invalid',
+    // the container class for error messages below an element
+    containerErrorClass: 'form-error',
+    // additional options for fetch
+    fetchOptions: {
+        credentials: 'include'
+    },
+    // if you have a fixed header, either set a number or function here
+    scrollToElementDiff: 0
 }
 {% endhighlight%}
 <hr>

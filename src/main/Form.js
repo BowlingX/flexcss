@@ -138,8 +138,10 @@ class Form {
             containerErrorClass: 'form-error',
             // additional options for fetch
             fetchOptions: {
-                credentials:'include'
-            }
+                credentials: 'include'
+            },
+            // if you have a fixed header, either set a number or function here
+            scrollToElementDiff: 0
         };
 
         // overwrite default options
@@ -290,7 +292,7 @@ class Form {
         var arr = Form._createArrayFromInvalidFieldList(toValidateFields), isLocalInvalid = arr.length > 0;
         // focus must appear in the same frame for iOS devices
         if (isLocalInvalid && focus) {
-            arr[0].focus();
+            self._focusElement(arr[0]);
         }
         var validation = scoped ? this._customValidationsForElements(toValidateFields) :
             self.validateCustomFields();
@@ -308,7 +310,7 @@ class Form {
                 firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
                 if (focus) {
-                    firstInvalidField.focus();
+                    self._focusElement(firstInvalidField);
                     // if element could not be focused:
                     if (document.activeElement !== firstInvalidField) {
                         self._handleTooltipHideClickAfterChange();
@@ -936,6 +938,11 @@ class Form {
         }
     }
 
+    _focusElement(el) {
+        el.focus();
+        Util.scrollToElement(el, this.options.scrollToElementDiff);
+    }
+
     /**
      * Listener that is executed on form submit
      * @param e
@@ -968,7 +975,7 @@ class Form {
                     var fields = self._getInvalidElements(),
                         errors = self.prepareErrors(fields, false), firstError = errors[0];
                     if (firstError) {
-                        firstError.focus();
+                        self._focusElement(firstError);
                         self.showAndOrCreateTooltip(firstError, true);
                     }
                     resolve(r);
