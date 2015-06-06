@@ -329,7 +329,7 @@ class Util {
                 optionalOffset = optionalOffset(this);
             }
             if (optionalOffset > 0) {
-                const scrolledY = window.scrollY;
+                const scrolledY = window.scrollY || window.pageYOffset;
                 if (scrolledY) {
                     window.scroll(0, scrolledY - optionalOffset);
                 }
