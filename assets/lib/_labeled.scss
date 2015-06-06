@@ -84,11 +84,6 @@
   }
 }
 
-// labeled inside a form
-form fieldset .labeled {
-  margin: 0 0 $formMargin 0;
-}
-
 @media #{$mediaInBetween} {
   .labeled:not(.wide) {
     &.three-columns {

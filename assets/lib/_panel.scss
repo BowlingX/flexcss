@@ -14,6 +14,11 @@
     @include create-color-section($successColor);
   }
 
+  &.danger {
+    background:lighten($dangerColor, 45%);
+    @include create-color-section($dangerColor);
+  }
+
   &.inline-panel {
     display: inline-block;
     width:auto;
