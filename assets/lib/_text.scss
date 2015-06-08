@@ -176,6 +176,10 @@ ol, ul {
   white-space: nowrap;
 }
 
+.tight {
+  margin-bottom: 0 !important;
+}
+
 .half-space {
   margin-bottom:.5rem !important;
 }
@@ -186,10 +190,6 @@ ol, ul {
 
 .double-space {
   margin-bottom: 2rem !important;
-}
-
-.tight {
-  margin-bottom: 0 !important;
 }
 
 .weight-normal {
