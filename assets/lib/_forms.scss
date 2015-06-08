@@ -202,7 +202,7 @@ form.loading {
 
 textarea {
   min-height: 12rem;
-  padding:$textareaPadding;
+  padding: $textareaPadding;
 }
 
 /* A third row for appended items*/
@@ -215,7 +215,7 @@ form .append {
   }
 
   p:first-of-type {
-    margin-top:0;
+    margin-top: 0;
   }
 }
 
@@ -347,6 +347,7 @@ form:not(.wide) {
 
     legend {
       margin-left: $labelWidthDesktop;
+      margin-bottom: $legendMarginDesktop;
     }
 
     .multi-select-field {

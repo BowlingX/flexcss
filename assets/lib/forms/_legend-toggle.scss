@@ -29,11 +29,22 @@
   }
 }
 
-fieldset.toggle-hide  {
+fieldset.toggle-hide {
   &.active {
     padding-bottom: $formMargin !important;
   }
   &:last-of-type {
     margin-bottom: -$legendMargin;
+  }
+}
+
+@media #{$mediaDesktop} {
+  fieldset.toggle-hide {
+    &.active {
+      padding-bottom: $formMarginDesktop !important;
+    }
+    &:last-of-type {
+      margin-bottom: -$legendMarginDesktop;
+    }
   }
 }
