@@ -227,7 +227,7 @@ class Form {
         return serverCall.then((r) => {
             (self._remoteValidationFunction || Form.globalRemoteValidationFunction).apply(self, [r]);
 
-            Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail(r).fire();
+            Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail({response:r}).fire();
             // always remove error class
             self._formStopLoading();
         });
