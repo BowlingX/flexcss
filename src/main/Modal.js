@@ -114,7 +114,8 @@ class Modal {
             closeOnEscape: true,
             closeOnBackgroundClick: true,
             destroyOnFinish: false,
-            fixedContainer: true
+            fixedContainer: true,
+            containerClassNames:''
         };
 
         Object.assign(this.options, options);
@@ -406,7 +407,7 @@ class Modal {
         // lazy create modal container
         if (!this.modalContainer) {
             this.modalContainer = global.document.createElement('div');
-            this.modalContainer.className = CLS_MODAL_CONTAINER + ' ' + CLS_OPEN;
+            this.modalContainer.className = `${CLS_MODAL_CONTAINER} ${this.options.containerClassNames} ${CLS_OPEN}`;
             const closeModalFunction = function (ce) {
                 if (self.loading) {
                     return false;
@@ -448,7 +449,7 @@ class Modal {
         this.loading = true;
         toggleLoader(true);
         var async = widget ? widget.getAsync() : null;
-        if (widget instanceof Widget && async) {
+        if (Widget.isWidget(widget) && async) {
             future = async.then(function (r) {
                 var result;
                 if (r instanceof HTMLElement || r instanceof DocumentFragment) {

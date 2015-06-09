@@ -263,7 +263,7 @@ class Dropdown {
 
         var widget = thisWidget || Widget.findWidget(target), future,
             data = target.getAttribute(ATTR_NAME), dropdownContainerElement = doc.getElementById(data),
-            async = !dropdownContainerElement && widget instanceof Widget ? widget.getAsync() : false;
+            async = !dropdownContainerElement && Widget.isWidget(widget) ? widget.getAsync() : false;
 
         if (async) {
             target.classList.add(STATE_LOADING);

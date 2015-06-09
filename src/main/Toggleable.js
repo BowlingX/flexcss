@@ -148,7 +148,7 @@ class Toggleable {
                 resolve(ref);
             } else {
                 var widget = Widget.findWidget(target), async = widget ? widget.getAsync() : null;
-                if (widget instanceof Widget && async) {
+                if (Widget.isWidget(widget) && async) {
                     future = async.then(function (r) {
                         if (r instanceof HTMLElement) {
                             var id = Util.guid();

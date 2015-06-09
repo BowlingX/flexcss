@@ -63,6 +63,8 @@
       padding: $labelPaddingDesktop;
       padding-top: 0;
       margin-bottom: $labeledSpacing;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     > dd {
       padding: $labelPaddingDesktop;
@@ -70,9 +72,13 @@
       width: $formWidthControls;
     }
 
-    &:last-of-type {
-      dt {
-        margin-bottom: 0;
+    // modifier to make the last of a list without a margin
+    &.last-tight {
+      &:last-of-type {
+        dd:last-of-type,
+        dt:last-of-type {
+          margin-bottom: 0;
+        }
       }
     }
 
@@ -81,6 +87,14 @@
         padding-right: 0;
       }
     }
+
+    // modifier to let the labels stay in a single line
+    &.nowrap {
+      > dt {
+        white-space: nowrap;
+      }
+    }
+
   }
 }
 
@@ -89,6 +103,21 @@
     &.three-columns {
       > dd {
         padding-right: $thirdColumnPaddingOffsetInBetween;
+      }
+    }
+    &.between-thirty-sixty {
+      > dt {
+        width: 35%;
+      }
+
+      > dd {
+        width: 65%;
+      }
+    }
+    &.between-fifty-fifty {
+      > dd,
+      > dt {
+        width: 50%;
       }
     }
   }
