@@ -255,7 +255,7 @@ form:not(.wide) {
   }
 
   // will break it to one column
-  &.break {
+  &.break, &.column {
     display: block;
     > * {
       margin-left: 0;
@@ -265,6 +265,7 @@ form:not(.wide) {
     }
     flex-direction: column;
   }
+
 }
 
 .toolbar-form {
