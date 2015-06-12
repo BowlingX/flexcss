@@ -123,3 +123,14 @@
     }
   }
 }
+
+@media #{$mediaDesktop} {
+  .labeled:not(.wide) {
+    &.desktop-fifty-fifty {
+      > dd,
+      > dt {
+        width: 50%;
+      }
+    }
+  }
+}
