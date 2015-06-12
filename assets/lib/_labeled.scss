@@ -39,6 +39,17 @@
       margin-top: 0;
     }
   }
+
+  // modifier to make the last of a list without a margin
+  &.last-tight {
+    &:last-of-type {
+      dd:last-of-type,
+      dt:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
 }
 
 .labeled:not(.wide) {
@@ -70,16 +81,6 @@
       padding: $labelPaddingDesktop;
       padding-top: 0;
       width: $formWidthControls;
-    }
-
-    // modifier to make the last of a list without a margin
-    &.last-tight {
-      &:last-of-type {
-        dd:last-of-type,
-        dt:last-of-type {
-          margin-bottom: 0;
-        }
-      }
     }
 
     &.three-columns {
