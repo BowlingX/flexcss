@@ -54,6 +54,16 @@ table {
     }
   }
 
+  &.fixed {
+    table-layout:fixed;
+  }
+  
+  &.align-top {
+    td {
+      vertical-align: top;
+    }
+  }
+
 }
 
 @media #{$mediaSmall} {
