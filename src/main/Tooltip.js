@@ -105,10 +105,11 @@ class Tooltip {
 
         if (!tooltipContainer) {
             tooltipContainer = doc.createElement('div');
-            this._restoreClassNames(tooltipContainer, target);
             this.container.appendChild(tooltipContainer);
             this.tooltipContainer = tooltipContainer;
         }
+        this._restoreClassNames(tooltipContainer, target);
+
         tooltipContainer.style.left = 'auto';
         tooltipContainer.style.top = 'auto';
         tooltipContainer.innerHTML = text;
