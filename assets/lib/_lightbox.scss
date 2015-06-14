@@ -115,17 +115,11 @@ html:not(.touch) {
     max-width: 60%;
     align-self:center;
   }
-
   .image-container {
     min-height: calc(80vh - 40px);
     img {
       display:none;
     }
     width: 100%;
-  }
-
-  .modal-close-lightbox {
-    left: 0;
-    right: auto;
   }
 }
