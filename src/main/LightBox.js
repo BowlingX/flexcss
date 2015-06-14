@@ -140,12 +140,14 @@ class LightBox {
             registerPrevNextEvents: true,
             // set if modal should be closed after last image
             closeOnLast: true,
-            // called when next image is requested (either by keyboard or click
+            // called when next image is requested (either by keyboard or click), return false to abort
             onNext: function () {
                 return true;
             },
             onClose: function () {
             },
+            getNext: null,
+            getPrev: null,
             // called when underlying target changed
             onSwitchImage: function () {
             }
@@ -155,16 +157,26 @@ class LightBox {
     }
 
     /**
-     * Will fetch the next element of a lightBox
-     * @param target
-     * @returns {*}
+     * @param {HTMLElement} node
+     * @returns {HTMLElement|null}
      */
-    getNext(target) {
-        var next = target.parentNode.nextElementSibling;
-        if (next && next.children[0].hasAttribute(this._attributeSelector)) {
-            return next.children[0];
+    findImmediateNextTarget(node) {
+        if (node && node.children[0].hasAttribute(this._attributeSelector)) {
+            return node.children[0];
         }
         return null;
+    }
+
+    /**
+     * Will fetch the next element of a lightBox
+     * @param {HTMLElement} target
+     * @returns {null|HTMLElement}
+     */
+    getNext(target) {
+        if (this.options.getNext) {
+            return this.options.getNext.apply(this, [target]);
+        }
+        return this.findImmediateNextTarget(target.parentNode.nextElementSibling);
     }
 
     /**
@@ -173,11 +185,10 @@ class LightBox {
      * @returns {null|HTMLElement}
      */
     getPrev(target) {
-        var previous = target.parentNode.previousElementSibling;
-        if (previous && previous.children[0].hasAttribute(this._attributeSelector)) {
-            return previous.children[0];
+        if (this.options.getPrev) {
+            return this.options.getPrev.apply(this, [target]);
         }
-        return null;
+        return this.findImmediateNextTarget(target.parentNode.previousElementSibling);
     }
 
     /**
@@ -238,6 +249,7 @@ class LightBox {
         if (this.options.onNext.apply(this, [next])) {
             return this.switchImage(next);
         }
+        return new Promise((_, reject) => reject(next));
     }
 
     /**

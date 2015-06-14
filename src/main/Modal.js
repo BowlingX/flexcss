@@ -115,7 +115,7 @@ class Modal {
             closeOnBackgroundClick: true,
             destroyOnFinish: false,
             fixedContainer: true,
-            containerClassNames:''
+            containerClassNames: ''
         };
 
         Object.assign(this.options, options);
