@@ -5,6 +5,7 @@ FlexCss
 ![Dependencies](https://img.shields.io/david/bowlingx/flexcss.svg)
 [![Codacy Badge](https://www.codacy.com/project/badge/daeca02d87924f14b1cbaca870ff454d)](https://www.codacy.com/app/billing/flexcss)
 [![Coverage Status](https://coveralls.io/repos/BowlingX/flexcss/badge.svg?branch=master)](https://coveralls.io/r/BowlingX/flexcss?branch=master)
+[![npm](https://img.shields.io/npm/v/flexcss.svg?style=flat-square)](https://www.npmjs.com/package/flexcss)
 
 **A lightweight Flexbox based mobile-first CSS/Javascript pattern-library created by [David Heidrich](https://github.com/BowlingX),
 build for [hellofellow.com](https://hellofellow.com).**
