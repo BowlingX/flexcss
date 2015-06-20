@@ -1,6 +1,6 @@
 {
   "name": "flexcss",
-  "version": "0.4.21",
+  "version": "0.4.22",
   "dependencies": {
     "isomorphic-fetch": "^2.1.0",
     "whatwg-fetch": "^0.9.0"
