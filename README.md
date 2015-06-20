@@ -2,7 +2,7 @@ FlexCss
 ===
 
 [![Circle CI](https://circleci.com/gh/BowlingX/flexcss.svg?style=svg)](https://circleci.com/gh/BowlingX/flexcss)
-![Dependencies](https://img.shields.io/david/bowlingx/flexcss.svg)
+![Dependencies](https://david-dm.org/bowlingx/flexcss.svg)
 [![Codacy Badge](https://www.codacy.com/project/badge/daeca02d87924f14b1cbaca870ff454d)](https://www.codacy.com/app/billing/flexcss)
 [![Coverage Status](https://coveralls.io/repos/BowlingX/flexcss/badge.svg?branch=master)](https://coveralls.io/r/BowlingX/flexcss?branch=master)
 [![npm](https://img.shields.io/npm/v/flexcss.svg?style=flat-square)](https://www.npmjs.com/package/flexcss)
