@@ -1,7 +1,10 @@
-import Form, {EVENT_FORM_READY, EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT} from 'Form';
-import setup_jasmine from 'setup_jasmine';
+/* global loadFixtures */
+'use strict';
+
+import Form, {EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT} from 'Form';
+import setup from 'setup_jasmine';
 import $ from 'jquery';
-setup_jasmine();
+setup();
 
 describe("Construct a Form Element", () => {
     it("A valid form object without options needs to be constructed", () => {
@@ -16,7 +19,7 @@ describe("Construct a Form Element", () => {
         // check created options
         expect(form.options.createTooltips).toBe(false);
         expect(form.options.appendError).toBe(true);
-    })
+    });
 });
 
 describe("Submit a simple Form", () => {
@@ -27,8 +30,8 @@ describe("Submit a simple Form", () => {
     it("submit an empty form (no validation)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
+        expect(form instanceof Form).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);
-
     });
 });
 
@@ -40,6 +43,7 @@ describe("Submit a form with validation", () => {
     it("submit a form with browser-validation (invalid)", () => {
         var $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
         var form = new Form(htmlForm);
+        expect(form instanceof Form).toBe(true);
         expect(htmlForm.checkValidity()).toBe(false);
     });
 });
@@ -61,7 +65,7 @@ describe('Create a form with custom validations', function () {
         form.registerValidator('custom', (field) => {
             return new Promise((r) => {
                 r(field.value === 'test');
-            })
+            });
         });
 
         // submit form
@@ -79,7 +83,7 @@ describe('Create a form with custom validations', function () {
         expect(form instanceof Form).toBe(true);
         expect(submitted).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);
-    })
+    });
 });
 
 describe('Create a form with remote validations', function () {
@@ -105,5 +109,5 @@ describe('Create a form with remote validations', function () {
         expect(form instanceof Form).toBe(true);
         expect(submitted).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);
-    })
+    });
 });

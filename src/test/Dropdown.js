@@ -1,7 +1,8 @@
+'use strict';
+
 import Dropdown from 'Dropdown';
-import setup_jasmine from 'setup_jasmine';
-import $ from 'jquery';
-setup_jasmine();
+import setup from 'setup_jasmine';
+setup();
 
 describe("Construct a Dropdown", () => {
     it("a valid dropdown object needs to be constructed", () => {
