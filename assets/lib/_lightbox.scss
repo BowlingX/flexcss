@@ -2,6 +2,7 @@
 * Everything about photo lightbox
 */
 
+
 .image-container {
   justify-content: center;
   align-items: center;
@@ -23,7 +24,6 @@
 }
 
 .image-container {
-  min-height: 300px;
   background: $lightboxImageBackground no-repeat center;
   background-size:contain;
   position: relative;
@@ -106,17 +106,23 @@ html:not(.touch) {
   background: rgba(#000, .8);
 }
 
+@media #{$mediaDesktop} {
+  .image-modal {
+    min-height: $lightBoxMinHeightDesktop;
+  }
+}
+
 @media #{$mediaLarge} {
 
   .image-modal {
     background: rgba($lightGrayColor, 1);
     position: relative;
-    min-width: 60%;
-    max-width: 60%;
+    min-width: $lightBoxWidthLarge;
+    max-width: $lightBoxWidthLarge;
     align-self:center;
   }
   .image-container {
-    min-height: calc(80vh - 40px);
+    min-height: $lightBoxMinHeightLarge;
     img {
       display:none;
     }

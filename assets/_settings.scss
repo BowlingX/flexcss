@@ -217,7 +217,10 @@ $dropdownBorderColor:lighten($grayColor, 20%) !default;
 $dropdownMaxHeight:300px !default;
 
 // lightbox
-$lightboxImageBackground:black;
+$lightboxImageBackground:black !default;
+$lightBoxMinHeightDesktop:300px !default;
+$lightBoxWidthLarge: 60% !default;
+$lightBoxMinHeightLarge: calc(80vh - 40px) !default;
 
 // tooltips
 $tooltipBg:#333 !default;
