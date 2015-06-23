@@ -361,6 +361,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "9daa1fdf0838118518a7e22715e83abc",
+      "css": "file-pdf",
+      "code": 59468,
+      "src": "fontawesome"
+    },
+    {
       "uid": "72b1277834cba5b7944b0a6cac7ddb0d",
       "css": "rss",
       "code": 59413,
@@ -580,6 +586,12 @@
       "uid": "8b9e6a8dd8f67f7c003ed8e7e5ee0857",
       "css": "off",
       "code": 59453,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "c819c6225685bae2eed1b8da13e629fa",
+      "css": "list-alt",
+      "code": 59469,
       "src": "fontawesome"
     },
     {
