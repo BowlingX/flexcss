@@ -204,6 +204,15 @@ class Util {
     }
 
     /**
+     * Creates a copy of `input`
+     * @param {*} input
+     * @return *
+     */
+    static copy(input) {
+        return JSON.parse(JSON.stringify(input));
+    }
+
+    /**
      * Reads options from element (data attributes) and applies to base
      * @param {HTMLElement} element
      * @param {Object} base

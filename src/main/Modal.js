@@ -183,13 +183,16 @@ class Modal {
     close(e) {
         var self = this;
 
+        const options = self.currentOpen ? Util.applyOptionsFromElement(
+            self.currentOpen, Util.copy(self.options)) : self.options;
+
         // close only on keyboard if instance should
-        if (!self.options.closeOnEscape && e instanceof KeyboardEvent) {
+        if (!options.closeOnEscape && e instanceof KeyboardEvent) {
             return false;
         }
 
         // close only on background if instance should
-        if (!self.options.closeOnBackgroundClick && e &&
+        if (!options.closeOnBackgroundClick && e &&
             e.type === Settings.getTabEvent() && !e.target.hasAttribute(ATTR_CLOSE)) {
             return false;
         }
