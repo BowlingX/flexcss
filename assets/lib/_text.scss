@@ -66,10 +66,10 @@ a {
 .badge {
   display: inline-block;
   font-size: $smallFontSize;
-  background: $secondaryColor;
+  background: $badgeBackground;
   color: #fff;
   line-height: $baseLineHeight;
-  padding: 0 5px;
+  padding: $badgePadding;
   border-radius: 3px;
   font-weight: bold;
 }

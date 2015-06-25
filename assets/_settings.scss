@@ -267,3 +267,7 @@ $linkFontWeight: 600 !default;
 // code:
 $codeBackgroundColor: lighten($grayColor, 35%) !default;
 $codeBorderColor:lighten($grayColor, 20%) !default;
+
+// badge:
+$badgePadding:0 5px !default;
+$badgeBackground: $secondaryColor !default;

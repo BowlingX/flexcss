@@ -296,4 +296,11 @@
   .logo, .home {
     height:$topbarHeightDesktop;
   }
+
+}
+
+.navbar-main, .subnav {
+  .badge {
+    margin-left:3px;
+  }
 }
