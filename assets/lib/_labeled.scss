@@ -72,7 +72,7 @@
       width: $labelWidthDesktop;
       min-width: 0;
       padding: $labelPaddingDesktop;
-      padding-top: 0;
+      padding-top: $labeledPaddingTopDesktop;
       // fixes firefox (-1px)
       margin-bottom: calc(#{$labeledSpacing} - 1px);
       text-overflow: ellipsis;
