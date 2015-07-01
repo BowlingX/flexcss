@@ -30,9 +30,10 @@
   &.alternate {
     > dt {
       color: $baseColor;
+      font-size:$baseFontSize;
     }
     > dd {
-      color: $grayColor;
+      @include create-color-section($grayColor);
     }
 
     > dd + dt {

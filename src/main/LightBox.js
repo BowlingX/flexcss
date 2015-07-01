@@ -327,7 +327,7 @@ class LightBox {
                 nextImgObject.addEventListener('load', function () {
                     img.src = nextSource;
                     self._imageContainer.style.backgroundImage = 'url(' + nextSource + ')';
-                    LightBox._setupMaxWidthHeight(nextThumb, img, nextImgObject);
+                    LightBox._setupMaxWidthHeight(next, img, nextImgObject);
                     self._calculateContainer(img);
                     self.highRes(nextThumb, nextHighRes);
                     self._setupPrevNextStates();
