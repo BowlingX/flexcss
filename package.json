@@ -1,6 +1,7 @@
 {
   "name": "flexcss",
-  "version": "0.4.22",
+  "version": "0.4.23",
+  "description":"A lightweight Flexbox based mobile-first CSS/Javascript pattern-library",
   "dependencies": {
     "isomorphic-fetch": "^2.1.0",
     "whatwg-fetch": "^0.9.0"
