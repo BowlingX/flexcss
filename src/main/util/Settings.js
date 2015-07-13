@@ -29,23 +29,21 @@ import Util from 'util/Util';
 // we attach global settings to global once because settings might be shared a lot of times trough the application
 // Maybe find a better way to handle that scenario
 if (!global.FLEXCSS_GLOBAL_SETTINGS) {
+
+    global.FLEXCSS_GLOBAL_SETTINGS = {
+        // defined breakpoint for small devices < n
+        smallBreakpoint: 768,
+        // nodes that should be updated when no scrollbar is expected
+        scrollbarUpdateNodes: null !== global.document.body? [global.document.body] : [],
+        // additional Delay until darkener is fully hidden
+        darkenerFadeDelay: 100,
+        // class that is added if canvas has been toggled
+        canvasToggledClass: 'toggled-canvas'
+    };
+
     // it's possible that global.document.body is not available if the document is not
     // loaded completely
     document.addEventListener('DOMContentLoaded', () => {
-        /**
-         * Global Settings
-         */
-        global.FLEXCSS_GLOBAL_SETTINGS = {
-            // defined breakpoint for small devices < n
-            smallBreakpoint: 768,
-            // nodes that should be updated when no scrollbar is expected
-            scrollbarUpdateNodes: [global.document.body],
-            // additional Delay until darkener is fully hidden
-            darkenerFadeDelay: 100,
-            // class that is added if canvas has been toggled
-            canvasToggledClass: 'toggled-canvas'
-        };
-
         // Measure scrollbar width
         global.FLEXCSS_CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
         // detect right transition end event
