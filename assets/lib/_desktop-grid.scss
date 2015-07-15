@@ -97,20 +97,25 @@
         a:active:not(.logo):not(.button),
         &.active a {
           background: none !important;
+          color: $topbarNavActiveColorWide !important;
         }
         &:not(:last-of-type) {
           margin-right: 10px;
         }
         a:not(.button) {
-          line-height: $topbarHeight;
+          line-height: $topbarHeightDesktop;
           padding: 0 10px;
-
+          color: $topbarColorWide;
           // only works in chrome:
           white-space: nowrap;
           text-overflow: ellipsis;
 
           .badge {
             position: static;
+          }
+
+          &:hover {
+            color: $topbarNavActiveColorWide;
           }
         }
       }
@@ -152,6 +157,7 @@
 
   .header {
     height: $topbarHeightDesktop;
+    background:$topbarBgDesktop;
   }
 
   .navigation-toggler {

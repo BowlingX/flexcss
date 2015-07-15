@@ -4,6 +4,9 @@
 .navbar-sub {
   margin:$topbarHeight 0 0;
   background:$subnavBg;
+  @if $subnavBorderTop {
+    border-top: 1px solid $globalBorderColor;
+  }
   .subnav {
     max-width:$overallMaxWidth;
     margin: 0 auto;
@@ -33,6 +36,12 @@
 
 .subnav-trigger {
   display:none;
+}
+
+@media #{$mediaDesktop} {
+  .navbar-sub {
+    margin:$topbarHeightDesktop 0 0;
+  }
 }
 
 @media #{$mediaSmall} {

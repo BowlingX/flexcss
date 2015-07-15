@@ -17,13 +17,13 @@
   }
 
   a:not(.button) {
-    color: $topbarColorWide;
+    color: $topbarColor;
     &:active:not(.logo) {
       background: rgba(#000, .3) !important;
     }
 
     &:hover {
-      color: #fff;
+      color: $topbarNavActiveColor;
     }
   }
 
@@ -46,7 +46,7 @@
         a {
           background: rgba(#000, .2);
           font-weight: $topbarNavActiveFontWeight;
-          color: #fff;
+          color: $topbarNavActiveColor;
         }
       }
       a:not(.button) {
