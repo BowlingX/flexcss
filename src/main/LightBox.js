@@ -195,8 +195,8 @@ class LightBox {
      * Registers events for delegate container
      */
     registerEvents(onOpen) {
-        this._delegateContainer.addEventListener(Settings.getTabEvent(), function (e) {
-            var target = e.target, parent = target.parentNode,
+        this._delegateContainer.addEventListener(Settings.getTabEvent(), (e) => {
+            let target = e.target, parent = target.parentNode,
                 validTarget = target.hasAttribute(this._attributeSelector),
                 parentIsValid = parent && parent.hasAttribute(this._attributeSelector);
             if (!validTarget && parentIsValid) {
@@ -205,13 +205,13 @@ class LightBox {
             }
             if (validTarget) {
                 e.preventDefault();
-                this.open(target).then(function (r) {
+                this.open(target).then((r) => {
                     if (onOpen) {
                         onOpen.apply(this, [r, target]);
                     }
-                }.bind(this));
+                });
             }
-        }.bind(this));
+        });
     }
 
     /**
@@ -229,7 +229,7 @@ class LightBox {
      * @private
      */
     static _setupMaxWidthHeight(target, img, loadedImage) {
-        var nextMaxWidth = target.getAttribute(ATTR_MAX_WIDTH),
+        const nextMaxWidth = target.getAttribute(ATTR_MAX_WIDTH),
             nextMaxHeight = target.getAttribute(ATTR_MAX_HEIGHT);
         if (nextMaxWidth && nextMaxHeight) {
             img.style.maxWidth = nextMaxWidth + "px";
@@ -245,7 +245,7 @@ class LightBox {
      * @param {boolean} direction
      */
     switchImageByDirection(direction) {
-        var next = direction ? this.getPrev(this.target) : this.getNext(this.target);
+        const next = direction ? this.getPrev(this.target) : this.getNext(this.target);
         if (this.options.onNext.apply(this, [next])) {
             return this.switchImage(next);
         }
@@ -271,7 +271,7 @@ class LightBox {
     }
 
     _setupPrevNextStates() {
-        var target = this.target, hasPrev = this.getPrev(target), hasNext = this.getNext(target),
+        const target = this.target, hasPrev = this.getPrev(target), hasNext = this.getNext(target),
             hasPrevClass = CLS_HAS_PREV, hasNextClass = CLS_HAS_NEXT;
         // because IE does not support the second toggle parameter, we need to do this manually
         if (hasPrev) {
@@ -304,7 +304,7 @@ class LightBox {
      * @returns {*}
      */
     switchImage(next) {
-        var self = this, img = this.img;
+        const self = this, img = this.img;
         this._isLoading = true;
         self._nextFuture = new Promise(((resolve, reject) => {
             // notify observers about image switching

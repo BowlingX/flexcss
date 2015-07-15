@@ -25,6 +25,7 @@
 
 import Util from 'util/Util';
 
+const DOM_COMPLETE = 'complete';
 
 // we attach global settings to global once because settings might be shared a lot of times trough the application
 // Maybe find a better way to handle that scenario
@@ -41,24 +42,30 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
         canvasToggledClass: 'toggled-canvas'
     };
 
-    // it's possible that global.document.body is not available if the document is not
-    // loaded completely
-    document.addEventListener('DOMContentLoaded', () => {
+    global.FLEXCSS_CONST_IS_IOS = null;
+
+    global.FLEXCSS_CONST_IS_TOUCH = null;
+
+    global.FLEXCSS_CONST_IS_IE = null;
+
+    global.FLEXCSS_CONST_TAB_EVENT = 'click';
+
+    const init = () => {
         // Measure scrollbar width
         global.FLEXCSS_CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
         // detect right transition end event
         global.FLEXCSS_CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
+    };
 
-        global.FLEXCSS_CONST_TAB_EVENT = 'click';
-
-        global.FLEXCSS_CONST_IS_IOS = null;
-
-        global.FLEXCSS_CONST_IS_TOUCH = null;
-
-        global.FLEXCSS_CONST_CANVAS_TOGGLE = 'toggled-canvas';
-
-        global.FLEXCSS_CONST_IS_IE = null;
-    });
+    if (global.document.readyState === DOM_COMPLETE) {
+        init();
+    } else {
+        // it's possible that global.document.body is not available if the document is not
+        // loaded completely
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+    }
 }
 
 /**
