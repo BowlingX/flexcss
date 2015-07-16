@@ -25,7 +25,7 @@ header + .navbar-sub + .overall-wrapper > .content-wrapper .wrapper {
 }
 
 header ~ .navbar-sub + .overall-wrapper {
-  min-height: calc(100vh - #{$topbarHeight*2});
+  min-height: calc(100vh - #{$topbarHeight + $subnavHeight});
 }
 
 @media #{$mediaDesktop} {
@@ -35,7 +35,7 @@ header ~ .navbar-sub + .overall-wrapper {
   }
 
   header ~ .navbar-sub + .overall-wrapper {
-    min-height: calc(100vh - #{$topbarHeightDesktop + $topbarHeight + 1});
+    min-height: calc(100vh - #{$topbarHeightDesktop + $subnavHeightDesktop});
   }
 
 }

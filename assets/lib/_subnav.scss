@@ -13,9 +13,8 @@
   }
 
   border-bottom:1px solid $globalBorderColor;
-  // +1 because we have the border:
-  height:$topbarHeight + 1px;
 
+  height:$subnavHeight;
 }
 @media #{$mediaLarge} {
   .navbar-sub {
@@ -41,6 +40,7 @@
 @media #{$mediaDesktop} {
   .navbar-sub {
     margin:$topbarHeightDesktop 0 0;
+    height:$subnavHeightDesktop;
   }
 }
 
@@ -75,14 +75,14 @@
   .slidebar {
     overflow: visible;
     position: relative;
-    height: $topbarHeight;
+    height: $subnavHeight;
     z-index: 2;
 
     .subnav {
       position: relative;
       display: flex;
       flex-direction: column;
-      transform: translate3d(0, -100%, 0) translate3d(0, $topbarHeight, 0);
+      transform: translate3d(0, -100%, 0) translate3d(0, $subnavHeight, 0);
       transition: transform 0s ease;
       margin-bottom: -100%;
       border-bottom: 1px solid $globalBorderColor;
@@ -114,7 +114,7 @@
             > i {
               transition:transform .3s ease;
               position: absolute;
-              bottom: ($topbarHeight - $baseFontSize) / 2 - 2px;
+              bottom: ($subnavHeight - $baseFontSize) / 2 - 2px;
               right: 9px;
             }
           }

@@ -6,11 +6,15 @@
 $MainNavigationWidth: 250px !default;
 $MainSidebarWidth: 265px !default;
 $MainNavigationBg: #4a4a4a !default;
+
+// subnav
 $subnavColor: #616161 !default;
 $subnavActiveFontWeight: bold !default;
 $subnavBorderTop: false !default;
+$subnavHeightDesktop: 43px !default;
+$subnavHeight: 43px !default;
 
-// height of topbar
+// topbar
 $topbarHeight: 43px !default;
 $topbarHeightDesktop: 43px !default;
 $tabHeight: 40px !default;
