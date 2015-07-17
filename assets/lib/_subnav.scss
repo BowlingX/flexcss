@@ -101,13 +101,12 @@
           height: 100%;
           text-indent: 0;
           right: 0;
-          margin: 0 $overallPadding 0 0;
           > label {
             width: 100%;
             height: 100%;
             margin: 0;
             text-indent: 0;
-            padding: 0 16px;
+            padding: 0 $overallPadding + 16px;
             cursor: pointer;
             bottom: 0;
             position: absolute;
@@ -117,7 +116,7 @@
               transition: transform .3s ease;
               position: absolute;
               bottom: ($subnavHeight - $baseFontSize) / 2 - 2px;
-              right: 9px;
+              right: 16px;
             }
           }
         }

@@ -41,7 +41,7 @@
   }
 
   .page-content {
-    padding: 30px $paddingRightLeftDesktop;
+    padding: $overallPaddingTopBottomDesktop $paddingRightLeftDesktop;
 
     .page-content {
       padding:0 $paddingRightLeftDesktop;
