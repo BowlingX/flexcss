@@ -245,6 +245,19 @@
 }
 
 /**
+* Mixin to support retina displays on a specific size
+*/
+@mixin retinaDisplayScreenSize($ratio:1.3, $size:$breakpointDesktop) {
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio) and (min-width: #{$breakpointDesktop}),
+  only screen and (min--moz-device-pixel-ratio: $ratio) and (min-width: #{$breakpointDesktop}),
+  only screen and (-o-min-device-pixel-ratio: #{$ratio}/1) and (min-width: #{$breakpointDesktop}),
+  only screen and (min-device-pixel-ratio: $ratio) and (min-width: #{$breakpointDesktop}),
+  only screen and (min-resolution: #{$ratio}dppx) and (min-width: #{$breakpointDesktop}) {
+    @content;
+  }
+}
+
+/**
 * Mixin that generates a simple grid
 */
 @mixin generate-grid($columns: $columns) {
@@ -280,7 +293,6 @@
   }
 }
 
-
 /* Form Mixins */
 
 /**
@@ -302,6 +314,7 @@
   box-shadow: $inputBoxShadow;
   border-radius: $globalRadius;
 }
+
 /**
 * Input style when focused
 */
@@ -311,7 +324,6 @@
   box-shadow: $inputFocusBoxShadow !important;
   outline: none;
 }
-
 
 /**
 * Mixin to create a button style
@@ -359,6 +371,7 @@
 
   &.disabled, [disabled] {
     background-color: $disabledColor;
+    color:$color;
     cursor: not-allowed;
   }
 }

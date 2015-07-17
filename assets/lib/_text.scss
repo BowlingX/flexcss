@@ -156,6 +156,22 @@ ol, ul {
         content: ' | '
       }
     }
+    &.custom {
+      li:not(:last-of-type):after {
+        content: attr(data-separator)
+      }
+    }
+
+    &.spacey {
+      li:not(:last-of-type) {
+        margin-right: 1.5rem;
+
+        &:after {
+          content: '';
+        }
+      }
+
+    }
   }
 
   &.space {
@@ -185,7 +201,7 @@ ol, ul {
 }
 
 .half-space {
-  margin-bottom:.5rem !important;
+  margin-bottom: .5rem !important;
 }
 
 .single-space {
@@ -208,8 +224,8 @@ kbd {
 }
 
 ::selection {
-  background: lighten($primaryColor, 25%);
-  color: white;
+  background: $selectionBackground;
+  color: $selectionColor;
 }
 
 .cursor-help {
@@ -223,5 +239,22 @@ kbd {
 @media #{$mediaDesktop} {
   h1 {
     font-size: $h1DesktopFontSize;
+  }
+}
+
+@media #{$mediaSmall} {
+  ol, ul {
+    &.inline.spacey {
+      li {
+        display: block;
+        &:after {
+          content: '';
+        }
+        &:not(:last-of-type) {
+          margin-bottom: .5rem;
+          margin-right: 0;
+        }
+      }
+    }
   }
 }

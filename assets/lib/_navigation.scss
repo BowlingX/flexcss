@@ -181,6 +181,7 @@
 
     &.active a {
       font-weight: $subnavActiveFontWeight;
+      color:$subnavActiveColor;
     }
 
     &:last-of-type:not(.trigger) {

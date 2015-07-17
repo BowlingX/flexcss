@@ -2,23 +2,25 @@
 * Everything about the subnavbar
 */
 .navbar-sub {
-  margin:$topbarHeight 0 0;
-  background:$subnavBg;
+  margin: $topbarHeight 0 0;
+  background: $subnavBg;
   @if $subnavBorderTop {
     border-top: 1px solid $globalBorderColor;
   }
   .subnav {
-    max-width:$overallMaxWidth;
+    max-width: $overallMaxWidth;
     margin: 0 auto;
   }
 
-  border-bottom:1px solid $globalBorderColor;
-
-  height:$subnavHeight;
+  @if $subnavBorderBottom {
+    border-bottom: 1px solid $globalBorderColor;
+  }
+  height: $subnavHeight;
 }
+
 @media #{$mediaLarge} {
   .navbar-sub {
-    padding:0 $overallPaddingLarge;
+    padding: 0 $overallPaddingLarge;
   }
 }
 
@@ -34,13 +36,13 @@
 }
 
 .subnav-trigger {
-  display:none;
+  display: none;
 }
 
 @media #{$mediaDesktop} {
   .navbar-sub {
-    margin:$topbarHeightDesktop 0 0;
-    height:$subnavHeightDesktop;
+    margin: $topbarHeightDesktop 0 0;
+    height: $subnavHeightDesktop;
   }
 }
 
@@ -48,9 +50,9 @@
   .subnav-trigger {
 
     &:checked ~ .main .subnav-darkener {
-      display:block;
-      top:$topbarHeight;
-      z-index:1;
+      display: block;
+      top: $topbarHeight;
+      z-index: 1;
       @include animate(darkenerFadeIn);
     }
 
@@ -61,13 +63,13 @@
         order: 1;
       }
       li > label > i {
-        transform:rotate3d(0,0,1,180deg);
+        transform: rotate3d(0, 0, 1, 180deg);
       }
 
     }
     &:not(:checked) + .slidebar > .subnav {
       .trigger {
-        width:100%;
+        width: 100%;
       }
     }
   }
@@ -101,7 +103,7 @@
           right: 0;
           margin: 0 $overallPadding 0 0;
           > label {
-            width:100%;
+            width: 100%;
             height: 100%;
             margin: 0;
             text-indent: 0;
@@ -112,7 +114,7 @@
             right: 0;
             @include perspective();
             > i {
-              transition:transform .3s ease;
+              transition: transform .3s ease;
               position: absolute;
               bottom: ($subnavHeight - $baseFontSize) / 2 - 2px;
               right: 9px;

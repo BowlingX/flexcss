@@ -2,34 +2,7 @@
 * Base Settings
 */
 
-// Navigation and Sidebar when in mobile state (left + right)
-$MainNavigationWidth: 250px !default;
-$MainSidebarWidth: 265px !default;
-$MainNavigationBg: #4a4a4a !default;
 
-// subnav
-$subnavColor: #616161 !default;
-$subnavActiveFontWeight: bold !default;
-$subnavBorderTop: false !default;
-$subnavHeightDesktop: 43px !default;
-$subnavHeight: 43px !default;
-
-// topbar
-$topbarHeight: 43px !default;
-$topbarHeightDesktop: 43px !default;
-$tabHeight: 40px !default;
-$topbarBg:#333333 !default;
-$topbarBgDesktop:#333 !default;
-$topbarColor:#aaa !default;
-$topBarFontSize:18px !default;
-
-$topbarActionFontWeight:bold !default;
-$topbarNavActiveFontWeight: bold !default;
-$topbarNavActiveColor: #fff !default;
-
-// wide topbar
-$topbarNavActiveColorWide:#fff !default;
-$topbarColorWide:#aaa !default;
 // Minimal footer height:
 $footerHeight:100px !default;
 
@@ -62,8 +35,6 @@ $lighterGrayColor: #ccc !default;
 // A base light gray color for surfaces
 $lightGrayColor:#f1f1f1 !default;
 $globalHoverColor:#f8f8f8 !default;
-// subnav
-$subnavBg: $lightGrayColor !default;
 
 $smallFontSize:12px !default;
 $smallFontSizeLineHeight:1.5 !default;
@@ -90,6 +61,7 @@ $dangerColor:#f08201 !default;
 $successColor:#43A047 !default;
 $globalRadius:3px !default;
 
+
 // breakpoints
 
 $breakpointLarge: 1000px !default;
@@ -103,9 +75,43 @@ $mediaSmall: "all and (max-width:  #{$breakpointDesktop - 1px})";
 $mediaLandscape: "only screen and (orientation: landscape)" !default;
 $mediaPortrait: "only screen and (orientation: portrait)" !default;
 
+// sidebar
 $sidebarWidthLarge: 273px !default;
 $sidebarWidthDesktop: 220px !default;
 $sidebarBackground:#fafafa !default;
+
+// Navigation and Sidebar when in mobile state (left + right)
+$MainNavigationWidth: 250px !default;
+$MainSidebarWidth: 265px !default;
+$MainNavigationBg: #4a4a4a !default;
+
+// topbar
+$topbarHeight: 43px !default;
+$topbarHeightDesktop: 43px !default;
+$tabHeight: 40px !default;
+$topbarBg:#333333 !default;
+$topbarBgDesktop:#333 !default;
+$topbarColor:#aaa !default;
+$topBarFontSize:18px !default;
+
+$topbarActionFontWeight:bold !default;
+$topbarNavActiveFontWeight: bold !default;
+$topbarNavActiveColor: #fff !default;
+
+// wide topbar
+$topbarNavActiveColorWide:#fff !default;
+$topbarColorWide:#aaa !default;
+
+// subnav
+$subnavColor: #616161 !default;
+$subnavActiveColor: #616161 !default;
+// subnav
+$subnavBg: $lightGrayColor !default;
+$subnavActiveFontWeight: bold !default;
+$subnavBorderTop: false !default;
+$subnavBorderBottom:true !default;
+$subnavHeightDesktop: 43px !default;
+$subnavHeight: 43px !default;
 
 // z-indexes:
 $indexModalContainer:22 !default;
@@ -284,3 +290,7 @@ $codeBorderColor:lighten($grayColor, 20%) !default;
 // badge:
 $badgePadding:0 5px !default;
 $badgeBackground: $secondaryColor !default;
+
+// selection
+$selectionBackground:lighten($primaryColor, 25%) !default;
+$selectionColor:#fff !default;
