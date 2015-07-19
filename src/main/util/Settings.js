@@ -35,7 +35,7 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
         // defined breakpoint for small devices < n
         smallBreakpoint: 768,
         // nodes that should be updated when no scrollbar is expected
-        scrollbarUpdateNodes: null !== global.document.body ? [global.document.body] : [],
+        scrollbarUpdateNodes: global.document.body !== null ? [global.document.body] : [],
         // additional Delay until darkener is fully hidden
         darkenerFadeDelay: 100,
         // class that is added if canvas has been toggled
