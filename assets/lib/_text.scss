@@ -163,6 +163,9 @@ ol, ul {
     }
 
     &.spacey {
+      li {
+        display:inline-block;
+      }
       li:not(:last-of-type) {
         margin-right: 1.5rem;
 
