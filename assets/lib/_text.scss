@@ -55,7 +55,7 @@ a {
     font-weight: normal;
   }
   &:hover {
-    color: lighten($primaryColor, 10%);
+    color: $linkHoverColor;
   }
 
   &:active {

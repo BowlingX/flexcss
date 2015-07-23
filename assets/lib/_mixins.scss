@@ -354,7 +354,7 @@
 
   &:hover {
     color: $color;
-    background-color: lighten($background, 10%);
+    background-color: rgba($background, .7);
     &.loading {
       background-color: $background;
     }

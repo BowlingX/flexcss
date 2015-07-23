@@ -2,21 +2,19 @@
 * Base Settings
 */
 
-
 // Minimal footer height:
-$footerHeight:100px !default;
+$footerHeight: 100px !default;
 
 // maximum site width (before staying centered layout)
-$overallMaxWidth:1200px !default;
+$overallMaxWidth: 1200px !default;
 
 // a base padding, used by various components
-$overallPadding:10px !default;
+$overallPadding: 10px !default;
 $overallPaddingTopBottom: 25px !default;
 $overallPaddingTopBottomDesktop: 30px !default;
 $overallPaddingLarge: 50px !default;
 // padding when in desktop state
-$paddingRightLeftDesktop:20px !default;
-
+$paddingRightLeftDesktop: 20px !default;
 
 // paragraphs:
 $paragraphMargin: 0 0 1rem 0;
@@ -30,44 +28,43 @@ $baseLineHeight: 1.3 !default;
 $columns: one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve;
 
 // A Base gray color where other gray tones are inhered from
-$grayColor:#999 !default;
+$grayColor: #999 !default;
 $lighterGrayColor: #ccc !default;
 
 // A base light gray color for surfaces
-$lightGrayColor:#f1f1f1 !default;
-$globalHoverColor:#f8f8f8 !default;
+$lightGrayColor: #f1f1f1 !default;
+$globalHoverColor: #f8f8f8 !default;
 
-$smallFontSize:12px !default;
-$smallFontSizeLineHeight:1.5 !default;
-$extraSmallFontSize:$smallFontSize !default;
+$smallFontSize: 12px !default;
+$smallFontSizeLineHeight: 1.5 !default;
+$extraSmallFontSize: $smallFontSize !default;
 
 $globalShortEaseTime: .2s;
 $globalMediumEaseTime: .35s;
 $globalLongEaseTime: .8s;
-$globalMenuEasing:ease;
+$globalMenuEasing: ease;
 
 $h1FontSize: 18px !default;
 $h2FontSize: $h1FontSize - 1px !default;
 $h3FontSize: $h1FontSize - 3px !default;
 
-$h1DesktopFontSize:20px !default;
+$h1DesktopFontSize: 20px !default;
 $h1Color: $baseColor !default;
 $headingMargin: 0 0 1rem 0 !default;
 
-$primaryColor:#258db8 !default;
-$secondaryColor:#e6007e !default;
-$actionColor:#83ba5e !default;
+$primaryColor: #258db8 !default;
+$secondaryColor: #e6007e !default;
+$actionColor: #83ba5e !default;
 $alertColor: #d84c3d !default;
-$dangerColor:#f08201 !default;
-$successColor:#43A047 !default;
-$globalRadius:3px !default;
-
+$dangerColor: #f08201 !default;
+$successColor: #43A047 !default;
+$globalRadius: 3px !default;
 
 // breakpoints
 
 $breakpointLarge: 1000px !default;
 $breakpointInBetween: 900px !default;
-$breakpointDesktop:768px !default;
+$breakpointDesktop: 768px !default;
 
 $mediaDesktop: "all and (min-width: #{$breakpointDesktop})";
 $mediaLarge: "all and (min-width: #{$breakpointLarge})";
@@ -79,7 +76,7 @@ $mediaPortrait: "only screen and (orientation: portrait)" !default;
 // sidebar
 $sidebarWidthLarge: 273px !default;
 $sidebarWidthDesktop: 220px !default;
-$sidebarBackground:#fafafa !default;
+$sidebarBackground: #fafafa !default;
 
 // Navigation and Sidebar when in mobile state (left + right)
 $MainNavigationWidth: 250px !default;
@@ -90,18 +87,18 @@ $MainNavigationBg: #4a4a4a !default;
 $topbarHeight: 43px !default;
 $topbarHeightDesktop: 43px !default;
 $tabHeight: 40px !default;
-$topbarBg:#333333 !default;
-$topbarBgDesktop:#333 !default;
-$topbarColor:#aaa !default;
-$topBarFontSize:18px !default;
+$topbarBg: #333333 !default;
+$topbarBgDesktop: #333 !default;
+$topbarColor: #aaa !default;
+$topBarFontSize: 18px !default;
 
-$topbarActionFontWeight:bold !default;
+$topbarActionFontWeight: bold !default;
 $topbarNavActiveFontWeight: bold !default;
 $topbarNavActiveColor: #fff !default;
 
 // wide topbar
-$topbarNavActiveColorWide:#fff !default;
-$topbarColorWide:#aaa !default;
+$topbarNavActiveColorWide: #fff !default;
+$topbarColorWide: #aaa !default;
 
 // subnav
 $subnavColor: #616161 !default;
@@ -110,32 +107,32 @@ $subnavActiveColor: #616161 !default;
 $subnavBg: $lightGrayColor !default;
 $subnavActiveFontWeight: bold !default;
 $subnavBorderTop: false !default;
-$subnavBorderBottom:true !default;
+$subnavBorderBottom: true !default;
 $subnavHeightDesktop: 43px !default;
 $subnavHeight: 43px !default;
 
 // z-indexes:
-$indexModalContainer:22 !default;
+$indexModalContainer: 22 !default;
 $indexDarkener: 21 !default;
-$indexDropdown:3 !default;
-$indexFixedDropdown:22 !default;
-$indexTooltip:31 !default;
+$indexDropdown: 3 !default;
+$indexFixedDropdown: 22 !default;
+$indexTooltip: 31 !default;
 $indexMainNavigation: $indexDarkener + 1 !default;
 $indexSidebar: $indexDarkener + 1 !default;
-$indexModalCurrent:10 !default;
+$indexModalCurrent: 10 !default;
 
 // Box Shadows:
-$globalBoxShadow: 0px 0px 3px rgba(#000,.7) !default;
-$globalBorderColor:$lightGrayColor !default;
+$globalBoxShadow: 0px 0px 3px rgba(#000, .7) !default;
+$globalBorderColor: $lightGrayColor !default;
 
 // Modal Settings:
-$modalAlertWidthDesktop:320px !default;
-$modalWidthSmall:360px !default;
-$modalAnimateName:bounceIn !default;
-$modalAnimateDuration:.6s !default;
-$modalBackground:#fff !default;
+$modalAlertWidthDesktop: 320px !default;
+$modalWidthSmall: 360px !default;
+$modalAnimateName: bounceIn !default;
+$modalAnimateDuration: .6s !default;
+$modalBackground: #fff !default;
 $modalBoxShadow: $globalBoxShadow !default;
-$minWidthModalDesktop:640px !default;
+$minWidthModalDesktop: 640px !default;
 
 //forms
 $inputBackground: $lightGrayColor !default;
@@ -147,26 +144,26 @@ $inputDisabledBg: #fafafa !default;
 $inputDisabledColor: #bababa !default;
 $inputDisabledBorder: #e0e0e0 !default;
 $inputFocusColor: darken($inputBackground, 5%) !default;
-$inputFocusBorderColor:none !default;
+$inputFocusBorderColor: none !default;
 $inputFocusBoxShadow: none !default;
 $labelWidthDesktop: calc(25% + .375rem) !default;
-$labelMinWidth:0 !default;
+$labelMinWidth: 0 !default;
 $labelColor: $baseColor !default;
 $labelFontSize: $smallFontSize !default;
-$labelPaddingDesktop:5px 1rem 0 0 !default;
-$inputHeight:35px !default;
-$formMargin:30px !default;
+$labelPaddingDesktop: 5px 1rem 0 0 !default;
+$inputHeight: 35px !default;
+$formMargin: 30px !default;
 $formMarginDesktop: 30px !default;
 $formActionsPadding: 40px !default;
-$formActionsPaddingDesktop:60px !default;
-$formMinWidthControls:330px !default;
-$appendMargin:20px !default;
+$formActionsPaddingDesktop: 60px !default;
+$formMinWidthControls: 330px !default;
+$appendMargin: 20px !default;
 // append Margins for different states (last-child etc.)
-$appendMarginTopNegative:-10px !default;
-$appendMarginTopPositive:10px !default;
-$thirdColumnPaddingOffsetInBetween:$labelWidthDesktop !default;
+$appendMarginTopNegative: -10px !default;
+$appendMarginTopPositive: 10px !default;
+$thirdColumnPaddingOffsetInBetween: $labelWidthDesktop !default;
 $inputMultiFormSpacing: 10px !default;
-$controlMargin:20px !default;
+$controlMargin: 20px !default;
 $formWidthControlsBetween: calc(50% - .75rem) !default;
 $formWidthControls: calc(75% - .5rem) !default;
 $inputPadding: 8px 10px !default;
@@ -174,22 +171,22 @@ $textareaPadding: 10px !default;
 $legendMargin: $formMargin !default;
 $legendMarginDesktop: $formMarginDesktop !default;
 $uneditableInputPadding: 8px 10px !default;
-$inputBoxShadow:none !default;
-$legendFontSize:$baseFontSize !default;
+$inputBoxShadow: none !default;
+$legendFontSize: $baseFontSize !default;
 $legendFontWeight: bold !default;
 $legendColor: $baseColor !default;
 $placeholderColor: lighten($grayColor, 10%) !default;
-$selectPickerColor:#a6a6a6 !default;
+$selectPickerColor: #a6a6a6 !default;
 $selectChooseBackgroundColor: transparent !default;
-$labelMargin:3px !default;
+$labelMargin: 3px !default;
 $formParagraphMargin: $appendMarginTopPositive !default;
-$checkboxAndOptionHeight:20px !default;
-$checkRadioColor:$primaryColor !default;
-$labelTextAlign:right !default;
-$copyTextFormsFontSize:$smallFontSize!default;
-$copyTextFormsLineHeight:$smallFontSizeLineHeight !default;
+$checkboxAndOptionHeight: 20px !default;
+$checkRadioColor: $primaryColor !default;
+$labelTextAlign: right !default;
+$copyTextFormsFontSize: $smallFontSize !default;
+$copyTextFormsLineHeight: $smallFontSizeLineHeight !default;
 $copyTextFormsMultipleMarginTop: .5rem !default;
-$inputFontSize:$baseFontSize !default;
+$inputFontSize: $baseFontSize !default;
 $inputTransitions: background .5s ease !default;
 $checkboxMargin: 0px 0 0 28px;
 $disabledThumbColor: lighten($lighterGrayColor, 10%);
@@ -200,15 +197,15 @@ $btnPrimaryColor: $actionColor !default;
 $btnSecondaryColor: #c3c3c3 !default;
 $btnDangerColor: $dangerColor !default;
 $btnAlternativeColor: $primaryColor !default;
-$btnFontSize:$baseFontSize !default;
+$btnFontSize: $baseFontSize !default;
 $btnPadding: 11px 45px 10px !default;
-$btnBackgroundSize:40px 40px !default;
-$btnSmallPadding:7px 30px 7px !default;
-$btnFontWeight:bold !default;
+$btnBackgroundSize: 40px 40px !default;
+$btnSmallPadding: 7px 30px 7px !default;
+$btnFontWeight: bold !default;
 // tabs
-$tabBottomLineHeight:2px !default;
+$tabBottomLineHeight: 2px !default;
 $tabsSmallPadding: 5px !default;
-$tabsSmallLineHeight:1px !default;
+$tabsSmallLineHeight: 1px !default;
 
 // loader
 
@@ -216,64 +213,64 @@ $loaderSize: 40px !default;
 $loaderColor: lighten(#ccc, 5%) !default;
 $loaderBorder: 4px !default;
 $smallLoaderSize: 20px !default;
-$smallLoaderBorder:2px !default;
+$smallLoaderBorder: 2px !default;
 
 // fonts
-$includeFontello:true !default;
-$fontelloFontPath:'../fonts/fontello' !default;
-$iconFontName:'fontello';
+$includeFontello: true !default;
+$fontelloFontPath: '../fonts/fontello' !default;
+$iconFontName: 'fontello';
 
 // Effects:
 $darkenerFadeOpacity: .35 !default;
-$darkenerColor:#000 !default;
+$darkenerColor: #000 !default;
 
 // darkener when using background-color (e.g. in modals)
 $backgroundDarkenerFadeOpacity: .35 !default;
-$backgroundDarkenerColor:#000 !default;
+$backgroundDarkenerColor: #000 !default;
 
 // dropdowns:
-$dropdownBorderColor:lighten($grayColor, 20%) !default;
-$dropdownMaxHeight:300px !default;
+$dropdownBorderColor: lighten($grayColor, 20%) !default;
+$dropdownMaxHeight: 300px !default;
 
 // lightbox
-$lightboxImageBackground:black !default;
-$lightBoxMinHeightDesktop:300px !default;
+$lightboxImageBackground: black !default;
+$lightBoxMinHeightDesktop: 300px !default;
 $lightBoxWidthLarge: 60% !default;
 $lightBoxMinHeightLarge: calc(80vh - 40px) !default;
 
 // tooltips
-$tooltipBg:#333 !default;
+$tooltipBg: #333 !default;
 $tooltipFontSize: $smallFontSize !default;
-$alertTooltipColor:$tooltipBg !default;
-$tooltipFontWeight:600 !default;
+$alertTooltipColor: $tooltipBg !default;
+$tooltipFontWeight: 600 !default;
 
 // breadcrumbs
 $breadcrumbFontSize: $baseFontSize !default;
 $breadcrumbFontSizeLarge: 18px !default;
-$breadcrumbColor:#ccc !default;
-$breadcrumbSeparatorIcon:"\00B7 ";
+$breadcrumbColor: #ccc !default;
+$breadcrumbSeparatorIcon: "\00B7 ";
 
 // labeled
 $labeledSpacing: 1rem !default;
 $labeledBorder: 1px solid $globalBorderColor !default;
-$labeledPaddingTopDesktop:0 !default;
+$labeledPaddingTopDesktop: 0 !default;
 
 // icons:
-$iconSpacingButton:.3rem !default;
-$iconSpacing:.1rem !default;
+$iconSpacingButton: .3rem !default;
+$iconSpacing: .1rem !default;
 
 // table
 $tableBorder: 1px solid $globalBorderColor !default;
 $tableSpacing: 10px 1rem 10px 0 !default;
 $tableSpacingBreak: 6px 1rem 6px 0 !default;
 $tableSpacingLastAndFirst: 5px !default;
-$tableTransition:background .1s ease !default;
+$tableTransition: background .1s ease !default;
 
 // listings:
-$listingMinHeight:105px !default;
-$listingAvatarRowLarge:84px !default;
-$listingAvatarRow:84px !default;
-$listingAvatarRowSmall:36px !default;
+$listingMinHeight: 105px !default;
+$listingAvatarRowLarge: 84px !default;
+$listingAvatarRow: 84px !default;
+$listingAvatarRowSmall: 36px !default;
 $listingOuterPadding: 10px !default;
 $listingSpaceRight: 30px !default;
 $listingSmallWidth: 30% !default;
@@ -283,15 +280,16 @@ $panelBackground: $lightGrayColor !default;
 
 // links:
 $linkFontWeight: 600 !default;
+$linkHoverColor: lighten($primaryColor, 10%) !default;
 
 // code:
 $codeBackgroundColor: lighten($grayColor, 35%) !default;
-$codeBorderColor:lighten($grayColor, 20%) !default;
+$codeBorderColor: lighten($grayColor, 20%) !default;
 
 // badge:
-$badgePadding:0 5px !default;
+$badgePadding: 0 5px !default;
 $badgeBackground: $secondaryColor !default;
 
 // selection
-$selectionBackground:lighten($primaryColor, 25%) !default;
-$selectionColor:#fff !default;
+$selectionBackground: lighten($primaryColor, 25%) !default;
+$selectionColor: #fff !default;
