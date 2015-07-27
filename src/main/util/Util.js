@@ -176,7 +176,7 @@ class Util {
      * @param {boolean} [capture]
      */
     static addEventOnce(ev, target, func, capture) {
-        const thisFunction = function (event) {
+        const thisFunction = function thisFunction(event) {
             func(event, func);
             target.removeEventListener(ev, thisFunction, capture);
         };
