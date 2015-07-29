@@ -363,7 +363,7 @@
   &:active, &:focus, &.outline:active, &.outline:focus {
     &:not(.disabled):not([disabled]) {
       transition: none;
-      color: $buttonColor;
+      color: $color;
       background-color: darken($background, 10%);
       border-color: transparent;
     }
