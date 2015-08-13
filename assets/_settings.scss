@@ -261,7 +261,7 @@ $iconSpacingButton: .3rem !default;
 $iconSpacing: .1rem !default;
 
 // table
-$tableBorder: 1px solid $globalBorderColor !default;
+$tableBorder: $globalBorder !default;
 $tableSpacing: 10px 1rem 10px 0 !default;
 $tableSpacingBreak: 6px 1rem 6px 0 !default;
 $tableSpacingLastAndFirst: 5px !default;
