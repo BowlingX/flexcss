@@ -143,6 +143,12 @@ ol, ul {
     list-style: none;
   }
 
+  &.spacey {
+    li:not(:last-of-type) {
+      margin-bottom:.5rem;
+    }
+  }
+
   &.inline {
     li {
       display: inline;
@@ -168,7 +174,7 @@ ol, ul {
       }
       li:not(:last-of-type) {
         margin-right: 1.5rem;
-
+        margin-bottom:0;
         &:after {
           content: '';
         }
