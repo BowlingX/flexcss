@@ -142,7 +142,7 @@
 
 .subnav-content {
   overflow: hidden;
-  @include overflowContainer($lightGrayColor, $subnavHeight);
+  @include overflowContainer($subnavBg, $subnavHeight);
 }
 
 /**
