@@ -183,6 +183,7 @@ ol, ul {
     }
   }
 
+  // possible deprecate this in favor of spacey
   &.space {
     li {
       &:not(:first-of-type) {
