@@ -298,7 +298,7 @@
   }
 
   .subnav-content {
-    @include overflowContainer($lightGrayColor, $subnavHeightDesktop);
+    @include overflowContainer($subnavBg, $subnavHeightDesktop);
   }
 
   .subnav li a {
