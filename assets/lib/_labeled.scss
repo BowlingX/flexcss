@@ -20,7 +20,7 @@
     margin-top: -$labeledSpacing/2;
   }
 
-  border-bottom: 1px solid $globalBorderColor;
+  border-bottom: $globalBorder;
 
   &:last-of-type {
     border-bottom: none;

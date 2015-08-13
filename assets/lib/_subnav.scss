@@ -5,7 +5,7 @@
   margin: $topbarHeight 0 0;
   background: $subnavBg;
   @if $subnavBorderTop {
-    border-top: 1px solid $globalBorderColor;
+    border-top: $globalBorder;
   }
   .subnav {
     max-width: $overallMaxWidth;
@@ -13,7 +13,7 @@
   }
 
   @if $subnavBorderBottom {
-    border-bottom: 1px solid $globalBorderColor;
+    border-bottom: $globalBorder;
   }
   height: $subnavHeight;
 }
@@ -87,7 +87,7 @@
       transform: translate3d(0, -100%, 0) translate3d(0, $subnavHeight, 0);
       transition: transform 0s ease;
       margin-bottom: -100%;
-      border-bottom: 1px solid $globalBorderColor;
+      border-bottom: $globalBorder;
       li {
         order: 1;
         &.active {

@@ -124,6 +124,7 @@ $indexModalCurrent: 10 !default;
 // Box Shadows:
 $globalBoxShadow: 0px 0px 3px rgba(#000, .7) !default;
 $globalBorderColor: $lightGrayColor !default;
+$globalBorder:1px solid $globalBorderColor !default;
 
 // Modal Settings:
 $modalAlertWidthDesktop: 320px !default;

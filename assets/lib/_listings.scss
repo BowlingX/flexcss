@@ -4,7 +4,7 @@
   display: flex;
   width: 100%;
   padding: $listingOuterPadding 0;
-  border-bottom: 1px solid $globalBorderColor;
+  border-bottom: $globalBorder;
   transition: background $globalShortEaseTime ease;
   will-change: background;
   margin:0;
@@ -42,7 +42,7 @@
   }
 
   &:first-of-type {
-    border-top: 1px solid $globalBorderColor;
+    border-top: $globalBorder;
     margin-top:0;
   }
 
