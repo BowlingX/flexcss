@@ -103,10 +103,10 @@
   display: inline-block;
   padding: 0 3px;
   font-weight: $topbarActionFontWeight;
-  color: $topbarColor;
+  color: $topbarActionColor;
 
   &:hover {
-    color:#fff;
+    color:$topbarActionColorHover;
   }
   min-width:30px;
   text-align: center;
