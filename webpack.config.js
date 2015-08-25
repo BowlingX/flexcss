@@ -49,7 +49,7 @@ module.exports = {
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                loader: 'url-loader?limit=1000'
+                loader: 'url-loader?limit=1000&name=img/[hash].[ext]'
             },
             {
                 test: /\.html/,
@@ -80,6 +80,7 @@ module.exports = {
         'tooltip': ['packages/tooltip.scss']
     },
     output: {
+        publicPath:'build/',
         path: __dirname + "/build",
         filename: 'js/[name].min.js',
         libraryTarget: 'umd',
