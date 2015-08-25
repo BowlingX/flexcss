@@ -80,7 +80,7 @@ module.exports = {
         'tooltip': ['packages/tooltip.scss']
     },
     output: {
-        publicPath:'build/',
+        publicPath:'../',
         path: __dirname + "/build",
         filename: 'js/[name].min.js',
         libraryTarget: 'umd',
