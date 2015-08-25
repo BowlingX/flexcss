@@ -746,6 +746,16 @@ class Form {
             self = this,
             invalidEvent = 'invalid';
 
+        /**
+         * Validates if is valid realtime element
+         * @param {HTMLElement} target
+         * @returns {boolean}
+         * @private
+         */
+        function _checkIsValidRealtimeElement(target) {
+            return !target.hasAttribute(ATTR_DISABLE_REALTIME) && !target.hasAttribute(ATTR_DISABLE_INLINE);
+        }
+
         form.addEventListener(invalidEvent, function (e) {
             e.preventDefault();
         }, true);
@@ -827,17 +837,6 @@ class Form {
         function _checkIsValidBlurFocusElement(target) {
             let attr = target.getAttribute("type");
             return (attr !== "radio" && attr !== "checkbox" && attr !== "submit");
-        }
-
-
-        /**
-         * Validates if is valid realtime element
-         * @param {HTMLElement} target
-         * @returns {boolean}
-         * @private
-         */
-        function _checkIsValidRealtimeElement(target) {
-            return !target.hasAttribute(ATTR_DISABLE_REALTIME) && !target.hasAttribute(ATTR_DISABLE_INLINE);
         }
 
         /**
