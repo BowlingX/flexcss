@@ -140,6 +140,8 @@ class Form {
             fetchOptions: {
                 credentials: 'include'
             },
+            // the container for tooltips
+            tooltipContainer: form,
             // if you have a fixed header, either set a number or function here
             scrollToElementDiff: 0
         };
@@ -666,7 +668,7 @@ class Form {
     showAndOrCreateTooltip(target, remove) {
         var self = this;
         if (!this.tooltips && this.options.createTooltips) {
-            this.tooltips = new Tooltip(this.getForm(), {
+            this.tooltips = new Tooltip(this.options.tooltipContainer, {
                 containerClass: 'error-tooltip'
             });
         }
