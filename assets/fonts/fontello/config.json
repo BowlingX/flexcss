@@ -397,6 +397,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "531bc468eecbb8867d822f1c11f1e039",
+      "css": "calendar",
+      "code": 59470,
+      "src": "fontawesome"
+    },
+    {
       "uid": "e44601720c64e6bb6a2d5cba6b0c588c",
       "css": "volume-off",
       "code": 128263,
