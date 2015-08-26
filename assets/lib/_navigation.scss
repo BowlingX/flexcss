@@ -175,7 +175,7 @@
       line-height: $subnavHeight;
       display: block;
       &:not(span):hover {
-        color: lighten($subnavColor, 20%);
+        color: $subnavHoverColor;
       }
     }
 

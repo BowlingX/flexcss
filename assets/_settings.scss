@@ -106,6 +106,7 @@ $topbarColorWide: #aaa !default;
 // subnav
 $subnavColor: #616161 !default;
 $subnavActiveColor: #616161 !default;
+$subnavHoverColor: lighten($subnavColor, 20%) !default;
 // subnav
 $subnavBg: $lightGrayColor !default;
 $subnavActiveFontWeight: bold !default;
