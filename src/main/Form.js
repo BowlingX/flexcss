@@ -38,6 +38,7 @@ export * from 'isomorphic-fetch';
 import Event from 'util/Event';
 import Util from 'util/Util';
 import Settings from 'util/Settings';
+import DestroyableWidget from 'DestroyableWidget';
 
 const LOADING_CLASS = 'loading';
 const DATA_ELEMENT_INVALID = 'data-flexcss-invalid';
@@ -81,12 +82,13 @@ export const EVENT_FORM_AJAX_COMPLETED = 'flexcss.form.ajaxCompleted';
  */
 
 export default
-class Form {
+class Form extends DestroyableWidget {
     /**
      * @param {HTMLElement} form
      * @param [options] optional options
      */
     constructor(form, options) {
+        super();
 
         if (!(form instanceof HTMLFormElement)) {
             throw 'argument {0} form needs to be an form element';
@@ -171,6 +173,13 @@ class Form {
         this._remoteValidationFunction = null;
 
         this.initFormValidation();
+    }
+
+    destroy() {
+        super.destroy();
+        if (this.tooltips) {
+            this.tooltips.destroy();
+        }
     }
 
     /**
@@ -782,10 +791,9 @@ class Form {
             }
         }, true);
 
-        form.addEventListener('reset', function () {
+        this.addEventListener(form, 'reset', () => {
             this.removeErrors();
-        }.bind(this));
-
+        });
 
         // Timeout for keys:
         var TIMEOUT_KEYDOWN, KEYDOWN_RUNNING = false;
@@ -798,7 +806,7 @@ class Form {
 
         // setup custom realtime event if given
         if (self.options.realtime) {
-            form.addEventListener(CONST_REALTIME_EVENT, function (e) {
+            this.addEventListener(form, CONST_REALTIME_EVENT, function (e) {
                 if (self._formIsLoading()) {
                     return;
                 }
@@ -851,7 +859,7 @@ class Form {
             return !target.hasAttribute(ATTR_DISABLE_INLINE);
         }
 
-        form.addEventListener('blur', function (e) {
+        this.addEventListener(form, 'blur', function (e) {
             // do not hide tooltip after change event
             if (!e.target.flexcssKeepTooltips) {
                 self._handleTooltipInline(e.target);
@@ -861,7 +869,7 @@ class Form {
 
         // handle focus on input elements
         // will show an error if field is invalid
-        form.addEventListener("focus", function (e) {
+        this.addEventListener(form, "focus", function (e) {
             if (self._formIsLoading()) {
                 return;
             }
@@ -878,7 +886,7 @@ class Form {
 
         if (self.options.inlineValidation) {
             // Handle change for checkbox, radios and selects
-            form.addEventListener("change", function (e) {
+            this.addEventListener(form, "change", function (e) {
                 const target = e.target;
                 if (self._formIsLoading() || !_checkIsValidInlineCheckElement(target)) {
                     return;
@@ -899,11 +907,11 @@ class Form {
                 });
             });
         }
+
         // prevent default if form is invalid
-        const submitListener = function (e) {
-            self._submitListener(e, submitListener);
-        };
-        form.addEventListener("submit", submitListener);
+        this.addEventListener(form, "submit", function listener(e) {
+            self._submitListener(e, listener);
+        });
 
         Event.dispatchAndFire(form, EVENT_FORM_READY);
     }

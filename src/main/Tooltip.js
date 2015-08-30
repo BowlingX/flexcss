@@ -31,6 +31,8 @@
 'use strict';
 
 import Util from 'util/Util';
+import DestroyableWidget from 'DestroyableWidget';
+
 /**
  * @type {string}
  */
@@ -54,7 +56,7 @@ const doc = global.document;
  * Simple Tooltip
  */
 export default
-class Tooltip {
+class Tooltip extends DestroyableWidget {
 
     /**
      * Creates a Tooltip
@@ -62,7 +64,7 @@ class Tooltip {
      * @param {Object} options
      */
     constructor(DelegateContainer, options) {
-
+        super();
         /**
          * The Container where possible events are captured
          */
@@ -72,6 +74,8 @@ class Tooltip {
         if (!this.container) {
             throw 'Could not create Tooltip, DelegateContainer not found';
         }
+
+        this.listeners = {};
 
         /**
          * The Container where tooltips are stored for this instance
@@ -144,6 +148,20 @@ class Tooltip {
     }
 
     /**
+     * Destroys this Widget
+     * @returns {boolean}
+     */
+    destroy() {
+        super.destroy();
+
+        if (this.tooltipContainer) {
+            this.tooltipContainer.parentNode.removeChild(this.tooltipContainer);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Removes a Tooltip on given target
      * @param {HTMLElement} [target], if not given will remove current open tooltip on this instance
      */
@@ -168,13 +186,13 @@ class Tooltip {
      */
     registerEvents() {
         const self = this;
-        this.container.addEventListener('mouseover', function (e) {
+        this.addEventListener(this.container, 'mouseover', function (e) {
             if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.createTooltip(e.target, e.target.getAttribute('title'), true);
             }
         });
 
-        this.container.addEventListener('mouseout', function (e) {
+        this.addEventListener(this.container, 'mouseout', function (e) {
             if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.removeTooltip(e.target);
             }
