@@ -43,7 +43,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract(
                     // activate source maps via loader query
                     'css?sourceMap!' +
-                    'autoprefixer?browsers=last 2 versions!' +
+                    'autoprefixer?browsers=last 2 versions&remove=false!' +
                     'sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
                 )
             },

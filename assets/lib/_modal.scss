@@ -29,7 +29,6 @@
     display: block;
   }
   -webkit-overflow-scrolling: touch;
-  justify-content: center;
   min-height: 100%;
 
   // always show scrollbars
@@ -148,6 +147,7 @@
 
     &.open {
       display:flex;
+      justify-content: center;
     }
   }
 
