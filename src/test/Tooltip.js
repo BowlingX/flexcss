@@ -14,6 +14,6 @@ describe("Construct a Tooltip Element", function () {
         tooltip.registerEvents();
         expect(tooltip.listeners.length).toBe(2);
         tooltip.destroy();
-        expect(tooltip.listeners).toBe(0);
+        expect(tooltip.listeners.length).toBe(0);
     })
 });
