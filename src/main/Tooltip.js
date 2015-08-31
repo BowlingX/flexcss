@@ -75,8 +75,6 @@ class Tooltip extends DestroyableWidget {
             throw 'Could not create Tooltip, DelegateContainer not found';
         }
 
-        this.listeners = {};
-
         /**
          * The Container where tooltips are stored for this instance
          * @type {HTMLElement}
