@@ -145,3 +145,13 @@ blockquote {
     }
   }
 }
+
+.logo {
+  background: url(../img/logo.svg) no-repeat 0px 3px;
+  background-size: 100% 100%;
+  height: $topbarHeight;
+  position: relative;
+  width: 130px;
+  margin-left: $overallPadding + 10px;
+  display: block;
+}
