@@ -90,16 +90,17 @@
 }
 
 // creates a link in a specific color
-@mixin link-color($color: $grayColor, $fontWeight:normal) {
+@mixin link-color($color: $grayColor, $fontWeight:normal, $hoverColor:lighten($color, 10%),
+  $activeColor:darken($color, 10%)) {
   color: $color;
   font-weight: $fontWeight;
   cursor: pointer;
   &:hover {
-    color: lighten($color, 10%);
+    color: $hoverColor;
   }
 
   &:active {
-    color: darken($color, 10%);
+    color: $activeColor;
   }
 }
 
