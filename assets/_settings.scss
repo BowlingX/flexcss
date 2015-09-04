@@ -103,17 +103,7 @@ $topbarNavActiveColor: #fff !default;
 $topbarNavActiveColorWide: #fff !default;
 $topbarColorWide: #aaa !default;
 
-// subnav
-$subnavColor: #616161 !default;
-$subnavActiveColor: #616161 !default;
-$subnavHoverColor: lighten($subnavColor, 20%) !default;
-// subnav
-$subnavBg: $lightGrayColor !default;
-$subnavActiveFontWeight: bold !default;
-$subnavBorderTop: false !default;
-$subnavBorderBottom: true !default;
-$subnavHeightDesktop: 43px !default;
-$subnavHeight: 43px !default;
+
 
 // z-indexes:
 $indexModalContainer: 22 !default;
@@ -129,6 +119,20 @@ $indexModalCurrent: 10 !default;
 $globalBoxShadow: 0px 0px 3px rgba(#000, .7) !default;
 $globalBorderColor: $lightGrayColor !default;
 $globalBorder:1px solid $globalBorderColor !default;
+
+// subnav
+$subnavColor: #616161 !default;
+$subnavActiveColor: #616161 !default;
+$subnavHoverColor: lighten($subnavColor, 20%) !default;
+
+// subnav
+$subnavBg: $lightGrayColor !default;
+$subnavActiveFontWeight: bold !default;
+$subnavBorderTop: false !default;
+$subnavBorderBottom: true !default;
+$subnavHeightDesktop: 43px !default;
+$subnavHeight: 43px !default;
+$subnavBorderTopBorder:$globalBorder !default;
 
 // Modal Settings:
 $modalAlertWidthDesktop: 320px !default;

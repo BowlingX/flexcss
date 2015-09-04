@@ -1,11 +1,12 @@
 /**
 * Everything about the subnavbar
 */
+
 .navbar-sub {
   margin: $topbarHeight 0 0;
   background: $subnavBg;
   @if $subnavBorderTop {
-    border-top: $globalBorder;
+    border-top: $subnavBorderTopBorder;
   }
   .subnav {
     max-width: $overallMaxWidth;
