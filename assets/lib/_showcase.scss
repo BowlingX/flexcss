@@ -1,0 +1,35 @@
+/**
+* Flex-Showcase
+*/
+
+@mixin flex-showcase() {
+
+  width:100%;
+  overflow: hidden;
+
+  ul {
+    padding:0;
+    margin:0;
+    width:calc(100% + 50px);
+    transform: translate3d(0%, 0, 0);
+    transition: transform .2s ease;
+    display:flex;
+    height:200px;
+    > * {
+      flex:1;
+      min-width:25%;
+      background:red;
+      display:block;
+      padding: 20px;
+      color:#fff;
+      &:first-of-type {
+        margin-left:-50px;
+      }
+    }
+  }
+}
+
+
+.flex-showcase {
+  @include flex-showcase();
+}

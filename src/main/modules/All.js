@@ -9,7 +9,7 @@ import Toggleable from 'Toggleable';
 import OffCanvas from 'OffCanvas';
 import Dropdown from 'Dropdown';
 import LightBox from 'LightBox';
-
+import Showcase from 'Showcase';
 
 // default export as component object
 export default {
@@ -21,5 +21,6 @@ export default {
     Toggleable: Toggleable,
     OffCanvas: OffCanvas,
     Dropdown: Dropdown,
-    LightBox: LightBox
+    LightBox: LightBox,
+    Showcase: Showcase
 };

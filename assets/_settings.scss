@@ -125,9 +125,10 @@ $globalBorder:1px solid $globalBorderColor !default;
 $subnavColor: #616161 !default;
 $subnavActiveColor: #616161 !default;
 $subnavHoverColor: lighten($subnavColor, 20%) !default;
-
+$subnavTriggerColor:$baseColor !default;
 // subnav
 $subnavBg: $lightGrayColor !default;
+$subnavBgDesktop: $subnavBg !default;
 $subnavActiveFontWeight: bold !default;
 $subnavBorderTop: false !default;
 $subnavBorderBottom: true !default;

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Install
-weight: 3
+weight: 4
 ---
 
 * Table of Contents

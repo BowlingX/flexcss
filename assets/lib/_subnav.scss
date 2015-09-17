@@ -44,6 +44,7 @@
   .navbar-sub {
     margin: $topbarHeightDesktop 0 0;
     height: $subnavHeightDesktop;
+    background:$subnavBgDesktop;
   }
 }
 
@@ -57,7 +58,7 @@
       @include animate(darkenerFadeIn);
     }
 
-    &:checked + .slidebar > .subnav {
+    &:checked + .slidebar .subnav {
       transform: translate3d(0, 0, 0);
       transition: transform $globalMediumEaseTime $globalMenuEasing;
       li.active {
@@ -68,7 +69,7 @@
       }
 
     }
-    &:not(:checked) + .slidebar > .subnav {
+    &:not(:checked) + .slidebar .subnav {
       .trigger {
         width: 100%;
       }
@@ -102,6 +103,7 @@
           height: 100%;
           text-indent: 0;
           right: 0;
+          color:$subnavTriggerColor;
           > label {
             width: 100%;
             height: 100%;

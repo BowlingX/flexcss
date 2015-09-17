@@ -290,7 +290,7 @@
   }
 
   .subnav-content {
-    @include overflowContainer($subnavBg, $subnavHeightDesktop);
+    @include overflowContainer($subnavBgDesktop, $subnavHeightDesktop);
   }
 
   .subnav li a {
