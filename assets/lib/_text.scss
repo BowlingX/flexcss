@@ -250,6 +250,17 @@ kbd {
   h1 {
     font-size: $h1DesktopFontSize;
   }
+
+  ol, ul {
+    &.custom-desktop {
+      li {
+        display: inline;
+      }
+      li:not(:last-of-type):after {
+        content: attr(data-separator)
+      }
+    }
+  }
 }
 
 @media #{$mediaSmall} {
