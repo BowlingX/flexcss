@@ -254,7 +254,12 @@ kbd {
   ol, ul {
     &.custom-desktop {
       li {
-        display: inline;
+        display:inline-block;
+      }
+      &.spacey {
+        li:not(:last-of-type) {
+          margin-bottom:0rem;
+        }
       }
       li:not(:last-of-type):after {
         content: attr(data-separator)
