@@ -39,10 +39,10 @@ $smallFontSize: 12px !default;
 $smallFontSizeLineHeight: 1.5 !default;
 $extraSmallFontSize: $smallFontSize !default;
 
-$globalShortEaseTime: .2s;
-$globalMediumEaseTime: .35s;
-$globalLongEaseTime: .8s;
-$globalMenuEasing: ease;
+$globalShortEaseTime: .2s !default;
+$globalMediumEaseTime: .35s !default;
+$globalLongEaseTime: .8s !default;
+$globalMenuEasing: ease !default;
 
 $h1FontSize: 18px !default;
 $h2FontSize: $h1FontSize - 1px !default;
