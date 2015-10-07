@@ -9,7 +9,8 @@
   border-radius: $globalRadius;
   font-weight: $btnFontWeight;
   background-image: none;
-  transition: background-color .2s ease, background-image 2s ease, color .2s ease, border .2s ease;
+  transition: background-color $globalShortEaseTime ease, background-image 2s ease,
+  color $globalShortEaseTime ease, border $globalShortEaseTime ease;
   background-size: $btnBackgroundSize;
   font-size: $btnFontSize;
   will-change: background, background-image;
