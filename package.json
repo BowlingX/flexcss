@@ -64,7 +64,7 @@
   "scripts": {
     "test": "node_modules/karma/bin/karma start --single-run --ci",
     "tdd": "node_modules/karma/bin/karma start --auto-watch",
-    "dist": "rm -Rf build && node_modules/webpack/bin/webpack.js --optimize-minimize --optimize-occurence-order",
+    "dist": "rm -Rf build && export NODE_ENV=production && node_modules/webpack/bin/webpack.js --optimize-minimize --optimize-occurence-order && export NODE_ENV=dev && node_modules/webpack/bin/webpack.js",
     "develop": "node_modules/webpack/bin/webpack.js --watch"
   }
 }

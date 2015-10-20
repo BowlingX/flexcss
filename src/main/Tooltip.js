@@ -61,7 +61,7 @@ class Tooltip extends DestroyableWidget {
     /**
      * Creates a Tooltip
      * @param {HTMLElement|String} DelegateContainer
-     * @param {Object} options
+     * @param {Object} [options]
      */
     constructor(DelegateContainer, options) {
         super();
@@ -89,7 +89,7 @@ class Tooltip extends DestroyableWidget {
             selectorAttribute: 'data-tooltip'
         };
 
-        Object.assign(this.options, options);
+        Object.assign(this.options, options || {});
     }
 
     /**

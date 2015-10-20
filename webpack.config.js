@@ -26,6 +26,8 @@ var path = require("path");
 var webpack = require("webpack"), fs = require('fs');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var isProduction = "production" === process.env.NODE_ENV;
+
 module.exports = {
     watch: false,
     devtool: "source-map",
@@ -77,21 +79,21 @@ module.exports = {
         'flexcss': ['modules/All'],
         'base': ['packages/base.scss'],
         'doc': ['packages/doc.scss'],
-        'tooltip': ['packages/tooltip.scss']
+        'tooltip': ['modules/Tooltip','packages/tooltip.scss']
     },
     output: {
         publicPath:'../',
         path: __dirname + "/build",
-        filename: 'js/[name].min.js',
+        filename: isProduction ? 'js/[name].min.js' : 'js/[name].js',
         libraryTarget: 'umd',
         library: 'FlexCss',
-        sourceMapFilename: 'maps/[name].min.map'
+        sourceMapFilename: isProduction ? 'maps/[name].min.map' : 'maps/[name].map'
     },
     plugins: [
         new webpack.EnvironmentPlugin(['NODE_ENV']),
         new webpack.ResolverPlugin(
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
         ),
-        new ExtractTextPlugin('css/[name].min.css')
+        new ExtractTextPlugin(isProduction ? 'css/[name].min.css' : 'css/[name].css')
     ]
 };

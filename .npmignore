@@ -1,0 +1,7 @@
+.idea
+_includes
+_layouts
+_site
+Gemfile
+Gemfile.lock
+_config.yml
