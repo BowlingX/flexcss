@@ -304,3 +304,6 @@ $badgeBackground: $secondaryColor !default;
 // selection
 $selectionBackground: lighten($primaryColor, 25%) !default;
 $selectionColor: #fff !default;
+
+// breadcrumbs
+$breadcrumbShortenPortrait: true !default;

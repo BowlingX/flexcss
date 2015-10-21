@@ -4,13 +4,13 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  padding:0;
+  padding: 0;
   max-width: 100%;
   @include clearfix();
   a {
     margin-left: 4px;
-    color:$breadcrumbColor;
-    font-weight:normal;
+    color: $breadcrumbColor;
+    font-weight: normal;
     &:hover {
       @extend .inherit-link:hover;
     }
@@ -18,7 +18,7 @@
   color: $breadcrumbColor;
   list-style-type: none;
   li {
-    display:inline;
+    display: inline;
     margin-left: 1px;
   }
   li:first-of-type {
@@ -45,32 +45,41 @@
   }
 }
 
-@media #{$mediaPortrait} {
+@if $breadcrumbShortenPortrait {
 
-  .breadcrumb {
-    li {
-      a { display:none; margin-left:0;}
-      &:before {
-        display:none;
-      }
-      margin-left:0;
-    }
+  @media #{$mediaPortrait} {
 
-    li:last-of-type {
-      &:not(:first-of-type):before {
-        display:inline;
-        content: "\00B7  ... \00B7";
+    .breadcrumb {
+      li {
+        a {
+          display: none;
+          margin-left: 0;
+        }
+        &:before {
+          display: none;
+        }
+        margin-left: 0;
       }
-      &:not(:first-of-type) a {
-        margin-left:4px;
-      }
-    }
 
-    li:first-of-type,
-    li:last-of-type {
-      a {display:inline; margin-right:1px}
-      &:after {
-        content: "";
+      li:last-of-type {
+        &:not(:first-of-type):before {
+          display: inline;
+          content: "\00B7  ... \00B7";
+        }
+        &:not(:first-of-type) a {
+          margin-left: 4px;
+        }
+      }
+
+      li:first-of-type,
+      li:last-of-type {
+        a {
+          display: inline;
+          margin-right: 1px
+        }
+        &:after {
+          content: "";
+        }
       }
     }
   }
