@@ -135,6 +135,7 @@ $subnavBorderBottom: true !default;
 $subnavHeightDesktop: 43px !default;
 $subnavHeight: 43px !default;
 $subnavBorderTopBorder:$globalBorder !default;
+$subnavSlideBorder:$globalBorder !default;
 
 // Modal Settings:
 $modalAlertWidthDesktop: 320px !default;
@@ -144,6 +145,10 @@ $modalAnimateDuration: .6s !default;
 $modalBackground: #fff !default;
 $modalBoxShadow: $globalBoxShadow !default;
 $minWidthModalDesktop: 640px !default;
+$modalCloseHoverColor: lighten($baseColor, 40%) !default;
+$modalCloseHoverBackground: lighten($grayColor, 35%) !default;
+$modalCloseActiveColor: lighten($baseColor, 10%) !default;
+$modalCloseActiveBackground: lighten($grayColor, 30%) !default;
 
 //forms
 $inputBackground: $lightGrayColor !default;
@@ -201,7 +206,7 @@ $inputFontSize: $baseFontSize !default;
 $inputTransitions: background .5s ease !default;
 $checkboxMargin: 0px 0 0 28px;
 $disabledThumbColor: lighten($lighterGrayColor, 10%);
-
+$inputBorderRadius: $globalRadius !default;
 // buttons
 $buttonColor: #fff !default;
 $btnPrimaryColor: $actionColor !default;
@@ -213,6 +218,7 @@ $btnPadding: 11px 45px 10px !default;
 $btnBackgroundSize: 40px 40px !default;
 $btnSmallPadding: 7px 30px 7px !default;
 $btnFontWeight: bold !default;
+$btnRadius: $globalRadius !default;
 // tabs
 $tabBottomLineHeight: 2px !default;
 $tabsSmallPadding: 5px !default;
@@ -276,6 +282,7 @@ $tableSpacing: 10px 1rem 10px 0 !default;
 $tableSpacingBreak: 6px 1rem 6px 0 !default;
 $tableSpacingLastAndFirst: 5px !default;
 $tableTransition: background .1s ease !default;
+$tableHeaderColor:$primaryColor !default;
 
 // listings:
 $listingMinHeight: 105px !default;

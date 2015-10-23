@@ -89,7 +89,7 @@
       transform: translate3d(0, -100%, 0) translate3d(0, $subnavHeight, 0);
       transition: transform 0s ease;
       margin-bottom: -100%;
-      border-bottom: $globalBorder;
+      border-bottom: $subnavSlideBorder;
       li {
         order: 1;
         &.active {

@@ -107,13 +107,13 @@
   color: lighten($baseColor, 50%);
 
   &:hover {
-    color: lighten($baseColor, 40%);
-    background: lighten($grayColor, 35%);
+    color: $modalCloseHoverColor;
+    background: $modalCloseHoverBackground;
   }
 
   &:active {
-    color: lighten($baseColor, 10%);
-    background: lighten($grayColor, 30%);
+    color: $modalCloseActiveColor;
+    background: $modalCloseActiveBackground;
   }
 
 }

@@ -17,5 +17,7 @@
     line-height:$inputHeight - 2px;
     padding-top:0 !important;
     padding-bottom:0 !important;
+    border-top-right-radius:$inputBorderRadius;
+    border-bottom-right-radius:$inputBorderRadius;
   }
 }

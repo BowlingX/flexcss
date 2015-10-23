@@ -6,7 +6,7 @@
   cursor: pointer;
   border: 1px solid transparent;
   padding: $btnPadding;
-  border-radius: $globalRadius;
+  border-radius: $btnRadius;
   font-weight: $btnFontWeight;
   background-image: none;
   transition: background-color $globalShortEaseTime ease, background-image 2s ease,
