@@ -1,4 +1,3 @@
-/* global ClientRect */
 /*
  * The MIT License (MIT)
  *
@@ -280,7 +279,7 @@ class Util {
             }
         });
 
-        const targetPosition = target instanceof ClientRect ? target : target.getBoundingClientRect(),
+        const targetPosition = target instanceof HTMLElement ? target.getBoundingClientRect() : target,
             elementRect = elementToPosition.getBoundingClientRect(),
             colRect = collisionContainer.getBoundingClientRect(),
             targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
