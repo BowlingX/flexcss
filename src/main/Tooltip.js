@@ -97,8 +97,9 @@ class Tooltip extends DestroyableWidget {
      * @param {HTMLElement} target where is this tooltip positioned
      * @param {String} text text content in tooltip, will be NOT escaped
      * @param {Boolean} [removeTitle] removes title element if given
+     * @param {Node} [positionRelative]
      */
-    createTooltip(target, text, removeTitle) {
+    createTooltip(target, text, removeTitle, positionRelative) {
         // abort if text is empty
         if (!text || text && text.trim() === '') {
             return;
@@ -121,7 +122,7 @@ class Tooltip extends DestroyableWidget {
             target.removeAttribute('title');
         }
 
-        Util.setupPositionNearby(target, tooltipContainer, this.container, true, true);
+        Util.setupPositionNearby(positionRelative || target, tooltipContainer, this.container, true, true);
 
         tooltipContainer.classList.add(CLASS_NAMES_OPEN);
 
