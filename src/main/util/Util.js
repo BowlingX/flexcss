@@ -1,3 +1,4 @@
+/* global ClientRect */
 /*
  * The MIT License (MIT)
  *
@@ -279,7 +280,7 @@ class Util {
             }
         });
 
-        const targetPosition = target.getBoundingClientRect(),
+        const targetPosition = target instanceof ClientRect ? target : target.getBoundingClientRect(),
             elementRect = elementToPosition.getBoundingClientRect(),
             colRect = collisionContainer.getBoundingClientRect(),
             targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
