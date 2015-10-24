@@ -253,7 +253,7 @@ class Util {
      *
      * You may overwrite preferred positioned with `centerHorizontal` and `positionTop`
      *
-     * @param {HTMLElement} target the target container to align to
+     * @param {HTMLElement|ClientRect} target the target container to align to
      * @param {HTMLElement} elementToPosition the element to position
      * @param {HTMLElement} collisionContainer the outer container to prevent collisions
      * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
