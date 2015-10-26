@@ -174,13 +174,15 @@ class Util {
      * @param {HTMLElement|HTMLDocument} target
      * @param {Function} func
      * @param {boolean} [capture]
+     * @return Function created listener
      */
     static addEventOnce(ev, target, func, capture) {
         const thisFunction = function thisFunction(event) {
             func(event, func);
             target.removeEventListener(ev, thisFunction, capture);
         };
-        return target.addEventListener(ev, thisFunction, capture);
+        target.addEventListener(ev, thisFunction, capture);
+        return thisFunction;
     }
 
     /**
