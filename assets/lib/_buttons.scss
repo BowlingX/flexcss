@@ -14,6 +14,7 @@
   background-size: $btnBackgroundSize;
   font-size: $btnFontSize;
   will-change: background, background-image;
+  line-height:$baseLineHeight;
   &:active, &:focus {
     outline: none;
   }
