@@ -7,11 +7,13 @@
   display: none;
 }
 
+.visible-inline-flex-small,
+.visible-inline-small,
 .visible-between,
 .visible-inline-block-small,
 .visible-block-small,
 .visible-small {
-  display: none;
+  display: none !important;
 }
 
 .visible-inline-block-large,
@@ -29,6 +31,11 @@
     display: block !important;
   }
 
+  .visible-inline-flex-small {
+    display:inline-flex !important;
+  }
+
+  .visible-inline-small,
   span.visible-small:not(.visible-block-small):not(.visible-inline-block-small) {
     display: inline !important;
   }

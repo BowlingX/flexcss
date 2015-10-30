@@ -42,6 +42,9 @@ $maxSlide: 10;
     cursor: pointer;
     transition: color $globalMediumEaseTime ease;
     margin: 0 5px;
+    > * {
+      pointer-events: none;
+    }
   }
 }
 
