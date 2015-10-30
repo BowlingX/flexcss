@@ -231,7 +231,8 @@ $loaderColor: lighten(#ccc, 5%) !default;
 $loaderBorder: 4px !default;
 $smallLoaderSize: 20px !default;
 $smallLoaderBorder: 2px !default;
-
+$loaderAlternate: false !default;
+$loaderAlternateColor: #ccc !default;
 // fonts
 $includeFontello: true !default;
 $fontelloFontPath: '../fonts/fontello' !default;
