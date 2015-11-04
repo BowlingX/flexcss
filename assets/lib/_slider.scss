@@ -48,9 +48,17 @@ $maxSlide: 10;
   }
 }
 
+// fix Safari/webkit bug with ~ selector, see:
+// http://stackoverflow.com/questions/8320530/webkit-bug-with-hover-and-multiple-adjacent-sibling-selectors
+
+@-webkit-keyframes bugfix {
+  from { fill: 0; }
+  to { fill: 0; }
+}
+
 .slide-container {
   overflow: hidden;
-
+  -webkit-animation: bugfix infinite 1s;
   input {
     visibility: hidden;
     pointer-events: none;
