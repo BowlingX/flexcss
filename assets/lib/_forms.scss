@@ -58,6 +58,7 @@ legend {
 .multi-form label:not(.checkbox),
 .control-group > label, .control-group > .label {
   &:not(.checkbox) {
+    font-weight:$labelFontWeight;
     font-size: $labelFontSize;
     color: $labelColor;
     margin-bottom: $labelMargin;
