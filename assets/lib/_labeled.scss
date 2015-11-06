@@ -32,6 +32,7 @@
     > dt {
       color: $baseColor;
       font-size:$baseFontSize;
+      font-weight:normal;
     }
     > dd {
       @include create-color-section($grayColor);
