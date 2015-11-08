@@ -10,6 +10,7 @@ import OffCanvas from 'OffCanvas';
 import Dropdown from 'Dropdown';
 import LightBox from 'LightBox';
 import Showcase from 'Showcase';
+import Util from 'util/Util';
 
 // default export as component object
 export default {
@@ -18,6 +19,7 @@ export default {
     Modal: Modal,
     Widget: Widget,
     Settings: Settings,
+    Util:Util,
     Toggleable: Toggleable,
     OffCanvas: OffCanvas,
     Dropdown: Dropdown,
