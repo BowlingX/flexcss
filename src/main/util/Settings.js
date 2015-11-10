@@ -25,8 +25,6 @@
 
 import Util from 'util/Util';
 
-const DOM_COMPLETE = 'complete';
-
 // we attach global settings to global once because settings might be shared a lot of times trough the application
 // Maybe find a better way to handle that scenario
 if (!global.FLEXCSS_GLOBAL_SETTINGS) {
@@ -57,7 +55,7 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
         global.FLEXCSS_CONST_TRANSITION_EVENT = Util.whichTransitionEndEvent();
     };
 
-    if (global.document.readyState === DOM_COMPLETE) {
+    if (global.document.readyState !== 'loading') {
         init();
     } else {
         // it's possible that global.document.body is not available if the document is not
