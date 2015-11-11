@@ -34,7 +34,7 @@ module.exports = {
                     path.resolve(__dirname, "src/test")
                 ],
                 test: /\.jsx?$/,
-                loader: 'babel-loader?optional=runtime&sourceMap=inline'
+                loader: 'babel-loader?presets[]=es2015'
             }
         ],
         preLoaders: [
