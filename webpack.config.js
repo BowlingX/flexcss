@@ -38,7 +38,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src/main")
                 ],
-                loader: 'babel-loader?optional=runtime&sourceMap=inline'
+                loader: 'babel-loader?presets[]=es2015'
             },
             {
                 test: /\.scss$/,
