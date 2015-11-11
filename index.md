@@ -70,32 +70,35 @@ Feel free to drop me [some comments](#disqus_thread).
 ----
 
 <script type="application/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        // Some async widgets
 
-        new FlexCss.Widget('AsyncModal').setAsync(function () {
-            return new Promise(function (s) {
-                setTimeout(function () {
-                    s(document.getElementById('async-modal'));
-                }, 600);
+    (function(window){
+        document.addEventListener('DOMContentLoaded', function () {
+            // Some async widgets
+            var FlexCss = window.FlexCss.default;
+            new FlexCss.Widget('AsyncModal').setAsync(function () {
+                return new Promise(function (s) {
+                    setTimeout(function () {
+                        s(document.getElementById('async-modal'));
+                    }, 600);
+                });
+            });
+    
+            new FlexCss.Widget('toggle-photo').setAsync(function () {
+                return new Promise(function (s) {
+                    setTimeout(function () {
+                        s(document.getElementById('async-tab'));
+                    }, 1000);
+                });
+            });
+            // Setup Dropdown
+            new FlexCss.Dropdown(document.body, 'Darkener').registerEvents();
+            new FlexCss.Widget('async-dropdown-target').setAsync(function () {
+                return new Promise(function (r) {
+                    setTimeout(function () {
+                        r(document.getElementById('dropdown-test'));
+                    }, 2000);
+                })
             });
         });
-
-        new FlexCss.Widget('toggle-photo').setAsync(function () {
-            return new Promise(function (s) {
-                setTimeout(function () {
-                    s(document.getElementById('async-tab'));
-                }, 1000);
-            });
-        });
-        // Setup Dropdown
-        new FlexCss.Dropdown(document.body, 'Darkener').registerEvents();
-        new FlexCss.Widget('async-dropdown-target').setAsync(function () {
-            return new Promise(function (r) {
-                setTimeout(function () {
-                    r(document.getElementById('dropdown-test'));
-                }, 2000);
-            })
-        });
-    });
+    })(window);
 </script>
