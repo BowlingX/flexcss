@@ -165,7 +165,8 @@
 */
 @-webkit-keyframes bounceIn {
   0%, 40%, 100% {
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   0% {
     opacity: 0;
@@ -186,7 +187,7 @@
 
 @-moz-keyframes bounceIn {
   0%, 40%, 100% {
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   0% {
     opacity: 0;
@@ -204,7 +205,7 @@
 
 @-ms-keyframes bounceIn {
   0%, 40%, 100% {
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   0% {
     opacity: 0;
@@ -222,7 +223,8 @@
 
 @keyframes bounceIn {
   0%, 40%, 100% {
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   0% {
     opacity: 0;
@@ -246,7 +248,8 @@
 */
 @-webkit-keyframes fadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -258,7 +261,7 @@
 
 @-moz-keyframes fadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -270,7 +273,7 @@
 
 @-ms-keyframes fadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -282,7 +285,8 @@
 
 @keyframes fadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -294,7 +298,8 @@
 
 @-webkit-keyframes darkenerFadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -306,7 +311,7 @@
 
 @-moz-keyframes darkenerFadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -318,7 +323,7 @@
 
 @-ms-keyframes darkenerFadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -330,7 +335,8 @@
 
 @keyframes darkenerFadeIn {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0;
@@ -342,7 +348,8 @@
 
 @-webkit-keyframes darkenerFadeOut {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0.35;
@@ -354,7 +361,7 @@
 
 @-moz-keyframes darkenerFadeOut {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0.35;
@@ -366,7 +373,7 @@
 
 @-ms-keyframes darkenerFadeOut {
   0%, 100% {
-    transition-timing-function: ease;
+    animation-timing-function: ease;
   }
   0% {
     opacity: 0.35;
@@ -378,7 +385,8 @@
 
 @keyframes darkenerFadeOut {
   0%, 100% {
-    transition-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
   }
   0% {
     opacity: 0.35;
@@ -3139,6 +3147,7 @@ input[type="range"]::-moz-range-thumb:focus, input[type="range"]::-moz-range-thu
 
 input[type="range"]::-ms-thumb {
   z-index: 1;
+  margin-top: 2px;
   pointer-events: all;
   position: relative;
   background: #258db8;
@@ -6303,8 +6312,8 @@ blockquote {
 }
 
 .logo {
-  background: url(../img/ff741b5a19eea6a9783eaa9fe5308c8f.svg) no-repeat 0px 3px;
-  background-size: 100% 100%;
+  background: url(../img/71ae28ed2a4e27294b55624209658cca.svg) no-repeat left 12px;
+  background-size: 130px auto;
   height: 43px;
   position: relative;
   width: 130px;

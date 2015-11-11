@@ -147,8 +147,8 @@ blockquote {
 }
 
 .logo {
-  background: url(../img/logo.svg) no-repeat 0px 3px;
-  background-size: 100% 100%;
+  background: url(../img/logo.svg) no-repeat left 12px;
+  background-size: 130px auto;
   height: $topbarHeight;
   position: relative;
   width: 130px;

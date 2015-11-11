@@ -59,6 +59,7 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="range"]::-ms-thumb {
   z-index: 1;
+  margin-top:2px;
   @include slider-thumb;
 }
 
