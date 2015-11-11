@@ -101,6 +101,7 @@
     void function (document) {
         document.addEventListener('DOMContentLoaded', function () {
             // init all forms on this page
+            var FlexCss = FlexCss.default;
             FlexCss.Form.init('form', {scrollToElementDiff:50});
             // setup scrollbar nodes to be updated
             FlexCss.Settings.setup({scrollbarUpdateNodes: [document.body, document.getElementById('Header')]});
