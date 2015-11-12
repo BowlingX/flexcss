@@ -89,7 +89,6 @@ export const EVENT_MODAL_ASYNC_TARGET_LOADED = 'flexcss.modal.asyncTargetLoaded'
 /**
  * A Modal Implementation
  */
-export default
 class Modal {
     constructor(DelegateContainer, options) {
         var doc = global.document, container = DelegateContainer instanceof HTMLElement ?
@@ -616,3 +615,5 @@ global.addEventListener('keydown', function (e) {
         }
     }
 });
+
+export default Modal;

@@ -62,7 +62,6 @@ const HIDE_FACTOR = 3;
 /**
  * A OffCanvas Implementation
  */
-export default
 class OffCanvas {
 
     /**
@@ -241,3 +240,5 @@ class OffCanvas {
 }
 
 OffCanvas.currentOpen = null;
+
+export default OffCanvas;

@@ -55,7 +55,6 @@ const ATTR_CLOSE = 'data-close-modal';
 /**
  * A Simple LightBox
  */
-export default
 class LightBox {
 
     /**
@@ -525,3 +524,5 @@ class LightBox {
     }
 
 }
+
+export default LightBox;

@@ -35,7 +35,6 @@ const COL_BOTTOM_CLASS = 'is-collision-bottom';
 /**
  * Provides shared DOM-Utility functions
  */
-export default
 class Util {
 
     /**
@@ -347,5 +346,6 @@ class Util {
             }
         }
     }
-
 }
+
+export default Util;

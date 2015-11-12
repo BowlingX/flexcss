@@ -68,7 +68,6 @@ const ATTR_TOGGLE_LIST = 'data-toggle-list';
 /**
  * Creates a toggleable element, either for tabs or a single toggle
  */
-export default
 class Toggleable {
     constructor(ContainerId) {
 
@@ -231,3 +230,5 @@ class Toggleable {
         }
     }
 }
+
+export default Toggleable;

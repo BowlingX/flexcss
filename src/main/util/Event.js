@@ -111,7 +111,6 @@ class EventHandler {
     }
 }
 
-export default
 class Event {
     /**
      * Prepares to dispatch a custom event (without firing)
@@ -134,3 +133,5 @@ class Event {
         return new EventHandler(target, name).withOptions(options).fire();
     }
 }
+
+export default Event;

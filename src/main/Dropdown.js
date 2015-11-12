@@ -83,7 +83,6 @@ export const EVENT_DROPDOWN_CLOSED = 'flexcss.dropdown.closed';
 /**
  * A Dropdown
  */
-export default
 class Dropdown {
     constructor(DelegateContainer, Darkener) {
 
@@ -343,3 +342,5 @@ class Dropdown {
     }
 
 }
+
+export default Dropdown;

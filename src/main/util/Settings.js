@@ -69,7 +69,6 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
 /**
  * Utility class that setups global settings
  */
-export default
 class Settings {
 
     /**
@@ -143,3 +142,5 @@ class Settings {
         return global.FLEXCSS_CONST_TAB_EVENT;
     }
 }
+
+export default Settings;
