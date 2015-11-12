@@ -12,17 +12,4 @@ import LightBox from 'LightBox';
 import Showcase from 'Showcase';
 import Util from 'util/Util';
 
-// default export as component object
-export default {
-    Form: Form,
-    Tooltip: Tooltip,
-    Modal: Modal,
-    Widget: Widget,
-    Settings: Settings,
-    Util:Util,
-    Toggleable: Toggleable,
-    OffCanvas: OffCanvas,
-    Dropdown: Dropdown,
-    LightBox: LightBox,
-    Showcase: Showcase
-};
+export {Form, Tooltip, Modal, Widget, Settings, Util, Toggleable, OffCanvas, Dropdown, LightBox, Showcase};

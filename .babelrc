@@ -1,3 +1,4 @@
 {
-  "plugins": ["transform-object-assign"]
+  "plugins": ["transform-object-assign"],
+  "presets":["es2015"]
 }
