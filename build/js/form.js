@@ -107,6 +107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -264,7 +266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	
 	        // overwrite default options
-	        Object.assign(_this3.options, options);
+	        _extends(_this3.options, options);
 	
 	        // apply settings from attributes
 	        _Util2.default.applyOptionsFromElement(form, _this3.options);
@@ -338,19 +340,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            // setup default headers
 	            if (useJson) {
-	                Object.assign(defaultHeaders, {
+	                _extends(defaultHeaders, {
 	                    'Content-Type': this.options.ajaxJsonContentType
 	                });
 	            }
-	            var defaultOptions = Object.assign(this.options.fetchOptions, {
+	            var defaultOptions = _extends(this.options.fetchOptions, {
 	                headers: defaultHeaders,
 	                method: this.options.ajaxSubmitType
 	            });
 	
 	            // support either JSON request payload or normal payload submission
-	            var serverCall = useJson ? fetch(ajaxPostUrl, Object.assign(defaultOptions, {
+	            var serverCall = useJson ? fetch(ajaxPostUrl, _extends(defaultOptions, {
 	                body: JSON.stringify(this.serialize())
-	            })) : fetch(ajaxPostUrl, Object.assign(defaultOptions, {
+	            })) : fetch(ajaxPostUrl, _extends(defaultOptions, {
 	                body: new FormData(thisForm)
 	            }));
 	
@@ -1754,6 +1756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -1835,7 +1839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            selectorAttribute: 'data-tooltip'
 	        };
 	
-	        Object.assign(_this.options, options || {});
+	        _extends(_this.options, options || {});
 	        return _this;
 	    }
 	
@@ -2503,6 +2507,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	// The needed polyfill is so small that I embedded it here
 	;
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -2561,7 +2567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(EventHandler, [{
 	        key: 'withOptions',
 	        value: function withOptions(options) {
-	            Object.assign(this.defaultOptions, options || {});
+	            _extends(this.defaultOptions, options || {});
 	            return this;
 	        }
 	
@@ -2591,7 +2597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!this.defaultOptions.detail) {
 	                this.defaultOptions.detail = {};
 	            }
-	            Object.assign(this.defaultOptions.detail, o);
+	            _extends(this.defaultOptions.detail, o);
 	            return this;
 	        }
 	
@@ -2683,6 +2689,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -2755,7 +2763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {Object} settings
 	         */
 	        value: function setup(settings) {
-	            Object.assign(global.FLEXCSS_GLOBAL_SETTINGS, settings);
+	            _extends(global.FLEXCSS_GLOBAL_SETTINGS, settings);
 	        }
 	
 	        /**

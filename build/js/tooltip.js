@@ -100,6 +100,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -181,7 +183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            selectorAttribute: 'data-tooltip'
 	        };
 	
-	        Object.assign(_this.options, options || {});
+	        _extends(_this.options, options || {});
 	        return _this;
 	    }
 	

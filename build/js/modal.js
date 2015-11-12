@@ -514,6 +514,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	// The needed polyfill is so small that I embedded it here
 	;
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -572,7 +574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(EventHandler, [{
 	        key: 'withOptions',
 	        value: function withOptions(options) {
-	            Object.assign(this.defaultOptions, options || {});
+	            _extends(this.defaultOptions, options || {});
 	            return this;
 	        }
 	
@@ -602,7 +604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!this.defaultOptions.detail) {
 	                this.defaultOptions.detail = {};
 	            }
-	            Object.assign(this.defaultOptions.detail, o);
+	            _extends(this.defaultOptions.detail, o);
 	            return this;
 	        }
 	
@@ -694,6 +696,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -766,7 +770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {Object} settings
 	         */
 	        value: function setup(settings) {
-	            Object.assign(global.FLEXCSS_GLOBAL_SETTINGS, settings);
+	            _extends(global.FLEXCSS_GLOBAL_SETTINGS, settings);
 	        }
 	
 	        /**
@@ -902,6 +906,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -1009,7 +1015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            containerClassNames: ''
 	        };
 	
-	        Object.assign(this.options, options);
+	        _extends(this.options, options);
 	
 	        // Container where events are delegated
 	        this.eventContainer = null;
