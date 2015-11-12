@@ -12,7 +12,6 @@
     margin:0;
     width:calc(100% + 50px);
     transform: translate3d(0%, 0, 0);
-    transition: transform .2s ease;
     display:flex;
     height:200px;
     > * {
