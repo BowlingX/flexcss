@@ -33,7 +33,6 @@
 /**
  * A Widget provides async content on a specific target (e.g. a modal link)
  */
-export default
 class Widget {
 
     /**
@@ -63,8 +62,8 @@ class Widget {
                 this.setAsync((() => {
                     return new Promise(((s) => {
                         s(this.element);
-                    }).bind(this));
-                }).bind(this));
+                    }));
+                }));
             } else {
                 throw 'Could not found element with ID: ' + element;
             }
@@ -145,3 +144,5 @@ class Widget {
         return self instanceof Widget || typeof self === 'object' && self.hasOwnProperty('_isWidget');
     }
 }
+
+export default Widget;
