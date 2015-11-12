@@ -157,7 +157,12 @@ class Modal {
                             document.body.scrollTop = self.currentScrollTop;
                         }
                         Settings.get().scrollbarUpdateNodes.forEach(function (node) {
-                            node.style.paddingRight = '';
+                            if(node instanceof Array) {
+                                const [whatNode, property] = node;
+                                whatNode.style[property] = '';
+                            } else {
+                                node.style.paddingRight = '';
+                            }
                         });
                         HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
                     }, 0);
@@ -331,12 +336,20 @@ class Modal {
             // this causes reflow/paint and should be optimized
             // At lest we write in a batch later
             Settings.get().scrollbarUpdateNodes.map(function (n) {
+                let foundProperty = 'paddingRight';
+                let direction = 1;
+                if(n instanceof Array) {
+                    const [whatNode, property, d] = n;
+                    foundProperty = property;
+                    n = whatNode;
+                    direction = d || 1;
+                }
                 return {
-                    n: n, padding: parseInt(global.getComputedStyle(n).paddingRight) +
-                    Settings.getScrollbarWidth() + 'px'
+                    n: n, property:foundProperty, value: parseInt(global.getComputedStyle(n)[foundProperty]) +
+                    (Settings.getScrollbarWidth() * direction) + 'px'
                 };
             }).forEach(function (d) {
-                d.n.style.paddingRight = d.padding;
+                d.n.style[d.property] = d.value;
             });
             if (self.options.fixedContainer) {
                 if (c) {
