@@ -55,7 +55,6 @@ const doc = global.document;
 /**
  * Simple Tooltip
  */
-export default
 class Tooltip extends DestroyableWidget {
 
     /**
@@ -199,3 +198,5 @@ class Tooltip extends DestroyableWidget {
         return this;
     }
 }
+
+export default Tooltip;

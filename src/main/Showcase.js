@@ -26,7 +26,7 @@
 
 import DestroyableWidget from 'DestroyableWidget';
 
-export default class Showcase extends DestroyableWidget {
+class Showcase extends DestroyableWidget {
 
 
     constructor(container) {
@@ -73,3 +73,5 @@ export default class Showcase extends DestroyableWidget {
     }
 
 }
+
+export default Showcase;

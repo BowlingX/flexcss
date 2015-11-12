@@ -81,7 +81,6 @@ export const EVENT_FORM_AJAX_COMPLETED = 'flexcss.form.ajaxCompleted';
  * A HTML5 Form Validation replacement
  */
 
-export default
 class Form extends DestroyableWidget {
     /**
      * @param {HTMLElement} form
@@ -1085,3 +1084,5 @@ Form.globalErrorMessageHandler = (field, validity) => {
         }
     }
 };
+
+export default Form;
