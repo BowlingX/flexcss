@@ -143,6 +143,9 @@ class Form extends DestroyableWidget {
             },
             // the container for tooltips
             tooltipContainer: form,
+            tooltipOptions: {
+                containerClass: 'error-tooltip'
+            },
             // if you have a fixed header, either set a number or function here
             scrollToElementDiff: 0
         };
@@ -676,9 +679,7 @@ class Form extends DestroyableWidget {
     showAndOrCreateTooltip(target, remove) {
         var self = this;
         if (!this.tooltips && this.options.createTooltips) {
-            this.tooltips = new Tooltip(this.options.tooltipContainer, {
-                containerClass: 'error-tooltip'
-            });
+            this.tooltips = new Tooltip(this.options.tooltipContainer, this.options.tooltipOptions);
         }
         if (!this.options.createTooltips) {
             return false;

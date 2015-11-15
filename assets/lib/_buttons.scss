@@ -1,7 +1,7 @@
 /**
 * Buttons
 */
-.button {
+@mixin button() {
   display: inline-block;
   cursor: pointer;
   border: 1px solid transparent;
@@ -79,4 +79,10 @@
   }
 
   @include interface();
+}
+
+@if $executeDefaultMixins {
+  .button {
+    @include button();
+  }
 }

@@ -85,7 +85,8 @@ class Tooltip extends DestroyableWidget {
          */
         this.options = {
             containerClass: '',
-            selectorAttribute: 'data-tooltip'
+            selectorAttribute: 'data-tooltip',
+            collisionContainer:this.container
         };
 
         Object.assign(this.options, options || {});
@@ -121,7 +122,8 @@ class Tooltip extends DestroyableWidget {
             target.removeAttribute('title');
         }
 
-        Util.setupPositionNearby(positionRelative || target, tooltipContainer, this.container, true, true);
+        Util.setupPositionNearby(positionRelative || target, tooltipContainer,
+            this.options.collisionContainer, true, true);
 
         tooltipContainer.classList.add(CLASS_NAMES_OPEN);
 

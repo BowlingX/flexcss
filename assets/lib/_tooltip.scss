@@ -14,7 +14,7 @@
 }
 
 // Global Tooltip
-.tooltip-container {
+@mixin tooltip-container() {
   z-index: $indexTooltip;
   pointer-events: none;
   display: inline-block;
@@ -91,5 +91,11 @@
     &.error-tooltip {
       @include arrow-bottom-color($alertTooltipColor)
     }
+  }
+}
+
+@if $executeDefaultMixins {
+  .tooltip-container {
+    @include tooltip-container();
   }
 }

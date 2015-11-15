@@ -1,5 +1,5 @@
 /* An appended button */
-.append-input {
+@mixin append-input($buttonClass:button) {
   display:flex;
 
   @include inputs() {
@@ -10,7 +10,7 @@
     min-width:0;
   }
 
-  .button {
+  .#{$buttonClass} {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     // needed for link-tags (a) to center text, height excludes the border
@@ -19,5 +19,11 @@
     padding-bottom:0 !important;
     border-top-right-radius:$inputBorderRadius;
     border-bottom-right-radius:$inputBorderRadius;
+  }
+}
+
+@if $executeDefaultMixins {
+  .append-input {
+    @include append-input();
   }
 }
