@@ -1,3 +1,5 @@
+/*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
+
 /*
  * The MIT License (MIT)
  *
@@ -30,11 +32,8 @@
 
 'use strict';
 
-
-/*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
-
 import Tooltip from 'Tooltip';
-export * from 'isomorphic-fetch';
+import 'isomorphic-fetch';
 import Event from 'util/Event';
 import Util from 'util/Util';
 import Settings from 'util/Settings';
@@ -56,6 +55,7 @@ const CONST_USE_JSON = 'json';
 const CONST_REALTIME_EVENT = 'input';
 const FOCUS_TOOLTIP_DELAY = 20;
 const CLICK_TOOLTIP_DELAY = 150;
+
 /**
  * Triggered when form is fully initialized and handlers are binded
  * @type {string}

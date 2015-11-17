@@ -5502,7 +5502,7 @@ html:not(.touch) .paginator a:hover {
 }
 
 html:not(.touch) .paginator a:active {
-  background: #d7d7d7;
+  background: #d8d8d8;
 }
 
 @media all and (max-width: 767px) {

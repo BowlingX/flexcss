@@ -27,7 +27,7 @@
 /**
  * Provides a Basic Widget
  */
-export default class DestroyableWidget {
+class DestroyableWidget {
 
     constructor() {
         this.listeners = [];
@@ -61,3 +61,5 @@ export default class DestroyableWidget {
     }
 
 }
+
+export default DestroyableWidget;
