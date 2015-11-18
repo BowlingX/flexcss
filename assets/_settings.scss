@@ -99,9 +99,11 @@ $topBarFontSize: 18px !default;
 $topbarActionFontWeight: bold !default;
 $topbarNavActiveFontWeight: bold !default;
 $topbarNavActiveColor: #fff !default;
+$topbarNavHoverColor: $topbarNavActiveColor !default;
 
 // wide topbar
-$topbarNavActiveColorWide: #fff !default;
+$topbarNavActiveColorWide: $topbarNavActiveColor !default;
+$topbarNavHoverColorWide: $topbarNavActiveColorWide !default;
 $topbarColorWide: #aaa !default;
 
 
