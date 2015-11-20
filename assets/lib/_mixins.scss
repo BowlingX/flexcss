@@ -376,3 +376,58 @@
     cursor: not-allowed;
   }
 }
+
+/**
+* Mixin to create a multine ellipsis
+*/
+@mixin multi-line-ellipsis($fontSize:14px, $lineHeight:1.4, $maxLines:3) {
+  height: $fontSize*$lineHeight*$maxLines;
+  display:block;
+  display: -webkit-box;
+  line-height: $lineHeight;
+  -webkit-line-clamp: $maxLines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: $fontSize;
+}
+
+@mixin multi-line-ellipsis-fade($lineHeight:1.5, $maxLines:6, $fontSize:15px, $fadeBackground:white) {
+
+  $maxHeight: $fontSize*$lineHeight*$maxLines;
+  $spacer:5px;
+
+  &:before {
+    content:"";
+    float: left;
+    width: $spacer;
+    height: $maxHeight;
+  }
+
+  line-height: $lineHeight;
+  overflow: hidden;
+  height: $maxHeight;
+
+  > *:first-child {
+    float: right;
+    width: 100%;
+    margin:0;
+    margin-left: $spacer*-1;
+  }
+
+  &:after {
+    content: "\00a0\00a0\00a0";
+    box-sizing: content-box;
+    float: right;
+    position: relative;
+    top: ($lineHeight*$fontSize) * -1;
+    left: 100%;
+    width: 50%;
+    margin-left: -50%;
+    padding-right: $spacer;
+    text-align: right;
+    background-size: 100% 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0),
+            $fadeBackground 100%, $fadeBackground);
+  }
+}
