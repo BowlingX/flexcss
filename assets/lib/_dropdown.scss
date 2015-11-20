@@ -1,93 +1,96 @@
 @mixin dropdown-content() {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 
-    a {
-      padding: 15px 15px;
-      display: block;
-      border-bottom: 1px solid $dropdownBorderColor;
-      font-weight: normal;
+  a {
+    padding: 15px 15px;
+    display: block;
+    border-bottom: 1px solid $dropdownBorderColor;
+    font-weight: normal;
+    color: $baseColor;
+    cursor: pointer;
+    &.active,
+    &:hover {
+      background: lighten($grayColor, 35%);
+    }
+
+    &:active {
+      background: lighten($grayColor, 25%);
+    }
+
+    i {
       color: $baseColor;
-      cursor: pointer;
-      &.active,
-      &:hover {
-        background: lighten($grayColor, 35%);
-      }
-
-
-      &:active {
-        background: lighten($grayColor, 25%);
-      }
-
-      i {
-        color: $baseColor;
-      }
-
-      &.disabled {
-        cursor:not-allowed;
-        background: none;
-        color:$inputDisabledColor;
-        > * {
-          color:$inputDisabledColor;
-        }
-      }
     }
 
-    li:last-of-type a {
-      border-bottom: none;
-      border-bottom-left-radius: $globalRadius;
-      border-bottom-right-radius: $globalRadius;
+    &.disabled {
+      cursor: not-allowed;
+      background: none;
+      color: $inputDisabledColor;
+      > * {
+        color: $inputDisabledColor;
+      }
     }
+  }
 
-    li:first-of-type a {
-      border-top-left-radius: $globalRadius;
-      border-top-right-radius: $globalRadius;
-    }
+  li:last-of-type a {
+    border-bottom: none;
+    border-bottom-left-radius: $globalRadius;
+    border-bottom-right-radius: $globalRadius;
+  }
+
+  li:first-of-type a {
+    border-top-left-radius: $globalRadius;
+    border-top-right-radius: $globalRadius;
+  }
 }
 
 // A Responsive dropdown
+@mixin dropdown() {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    will-change: opacity, transform;
+    pointer-events: none;
+    transition: transform .25s ease, opacity .25s ease;
+    // should be over modals
+    z-index: $indexFixedDropdown;
+    font-size: $baseFontSize;
+
+    -webkit-overflow-scrolling: touch;
+    max-height: $dropdownMaxHeight;
+    overflow-y: auto;
+    &.open {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: all;
+      transform: translate3d(0, 0, 0);
+    }
+
+    ul {
+      @include dropdown-content();
+    }
+
+    // headline for dropdowns
+    h3 {
+      font-size: $baseFontSize;
+      margin: 0;
+      padding: 15px 15px;
+      border-bottom: 1px solid $dropdownBorderColor;
+    }
+
+    background: #fff;
+    transform: translate3d(0, 100%, 0);
+
+    &.content {
+      padding: 10px;
+    }
+}
+
 .dropdown {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  will-change: opacity, transform;
-  pointer-events: none;
-  transition: transform .25s ease, opacity .25s ease;
-  // should be over modals
-  z-index: $indexFixedDropdown;
-  font-size: $baseFontSize;
-
-  -webkit-overflow-scrolling: touch;
-  max-height: $dropdownMaxHeight;
-  overflow-y: auto;
-  &.open {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: all;
-    transform: translate3d(0, 0, 0);
-  }
-
-  ul {
-    @include dropdown-content();
-  }
-
-  // headline for dropdowns
-  h3 {
-    font-size:$baseFontSize;
-    margin:0;
-    padding: 15px 15px;
-    border-bottom: 1px solid $dropdownBorderColor;
-  }
-
-  background: #fff;
-  transform: translate3d(0, 100%, 0);
-
-  &.content {
-    padding:10px;
-  }
+  @include dropdown();
 }
 
 // dropdowns in modal in small:
@@ -97,7 +100,7 @@
       top: 0 !important;
       bottom: auto;
       transform: translate3d(0, -100%, 0);
-      box-shadow:$globalBoxShadow;
+      box-shadow: $globalBoxShadow;
       &.open {
         transform: translate3d(0, 0, 0);
 
@@ -106,30 +109,34 @@
   }
 }
 
+@mixin dropdown-desktop() {
+  transform: none;
+  left: auto;
+  bottom: auto;
+  width: auto;
+  position: absolute;
+  border-radius: $globalRadius;
+  box-shadow: $globalBoxShadow;
+  max-width: 320px;
+  transition: none;
+  z-index: $indexDropdown;
+  min-width: 120px;
+  // reset positioning
+  &:not(.open) {
+    top: -100% !important;
+    left: -100% !important;
+    bottom: auto !important;
+  }
+  ul a {
+    padding: 12px 15px;
+  }
+}
+
 // Desktop version of dropdowns
 @media #{$mediaDesktop} {
 
   .dropdown {
-    transform: none;
-    left: auto;
-    bottom: auto;
-    width: auto;
-    position: absolute;
-    border-radius: $globalRadius;
-    box-shadow: $globalBoxShadow;
-    max-width: 320px;
-    transition: none;
-    z-index: $indexDropdown;
-    min-width:120px;
-    // reset positioning
-    &:not(.open) {
-      top: -100% !important;
-      left: -100% !important;
-      bottom: auto !important;
-    }
-    ul a {
-      padding: 12px 15px;
-    }
+    @include dropdown-desktop();
   }
 
 }

@@ -2,17 +2,6 @@
 * Normalized / Styled select-control
 */
 
-select {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  cursor: pointer;
-  appearance: none;
-  padding-right: $baseFontSize * 2;
-  &::-ms-expand {
-    display: none;
-  }
-}
-
 .select-element {
   cursor: pointer;
   position: relative;
@@ -56,4 +45,15 @@ select {
 .select-year {
   flex: 2;
   max-width: 100px;
+}
+
+select {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  appearance: none;
+  padding-right: $baseFontSize * 2 !important;
+  &::-ms-expand {
+    display: none;
+  }
 }
