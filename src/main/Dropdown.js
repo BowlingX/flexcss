@@ -306,6 +306,8 @@ class Dropdown {
             target.dropdownContent = dropdownContent;
             var isAbsolute = global.getComputedStyle(dropdownContent).position === 'absolute';
 
+            dropdownContent.hfWidgetInstance = this;
+
             if (!target.flexCollisionContainer) {
                 var collisionC = target.getAttribute(ATTR_CC);
                 target.flexCollisionContainer = collisionC ?
