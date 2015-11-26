@@ -32,6 +32,7 @@
 
 import Util from 'util/Util';
 import DestroyableWidget from 'DestroyableWidget';
+import Settings from 'util/Settings';
 
 /**
  * @type {string}
@@ -46,6 +47,11 @@ const CLASS_NAMES_OPEN = 'open';
  * @type {string}
  */
 const ATTR_DATA_CLASSNAME = 'data-class';
+
+/**
+ * @type {string}
+ */
+const ATTR_DATA_NO_TOUCH = 'data-no-touch';
 
 /**
  * @type {HTMLDocument}
@@ -104,6 +110,11 @@ class Tooltip extends DestroyableWidget {
         if (!text || text && text.trim() === '') {
             return;
         }
+
+        if(Settings.isTouchDevice() && target && target.hasAttribute(ATTR_DATA_NO_TOUCH)) {
+            return;
+        }
+
         let tooltipContainer = this.tooltipContainer;
 
         if (!tooltipContainer) {
