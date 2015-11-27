@@ -13,6 +13,40 @@
   }
 }
 
+@mixin tooltip-arrow-state($arrowColor) {
+  &.is-collision-bottom:not(.is-collision-left) {
+    @include spaceBottom();
+    @include arrow-bottom($arrowColor);
+  }
+
+  &:not(.is-collision-bottom):not(.is-collision-left) {
+    @include spaceTop();
+    @include arrow-top($arrowColor);
+  }
+
+  // left collisions
+  &.is-collision-left.is-collision-bottom {
+    @include spaceBottom();
+    @include arrow-bottom($arrowColor, 15px);
+  }
+
+  &.is-collision-left:not(.is-collision-bottom) {
+    @include spaceTop();
+    @include arrow-top($arrowColor, 15px);
+  }
+
+  // right collisions
+  &.is-collision-right:not(.is-collision-bottom) {
+    @include spaceTop();
+    @include arrow-top($arrowColor, calc(100% - 15px));
+  }
+
+  &.is-collision-right.is-collision-bottom {
+    @include spaceBottom();
+    @include arrow-bottom($arrowColor, calc(100% - 15px));
+  }
+}
+
 // Global Tooltip
 @mixin tooltip-container() {
   z-index: $indexTooltip;
@@ -33,7 +67,7 @@
 
   &.error-tooltip {
     word-break: normal;
-    background:$alertTooltipColor;
+    background: $alertTooltipColor;
   }
   &.open {
     opacity: 1;
@@ -41,56 +75,9 @@
   max-width: 250px;
   text-align: center;
 
-  // normal state (centered)
-  &.is-collision-bottom:not(.is-collision-left) {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg);
-
-    &.error-tooltip {
-      @include arrow-bottom-color($alertTooltipColor)
-    }
-  }
-
-  &:not(.is-collision-bottom):not(.is-collision-left) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg);
-    &.error-tooltip {
-      @include arrow-top-color($alertTooltipColor)
-    }
-  }
-
-  // left collisions
-  &.is-collision-left.is-collision-bottom {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg, 15px);
-    &.error-tooltip {
-      @include arrow-bottom-color($alertTooltipColor)
-    }
-  }
-
-  &.is-collision-left:not(.is-collision-bottom) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg, 15px);
-    &.error-tooltip {
-      @include arrow-top-color($alertTooltipColor)
-    }
-  }
-
-  // right collisions
-  &.is-collision-right:not(.is-collision-bottom) {
-    @include spaceTop();
-    @include arrow-top($tooltipBg, calc(100% - 15px));
-    &.error-tooltip {
-      @include arrow-top-color($alertTooltipColor)
-    }
-  }
-
-  &.is-collision-right.is-collision-bottom {
-    @include spaceBottom();
-    @include arrow-bottom($tooltipBg, calc(100% - 15px));
-    &.error-tooltip {
-      @include arrow-bottom-color($alertTooltipColor)
-    }
+  @include tooltip-arrow-state($tooltipBg);
+  &.error-tooltip {
+    @include tooltip-arrow-state($alertTooltipColor);
   }
 }
 
