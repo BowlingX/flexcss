@@ -73,6 +73,11 @@ The first param <code>form</code> may be a selector defined by <code>Document.qu
     fetchOptions: {
         credentials: 'include'
     },
+    // the container for tooltips
+    tooltipContainer: form,
+    tooltipOptions: {
+        containerClass: 'error-tooltip'
+    },
     // if you have a fixed header, either set a number or function here
     scrollToElementDiff: 0
 }

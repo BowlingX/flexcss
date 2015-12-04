@@ -7,19 +7,19 @@ setup();
 
 describe("Construct a Modal Element", () => {
     it("A valid modal object without options needs to be constructed", () => {
-        var modal = new Modal(document.createElement('body'));
+        let modal = new Modal(document.createElement('body'));
         expect(modal instanceof Modal).toBe(true);
     });
 });
 
 describe("Open a Modal Element", () => {
     it("Open a Modal from a widget", () => {
-        var modal = new Modal(document.createElement('body'));
+        let modal = new Modal(document.createElement('body'));
         modal.fromWidget(new Widget(document.createElement('div')));
     });
 
     it("Open a Modal from a widget, no element needs to be an async element", () => {
-        var modal = new Modal(document.createElement('body'));
+        let modal = new Modal(document.createElement('body'));
         modal.fromWidget(new Widget(document.createElement('div')));
     });
 });
@@ -29,7 +29,7 @@ describe("Expect Events to be correctly fired when open programmatically", () =>
 
     beforeEach(done => {
         const el = document.createElement('div');
-        var modal = new Modal(document.createElement('body'));
+        let modal = new Modal(document.createElement('body'));
         modal.fromWidget(new Widget(el));
 
         el.addEventListener(EVENT_MODAL_OPENED, (e) => {

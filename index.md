@@ -74,7 +74,6 @@ Feel free to drop me [some comments](#disqus_thread).
     (function(window){
         document.addEventListener('DOMContentLoaded', function () {
             // Some async widgets
-            var FlexCss = window.FlexCss.default;
             new FlexCss.Widget('AsyncModal').setAsync(function () {
                 return new Promise(function (s) {
                     setTimeout(function () {

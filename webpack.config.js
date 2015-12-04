@@ -67,11 +67,7 @@ module.exports = {
         ]
     },
     resolve: {
-        // add bower components and main source to resolved
-        root: [
-            path.join(__dirname, 'src/main'),
-            path.join(__dirname, 'assets')
-        ]
+        modulesDirectories: ['src/main', 'assets', 'node_modules']
     },
     entry: {
         'form': ['modules/Form'],
@@ -91,9 +87,6 @@ module.exports = {
     },
     plugins: [
         new webpack.EnvironmentPlugin(['NODE_ENV']),
-        new webpack.ResolverPlugin(
-            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-        ),
         new ExtractTextPlugin(isProduction ? 'css/[name].min.css' : 'css/[name].css')
     ]
 };

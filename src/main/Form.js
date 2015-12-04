@@ -602,7 +602,7 @@ class Form extends DestroyableWidget {
      */
     static _shouldNotValidateField(field) {
         var target = Form._findErrorTarget(field);
-        return target instanceof HTMLFieldSetElement ||
+        return target instanceof HTMLFieldSetElement || field.validity === undefined ||
             (target.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(target));
     }
 

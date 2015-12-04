@@ -34,7 +34,7 @@ module.exports = {
                     path.resolve(__dirname, "src/test")
                 ],
                 test: /\.jsx?$/,
-                loader: 'babel-loader?presets[]=es2015'
+                loader: 'babel-loader'
             }
         ],
         preLoaders: [
@@ -54,13 +54,8 @@ module.exports = {
         }]
     },
     resolve: {
-        root: [path.join(__dirname, "bower_components"),
-            path.join(__dirname, 'src/main'),
-            path.join(__dirname, 'src/test_helpers')]
+        modulesDirectories: ['src/main/js', 'src/main', 'node_modules', 'src/test_helpers']
     },
     plugins: [
-        new webpack.ResolverPlugin(
-            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-        )
     ]
 };

@@ -6,7 +6,7 @@ setup();
 
 describe("Construct a Dropdown", () => {
     it("a valid dropdown object needs to be constructed", () => {
-        var dropdown = new Dropdown(document.body, document.createElement('Darkener'));
+        let dropdown = new Dropdown(document.body, document.createElement('Darkener'));
         expect(dropdown instanceof Dropdown).toBe(true);
     });
 });
