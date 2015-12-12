@@ -32,10 +32,9 @@
 
 /* global Image, TouchEvent*/
 
-import Modal from 'Modal';
-import {EVENT_MODAL_CLOSED} from 'Modal';
-import Settings from 'util/Settings';
-import Widget from 'Widget';
+import Modal, {EVENT_MODAL_CLOSED} from './Modal';
+import Settings from './util/Settings';
+import Widget from './Widget';
 
 const ATTR_MAX_WIDTH = 'data-original-width';
 const ATTR_MAX_HEIGHT = 'data-original-height';

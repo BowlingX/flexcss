@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-import DestroyableWidget from 'DestroyableWidget';
+import DestroyableWidget from './DestroyableWidget';
 
 class Showcase extends DestroyableWidget {
 

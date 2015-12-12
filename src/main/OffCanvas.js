@@ -30,8 +30,8 @@
 
 'use strict';
 
-import Settings from 'util/Settings';
-import Util from 'util/Util';
+import Settings from './util/Settings';
+import Util from './util/Util';
 
 /**
  * @type {string}

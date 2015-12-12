@@ -32,12 +32,12 @@
 
 'use strict';
 
-import Tooltip from 'Tooltip';
+import Tooltip from './Tooltip';
 import 'isomorphic-fetch';
-import Event from 'util/Event';
-import Util from 'util/Util';
-import Settings from 'util/Settings';
-import DestroyableWidget from 'DestroyableWidget';
+import Event from './util/Event';
+import Util from './util/Util';
+import Settings from './util/Settings';
+import DestroyableWidget from './DestroyableWidget';
 
 const LOADING_CLASS = 'loading';
 const DATA_ELEMENT_INVALID = 'data-flexcss-invalid';

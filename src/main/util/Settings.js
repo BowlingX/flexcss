@@ -23,7 +23,7 @@
  */
 'use strict';
 
-import Util from 'util/Util';
+import Util from './Util';
 
 // we attach global settings to global once because settings might be shared a lot of times trough the application
 // Maybe find a better way to handle that scenario

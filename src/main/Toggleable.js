@@ -30,10 +30,10 @@
 
 'use strict';
 
-import Settings from 'util/Settings';
-import Widget from 'Widget';
-import Util from 'util/Util';
-import Event from 'util/Event';
+import Settings from './util/Settings';
+import Widget from './Widget';
+import Util from './util/Util';
+import Event from './util/Event';
 
 /**
  * Event that is fired when a tab is closed

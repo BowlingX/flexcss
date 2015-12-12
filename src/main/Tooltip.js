@@ -30,9 +30,9 @@
 
 'use strict';
 
-import Util from 'util/Util';
-import DestroyableWidget from 'DestroyableWidget';
-import Settings from 'util/Settings';
+import Util from './util/Util';
+import DestroyableWidget from './DestroyableWidget';
+import Settings from './util/Settings';
 
 /**
  * @type {string}

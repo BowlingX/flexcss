@@ -33,10 +33,10 @@
 
 /*global KeyboardEvent*/
 
-import Settings from 'util/Settings';
-import Event from 'util/Event';
-import Util from 'util/Util';
-import Widget from 'Widget';
+import Settings from './util/Settings';
+import Event from './util/Event';
+import Util from './util/Util';
+import Widget from './Widget';
 
 const HTML_ELEMENT = global.document.documentElement;
 const KEY_ESC = 27;

@@ -30,10 +30,10 @@
 
 'use strict';
 
-import Util from 'util/Util';
-import Settings from 'util/Settings';
-import Event from 'util/Event';
-import Widget from 'Widget';
+import Util from './util/Util';
+import Settings from './util/Settings';
+import Event from './util/Event';
+import Widget from './Widget';
 
 /**
  * @type {string}
