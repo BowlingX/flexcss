@@ -1,3 +1,5 @@
+/* global CustomEvent */
+
 /*
  * The MIT License (MIT)
  *
@@ -21,30 +23,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/*global CustomEvent*/
-
-'use strict';
 
 // polyfill for custom events to make thinks work in IE
 // The needed polyfill is so small that I embedded it here
-void function () {
+(function poly() {
     if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
-        var CustomEvent;
-        CustomEvent = function (event, params) {
-            var evt;
-            params = params || {
+        const CustomEvent = function CustomEvent(event, params) {
+            let evt;
+            const thisParams = params ||
+                {
                     bubbles: false,
                     cancelable: false,
                     detail: undefined
                 };
             evt = document.createEvent("CustomEvent");
-            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+            evt.initCustomEvent(event, thisParams.bubbles, thisParams.cancelable, thisParams.detail);
             return evt;
         };
         CustomEvent.prototype = global.Event.prototype;
         global.CustomEvent = CustomEvent;
     }
-}();
+})();
 /**
  * Simpler Event dispatching
  */
@@ -55,7 +54,6 @@ class EventHandler {
      * @param {String} name
      */
     constructor(target, name) {
-
         this.target = target;
         this.defaultOptions = {
             bubbles: true,
@@ -100,10 +98,10 @@ class EventHandler {
     }
 
     /**
-     * @returns {Window.CustomEvent}
+     * @returns {CustomEvent}
      */
     fire() {
-        var e = new CustomEvent(this.name, this.defaultOptions);
+        const e = new CustomEvent(this.name, this.defaultOptions);
         if (this.target) {
             this.target.dispatchEvent(e);
         }
@@ -127,7 +125,7 @@ class Event {
      * @param {HTMLElement} target
      * @param {String} name
      * @param {Object} [options]
-     * @returns {Window.CustomEvent}
+     * @returns {CustomEvent}
      */
     static dispatchAndFire(target, name, options) {
         return new EventHandler(target, name).withOptions(options).fire();

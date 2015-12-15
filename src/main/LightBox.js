@@ -32,7 +32,7 @@
 
 /* global Image, TouchEvent*/
 
-import Modal, {EVENT_MODAL_CLOSED} from './Modal';
+import Modal, { EVENT_MODAL_CLOSED } from './Modal';
 import Settings from './util/Settings';
 import Widget from './Widget';
 
@@ -64,8 +64,7 @@ class LightBox {
      * @param [options]
      */
     constructor(DelegateContainer, AttributeSelector, ModalAppend, options) {
-
-        var thisDelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
+        const thisDelegateContainer = DelegateContainer instanceof HTMLElement ? DelegateContainer :
             document.getElementById(DelegateContainer);
 
         this._modalAppend = ModalAppend || DelegateContainer;
@@ -139,15 +138,15 @@ class LightBox {
             // set if modal should be closed after last image
             closeOnLast: true,
             // called when next image is requested (either by keyboard or click), return false to abort
-            onNext: function () {
+            onNext: () => {
                 return true;
             },
-            onClose: function () {
+            onClose: () => {
             },
             getNext: null,
             getPrev: null,
             // called when underlying target changed
-            onSwitchImage: function () {
+            onSwitchImage: () => {
             }
         };
 
@@ -194,9 +193,11 @@ class LightBox {
      */
     registerEvents(onOpen) {
         this._delegateContainer.addEventListener(Settings.getTabEvent(), (e) => {
-            let target = e.target, parent = target.parentNode,
-                validTarget = target.hasAttribute(this._attributeSelector),
-                parentIsValid = parent && parent.hasAttribute(this._attributeSelector);
+            let target = e.target;
+            const parent = target.parentNode;
+            let validTarget = target.hasAttribute(this._attributeSelector);
+            const parentIsValid = parent && parent.hasAttribute(this._attributeSelector);
+
             if (!validTarget && parentIsValid) {
                 validTarget = true;
                 target = parent;
@@ -227,8 +228,8 @@ class LightBox {
      * @private
      */
     static _setupMaxWidthHeight(target, img, loadedImage) {
-        const nextMaxWidth = target.getAttribute(ATTR_MAX_WIDTH),
-            nextMaxHeight = target.getAttribute(ATTR_MAX_HEIGHT);
+        const nextMaxWidth = target.getAttribute(ATTR_MAX_WIDTH);
+        const nextMaxHeight = target.getAttribute(ATTR_MAX_HEIGHT);
         if (nextMaxWidth && nextMaxHeight) {
             img.style.maxWidth = nextMaxWidth + "px";
             img.style.maxHeight = nextMaxHeight + "px";
@@ -269,8 +270,11 @@ class LightBox {
     }
 
     _setupPrevNextStates() {
-        const target = this.target, hasPrev = this.getPrev(target), hasNext = this.getNext(target),
-            hasPrevClass = CLS_HAS_PREV, hasNextClass = CLS_HAS_NEXT;
+        const target = this.target;
+        const hasPrev = this.getPrev(target);
+        const hasNext = this.getNext(target);
+        const hasPrevClass = CLS_HAS_PREV;
+        const hasNextClass = CLS_HAS_NEXT;
         // because IE does not support the second toggle parameter, we need to do this manually
         if (hasPrev) {
             this._imageContainer.classList.add(hasPrevClass);
@@ -290,9 +294,9 @@ class LightBox {
      */
     _calculateContainer(img) {
         if (Settings.isIE()) {
-            setTimeout(function () {
+            setTimeout(() => {
                 this._imageContainer.style.height = img.offsetHeight + 'px';
-            }.bind(this), 0);
+            }, 0);
         }
     }
 
@@ -302,17 +306,18 @@ class LightBox {
      * @returns {*}
      */
     switchImage(next) {
-        const self = this, img = this.img;
+        const self = this;
+        const img = this.img;
         this._isLoading = true;
-        self._nextFuture = new Promise(((resolve, reject) => {
+        self._nextFuture = new Promise((resolve, reject) => {
             // notify observers about image switching
             self.options.onSwitchImage.apply(self, [self._nextFuture]);
             if (next) {
-                var nextThumb = next.hasAttribute(ATTR_NO_THUMBNAIL) ? next : (next.children[0] || next),
-                    nextHighRes = next.getAttribute(ATTR_DATA_HREF) ||
-                        next.getAttribute(ATTR_HREF),
-                    nextSource = nextThumb.getAttribute(ATTR_SRC) || nextThumb.src || nextHighRes,
-                    nextImgObject = new Image();
+                const nextThumb = next.hasAttribute(ATTR_NO_THUMBNAIL) ? next : (next.children[0] || next);
+                const nextHighRes = next.getAttribute(ATTR_DATA_HREF) ||
+                        next.getAttribute(ATTR_HREF);
+                const nextSource = nextThumb.getAttribute(ATTR_SRC) || nextThumb.src || nextHighRes;
+                const nextImgObject = new Image();
 
                 if (!nextSource) {
                     reject(next);
@@ -322,7 +327,7 @@ class LightBox {
                 this.target = next;
                 nextImgObject.src = nextSource;
                 self._imageContainer.classList.add(CLS_LOADING);
-                nextImgObject.addEventListener('load', function () {
+                nextImgObject.addEventListener('load', () => {
                     img.src = nextSource;
                     self._imageContainer.style.backgroundImage = 'url(' + nextSource + ')';
                     LightBox._setupMaxWidthHeight(next, img, nextImgObject);
@@ -332,11 +337,11 @@ class LightBox {
                     self._imageContainer.classList.remove(CLS_LOADING);
                     this._isLoading = false;
                     resolve(nextSource, this.target);
-                }.bind(this));
+                });
             } else {
                 reject(this);
             }
-        }).bind(this));
+        });
         return self._nextFuture;
     }
 
@@ -347,17 +352,16 @@ class LightBox {
      * @param {String} thisImgHighResolution
      */
     highRes(thisThumbnail, thisImgHighResolution) {
-
         if (thisImgHighResolution && thisThumbnail.src !== thisImgHighResolution) {
-            var highImageObj = new Image();
+            const highImageObj = new Image();
             highImageObj.src = thisImgHighResolution;
-            highImageObj.addEventListener('load', function () {
+            highImageObj.addEventListener('load', () => {
                 // if current image is still available
                 if (this._getSrc(thisThumbnail) === this.img.src) {
                     this.img.src = thisImgHighResolution;
                     this._imageContainer.style.backgroundImage = 'url(' + thisImgHighResolution + ')';
                 }
-            }.bind(this));
+            });
         }
     }
 
@@ -377,7 +381,7 @@ class LightBox {
      * @returns {$.Deferred|*}
      */
     open(target) {
-        var self = this;
+        const self = this;
 
         if (!target) {
             return false;
@@ -387,9 +391,9 @@ class LightBox {
 
         // if lightBox is open, we just switch to the new target image
         if (this._isOpen && target) {
-            return this.switchImage(target).then(function () {
+            return this.switchImage(target).then(() => {
                 return this;
-            }.bind(this));
+            });
         }
 
         this._isOpen = true;
@@ -398,14 +402,14 @@ class LightBox {
          * Setup Widget for modal
          * @type {Widget}
          */
-        this._widget = new Widget().setAsync(function () {
+        this._widget = new Widget().setAsync(() => {
             // thumbnail is either target itself or expected to be first childNode
-            var thumbnail = target.hasAttribute(ATTR_NO_THUMBNAIL) ? target : (target.children[0] || target);
+            const thumbnail = target.hasAttribute(ATTR_NO_THUMBNAIL) ? target : (target.children[0] || target);
 
-            var imgHighResolution = target.getAttribute(ATTR_DATA_HREF) || target.getAttribute(ATTR_HREF),
-                imgSrc = this._getSrc(thumbnail) || imgHighResolution;
+            const imgHighResolution = target.getAttribute(ATTR_DATA_HREF) || target.getAttribute(ATTR_HREF);
+            const imgSrc = this._getSrc(thumbnail) || imgHighResolution;
 
-            var imageObj = new Image();
+            const imageObj = new Image();
             imageObj.src = imgSrc;
             this._imageContainer = document.createElement('div');
             this._modalContainerDiv = document.createElement('div');
@@ -421,10 +425,10 @@ class LightBox {
             this._modalContainerDiv.appendChild(this._closerContainerDiv);
             this._contentContainer.className = 'content-container';
             this._isLoading = true;
-            this._future = new Promise(((resolve) => {
-                imageObj.addEventListener('load', function () {
+            this._future = new Promise((resolve) => {
+                imageObj.addEventListener('load', () => {
                     this._imageContainer.className = 'image-container';
-                    var img = document.createElement('img');
+                    const img = document.createElement('img');
                     // current image
                     this.img = img;
 
@@ -437,8 +441,8 @@ class LightBox {
                     this._isLoading = false;
 
                     if (Settings.isIE()) {
-                        self._resizeEvent = global.addEventListener('resize', function () {
-                            setTimeout(function () {
+                        self._resizeEvent = global.addEventListener('resize', () => {
+                            setTimeout(() => {
                                 self._imageContainer.style.height = img.offsetHeight + 'px';
                             }, 0);
                         });
@@ -447,49 +451,52 @@ class LightBox {
                     if (self.options.registerPrevNextEvents) {
                         self._setupPrevNextStates();
                         // prev or next on touch/click
-                        self._imageContainer.addEventListener(Settings.getTabEvent(), function (e) {
+                        self._imageContainer.addEventListener(Settings.getTabEvent(), (e) => {
                             if (self.isLoading()) {
                                 return;
                             }
                             e.preventDefault();
 
-                            var ev = e;
-                            var pageX = global.TouchEvent && ev instanceof TouchEvent ?
+                            const ev = e;
+                            const pageX = global.TouchEvent && ev instanceof TouchEvent ?
                                 ev.changedTouches[0].pageX : ev.pageX;
-                            var rect = self._imageContainer.getBoundingClientRect(), imgX = rect.left,
-                                wrapperWidth = rect.width,
-                                posX = pageX - imgX;
+                            const rect = self._imageContainer.getBoundingClientRect();
+                            const imgX = rect.left;
+                            const wrapperWidth = rect.width;
+                            const posX = pageX - imgX;
 
-                            self.switchImageByDirection(wrapperWidth / 2 > posX).catch(function () {
+                            self.switchImageByDirection(wrapperWidth / 2 > posX).catch(() => {
                                 self._runOptionalClose();
                             });
                         });
 
                         // register keyboard events
-                        self._keyboardNextEvent = function (e) {
+                        self._keyboardNextEvent = (e) => {
                             if (e.keyCode === KEY_NEXT || e.keyCode === KEY_PREV) {
                                 if (self.isLoading()) {
                                     return;
                                 }
-                                self.switchImageByDirection(e.keyCode === KEY_PREV).catch(function () {
+                                self.switchImageByDirection(e.keyCode === KEY_PREV).catch(() => {
                                     self._runOptionalClose();
                                 });
                             }
                         };
                         global.addEventListener('keydown', self._keyboardNextEvent);
                     } else {
-                        self._imageContainer.addEventListener(Settings.getTabEvent(), function () {
+                        self._imageContainer.addEventListener(Settings.getTabEvent(), () => {
                             self._runOptionalClose();
                         });
                     }
 
                     self.highRes(thumbnail, imgHighResolution);
-                }.bind(this));
-            }).bind(this));
-            this._future.then(function () {
+                });
+            });
+
+            this._future.then(() => {
                 self._calculateContainer(this.img);
-            }.bind(this));
-            self._modalContainerDiv.addEventListener(EVENT_MODAL_CLOSED, function () {
+            });
+
+            self._modalContainerDiv.addEventListener(EVENT_MODAL_CLOSED, () => {
                 // cleanup:
                 this._modalContainerDiv.parentNode.removeChild(this._modalContainerDiv);
                 this.options.onClose.apply(self);
@@ -502,24 +509,23 @@ class LightBox {
                 if (this._resizeEvent) {
                     global.removeEventListener('resize', self._resizeEvent);
                 }
-            }.bind(this));
+            });
 
             return this._future;
-        }.bind(this));
+        });
 
         this._nextFuture = this._future;
 
         if (self._widget) {
             this.modal = new Modal(this._modalAppend);
             // make sure we close stack before
-            return this.modal.close().fromWidget(self._widget).then(function () {
-                return self._future.then(function () {
+            return this.modal.close().fromWidget(self._widget).then(() => {
+                return self._future.then(() => {
                     return self;
                 });
             });
-        } else {
-            return false;
         }
+        return false;
     }
 
 }

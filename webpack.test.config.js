@@ -34,7 +34,11 @@ module.exports = {
                     path.resolve(__dirname, "src/test")
                 ],
                 test: /\.jsx?$/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015'],
+                    plugins: ['transform-runtime']
+                }
             }
         ],
         preLoaders: [

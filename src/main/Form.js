@@ -240,7 +240,7 @@ class Form extends DestroyableWidget {
         return serverCall.then((r) => {
             (self._remoteValidationFunction || Form.globalRemoteValidationFunction).apply(self, [r]);
 
-            Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail({response: r}).fire();
+            Event.dispatch(thisForm, EVENT_FORM_AJAX_COMPLETED).withOriginal(e).withDetail({ response: r }).fire();
             // always remove error class
             self._formStopLoading();
         });
@@ -252,11 +252,11 @@ class Form extends DestroyableWidget {
      */
     serialize() {
         var selectors = [
-            'input[name]:not([type="radio"]):enabled',
-            'input[type="radio"][name]:checked',
-            'select[name]:enabled',
-            'textarea[name]:enabled'
-        ], inputs = this.form.querySelectorAll(selectors.join(',')), result = {};
+                'input[name]:not([type="radio"]):enabled',
+                'input[type="radio"][name]:checked',
+                'select[name]:enabled',
+                'textarea[name]:enabled'
+            ], inputs = this.form.querySelectorAll(selectors.join(',')), result = {};
 
         Array.prototype.forEach.call(inputs, function (input) {
             var exists = result[input.name], value = input.value;

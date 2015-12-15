@@ -6,7 +6,7 @@ import Settings from '../util/Settings';
 
 // default export as component object
 export default {
-    Form: Form,
-    Settings: Settings,
-    Tooltip: Tooltip
+    Form,
+    Settings,
+    Tooltip
 };

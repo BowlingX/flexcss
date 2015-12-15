@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 import Settings from './util/Settings';
 import Widget from './Widget';
 import Util from './util/Util';

@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 import Util from './util/Util';
 import DestroyableWidget from './DestroyableWidget';
 import Settings from './util/Settings';
@@ -77,7 +75,7 @@ class Tooltip extends DestroyableWidget {
             DelegateContainer : doc.getElementById(DelegateContainer);
 
         if (!this.container) {
-            throw 'Could not create Tooltip, DelegateContainer not found';
+            throw new Error('Could not create Tooltip, DelegateContainer not found');
         }
 
         /**
@@ -92,7 +90,7 @@ class Tooltip extends DestroyableWidget {
         this.options = {
             containerClass: '',
             selectorAttribute: 'data-tooltip',
-            collisionContainer:this.container
+            collisionContainer: this.container
         };
 
         Object.assign(this.options, options || {});
@@ -111,7 +109,7 @@ class Tooltip extends DestroyableWidget {
             return;
         }
 
-        if(Settings.isTouchDevice() && target && target.hasAttribute(ATTR_DATA_NO_TOUCH)) {
+        if (Settings.isTouchDevice() && target && target.hasAttribute(ATTR_DATA_NO_TOUCH)) {
             return;
         }
 
@@ -137,13 +135,12 @@ class Tooltip extends DestroyableWidget {
             this.options.collisionContainer, true, true);
 
         tooltipContainer.classList.add(CLASS_NAMES_OPEN);
-
     }
 
     _restoreClassNames(container, target) {
         // allow additional classname per tooltip on target element
-        const classNames = [CLASS_NAMES_TOOLTIP, this.options.containerClass],
-            maybeTargetClass = target.getAttribute(ATTR_DATA_CLASSNAME);
+        const classNames = [CLASS_NAMES_TOOLTIP, this.options.containerClass];
+        const maybeTargetClass = target.getAttribute(ATTR_DATA_CLASSNAME);
         if (maybeTargetClass) {
             classNames.push(maybeTargetClass);
         }
@@ -177,18 +174,19 @@ class Tooltip extends DestroyableWidget {
      * @param {HTMLElement} [target], if not given will remove current open tooltip on this instance
      */
     removeTooltip(target) {
-        if (!target && this.tooltipContainer) {
-            target = this.tooltipContainer.flexTooltipCurrentTarget;
+        let selfTarget = target;
+        if (!selfTarget && this.tooltipContainer) {
+            selfTarget = this.tooltipContainer.flexTooltipCurrentTarget;
         }
         if (this.tooltipContainer) {
-            if (this.tooltipContainer.flexTooltipCurrentTarget !== target) {
+            if (this.tooltipContainer.flexTooltipCurrentTarget !== selfTarget) {
                 return;
             }
             this.tooltipContainer.classList.remove(CLASS_NAMES_OPEN);
             delete this.tooltipContainer.flexTooltipCurrentTarget;
         }
-        if (target && target.oldTitle) {
-            target.setAttribute('title', target.oldTitle);
+        if (selfTarget && selfTarget.oldTitle) {
+            selfTarget.setAttribute('title', selfTarget.oldTitle);
         }
     }
 
@@ -197,13 +195,13 @@ class Tooltip extends DestroyableWidget {
      */
     registerEvents() {
         const self = this;
-        this.addEventListener(this.container, 'mouseover', function (e) {
+        this.addEventListener(this.container, 'mouseover', (e) => {
             if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.createTooltip(e.target, e.target.getAttribute('title'), true);
             }
         });
 
-        this.addEventListener(this.container, 'mouseout', function (e) {
+        this.addEventListener(this.container, 'mouseout', (e) => {
             if (e.target.hasAttribute(self.options.selectorAttribute)) {
                 self.removeTooltip(e.target);
             }

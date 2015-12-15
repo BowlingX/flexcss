@@ -85,8 +85,7 @@ export const EVENT_DROPDOWN_CLOSED = 'flexcss.dropdown.closed';
  */
 class Dropdown {
     constructor(DelegateContainer, Darkener) {
-
-        var doc = global.document;
+        const doc = global.document;
 
         /**
          * Container Element
@@ -105,9 +104,8 @@ class Dropdown {
         this.destroyOnClose = false;
 
         if (!this.darkener || !this.container) {
-            throw 'required elements not found (darkener and container element)';
+            throw new Error('required elements not found (darkener and container element)');
         }
-
     }
 
     /**
@@ -117,16 +115,16 @@ class Dropdown {
      * @private
      */
     _delegateFunction(e) {
-        var currentOpen = this.currentOpen,
-            targetHas = e.target.hasAttribute(ATTR_NAME),
-            parentHas = e.target.parentNode ?
-                e.target.parentNode.hasAttribute(ATTR_NAME) : false,
-            target = targetHas ? e.target : e.target.parentNode,
-            targetIsCurrent = target === this.currentTarget;
+        const currentOpen = this.currentOpen;
+        const targetHas = e.target.hasAttribute(ATTR_NAME);
+        const parentHas = e.target.parentNode ?
+            e.target.parentNode.hasAttribute(ATTR_NAME) : false;
+        const target = targetHas ? e.target : e.target.parentNode;
+        const targetIsCurrent = target === this.currentTarget;
 
         if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
             this.close();
-            if(targetIsCurrent) {
+            if (targetIsCurrent) {
                 e.preventDefault();
             }
             return targetIsCurrent ? false : this._delegateFunction(e);
@@ -189,8 +187,8 @@ class Dropdown {
      * @param show
      */
     toggleDarkenerToggler(instance, show) {
-        var cls = 'toggle-' + (instance.id || CLS_DARKENER_DROPDOWN),
-            classList = this.container.classList;
+        const cls = 'toggle-' + (instance.id || CLS_DARKENER_DROPDOWN);
+        const classList = this.container.classList;
         if (show) {
             classList.add(cls);
         } else {
@@ -203,16 +201,18 @@ class Dropdown {
      * @return {Boolean|Promise}
      */
     close() {
-        var currentOpen = this.currentOpen;
+        const currentOpen = this.currentOpen;
         if (!currentOpen) {
             return false;
         }
-        var future, darkenerInstance = currentOpen.flexDarkenerInstance || this.darkener, thisCurrentOpen = currentOpen;
+        let future;
+        const darkenerInstance = currentOpen.flexDarkenerInstance || this.darkener;
+        const thisCurrentOpen = currentOpen;
 
         future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function () {
-                    setTimeout(function () {
+                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, () => {
+                    setTimeout(() => {
                         Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
                         // if a new dropdown has been opened in the meantime, do not remove darkener
                         if (this.currentOpen !== null) {
@@ -221,8 +221,8 @@ class Dropdown {
                         this.toggleDarkenerToggler(darkenerInstance, false);
                         this.container.classList.remove(Settings.get().canvasToggledClass);
                         resolve(true);
-                    }.bind(this), Settings.get().darkenerFadeDelay);
-                }.bind(this));
+                    }, Settings.get().darkenerFadeDelay);
+                });
             } else {
                 resolve(true);
                 Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
@@ -254,62 +254,62 @@ class Dropdown {
      * @return {FlexCss.Dropdown}
      */
     createDropdown(target, thisWidget) {
-        var doc = global.document;
+        const doc = global.document;
 
         if (!target) {
-            throw 'Dropdown target not found';
+            throw new Error('Dropdown target not found');
         }
 
-        var widget = thisWidget || Widget.findWidget(target), future,
-            data = target.getAttribute(ATTR_NAME), dropdownContainerElement = doc.getElementById(data),
-            async = !dropdownContainerElement && Widget.isWidget(widget) ? widget.getAsync() : false;
+        const widget = thisWidget || Widget.findWidget(target);
+        let future;
+        const data = target.getAttribute(ATTR_NAME);
+        const dropdownContainerElement = doc.getElementById(data);
+        const async = !dropdownContainerElement && Widget.isWidget(widget) ? widget.getAsync() : false;
 
         if (async) {
             target.classList.add(STATE_LOADING);
             target.isLoading = true;
-            future = async.then(function (r) {
+            future = async.then((r) => {
                 if (r instanceof HTMLElement) {
                     if (r.id) {
                         target.setAttribute(ATTR_NAME, r.id);
                     }
                     return r;
-                } else {
-                    // Create container Element:
-                    var element = doc.createElement('div');
-                    element.className = CLS_DROPDOWN;
-                    element.innerHTML = r;
-                    element.id = Util.guid();
-                    // Cache target for later use:
-                    target.setAttribute(ATTR_NAME, element.id);
-                    this.container.appendChild(element);
-                    return element;
                 }
-            }).then(function (r) {
+                // Create container Element:
+                const element = doc.createElement('div');
+                element.className = CLS_DROPDOWN;
+                element.innerHTML = r;
+                element.id = Util.guid();
+                // Cache target for later use:
+                target.setAttribute(ATTR_NAME, element.id);
+                this.container.appendChild(element);
+                return element;
+            }).then((r) => {
                 target.isLoading = false;
                 target.classList.remove(STATE_LOADING);
                 return r;
             });
         } else {
             if (!dropdownContainerElement) {
-                throw 'Could not found Dropdown container with ID "' + data + '"';
+                throw new Error('Could not found Dropdown container with ID "' + data + '"');
             }
             future = new Promise((r) => {
                 r(dropdownContainerElement);
             });
         }
 
-        future.then(function (dropdownContent) {
+        future.then((dropdownContent) => {
             if (this.currentOpen) {
                 this.close();
             }
             // Skip one frame to show animation
             target.dropdownContent = dropdownContent;
-            var isAbsolute = global.getComputedStyle(dropdownContent).position === 'absolute';
-
+            const isAbsolute = global.getComputedStyle(dropdownContent).position === 'absolute';
             dropdownContent.hfWidgetInstance = this;
 
             if (!target.flexCollisionContainer) {
-                var collisionC = target.getAttribute(ATTR_CC);
+                const collisionC = target.getAttribute(ATTR_CC);
                 target.flexCollisionContainer = collisionC ?
                 doc.getElementById(collisionC) || document.documentElement : document.documentElement;
             }
@@ -321,26 +321,25 @@ class Dropdown {
             }
             if (isAbsolute) {
                 // Check collision:
-                var selfTarget = target.getAttribute(ATTR_DATA_TARGET);
+                let selfTarget = target.getAttribute(ATTR_DATA_TARGET);
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
                 this.container.classList.add(Settings.get().canvasToggledClass);
                 // optionally get custom darkener container for target
-                var d = target.getAttribute(ATTR_DARKENER);
+                const d = target.getAttribute(ATTR_DARKENER);
                 if (d) {
                     dropdownContent.flexDarkenerInstance = doc.getElementById(d);
                     (dropdownContent.flexDarkenerInstance || this.darkener).classList.toggle(DARKENER_INIT);
                 } else {
                     this.darkener.classList.toggle(DARKENER_INIT);
                 }
-
                 this.toggleDarkenerToggler(dropdownContent.flexDarkenerInstance || this.darkener, true);
 
                 dropdownContent.style.left = '0';
                 dropdownContent.style.top = 'auto';
             }
-        }.bind(this));
+        });
     }
 
 }

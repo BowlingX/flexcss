@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 /**
  * A Widget provides async content on a specific target (e.g. a modal link)
  */
@@ -40,7 +38,6 @@ class Widget {
      * @param [element], optional define the content of widget
      */
     constructor(element) {
-
         /**
          *
          * @type {Promise}
@@ -59,13 +56,13 @@ class Widget {
             this.element = element instanceof HTMLElement ? element : global.document.getElementById(element);
             if (this.element) {
                 this.element.hfWidgetInstance = this;
-                this.setAsync((() => {
-                    return new Promise(((s) => {
+                this.setAsync(() => {
+                    return new Promise((s) => {
                         s(this.element);
-                    }));
-                }));
+                    });
+                });
             } else {
-                throw 'Could not found element with ID: ' + element;
+                throw new Error(`Could not found element with ID: ${element}`);
             }
         }
         /**
@@ -113,7 +110,6 @@ class Widget {
      * @returns {boolean}
      */
     destroy() {
-
         if (this.finalContent && this.finalContent.parentNode) {
             this.finalContent.parentNode.removeChild(this.finalContent);
             return true;

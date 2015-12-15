@@ -53,9 +53,10 @@ class DestroyableWidget {
      */
     addEventListener(element, name, listener, capture) {
         this.listeners.push({
-            element: element,
+            element,
             args: [name, listener, capture]
         });
+
         element.addEventListener(name, listener, capture);
         return listener;
     }

@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  */
 
-'use strict';
-
 const PFX = ["webkit", "moz", "MS", "o", ""];
 
 const COL_LEFT_CLASS = 'is-collision-left';
@@ -44,15 +42,16 @@ class Util {
      * @param callback
      */
     static prefixedAnimateEvent(element, type, callback) {
-        const thisFunction = function (e) {
+        const thisFunction = function thisFunction(e) {
             callback.apply(element, [e, thisFunction]);
         };
 
-        for (var p = 0; p < PFX.length; p++) {
+        for (let p = 0; p < PFX.length; p++) {
+            let thisType = type;
             if (!PFX[p]) {
-                type = type.toLowerCase();
+                thisType = type.toLowerCase();
             }
-            var name = PFX[p] + type;
+            const name = PFX[p] + thisType;
             element.addEventListener(name, thisFunction, true);
         }
     }
@@ -66,7 +65,7 @@ class Util {
         let t;
         const el = document.createElement('fake');
 
-        var transitions = {
+        const transitions = {
             'transition': 'transitionend',
             'OTransition': 'oTransitionEnd',
             'MozTransition': 'transitionend',
@@ -139,8 +138,9 @@ class Util {
      * @returns {number}
      */
     static getScrollBarWidth() {
+        const doc = global.document;
+        const inner = doc.createElement('p');
 
-        const doc = global.document, inner = doc.createElement('p');
         inner.style.width = "100%";
         inner.style.height = "200px";
 
@@ -199,7 +199,7 @@ class Util {
      * @returns String
      */
     static dashToCamelCase(str) {
-        return str.replace(/-([a-z])/g, function (g) {
+        return str.replace(/-([a-z])/g, (g) => {
             return g[1].toUpperCase();
         });
     }
@@ -225,17 +225,17 @@ class Util {
         }
         const attrs = element.attributes;
         for (let i = 0; i < attrs.length; i++) {
-            let attr = attrs[i];
+            const attr = attrs[i];
             if (attr) {
-                let s = Util.dashToCamelCase(attr.nodeName.replace('data-', '')),
-                    val = attr.nodeValue;
+                const s = Util.dashToCamelCase(attr.nodeName.replace('data-', ''));
+                const val = attr.nodeValue;
                 if (base.hasOwnProperty(s)) {
                     // skip functions
                     if (typeof base[s] === 'function') {
                         continue;
                     }
                     if (typeof base[s] === 'boolean') {
-                        base[s] = parseInt(val || 1) === 1;
+                        base[s] = parseInt(val || 1, 10) === 1;
                     } else {
                         base[s] = val;
                     }
@@ -261,50 +261,53 @@ class Util {
      * @returns {HTMLElement}
      */
     static setupPositionNearby(target, elementToPosition, collisionContainer, centerHorizontal, positionTop) {
-
         // determine relative offsets
-        let amountTop = 0, amountLeft = 0;
-        Util.parentsUntil(target.parentNode, function (el) {
+        let amountTop = 0;
+        let amountLeft = 0;
+        Util.parentsUntil(target.parentNode, (el) => {
             if (!(el instanceof HTMLElement)) {
                 return false;
             }
-            var style = window.getComputedStyle(el);
+            const style = window.getComputedStyle(el);
             if (Util.isPartOfNode(elementToPosition, el)) {
                 if (style && style.position === 'relative') {
                     amountTop += el.offsetTop || 0;
                     amountLeft += el.offsetLeft || 0;
                 }
                 return false;
-            } else {
-                return true;
             }
+            return true;
         });
 
-        const targetPosition = target instanceof HTMLElement ? target.getBoundingClientRect() : target,
-            elementRect = elementToPosition.getBoundingClientRect(),
-            colRect = collisionContainer.getBoundingClientRect(),
-            targetTop = targetPosition.top - amountTop, targetRight = targetPosition.right,
-            isCollisionTop = (targetTop - elementRect.height) <= 0,
-            isCollisionBottom = window.innerHeight < (targetTop + amountTop + targetPosition.height + elementRect.height),
-            isCollisionLeft = targetRight < elementRect.width, targetLeft = targetPosition.left,
-            isCollisionRight = (targetLeft + elementRect.width) > colRect.width,
-            classList = elementToPosition.classList;
+        const targetPosition = target instanceof HTMLElement ? target.getBoundingClientRect() : target;
+        const elementRect = elementToPosition.getBoundingClientRect();
+        const colRect = collisionContainer.getBoundingClientRect();
+        const targetTop = targetPosition.top - amountTop;
+        const targetRight = targetPosition.right;
+        const isCollisionTop = (targetTop - elementRect.height) <= 0;
+        const isCollisionBottom =
+            window.innerHeight < (targetTop + amountTop + targetPosition.height + elementRect.height);
+        const isCollisionLeft = targetRight < elementRect.width;
+        const targetLeft = targetPosition.left;
+        const isCollisionRight = (targetLeft + elementRect.width) > colRect.width;
+        const classList = elementToPosition.classList;
 
         classList.remove(COL_RIGHT_CLASS);
         classList.remove(COL_LEFT_CLASS);
         classList.remove(COL_BOTTOM_CLASS);
 
-        let calcTop, calcLeft;
+        let calcTop;
+        let calcLeft;
         if (isCollisionLeft && !isCollisionRight) {
             // put element to left if collision with left
             calcLeft = (targetPosition.left - colRect.left - amountLeft) + 'px';
             classList.add(COL_LEFT_CLASS);
         } else {
             // maybe center if no collision with either side
-            var rightPosition = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px',
-                leftCentered = ((targetLeft + targetPosition.width / 2) -
-                    (elementRect.width / 2) || 0) - colRect.left,
-                collisionCentered = (leftCentered + elementRect.width) > colRect.width;
+            const rightPosition = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px';
+            const leftCentered = ((targetLeft + targetPosition.width / 2) -
+                    (elementRect.width / 2) || 0) - colRect.left;
+            const collisionCentered = (leftCentered + elementRect.width) > colRect.width;
             if (centerHorizontal && !collisionCentered) {
                 calcLeft = leftCentered + 'px';
             } else {
@@ -333,15 +336,16 @@ class Util {
      */
     static scrollToElement(el, optionalOffset) {
         el.scrollIntoView();
+        let thisOffset = optionalOffset;
         // optionally use a additional scrollDif
-        if (optionalOffset) {
-            if (typeof optionalOffset === 'function') {
-                optionalOffset = optionalOffset();
+        if (thisOffset) {
+            if (typeof thisOffset === 'function') {
+                thisOffset = optionalOffset();
             }
-            if (optionalOffset > 0) {
+            if (thisOffset > 0) {
                 const scrolledY = window.scrollY || window.pageYOffset;
                 if (scrolledY) {
-                    window.scroll(0, scrolledY - optionalOffset);
+                    window.scroll(0, scrolledY - thisOffset);
                 }
             }
         }

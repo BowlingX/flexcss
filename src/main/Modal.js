@@ -91,12 +91,12 @@ export const EVENT_MODAL_ASYNC_TARGET_LOADED = 'flexcss.modal.asyncTargetLoaded'
  */
 class Modal {
     constructor(DelegateContainer, options) {
-        var doc = global.document, container = DelegateContainer instanceof HTMLElement ?
+        const doc = global.document, container = DelegateContainer instanceof HTMLElement ?
             DelegateContainer : doc.getElementById(DelegateContainer);
 
         // Instance vars:
         if (!container) {
-            throw 'Could not found container element by given ID/Element: ' + DelegateContainer;
+            throw new Error(`Could not found container element by given ID/Element: ${DelegateContainer}`);
         }
 
         this.currentOpen = null;
@@ -156,7 +156,7 @@ class Modal {
                             document.body.scrollTop = self.currentScrollTop;
                         }
                         Settings.get().scrollbarUpdateNodes.forEach(function (node) {
-                            if(node instanceof Array) {
+                            if (node instanceof Array) {
                                 const [whatNode, property] = node;
                                 whatNode.style[property] = '';
                             } else {
@@ -337,7 +337,7 @@ class Modal {
             Settings.get().scrollbarUpdateNodes.map(function (n) {
                 let foundProperty = 'paddingRight';
                 let direction = 1;
-                if(n instanceof Array) {
+                if (n instanceof Array) {
                     const [whatNode, property, d] = n;
                     foundProperty = property;
                     n = whatNode;
@@ -445,7 +445,7 @@ class Modal {
         }
 
         let loader, doc = global.document, toggleLoader = function (show) {
-            if (show) {
+                if (show) {
                 loader = doc.createElement('div');
                 loader.className = CLS_LOADER_CONTAINER;
                 var loaderLoader = doc.createElement('div');
@@ -455,7 +455,7 @@ class Modal {
             } else {
                 loader.parentNode.removeChild(loader);
             }
-        };
+            };
 
         this.handleScrollbar();
 
@@ -591,7 +591,7 @@ class Modal {
                     }
                 });
             });
-            observer.observe(modalContainer, {childList: true});
+            observer.observe(modalContainer, { childList: true });
         } else {
             modalContainer.addEventListener('DOMNodeRemoved', function (e) {
                 if (e.target !== modalContainer && (modalContainer.childNodes.length - 1) === 0) {
