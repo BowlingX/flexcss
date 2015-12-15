@@ -37,6 +37,7 @@
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^2.1.0",
     "eslint-loader": "^1.1.1",
+    "eslint-plugin-react": "^3.10.0",
     "event-stream": "^3.3.2",
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^0.9.1",
