@@ -30,6 +30,7 @@
 
 import Settings from './util/Settings';
 import Util from './util/Util';
+import Event from './util/Event';
 
 /**
  * @type {string}
@@ -58,6 +59,11 @@ const OPEN_CLASS = 'open';
 const HIDE_FACTOR = 3;
 
 /**
+ * @type {string}
+ */
+export const EVENT_TOGGLE = 'flexcss.offcanvas.toggle';
+
+/**
  * A OffCanvas Implementation
  */
 class OffCanvas {
@@ -74,7 +80,7 @@ class OffCanvas {
         const doc = global.document;
         let touched = 0;
         const navigationContainer = NavigationId instanceof HTMLElement ?
-                NavigationId : doc.getElementById(NavigationId);
+            NavigationId : doc.getElementById(NavigationId);
         const darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener);
         const DARKENER_CLASS_TOGGLE = 'toggle-' + darkener.id || 'darkener';
         const DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`;
@@ -108,57 +114,57 @@ class OffCanvas {
         if (!disableTouch) {
             navigationContainer.addEventListener('touchstart', (e) => {
                 requestAnimationFrame(() => {
-                    if (shouldNotTouch()) {
-                        return;
-                    }
-                    touched = e.touches[0].clientX;
-                    const target = navigationContainer;
-                    const style = target.style;
-                    target.mustHide = false;
-                    style.transition = 'transform 0s ease';
-                    style.webkitTransition = '-webkit-transform 0s ease';
-                });
-            });
-            navigationContainer.addEventListener('touchmove', (e) => {
                 if (shouldNotTouch()) {
                     return;
                 }
-                const x = e.touches[0].clientX;
+                touched = e.touches[0].clientX;
                 const target = navigationContainer;
                 const style = target.style;
-                const calc = touched - x;
-                const bounds = target.getBoundingClientRect();
-                const compare = factor > 0 ? calc <= 0 : calc >= 0;
-                if (compare) {
-                    target.mustHide = factor > 0 ? calc * -1 >
-                    bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-                    style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
-                    style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
-                }
+                target.mustHide = false;
+                style.transition = 'transform 0s ease';
+                style.webkitTransition = '-webkit-transform 0s ease';
             });
+        });
+            navigationContainer.addEventListener('touchmove', (e) => {
+                if (shouldNotTouch()) {
+                return;
+            }
+            const x = e.touches[0].clientX;
+            const target = navigationContainer;
+            const style = target.style;
+            const calc = touched - x;
+            const bounds = target.getBoundingClientRect();
+            const compare = factor > 0 ? calc <= 0 : calc >= 0;
+            if (compare) {
+                target.mustHide = factor > 0 ? calc * -1 >
+                bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
+                style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
+                style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
+            }
+        });
             navigationContainer.addEventListener('touchend', () => {
                 requestAnimationFrame(() => {
-                    if (shouldNotTouch()) {
-                        return;
-                    }
-                    const target = navigationContainer;
-                    const style = target.style;
-                    if (target.mustHide) {
-                        const width = target.getBoundingClientRect().width * factor;
-                        style.transition = 'transform .2s ease';
-                        style.webkitTransition = '-webkit-transform .2s ease';
+                if (shouldNotTouch()) {
+                    return;
+                }
+                const target = navigationContainer;
+                const style = target.style;
+                if (target.mustHide) {
+                    const width = target.getBoundingClientRect().width * factor;
+                    style.transition = 'transform .2s ease';
+                    style.webkitTransition = '-webkit-transform .2s ease';
 
-                        style.transform = 'translate3d(' + width + 'px,0,0)';
-                        style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
-                        this._remove(() => {
-                            resetStyles(style);
-                        });
-                        this._removeInstant();
-                    } else {
+                    style.transform = 'translate3d(' + width + 'px,0,0)';
+                    style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
+                    this._remove(() => {
                         resetStyles(style);
-                    }
                 });
+                    this._removeInstant();
+                } else {
+                    resetStyles(style);
+                }
             });
+        });
         }
     }
 
@@ -169,17 +175,18 @@ class OffCanvas {
         Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
             // add timeout because transition event fires a little to early
             setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const body = global.document.body;
-                    OffCanvas.currentOpen = null;
-                    body.classList.remove(TOGGLE_CLASS);
-                    body.classList.remove(this.darkenerClassToggle);
-                    if (callback) {
-                        callback();
-                    }
-                });
-            }, Settings.get().darkenerFadeDelay);
+            requestAnimationFrame(() => {
+                const body = global.document.body;
+            OffCanvas.currentOpen = null;
+            body.classList.remove(TOGGLE_CLASS);
+            body.classList.remove(this.darkenerClassToggle);
+            if (callback) {
+                Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE)
+                callback();
+            }
         });
+        }, Settings.get().darkenerFadeDelay);
+    });
     }
 
     /**
@@ -213,6 +220,11 @@ class OffCanvas {
             bodyClass.add(DARKENER_CLASS_TOGGLE);
             darkenerClass.add(INIT_CLASS);
             navigationControllerClassList.add(OPEN_CLASS);
+
+            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
+                Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE)
+        });
+
         }
     }
 
@@ -224,20 +236,20 @@ class OffCanvas {
         const thisDelegate = delegate || global.document;
         thisDelegate.addEventListener(Settings.getTabEvent(), (e) => {
             if (OffCanvas.currentOpen && OffCanvas.currentOpen !== this) {
-                return;
+            return;
+        }
+        const id = this.navigationContainerId;
+        const validTarget = e.target.getAttribute(ATTR_TARGET) === id;
+        if (!Util.isPartOfNode(e.target, this.navigationContainer)) {
+            if (validTarget || (OffCanvas.currentOpen === this && e.target === this.darkener)) {
+                this._toggle(e);
             }
-            const id = this.navigationContainerId;
-            const validTarget = e.target.getAttribute(ATTR_TARGET) === id;
-            if (!Util.isPartOfNode(e.target, this.navigationContainer)) {
-                if (validTarget || (OffCanvas.currentOpen === this && e.target === this.darkener)) {
-                    this._toggle(e);
-                }
-            } else {
-                if (e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
-                    this._toggle(e);
-                }
+        } else {
+            if (e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
+                this._toggle(e);
             }
-        });
+        }
+    });
     }
 }
 
