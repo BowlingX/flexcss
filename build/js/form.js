@@ -101,7 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
@@ -182,7 +182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * A HTML5 Form Validation replacement
 	 */
 	
-	var Form = (function (_DestroyableWidget) {
+	var Form = function (_DestroyableWidget) {
 	    _inherits(Form, _DestroyableWidget);
 	
 	    /**
@@ -398,7 +398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 	
 	            var fields = field instanceof Array || field instanceof NodeList ? field : [field];
-	            return this._handleValidation(fields, focus, true).then((function (r) {
+	            return this._handleValidation(fields, focus, true).then(function (r) {
 	                if (!r.foundAnyError) {
 	                    // remove tooltips
 	                    if (_this2.tooltips) {
@@ -406,7 +406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 	                return r;
-	            }).bind(this));
+	            }.bind(this));
 	        }
 	
 	        /**
@@ -478,7 +478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_handleLabels',
 	        value: function _handleLabels(fields) {
-	            Object.keys(fields).forEach((function (id) {
+	            Object.keys(fields).forEach(function (id) {
 	                var labels = this.getForm().querySelectorAll('[for="' + id + '"]'),
 	                    invalid = fields[id];
 	                if (labels.length) {
@@ -492,7 +492,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }
 	                    }
 	                }
-	            }).bind(this));
+	            }.bind(this));
 	        }
 	
 	        /**
@@ -730,11 +730,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
 	                if (id) {
 	                    var linkedFields = Array.from(this.getForm().querySelectorAll('[' + ATTR_DATA_CUSTOM_LABEL + '="' + id + '"], #' + id));
-	                    linkedFields.forEach((function (thisField) {
+	                    linkedFields.forEach(function (thisField) {
 	                        var validity = thisField.validity,
 	                            isInvalid = validity && !validity.valid && this._isElementInvalidElement(thisField);
 	                        handleAdditionalLabels(isInvalid, labelGroups, thisField);
-	                    }).bind(this));
+	                    }.bind(this));
 	                }
 	            }
 	            this._handleLabels(labelGroups);
@@ -1277,7 +1277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return Form;
-	})(_DestroyableWidget3.default);
+	}(_DestroyableWidget3.default);
 	
 	/**
 	 * Global validators
@@ -1312,7 +1312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
@@ -1396,7 +1396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Simple Tooltip
 	 */
 	
-	var Tooltip = (function (_DestroyableWidget) {
+	var Tooltip = function (_DestroyableWidget) {
 	    _inherits(Tooltip, _DestroyableWidget);
 	
 	    /**
@@ -1569,7 +1569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return Tooltip;
-	})(_DestroyableWidget3.default);
+	}(_DestroyableWidget3.default);
 	
 	exports.default = Tooltip;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
@@ -1580,7 +1580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -1624,7 +1624,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Provides shared DOM-Utility functions
 	 */
 	
-	var Util = (function () {
+	var Util = function () {
 	    function Util() {
 	        _classCallCheck(this, Util);
 	    }
@@ -1980,7 +1980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return Util;
-	})();
+	}();
 	
 	exports.default = Util;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
@@ -2019,7 +2019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Provides a Basic Widget
 	 */
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -2027,7 +2027,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var DestroyableWidget = (function () {
+	var DestroyableWidget = function () {
 	    function DestroyableWidget() {
 	        _classCallCheck(this, DestroyableWidget);
 	
@@ -2070,7 +2070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return DestroyableWidget;
-	})();
+	}();
 	
 	exports.default = DestroyableWidget;
 
@@ -2080,29 +2080,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * The MIT License (MIT)
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Permission is hereby granted, free of charge, to any person obtaining a copy
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * of this software and associated documentation files (the "Software"), to deal
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * in the Software without restriction, including without limitation the rights
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * copies of the Software, and to permit persons to whom the Software is
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * furnished to do so, subject to the following conditions:
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * The above copyright notice and this permission notice shall be included in
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * all copies or substantial portions of the Software.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * THE SOFTWARE.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Permission is hereby granted, free of charge, to any person obtaining a copy
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * of this software and associated documentation files (the "Software"), to deal
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * in the Software without restriction, including without limitation the rights
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * copies of the Software, and to permit persons to whom the Software is
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * furnished to do so, subject to the following conditions:
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The above copyright notice and this permission notice shall be included in
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * all copies or substantial portions of the Software.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -2162,7 +2162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Utility class that setups global settings
 	 */
 	
-	var Settings = (function () {
+	var Settings = function () {
 	    function Settings() {
 	        _classCallCheck(this, Settings);
 	    }
@@ -2264,7 +2264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return Settings;
-	})();
+	}();
 	
 	exports.default = Settings;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
@@ -2674,7 +2674,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -2731,7 +2731,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Simpler Event dispatching
 	 */
 	
-	var EventHandler = (function () {
+	var EventHandler = function () {
 	
 	    /**
 	     * @param {HTMLElement} target
@@ -2809,9 +2809,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return EventHandler;
-	})();
+	}();
 	
-	var Event = (function () {
+	var Event = function () {
 	    function Event() {
 	        _classCallCheck(this, Event);
 	    }
@@ -2845,7 +2845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 	
 	    return Event;
-	})();
+	}();
 	
 	exports.default = Event;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))

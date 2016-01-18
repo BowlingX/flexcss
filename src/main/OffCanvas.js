@@ -214,11 +214,9 @@ class OffCanvas {
             this._remove();
             this._removeInstant(navigationControllerClassList);
         } else if (!OffCanvas.currentOpen) {
-
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
-                Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE)
+                Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
             });
-
             OffCanvas.currentOpen = this;
             bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
             bodyClass.add(TOGGLE_CLASS);

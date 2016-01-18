@@ -68,8 +68,7 @@ const ATTR_TOGGLE_LIST = 'data-toggle-list';
  */
 class Toggleable {
     constructor(ContainerId) {
-
-        var doc = global.document;
+        const doc = global.document;
 
         this.container = ContainerId instanceof HTMLElement ? ContainerId :
             doc.getElementById(ContainerId);
@@ -77,7 +76,7 @@ class Toggleable {
         this.loading = false;
 
         if (!this.container) {
-            throw 'Toggleable container with id "' + ContainerId + '" not found';
+            throw new Error('Toggleable container with id "' + ContainerId + '" not found');
         }
     }
 
@@ -87,7 +86,9 @@ class Toggleable {
      * @private
      */
     _listener(e) {
-        var target = e.target, parent = target.parentNode, doc = global.document;
+        let target = e.target;
+        const parent = target.parentNode;
+        const doc = global.document;
 
         // support target child element to clicked
         if (!target.hasAttribute(ATTR_NAME)) {
@@ -102,8 +103,8 @@ class Toggleable {
             return;
         }
 
-        var refId = target.getAttribute(ATTR_NAME),
-            ref = doc.getElementById(refId);
+        const refId = target.getAttribute(ATTR_NAME);
+        const ref = doc.getElementById(refId);
 
         e.preventDefault();
 
@@ -125,10 +126,11 @@ class Toggleable {
 
     /**
      * Toggles given `ref`
-     * @param {HTMLElement} ref
-     * @param {HTMLElement} [target] optional target node
+     * @param {HTMLElement|Node} ref
+     * @param {HTMLElement|Node} [selfTarget] optional target node
      */
-    toggleTarget(ref, target) {
+    toggleTarget(ref, selfTarget) {
+        let target = selfTarget;
         if (!target && !ref) {
             return;
         }
@@ -136,25 +138,29 @@ class Toggleable {
             target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
         }
 
-        var maybeToggleNode, future,
-            elClassList = target.classList, parentClassList,
-            parent = target.parentNode, doc = global.document;
+        let maybeToggleNode;
+        let future;
+        const elClassList = target.classList;
+        let parentClassList;
+        const parent = target.parentNode;
+        const doc = global.document;
 
         future = new Promise((resolve, failure) => {
             if (ref) {
                 resolve(ref);
             } else {
-                var widget = Widget.findWidget(target), async = widget ? widget.getAsync() : null;
+                const widget = Widget.findWidget(target);
+                const async = widget ? widget.getAsync() : null;
                 if (Widget.isWidget(widget) && async) {
-                    future = async.then(function (r) {
+                    future = async.then((r) => {
                         if (r instanceof HTMLElement) {
-                            var id = Util.guid();
+                            const id = Util.guid();
                             r.id = id;
                             target.setAttribute(ATTR_NAME, id);
                             resolve(r);
                         } else {
-                            throw 'Dynamically creating toggle-content is not supported right now. ' +
-                            'Return an HTMLElement instance';
+                            throw new Error('Dynamically creating toggle-content is not supported right now. ' +
+                            'Return an HTMLElement instance');
                         }
                     });
                 } else {
@@ -164,7 +170,7 @@ class Toggleable {
         });
 
         if (parent) {
-            maybeToggleNode = Util.parentsUntil(target, function (node) {
+            maybeToggleNode = Util.parentsUntil(target, (node) => {
                 return node && node.hasAttribute && node.hasAttribute(ATTR_TOGGLE_LIST);
             });
 
@@ -180,13 +186,14 @@ class Toggleable {
             }
 
             if (maybeToggleNode) {
-                for (var i = 0; i < maybeToggleNode.children.length; i++) {
-                    var n = maybeToggleNode.children[i], targetRef = n.children[0];
+                for (let i = 0; i < maybeToggleNode.children.length; i++) {
+                    const n = maybeToggleNode.children[i];
+                    const targetRef = n.children[0];
                     if (n !== parent) {
                         n.classList.remove(ACTIVE_CLASS);
                         if (targetRef) {
-                            var attr = targetRef.getAttribute(ATTR_NAME),
-                                el = attr ? doc.getElementById(attr) : null;
+                            const attr = targetRef.getAttribute(ATTR_NAME);
+                            const el = attr ? doc.getElementById(attr) : null;
                             if (el) {
                                 Event.dispatchAndFire(el, EVENT_TAB_CLOSED);
                                 el.classList.remove(ACTIVE_CLASS);
@@ -196,23 +203,20 @@ class Toggleable {
                     }
                 }
             }
-
         }
         if (elClassList) {
             elClassList.toggle(ACTIVE_CLASS);
             elClassList.add(LOADING_CLASS);
         }
         this.loading = true;
-        future.then(function (r) {
+        future.then((r) => {
             Event.dispatchAndFire(r, EVENT_TAB_OPENED);
             Toggleable._handleLoaded(target);
             r.classList.toggle(ACTIVE_CLASS);
             this.loading = false;
-
-        }.bind(this)).catch((reason) => {
+        }).catch(() => {
             this.loading = false;
             Toggleable._handleLoaded(target);
-            console.warn(reason);
         });
     }
 
@@ -221,7 +225,7 @@ class Toggleable {
      * @private
      */
     static _handleLoaded(el) {
-        var parentClassList = el.parentNode.classList;
+        const parentClassList = el.parentNode.classList;
         el.classList.remove(LOADING_CLASS);
         if (parentClassList) {
             parentClassList.remove(LOADING_CLASS);
