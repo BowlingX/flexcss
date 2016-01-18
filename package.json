@@ -1,6 +1,5 @@
 {
   "name": "flexcss",
-  "version": "0.5.0",
   "description": "A lightweight Flexbox based mobile-first CSS/Javascript pattern-library",
   "dependencies": {
     "isomorphic-fetch": "^2.2.0",
@@ -17,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:BowlingX/flexcss.git"
+    "url": "https:git@github.com:BowlingX/flexcss.git"
   },
   "homepage": "https://hellofellow.com",
   "author": "hellofellow KG, David Heidrich",
@@ -60,7 +59,14 @@
     "sass-loader": "^3.1.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
-    "webpack": "^1.12.4"
+    "webpack": "^1.12.4",
+    "semantic-release": "^4.3.5"
+  },
+  "release": {
+    "debug": false,
+    "verifyConditions": {
+      "path": "./node_modules/semantic-release/dist/lib/plugin-noop.js"
+    }
   },
   "engines": {
     "node": ">=0.10.1"
@@ -69,6 +75,12 @@
     "test": "karma start --single-run --ci",
     "tdd": "karma start --auto-watch",
     "dist": "rm -Rf build && export NODE_ENV=production && webpack --optimize-minimize --optimize-occurence-order && export NODE_ENV=dev && webpack",
-    "develop": "webpack --watch"
+    "develop": "webpack --watch",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
