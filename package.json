@@ -5,6 +5,7 @@
     "isomorphic-fetch": "^2.2.0",
     "whatwg-fetch": "^0.10.1"
   },
+  "version": "0.0.0-semantically-released",
   "main": "src/main/modules/All.js",
   "keywords": [
     "css",
