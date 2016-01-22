@@ -76,16 +76,6 @@
   &.modal-anim-end {
     animation-name:none !important;
   }
-
-  &.part-of-stack {
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    @include animate(fadeOut);
-    &.modal-anim-end {
-      display: none;
-    }
-  }
 }
 
 // setup z-index just when in container
