@@ -13,5 +13,5 @@ deployment:
     branch: master
     commands:
       - npm run dist
-      - npm prune
+      - npm prune --production
       - npm run semantic-release
