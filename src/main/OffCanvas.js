@@ -44,10 +44,6 @@ const ATTR_TARGET = 'data-offcanvas';
 /**
  * @type {string}
  */
-const TOGGLE_CLASS = 'toggled-canvas';
-/**
- * @type {string}
- */
 const INIT_CLASS = 'init';
 /**
  * @type {string}
@@ -82,7 +78,7 @@ class OffCanvas {
         const navigationContainer = NavigationId instanceof HTMLElement ?
             NavigationId : doc.getElementById(NavigationId);
         const darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener);
-        const DARKENER_CLASS_TOGGLE = 'toggle-' + darkener.id || 'darkener';
+        const DARKENER_CLASS_TOGGLE = `toggle-${darkener.id}` || 'darkener';
         const DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`;
         const resetStyles = (s) => {
             s.transform = '';
@@ -101,6 +97,7 @@ class OffCanvas {
         this.darkener = darkener;
         this.darkenerClassToggle = DARKENER_CLASS_TOGGLE;
         this.darkenerClassToggleInstant = DARKENER_CLASS_INSTANT_TOGGLE;
+        this.globalToggleClass = Settings.get().canvasToggledClass;
 
         this.navigationContainer = navigationContainer;
         this.navigationContainerId = navigationContainer.id;
@@ -138,8 +135,9 @@ class OffCanvas {
                 if (compare) {
                     target.mustHide = factor > 0 ? calc * -1 >
                     bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-                    style.transform = 'translate3d(' + (calc * -1) + 'px,0,0)';
-                    style.webkitTransform = 'translate3d(' + (calc * -1) + 'px,0,0)';
+                    const transform = `translate3d(${calc * -1}px,0,0)`;
+                    style.transform = transform;
+                    style.webkitTransform = transform;
                 }
             });
             navigationContainer.addEventListener('touchend', () => {
@@ -153,9 +151,9 @@ class OffCanvas {
                         const width = target.getBoundingClientRect().width * factor;
                         style.transition = 'transform .2s ease';
                         style.webkitTransition = '-webkit-transform .2s ease';
-
-                        style.transform = 'translate3d(' + width + 'px,0,0)';
-                        style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
+                        const transform = `translate3d(${width}px,0,0)`;
+                        style.transform = transform;
+                        style.webkitTransform = transform;
                         this._remove(() => {
                             resetStyles(style);
                         });
@@ -178,8 +176,8 @@ class OffCanvas {
                 requestAnimationFrame(() => {
                     const body = global.document.body;
                     OffCanvas.currentOpen = null;
-                    body.classList.remove(TOGGLE_CLASS);
                     body.classList.remove(this.darkenerClassToggle);
+                    global.document.documentElement.classList.remove(this.globalToggleClass);
                     Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
                     if (callback) {
                         callback();
@@ -218,8 +216,8 @@ class OffCanvas {
                 Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
             });
             OffCanvas.currentOpen = this;
+            global.document.documentElement.classList.add(this.globalToggleClass);
             bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-            bodyClass.add(TOGGLE_CLASS);
             bodyClass.add(DARKENER_CLASS_TOGGLE);
             darkenerClass.add(INIT_CLASS);
             navigationControllerClassList.add(OPEN_CLASS);

@@ -187,7 +187,7 @@ class Dropdown {
      * @param show
      */
     toggleDarkenerToggler(instance, show) {
-        const cls = 'toggle-' + (instance.id || CLS_DARKENER_DROPDOWN);
+        const cls = `toggle-${(instance.id || CLS_DARKENER_DROPDOWN)}`;
         const classList = this.container.classList;
         if (show) {
             classList.add(cls);
@@ -219,7 +219,7 @@ class Dropdown {
                             return false;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
-                        this.container.classList.remove(Settings.get().canvasToggledClass);
+                        global.document.documentElement.classList.remove(Settings.get().canvasToggledClass);
                         resolve(true);
                     }, Settings.get().darkenerFadeDelay);
                 });
@@ -292,7 +292,7 @@ class Dropdown {
             });
         } else {
             if (!dropdownContainerElement) {
-                throw new Error('Could not found Dropdown container with ID "' + data + '"');
+                throw new Error(`Could not found Dropdown container with ID "${data}"`);
             }
             future = new Promise((r) => {
                 r(dropdownContainerElement);
@@ -325,7 +325,7 @@ class Dropdown {
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
-                this.container.classList.add(Settings.get().canvasToggledClass);
+                global.document.documentElement.classList.add(Settings.get().canvasToggledClass);
                 // optionally get custom darkener container for target
                 const d = target.getAttribute(ATTR_DARKENER);
                 if (d) {

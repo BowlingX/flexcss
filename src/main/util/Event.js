@@ -37,7 +37,8 @@
                     detail: undefined
                 };
             evt = document.createEvent("CustomEvent");
-            evt.initCustomEvent(event, thisParams.bubbles, thisParams.cancelable, thisParams.detail);
+            evt.initCustomEvent(event, thisParams.bubbles,
+                thisParams.cancelable, thisParams.detail);
             return evt;
         };
         CustomEvent.prototype = global.Event.prototype;

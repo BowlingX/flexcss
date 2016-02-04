@@ -36,6 +36,9 @@
       2,
       "global"
     ],
+    "no-param-reassign": [2, {"props": false}],
+    "arrow-body-style": [0],
+    "max-len": [2, 120, 4],
     "react/jsx-boolean-value": 1,
     "jsx-quotes": 0,
     "react/jsx-no-undef": 1,

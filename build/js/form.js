@@ -1666,10 +1666,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var el = document.createElement('fake');
 	
 	            var transitions = {
-	                'transition': 'transitionend',
-	                'OTransition': 'oTransitionEnd',
-	                'MozTransition': 'transitionend',
-	                'WebkitTransition': 'webkitTransitionEnd'
+	                transition: 'transitionend',
+	                OTransition: 'oTransitionEnd',
+	                MozTransition: 'transitionend',
+	                WebkitTransition: 'webkitTransitionEnd'
 	            };
 	
 	            for (t in transitions) {
@@ -1735,7 +1735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 	            }
 	
-	            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	            return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + (s4() + s4() + s4());
 	        }
 	
 	        /**
@@ -1925,15 +1925,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var calcLeft = undefined;
 	            if (isCollisionLeft && !isCollisionRight) {
 	                // put element to left if collision with left
-	                calcLeft = targetPosition.left - colRect.left - amountLeft + 'px';
+	                calcLeft = targetPosition.left - colRect.left - amountLeft + "px";
 	                classList.add(COL_LEFT_CLASS);
 	            } else {
 	                // maybe center if no collision with either side
-	                var rightPosition = targetRight - elementRect.width - colRect.left - amountLeft + 'px';
+	                var rightPosition = targetRight - elementRect.width - colRect.left - amountLeft + "px";
 	                var leftCentered = (targetLeft + targetPosition.width / 2 - elementRect.width / 2 || 0) - colRect.left;
 	                var collisionCentered = leftCentered + elementRect.width > colRect.width;
 	                if (centerHorizontal && !collisionCentered) {
-	                    calcLeft = leftCentered + 'px';
+	                    calcLeft = leftCentered + "px";
 	                } else {
 	                    classList.add(COL_RIGHT_CLASS);
 	                    calcLeft = rightPosition;
@@ -1942,10 +1942,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            if (isCollisionBottom || positionTop && !isCollisionTop) {
 	                // Put Element on top if collision
-	                calcTop = targetTop - elementRect.height - colRect.top + 'px';
+	                calcTop = targetTop - elementRect.height - colRect.top + "px";
 	                classList.add(COL_BOTTOM_CLASS);
 	            } else {
-	                calcTop = targetTop + targetPosition.height - colRect.top + 'px';
+	                calcTop = targetTop + targetPosition.height - colRect.top + "px";
 	            }
 	
 	            elementToPosition.style.cssText = "top:" + calcTop + ";left:" + calcLeft + ";";
@@ -2285,7 +2285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 13 */
 /***/ function(module, exports) {
 
-	(function() {
+	(function(self) {
 	  'use strict';
 	
 	  if (self.fetch) {
@@ -2427,6 +2427,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        throw new Error('unsupported BodyInit type')
 	      }
+	
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        }
+	      }
 	    }
 	
 	    if (support.blob) {
@@ -2563,13 +2571,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      options = {}
 	    }
 	
-	    this._initBody(bodyInit)
 	    this.type = 'default'
 	    this.status = options.status
 	    this.ok = this.status >= 200 && this.status < 300
 	    this.statusText = options.statusText
 	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
 	    this.url = options.url || ''
+	    this._initBody(bodyInit)
 	  }
 	
 	  Body.call(Response.prototype)
@@ -2665,7 +2673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    })
 	  }
 	  self.fetch.polyfill = true
-	})();
+	})(typeof self !== 'undefined' ? self : this);
 
 
 /***/ },

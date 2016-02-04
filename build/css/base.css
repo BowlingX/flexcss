@@ -4421,26 +4421,6 @@ img {
           animation-name: none !important;
 }
 
-.modal.part-of-stack {
-  display: block;
-  position: absolute;
-  pointer-events: none;
-  -webkit-animation-name: fadeOut;
-          animation-name: fadeOut;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
-}
-
-.modal.part-of-stack.modal-anim-end {
-  display: none;
-}
-
 .modal-container .modal.current {
   z-index: 10;
 }
@@ -6267,6 +6247,12 @@ html:not(.touch) .fade-listing:not(:hover) .fade-out {
 
 .flex-showcase ul > *:first-of-type {
   margin-left: -50px;
+}
+
+@media all and (max-width: 767px) {
+  html.toggled-canvas, html.toggled-canvas body {
+    overflow-y: hidden;
+  }
 }
 
 /*# sourceMappingURL=../maps/base.map*/

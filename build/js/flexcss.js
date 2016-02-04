@@ -1729,10 +1729,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var el = document.createElement('fake');
 	
 	            var transitions = {
-	                'transition': 'transitionend',
-	                'OTransition': 'oTransitionEnd',
-	                'MozTransition': 'transitionend',
-	                'WebkitTransition': 'webkitTransitionEnd'
+	                transition: 'transitionend',
+	                OTransition: 'oTransitionEnd',
+	                MozTransition: 'transitionend',
+	                WebkitTransition: 'webkitTransitionEnd'
 	            };
 	
 	            for (t in transitions) {
@@ -1798,7 +1798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 	            }
 	
-	            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	            return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + (s4() + s4() + s4());
 	        }
 	
 	        /**
@@ -1988,15 +1988,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var calcLeft = undefined;
 	            if (isCollisionLeft && !isCollisionRight) {
 	                // put element to left if collision with left
-	                calcLeft = targetPosition.left - colRect.left - amountLeft + 'px';
+	                calcLeft = targetPosition.left - colRect.left - amountLeft + "px";
 	                classList.add(COL_LEFT_CLASS);
 	            } else {
 	                // maybe center if no collision with either side
-	                var rightPosition = targetRight - elementRect.width - colRect.left - amountLeft + 'px';
+	                var rightPosition = targetRight - elementRect.width - colRect.left - amountLeft + "px";
 	                var leftCentered = (targetLeft + targetPosition.width / 2 - elementRect.width / 2 || 0) - colRect.left;
 	                var collisionCentered = leftCentered + elementRect.width > colRect.width;
 	                if (centerHorizontal && !collisionCentered) {
-	                    calcLeft = leftCentered + 'px';
+	                    calcLeft = leftCentered + "px";
 	                } else {
 	                    classList.add(COL_RIGHT_CLASS);
 	                    calcLeft = rightPosition;
@@ -2005,10 +2005,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            if (isCollisionBottom || positionTop && !isCollisionTop) {
 	                // Put Element on top if collision
-	                calcTop = targetTop - elementRect.height - colRect.top + 'px';
+	                calcTop = targetTop - elementRect.height - colRect.top + "px";
 	                classList.add(COL_BOTTOM_CLASS);
 	            } else {
-	                calcTop = targetTop + targetPosition.height - colRect.top + 'px';
+	                calcTop = targetTop + targetPosition.height - colRect.top + "px";
 	            }
 	
 	            elementToPosition.style.cssText = "top:" + calcTop + ";left:" + calcLeft + ";";
@@ -2348,7 +2348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 13 */
 /***/ function(module, exports) {
 
-	(function() {
+	(function(self) {
 	  'use strict';
 	
 	  if (self.fetch) {
@@ -2490,6 +2490,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        throw new Error('unsupported BodyInit type')
 	      }
+	
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        }
+	      }
 	    }
 	
 	    if (support.blob) {
@@ -2626,13 +2634,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      options = {}
 	    }
 	
-	    this._initBody(bodyInit)
 	    this.type = 'default'
 	    this.status = options.status
 	    this.ok = this.status >= 200 && this.status < 300
 	    this.statusText = options.statusText
 	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
 	    this.url = options.url || ''
+	    this._initBody(bodyInit)
 	  }
 	
 	  Body.call(Response.prototype)
@@ -2728,7 +2736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    })
 	  }
 	  self.fetch.polyfill = true
-	})();
+	})(typeof self !== 'undefined' ? self : this);
 
 
 /***/ },
@@ -4007,7 +4015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                target.setAttribute(ATTR_NAME, id);
 	                                resolve(r);
 	                            } else {
-	                                throw new Error('Dynamically creating toggle-content is not supported right now. ' + 'Return an HTMLElement instance');
+	                                throw new Error('Dynamically creating toggle-content is not supported right now.\n                            Return an HTMLElement instance');
 	                            }
 	                        });
 	                    } else {
@@ -4158,10 +4166,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @type {string}
 	 */
-	var TOGGLE_CLASS = 'toggled-canvas';
-	/**
-	 * @type {string}
-	 */
 	var INIT_CLASS = 'init';
 	/**
 	 * @type {string}
@@ -4220,6 +4224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.darkener = darkener;
 	        this.darkenerClassToggle = DARKENER_CLASS_TOGGLE;
 	        this.darkenerClassToggleInstant = DARKENER_CLASS_INSTANT_TOGGLE;
+	        this.globalToggleClass = _Settings2.default.get().canvasToggledClass;
 	
 	        this.navigationContainer = navigationContainer;
 	        this.navigationContainerId = navigationContainer.id;
@@ -4256,8 +4261,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var compare = factor > 0 ? calc <= 0 : calc >= 0;
 	                if (compare) {
 	                    target.mustHide = factor > 0 ? calc * -1 > bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-	                    style.transform = 'translate3d(' + calc * -1 + 'px,0,0)';
-	                    style.webkitTransform = 'translate3d(' + calc * -1 + 'px,0,0)';
+	                    var transform = 'translate3d(' + calc * -1 + 'px,0,0)';
+	                    style.transform = transform;
+	                    style.webkitTransform = transform;
 	                }
 	            });
 	            navigationContainer.addEventListener('touchend', function () {
@@ -4271,9 +4277,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        var width = target.getBoundingClientRect().width * factor;
 	                        style.transition = 'transform .2s ease';
 	                        style.webkitTransition = '-webkit-transform .2s ease';
-	
-	                        style.transform = 'translate3d(' + width + 'px,0,0)';
-	                        style.webkitTransform = 'translate3d(' + width + 'px,0,0)';
+	                        var transform = 'translate3d(' + width + 'px,0,0)';
+	                        style.transform = transform;
+	                        style.webkitTransform = transform;
 	                        _this._remove(function () {
 	                            resetStyles(style);
 	                        });
@@ -4301,8 +4307,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    requestAnimationFrame(function () {
 	                        var body = global.document.body;
 	                        OffCanvas.currentOpen = null;
-	                        body.classList.remove(TOGGLE_CLASS);
 	                        body.classList.remove(_this2.darkenerClassToggle);
+	                        global.document.documentElement.classList.remove(_this2.globalToggleClass);
 	                        _Event2.default.dispatchAndFire(_this2.navigationContainer, EVENT_TOGGLE);
 	                        if (callback) {
 	                            callback();
@@ -4349,8 +4355,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    _Event2.default.dispatchAndFire(_this3.navigationContainer, EVENT_TOGGLE);
 	                });
 	                OffCanvas.currentOpen = this;
+	                global.document.documentElement.classList.add(this.globalToggleClass);
 	                bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-	                bodyClass.add(TOGGLE_CLASS);
 	                bodyClass.add(DARKENER_CLASS_TOGGLE);
 	                darkenerClass.add(INIT_CLASS);
 	                navigationControllerClassList.add(OPEN_CLASS);
@@ -4661,7 +4667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                return false;
 	                            }
 	                            _this.toggleDarkenerToggler(darkenerInstance, false);
-	                            _this.container.classList.remove(_Settings2.default.get().canvasToggledClass);
+	                            global.document.documentElement.classList.remove(_Settings2.default.get().canvasToggledClass);
 	                            resolve(true);
 	                        }, _Settings2.default.get().darkenerFadeDelay);
 	                    });
@@ -4771,7 +4777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
 	                    _Util2.default.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
 	                } else {
-	                    _this2.container.classList.add(_Settings2.default.get().canvasToggledClass);
+	                    global.document.documentElement.classList.add(_Settings2.default.get().canvasToggledClass);
 	                    // optionally get custom darkener container for target
 	                    var d = target.getAttribute(ATTR_DARKENER);
 	                    if (d) {

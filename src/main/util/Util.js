@@ -66,10 +66,10 @@ class Util {
         const el = document.createElement('fake');
 
         const transitions = {
-            'transition': 'transitionend',
-            'OTransition': 'oTransitionEnd',
-            'MozTransition': 'transitionend',
-            'WebkitTransition': 'webkitTransitionEnd'
+            transition: 'transitionend',
+            OTransition: 'oTransitionEnd',
+            MozTransition: 'transitionend',
+            WebkitTransition: 'webkitTransitionEnd'
         };
 
         for (t in transitions) {
@@ -128,8 +128,7 @@ class Util {
                 .substring(1);
         }
 
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
+        return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
     }
 
     /**
@@ -300,16 +299,16 @@ class Util {
         let calcLeft;
         if (isCollisionLeft && !isCollisionRight) {
             // put element to left if collision with left
-            calcLeft = (targetPosition.left - colRect.left - amountLeft) + 'px';
+            calcLeft = `${(targetPosition.left - colRect.left - amountLeft)}px`;
             classList.add(COL_LEFT_CLASS);
         } else {
             // maybe center if no collision with either side
-            const rightPosition = (targetRight - elementRect.width - colRect.left - amountLeft) + 'px';
+            const rightPosition = `${(targetRight - elementRect.width - colRect.left - amountLeft)}px`;
             const leftCentered = ((targetLeft + targetPosition.width / 2) -
                     (elementRect.width / 2) || 0) - colRect.left;
             const collisionCentered = (leftCentered + elementRect.width) > colRect.width;
             if (centerHorizontal && !collisionCentered) {
-                calcLeft = leftCentered + 'px';
+                calcLeft = `${leftCentered}px`;
             } else {
                 classList.add(COL_RIGHT_CLASS);
                 calcLeft = rightPosition;
@@ -318,10 +317,10 @@ class Util {
 
         if (isCollisionBottom || (positionTop && !isCollisionTop)) {
             // Put Element on top if collision
-            calcTop = (targetTop - elementRect.height) - colRect.top + 'px';
+            calcTop = `${(targetTop - elementRect.height) - colRect.top}px`;
             classList.add(COL_BOTTOM_CLASS);
         } else {
-            calcTop = (targetTop + targetPosition.height) - colRect.top + 'px';
+            calcTop = `${(targetTop + targetPosition.height) - colRect.top}px`;
         }
 
         elementToPosition.style.cssText = `top:${calcTop};left:${calcLeft};`;

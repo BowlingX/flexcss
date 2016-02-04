@@ -135,7 +135,7 @@ class Toggleable {
             return;
         }
         if (!target) {
-            target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
+            target = document.querySelector(`[${ATTR_NAME}="${ref.id}"]`);
         }
 
         let maybeToggleNode;
@@ -159,8 +159,8 @@ class Toggleable {
                             target.setAttribute(ATTR_NAME, id);
                             resolve(r);
                         } else {
-                            throw new Error('Dynamically creating toggle-content is not supported right now. ' +
-                            'Return an HTMLElement instance');
+                            throw new Error(`Dynamically creating toggle-content is not supported right now.
+                            Return an HTMLElement instance`);
                         }
                     });
                 } else {
