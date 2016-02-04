@@ -342,7 +342,7 @@ class Util {
                 thisOffset = optionalOffset();
             }
             if (thisOffset > 0) {
-                const scrolledY = window.scrollY || window.pageYOffset;
+                const scrolledY = window.pageYOffset;
                 if (scrolledY) {
                     window.scroll(0, scrolledY - thisOffset);
                 }

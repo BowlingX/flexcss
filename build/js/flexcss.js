@@ -4337,7 +4337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	
 	    }, {
-	        key: '_toggle',
+	        key: 'toggle',
 	        value: function _toggle(e) {
 	            var _this3 = this;
 	
