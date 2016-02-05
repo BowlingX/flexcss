@@ -3784,7 +3784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.EVENT_BEFORE_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_ADD = undefined;
+	exports.EVENT_AFTER_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_ADD = undefined;
 	
 	var _Settings = __webpack_require__(11);
 	
@@ -3804,8 +3804,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var CLS_FIXED_WINDOW = 'fixed-window-open';
 	
-	var EVENT_BEFORE_FIXED_ADD = exports.EVENT_BEFORE_FIXED_ADD = 'flexcss.fixedWindow.add';
-	var EVENT_BEFORE_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_REMOVE = 'flexcss.fixedWindow.remove';
+	var EVENT_BEFORE_FIXED_ADD = exports.EVENT_BEFORE_FIXED_ADD = 'flexcss.fixedWindow.beforeAdd';
+	var EVENT_AFTER_FIXED_REMOVE = exports.EVENT_AFTER_FIXED_REMOVE = 'flexcss.fixedWindow.afterRemove';
 	
 	/**
 	 * @type {FixedWindow}
@@ -3853,10 +3853,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _this.fixedScreenConstraints[widget] && _this.fixedScreenConstraints[widget](_this.windowWidth);
 	            });
 	            if (!widgetsThatRequireFixedWindow) {
-	                _Event2.default.dispatchAndFire(global.document.body, EVENT_BEFORE_FIXED_ADD);
 	                this._removeFixedContainer();
 	            } else {
-	                _Event2.default.dispatchAndFire(global.document.body, EVENT_BEFORE_FIXED_REMOVE);
 	                this._addFixedContainer();
 	            }
 	        }
@@ -3868,6 +3866,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_addFixedContainer',
 	        value: function _addFixedContainer() {
+	            if (this.isFixedWindowActive) {
+	                return;
+	            }
+	            _Event2.default.dispatchAndFire(global.document, EVENT_BEFORE_FIXED_ADD);
 	            // this causes layout and should be optimized
 	            // At lest we write in a batch later
 	            this.currentScrollTop = global.pageYOffset;
@@ -3930,6 +3932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                });
 	                global.document.documentElement.classList.remove(CLS_FIXED_WINDOW);
+	                _Event2.default.dispatchAndFire(global.document, EVENT_AFTER_FIXED_REMOVE);
 	                this.isFixedWindowActive = false;
 	            }
 	        }

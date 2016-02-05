@@ -2200,23 +2200,6 @@ html.modal-open.fixed-window-open body {
           animation-direction: normal;
 }
 
-.toggled-canvas .darkener {
-  display: block;
-}
-
-.toggled-canvas .darkener.init {
-  -webkit-animation-name: darkenerFadeIn;
-          animation-name: darkenerFadeIn;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
-}
-
 .flex-align-center {
   -webkit-align-self: center;
       -ms-flex-item-align: center;
@@ -6250,6 +6233,19 @@ html:not(.touch) .fade-listing:not(:hover) .fade-out {
 
 .fixed-window-open body {
   width: 100%;
+}
+
+.fixed-window-open .darkener.init {
+  -webkit-animation-name: darkenerFadeIn;
+          animation-name: darkenerFadeIn;
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
 }
 
 .showcase {

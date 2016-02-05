@@ -54,7 +54,7 @@ export default class FixedWindow {
      * @private
      */
     _addFixedContainer() {
-        if(this.isFixedWindowActive) {
+        if (this.isFixedWindowActive) {
             return;
         }
         Event.dispatchAndFire(global.document, EVENT_BEFORE_FIXED_ADD);
