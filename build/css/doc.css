@@ -2079,7 +2079,7 @@ pre > code {
   margin: 43px auto 0 auto;
 }
 
-html.modal-open body {
+html.modal-open.fixed-window-open body {
   overflow: hidden;
 }
 
@@ -4376,10 +4376,6 @@ img {
   cursor: wait;
 }
 
-.modal-open body {
-  width: 100%;
-}
-
 .modal {
   -webkit-user-select: text;
      -moz-user-select: text;
@@ -6252,10 +6248,8 @@ html:not(.touch) .fade-listing:not(:hover) .fade-out {
   margin-left: -50px;
 }
 
-@media all and (max-width: 767px) {
-  html.toggled-canvas, html.toggled-canvas body {
-    overflow-y: hidden;
-  }
+.fixed-window-open body {
+  width: 100%;
 }
 
 .showcase {

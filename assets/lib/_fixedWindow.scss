@@ -1,0 +1,9 @@
+.fixed-window-open {
+  body {
+    width: 100%;
+  }
+}
+
+.fixed-window-open .darkener.init {
+  @include animate(darkenerFadeIn);
+}

@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(21);
+	module.exports = __webpack_require__(23);
 
 
 /***/ },
@@ -1970,7 +1970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    thisOffset = optionalOffset();
 	                }
 	                if (thisOffset > 0) {
-	                    var scrolledY = window.scrollY || window.pageYOffset;
+	                    var scrolledY = window.pageYOffset;
 	                    if (scrolledY) {
 	                        window.scroll(0, scrolledY - thisOffset);
 	                    }
@@ -2139,6 +2139,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        global.FLEXCSS_CONST_TAB_EVENT = 'click';
 	
+	        global.FLEXCSS_IS_SMALL_SCREEN = false;
+	
 	        var init = function init() {
 	            // Measure scrollbar width
 	            global.FLEXCSS_CONST_SCROLLBAR_WIDTH = _Util2.default.getScrollBarWidth();
@@ -2202,6 +2204,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            return global.FLEXCSS_CONST_IS_IOS;
+	        }
+	
+	        /**
+	         * @returns {boolean}
+	         */
+	
+	    }, {
+	        key: 'isSmallScreen',
+	        value: function isSmallScreen() {
+	            return window.innerWidth < Settings.get().smallBreakpoint;
 	        }
 	
 	        /**
@@ -2865,7 +2877,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -22,7 +22,7 @@
 }
 
 html {
-  &.modal-open {
+  &.modal-open.fixed-window-open {
     body {
       overflow: hidden;
     }
@@ -127,13 +127,6 @@ html {
   }
 }
 
-.toggled-canvas .darkener {
-  display: block;
-}
-
-.toggled-canvas .darkener.init {
-  @include animate(darkenerFadeIn);
-}
 
 // Some flex utility classes:
 

@@ -76,7 +76,7 @@ class Toggleable {
         this.loading = false;
 
         if (!this.container) {
-            throw new Error('Toggleable container with id "' + ContainerId + '" not found');
+            throw new Error(`Toggleable container with id ${ContainerId} not found`);
         }
     }
 

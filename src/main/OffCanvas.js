@@ -31,6 +31,7 @@
 import Settings from './util/Settings';
 import Util from './util/Util';
 import Event from './util/Event';
+import FixedWindow from './lib/FixedWindow';
 
 /**
  * @type {string}
@@ -109,8 +110,7 @@ class OffCanvas {
                     return;
                 }
                 touched = e.touches[0].clientX;
-                const target = navigationContainer;
-                target.mustHide = false;
+                navigationContainer.mustHide = false;
             });
             navigationContainer.addEventListener('touchmove', (e) => {
                 if (shouldNotTouch()) {
@@ -180,9 +180,9 @@ class OffCanvas {
                         OffCanvas.currentOpen = null;
                         body.classList.remove(this.darkenerClassToggle);
                         global.document.documentElement.classList.remove(this.globalToggleClass);
-                        Event.dispatch(this.navigationContainer, EVENT_TOGGLE).withDetail({
-                            wasEvent: !!event
-                        }).fire();
+                        if (!!event) {
+                            Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
+                        }
                         resolve();
                     });
                 }, Settings.get().darkenerFadeDelay);
@@ -197,6 +197,7 @@ class OffCanvas {
         this.navigationContainer.classList.remove(OPEN_CLASS);
         global.document.body.classList.remove(this.darkenerClassToggleInstant);
         this.darkener.classList.remove(INIT_CLASS);
+        FixedWindow.getInstance().close();
     }
 
     /**
@@ -216,11 +217,12 @@ class OffCanvas {
         const navigationControllerClassList = this.navigationContainer.classList;
         if (!OffCanvas.currentOpen) {
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
-                Event.dispatch(this.navigationContainer, EVENT_TOGGLE).withDetail({
-                    wasEvent: !!e
-                }).fire();
+                if (!!e) {
+                    Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
+                }
             });
             OffCanvas.currentOpen = this;
+            FixedWindow.getInstance().open(this);
             global.document.documentElement.classList.add(this.globalToggleClass);
             bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
             bodyClass.add(DARKENER_CLASS_TOGGLE);
@@ -247,6 +249,7 @@ class OffCanvas {
      */
     registerEvents(delegate) {
         const thisDelegate = delegate || global.document;
+        FixedWindow.getInstance().addScreenConstraint(OffCanvas, (width) => width < Settings.get().smallBreakpoint);
         thisDelegate.addEventListener(Settings.getTabEvent(), (e) => {
             if (OffCanvas.currentOpen && OffCanvas.currentOpen !== this) {
                 return;

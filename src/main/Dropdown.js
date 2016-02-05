@@ -34,6 +34,7 @@ import Util from './util/Util';
 import Settings from './util/Settings';
 import Event from './util/Event';
 import Widget from './Widget';
+import FixedWindow from './lib/FixedWindow';
 
 /**
  * @type {string}
@@ -156,6 +157,7 @@ class Dropdown {
      * @returns {Dropdown}
      */
     registerEvents() {
+        FixedWindow.getInstance().addScreenConstraint(Dropdown, (width) => width < Settings.get().smallBreakpoint);
         this.container.addEventListener(Settings.getTabEvent(), this._delegateFunction.bind(this), true);
         return this;
     }
@@ -219,7 +221,7 @@ class Dropdown {
                             return false;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
-                        global.document.documentElement.classList.remove(Settings.get().canvasToggledClass);
+                        FixedWindow.getInstance().close();
                         resolve(true);
                     }, Settings.get().darkenerFadeDelay);
                 });
@@ -325,7 +327,7 @@ class Dropdown {
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
-                global.document.documentElement.classList.add(Settings.get().canvasToggledClass);
+                FixedWindow.getInstance().open(this);
                 // optionally get custom darkener container for target
                 const d = target.getAttribute(ATTR_DARKENER);
                 if (d) {
