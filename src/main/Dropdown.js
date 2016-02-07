@@ -221,7 +221,6 @@ class Dropdown {
                             return false;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
-                        FixedWindow.getInstance().close();
                         resolve(true);
                     }, Settings.get().darkenerFadeDelay);
                 });
@@ -231,6 +230,7 @@ class Dropdown {
             }
         });
 
+        FixedWindow.getInstance().close();
         currentOpen.classList.remove(CLS_OPEN);
 
         if (currentOpen.flexDarkenerInstance) {

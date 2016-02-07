@@ -33,6 +33,13 @@ export default class FixedWindow {
     }
 
     /**
+     * @returns {null|DestroyableWidget}
+     */
+    getCurrentWidget() {
+        return this.widgets.length > 0 ? this.widgets[this.widgets.length - 1] : null;
+    }
+
+    /**
      * @private
      */
     _checkFixedNeeded() {
@@ -57,7 +64,9 @@ export default class FixedWindow {
         if (this.isFixedWindowActive) {
             return;
         }
-        Event.dispatchAndFire(global.document, EVENT_BEFORE_FIXED_ADD);
+        Event.dispatchAndFire(global.document, EVENT_BEFORE_FIXED_ADD, {
+            detail: this.getCurrentWidget()
+        });
         // this causes layout and should be optimized
         // At lest we write in a batch later
         this.currentScrollTop = global.pageYOffset;
@@ -129,10 +138,12 @@ export default class FixedWindow {
         if (!fixedWindowInstance) {
             fixedWindowInstance = new FixedWindow();
             fixedWindowInstance.windowWidth = global.innerWidth;
+            const eventHandler = fixedWindowInstance.resizeListener.bind(fixedWindowInstance);
             global.addEventListener(
                 'resize',
-                debounce(fixedWindowInstance.resizeListener.bind(fixedWindowInstance), 500)
+                debounce(eventHandler, 500)
             );
+            global.addEventListener('orientationchange', eventHandler);
         }
         return fixedWindowInstance;
     }
@@ -166,13 +177,14 @@ export default class FixedWindow {
             if (cn && fixedWidget) {
                 fixed = fixedWidget(this.windowWidth);
             }
+            const length = this.widgets.length;
+            this.widgets.push(cn);
             // open a new window if there is no window active
-            if (this.widgets.length === 0) {
+            if (length === 0) {
                 if (fixed) {
                     this._addFixedContainer();
                 }
             }
-            this.widgets.push(cn);
         }
     }
 }

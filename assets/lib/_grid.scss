@@ -96,7 +96,7 @@ html {
   transform: translate3d(100%, 0, 0);
   transition: transform $globalMediumEaseTime $globalMenuEasing;
   top: 0;
-  right: 0px;
+  right:0;
   &.open {
     transform: translate3d(0%, 0, 0);
   }

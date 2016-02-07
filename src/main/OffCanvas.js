@@ -75,7 +75,7 @@ class OffCanvas {
      */
     constructor(NavigationId, Darkener, factor, disableTouch) {
         const doc = global.document;
-        let touched = 0;
+        let touchedX = 0;
         const navigationContainer = NavigationId instanceof HTMLElement ?
             NavigationId : doc.getElementById(NavigationId);
         const darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener);
@@ -109,25 +109,25 @@ class OffCanvas {
                 if (shouldNotTouch()) {
                     return;
                 }
-                touched = e.touches[0].clientX;
+                touchedX = e.touches[0].clientX;
                 navigationContainer.mustHide = false;
             });
             navigationContainer.addEventListener('touchmove', (e) => {
                 if (shouldNotTouch()) {
                     return;
                 }
-                const x = e.touches[0].clientX;
+                const { clientX } = e.touches[0];
                 const target = navigationContainer;
                 const style = target.style;
-                const calc = touched - x;
+                const calcX = touchedX - clientX;
                 const bounds = target.getBoundingClientRect();
-                const compare = factor > 0 ? calc <= 0 : calc >= 0;
+                const compare = factor > 0 ? calcX <= 0 : calcX >= 0;
                 if (compare) {
                     style.transition = 'transform 0s ease';
                     style.webkitTransition = '-webkit-transform 0s ease';
-                    target.mustHide = factor > 0 ? calc * -1 >
-                    bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-                    const transform = `translate3d(${calc * -1}px,0,0)`;
+                    target.mustHide = factor > 0 ? calcX * -1 >
+                    bounds.width / HIDE_FACTOR : calcX > bounds.width / HIDE_FACTOR;
+                    const transform = `translate3d(${calcX * -1}px,0,0)`;
                     style.transform = transform;
                     style.webkitTransform = transform;
                 }
