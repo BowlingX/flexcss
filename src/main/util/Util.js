@@ -100,6 +100,23 @@ class Util {
     }
 
     /**
+     * Finds the closest element including itself matching a callback
+     * @param {Node} el
+     * @param {Function} callback
+     * @returns {Node|boolean}
+     */
+    static closestCallback(el, callback) {
+        let element = el;
+        while (element !== null) {
+            if (callback(element)) {
+                return element;
+            }
+            element = element.parentNode;
+        }
+        return false;
+    }
+
+    /**
      * Walks the tree until func returns true for given argument
      * @param target
      * @param func

@@ -117,10 +117,7 @@ class Dropdown {
      */
     _delegateFunction(e) {
         const currentOpen = this.currentOpen;
-        const targetHas = e.target.hasAttribute(ATTR_NAME);
-        const parentHas = e.target.parentNode ?
-            e.target.parentNode.hasAttribute(ATTR_NAME) : false;
-        const target = targetHas ? e.target : e.target.parentNode;
+        const target = Util.closestCallback(e.target, n => n instanceof HTMLElement && n.hasAttribute(ATTR_NAME));
         const targetIsCurrent = target === this.currentTarget;
 
         if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
@@ -131,7 +128,7 @@ class Dropdown {
             return targetIsCurrent ? false : this._delegateFunction(e);
         }
 
-        if (targetHas || parentHas && !currentOpen) {
+        if (target && !currentOpen) {
             e.preventDefault();
             e.stopImmediatePropagation();
 
