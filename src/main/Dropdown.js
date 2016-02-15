@@ -210,8 +210,11 @@ class Dropdown {
 
         future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, () => {
-                    setTimeout(() => {
+                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function scheduler(e) {
+                    if (e.srcElement !== currentOpen) {
+                        return Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, scheduler.bind(this));
+                    }
+                    requestAnimationFrame(() => {
                         Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
                         // if a new dropdown has been opened in the meantime, do not remove darkener
                         if (this.currentOpen !== null) {
@@ -219,8 +222,8 @@ class Dropdown {
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
                         resolve(true);
-                    }, Settings.get().darkenerFadeDelay);
-                });
+                    });
+                }.bind(this));
             } else {
                 resolve(true);
                 Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);

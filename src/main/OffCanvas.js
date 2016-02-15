@@ -172,21 +172,22 @@ class OffCanvas {
      */
     _remove(event) {
         return new Promise((resolve) => {
-            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
-                // add timeout because transition event fires a little to early
-                setTimeout(() => {
-                    requestAnimationFrame(() => {
-                        const body = global.document.body;
-                        OffCanvas.currentOpen = null;
-                        body.classList.remove(this.darkenerClassToggle);
-                        global.document.documentElement.classList.remove(this.globalToggleClass);
-                        if (!!event) {
-                            Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
-                        }
-                        resolve();
-                    });
-                }, Settings.get().darkenerFadeDelay);
-            });
+            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function scheduler(e) {
+                if (e.srcElement !== this.navigationContainer) {
+                    return Util.addEventOnce(Settings.getTransitionEvent(),
+                        this.navigationContainer, scheduler.bind(this));
+                }
+                requestAnimationFrame(() => {
+                    OffCanvas.currentOpen = null;
+                    const docCls = global.document.documentElement.classList;
+                    docCls.remove(this.darkenerClassToggle);
+                    docCls.remove(this.globalToggleClass);
+                    if (!!event) {
+                        Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
+                    }
+                    resolve();
+                });
+            }.bind(this));
         });
     }
 
@@ -195,7 +196,7 @@ class OffCanvas {
      */
     _removeInstant() {
         this.navigationContainer.classList.remove(OPEN_CLASS);
-        global.document.body.classList.remove(this.darkenerClassToggleInstant);
+        global.document.documentElement.classList.remove(this.darkenerClassToggleInstant);
         this.darkener.classList.remove(INIT_CLASS);
         FixedWindow.getInstance().close();
     }
@@ -210,7 +211,6 @@ class OffCanvas {
             e.preventDefault();
         }
         this.resetTransform(this.navigationContainer.style);
-        const bodyClass = global.document.body.classList;
         const darkenerClass = this.darkener.classList;
         const DARKENER_CLASS_TOGGLE = this.darkenerClassToggle;
         const DARKENER_CLASS_INSTANT_TOGGLE = this.darkenerClassToggleInstant;
@@ -223,9 +223,10 @@ class OffCanvas {
             });
             OffCanvas.currentOpen = this;
             FixedWindow.getInstance().open(this);
-            global.document.documentElement.classList.add(this.globalToggleClass);
-            bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-            bodyClass.add(DARKENER_CLASS_TOGGLE);
+            const docElementCls = global.document.documentElement.classList;
+            docElementCls.add(this.globalToggleClass);
+            docElementCls.add(DARKENER_CLASS_INSTANT_TOGGLE);
+            docElementCls.add(DARKENER_CLASS_TOGGLE);
             darkenerClass.add(INIT_CLASS);
             navigationControllerClassList.add(OPEN_CLASS);
         } else {
@@ -235,9 +236,8 @@ class OffCanvas {
 
     close(event) {
         if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
-            const navigationControllerClassList = this.navigationContainer.classList;
             const promise = this._remove(event);
-            this._removeInstant(navigationControllerClassList);
+            this._removeInstant();
             return promise;
         }
         return new Promise(r => r());
