@@ -173,7 +173,7 @@ class OffCanvas {
     _remove(event) {
         return new Promise((resolve) => {
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function scheduler(e) {
-                if (e.srcElement !== this.navigationContainer) {
+                if (e.target !== this.navigationContainer) {
                     return Util.addEventOnce(Settings.getTransitionEvent(),
                         this.navigationContainer, scheduler.bind(this));
                 }
