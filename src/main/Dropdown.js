@@ -321,13 +321,13 @@ class Dropdown {
                 this.currentOpen = dropdownContent;
                 this.currentTarget = target;
             }
+            FixedWindow.getInstance().open(this);
             if (isAbsolute) {
                 // Check collision:
                 let selfTarget = target.getAttribute(ATTR_DATA_TARGET);
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
-                FixedWindow.getInstance().open(this);
                 // optionally get custom darkener container for target
                 const d = target.getAttribute(ATTR_DARKENER);
                 if (d) {
