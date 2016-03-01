@@ -272,8 +272,8 @@ class Util {
      * @param {HTMLElement|ClientRect} target the target container to align to
      * @param {HTMLElement} elementToPosition the element to position
      * @param {HTMLElement} collisionContainer the outer container to prevent collisions
-     * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
-     * @param {bool} [positionTop] flip top, by default element is positioned to the bottom.
+     * @param {boolean} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
+     * @param {boolean} [positionTop] flip top, by default element is positioned to the bottom.
      * @returns {HTMLElement}
      */
     static setupPositionNearby(target, elementToPosition, collisionContainer, centerHorizontal, positionTop) {
