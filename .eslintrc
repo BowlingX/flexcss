@@ -36,6 +36,7 @@
       2,
       "global"
     ],
+    "consistent-return": 0,
     "no-param-reassign": [2, {"props": false}],
     "arrow-body-style": [0],
     "max-len": [2, 120, 4],

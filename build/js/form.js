@@ -67,7 +67,46 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_FORM_AJAX_COMPLETED = exports.EVENT_FORM_AFTER_AJAX_SUBMIT = exports.EVENT_FORM_SUBMIT = exports.EVENT_FORM_READY = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _Tooltip = __webpack_require__(8);
+	
+	var _Tooltip2 = _interopRequireDefault(_Tooltip);
+	
+	__webpack_require__(12);
+	
+	var _Event = __webpack_require__(14);
+	
+	var _Event2 = _interopRequireDefault(_Event);
+	
+	var _Util = __webpack_require__(9);
+	
+	var _Util2 = _interopRequireDefault(_Util);
+	
+	var _Settings = __webpack_require__(11);
+	
+	var _Settings2 = _interopRequireDefault(_Settings);
+	
+	var _DestroyableWidget2 = __webpack_require__(10);
+	
+	var _DestroyableWidget3 = _interopRequireDefault(_DestroyableWidget2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
 	
 	/*
 	 * The MIT License (MIT)
@@ -98,47 +137,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Licensed under the MIT License (MIT)
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
-	
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_FORM_AJAX_COMPLETED = exports.EVENT_FORM_AFTER_AJAX_SUBMIT = exports.EVENT_FORM_SUBMIT = exports.EVENT_FORM_READY = undefined;
-	
-	var _Tooltip = __webpack_require__(8);
-	
-	var _Tooltip2 = _interopRequireDefault(_Tooltip);
-	
-	__webpack_require__(12);
-	
-	var _Event = __webpack_require__(14);
-	
-	var _Event2 = _interopRequireDefault(_Event);
-	
-	var _Util = __webpack_require__(9);
-	
-	var _Util2 = _interopRequireDefault(_Util);
-	
-	var _Settings = __webpack_require__(11);
-	
-	var _Settings2 = _interopRequireDefault(_Settings);
-	
-	var _DestroyableWidget2 = __webpack_require__(10);
-	
-	var _DestroyableWidget3 = _interopRequireDefault(_DestroyableWidget2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var LOADING_CLASS = 'loading';
 	var DATA_ELEMENT_INVALID = 'data-flexcss-invalid';
@@ -762,6 +760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getForm',
 	
+	
 	        /**
 	         * This form
 	         * @returns {HTMLElement}
@@ -805,6 +804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    }, {
 	        key: 'showAndOrCreateTooltip',
+	
 	
 	        /**
 	         * Creates a tooltip at given element, will only create a new instance if not created
@@ -1284,6 +1284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {Array}
 	 */
 	
+	
 	Form.globalValidators = [];
 	
 	/**
@@ -1312,13 +1313,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
 	var _Util = __webpack_require__(9);
 	
@@ -1446,6 +1447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Boolean} [removeTitle] removes title element if given
 	     * @param {Node} [positionRelative]
 	     */
+	
 	
 	    _createClass(Tooltip, [{
 	        key: 'createTooltip',
@@ -1580,11 +1582,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -1631,6 +1633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _createClass(Util, null, [{
 	        key: "prefixedAnimateEvent",
+	
 	
 	        /**
 	         * Will register the right animation event based on browser
@@ -1700,6 +1703,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	                now = now.parentNode;
 	            }
 	            return now !== null;
+	        }
+	
+	        /**
+	         * Finds the closest element including itself matching a callback
+	         * @param {Node} el
+	         * @param {Function} callback
+	         * @returns {Node|boolean}
+	         */
+	
+	    }, {
+	        key: "closestCallback",
+	        value: function closestCallback(el, callback) {
+	            var element = el;
+	            while (element !== null) {
+	                if (callback(element)) {
+	                    return element;
+	                }
+	                element = element.parentNode;
+	            }
+	            return false;
 	        }
 	
 	        /**
@@ -1879,8 +1902,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {HTMLElement|ClientRect} target the target container to align to
 	         * @param {HTMLElement} elementToPosition the element to position
 	         * @param {HTMLElement} collisionContainer the outer container to prevent collisions
-	         * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
-	         * @param {bool} [positionTop] flip top, by default element is positioned to the bottom.
+	         * @param {boolean} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
+	         * @param {boolean} [positionTop] flip top, by default element is positioned to the bottom.
 	         * @returns {HTMLElement}
 	         */
 	
@@ -1989,6 +2012,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
 	/*
 	 * The MIT License (MIT)
 	 *
@@ -2013,19 +2046,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * THE SOFTWARE.
 	 */
 	
-	'use strict';
-	
 	/**
 	 * Provides a Basic Widget
 	 */
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var DestroyableWidget = function () {
 	    function DestroyableWidget() {
@@ -2038,8 +2061,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Destroys a Widget
 	     */
 	
+	
 	    _createClass(DestroyableWidget, [{
-	        key: 'destroy',
+	        key: "destroy",
 	        value: function destroy() {
 	            this.listeners.forEach(function (listener) {
 	                listener.element.removeEventListener.apply(listener.element, listener.args);
@@ -2057,7 +2081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	
 	    }, {
-	        key: 'addEventListener',
+	        key: "addEventListener",
 	        value: function addEventListener(element, name, listener, capture) {
 	            this.listeners.push({
 	                element: element,
@@ -2079,6 +2103,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
@@ -2104,9 +2132,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 	
 	var _Util = __webpack_require__(9);
 	
@@ -2171,6 +2196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _createClass(Settings, null, [{
 	        key: 'setup',
+	
 	
 	        /**
 	         * Setup global settings, overwrite default values
@@ -2694,11 +2720,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -2733,13 +2759,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function poly() {
 	    if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
 	        var _CustomEvent = function CustomEvent(event, params) {
-	            var evt = undefined;
 	            var thisParams = params || {
 	                bubbles: false,
 	                cancelable: false,
 	                detail: undefined
 	            };
-	            evt = document.createEvent("CustomEvent");
+	            var evt = document.createEvent("CustomEvent");
 	            evt.initCustomEvent(event, thisParams.bubbles, thisParams.cancelable, thisParams.detail);
 	            return evt;
 	        };
@@ -2775,6 +2800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} options
 	     * @returns {EventHandler}
 	     */
+	
 	
 	    _createClass(EventHandler, [{
 	        key: "withOptions",

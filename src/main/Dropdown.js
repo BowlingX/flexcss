@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 import Util from './util/Util';
 import Settings from './util/Settings';
 import Event from './util/Event';
@@ -204,11 +202,10 @@ class Dropdown {
         if (!currentOpen) {
             return false;
         }
-        let future;
         const darkenerInstance = currentOpen.flexDarkenerInstance || this.darkener;
         const thisCurrentOpen = currentOpen;
 
-        future = new Promise((resolve) => {
+        const future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
                 Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function scheduler(e) {
                     if (e.srcElement !== currentOpen) {

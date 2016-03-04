@@ -138,10 +138,8 @@ class Toggleable {
             target = document.querySelector(`[${ATTR_NAME}="${ref.id}"]`);
         }
 
-        let maybeToggleNode;
         let future;
         const elClassList = target.classList;
-        let parentClassList;
         const parent = target.parentNode;
         const doc = global.document;
 
@@ -170,11 +168,11 @@ class Toggleable {
         });
 
         if (parent) {
-            maybeToggleNode = Util.parentsUntil(target, (node) => {
+            const maybeToggleNode = Util.parentsUntil(target, (node) => {
                 return node && node.hasAttribute && node.hasAttribute(ATTR_TOGGLE_LIST);
             });
 
-            parentClassList = parent.classList;
+            const parentClassList = parent.classList;
             // Abort if element is already active and if is part of a toggle list
             if (maybeToggleNode) {
                 if (!parentClassList.contains(ACTIVE_CLASS)) {

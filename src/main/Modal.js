@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 /* global KeyboardEvent */
 
 import Settings from './util/Settings';
