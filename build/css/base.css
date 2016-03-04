@@ -50,6 +50,9 @@
 * Mixin to create a multine ellipsis
 */
 /**
+* Tooltips
+*/
+/**
 * Global Animations
 */
 @-webkit-keyframes progress-bar-stripes {
@@ -2076,7 +2079,7 @@ pre > code {
   margin: 43px auto 0 auto;
 }
 
-html.modal-open body {
+html.modal-open.fixed-window-open body {
   overflow: hidden;
 }
 
@@ -2149,7 +2152,7 @@ html.modal-open body {
   transition: -webkit-transform 0.35s ease;
   transition: transform 0.35s ease;
   top: 0;
-  right: 0px;
+  right: 0;
 }
 
 .sidebar.open {
@@ -2184,40 +2187,50 @@ html.modal-open body {
   cursor: pointer;
 }
 
-.darkener:not(.init) {
-  -webkit-animation-name: darkenerFadeOut;
-          animation-name: darkenerFadeOut;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
-}
-
-.toggled-canvas .darkener {
-  display: block;
-}
-
-.toggled-canvas .darkener.init {
-  -webkit-animation-name: darkenerFadeIn;
-          animation-name: darkenerFadeIn;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
-}
-
 .flex-align-center {
   -webkit-align-self: center;
       -ms-flex-item-align: center;
           align-self: center;
+}
+
+.darkener {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: opacity;
+  opacity: 0.35;
+  background: #000;
+  z-index: 21;
+  display: none;
+  cursor: pointer;
+}
+
+.darkener:not(.init) {
+  -webkit-animation-name: darkenerFadeOut;
+          animation-name: darkenerFadeOut;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+}
+
+.fixed-window-open .darkener.init {
+  -webkit-animation-name: darkenerFadeIn;
+          animation-name: darkenerFadeIn;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
 }
 
 /* Main Navigation Container, Off-Screen Navigation*/
@@ -4323,17 +4336,6 @@ img {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background: rgba(0, 0, 0, 0.35);
-  -webkit-animation-name: backgroundFadeIn;
-          animation-name: backgroundFadeIn;
-  -webkit-animation-duration: 0.25s;
-          animation-duration: 0.25s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
   z-index: 22;
   display: none;
   -webkit-overflow-scrolling: touch;
@@ -4373,8 +4375,28 @@ img {
   cursor: wait;
 }
 
-.modal-open body {
+.modal-container:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal-container.open:after {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
 }
 
 .modal {
@@ -4543,9 +4565,6 @@ img {
           align-items: center;
 }
 
-/**
-* Tooltips
-*/
 .tooltip-container {
   z-index: 31;
   pointer-events: none;
@@ -6249,10 +6268,8 @@ html:not(.touch) .fade-listing:not(:hover) .fade-out {
   margin-left: -50px;
 }
 
-@media all and (max-width: 767px) {
-  html.toggled-canvas, html.toggled-canvas body {
-    overflow-y: hidden;
-  }
+.fixed-window-open body {
+  width: 100%;
 }
 
 /*# sourceMappingURL=../maps/base.map*/

@@ -28,15 +28,13 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
-
-/*global KeyboardEvent*/
+/* global KeyboardEvent */
 
 import Settings from './util/Settings';
 import Event from './util/Event';
 import Util from './util/Util';
 import Widget from './Widget';
+import FixedWindow from './lib/FixedWindow';
 
 const HTML_ELEMENT = global.document.documentElement;
 const KEY_ESC = 27;
@@ -91,7 +89,8 @@ export const EVENT_MODAL_ASYNC_TARGET_LOADED = 'flexcss.modal.asyncTargetLoaded'
  */
 class Modal {
     constructor(DelegateContainer, options) {
-        const doc = global.document, container = DelegateContainer instanceof HTMLElement ?
+        const doc = global.document;
+        const container = DelegateContainer instanceof HTMLElement ?
             DelegateContainer : doc.getElementById(DelegateContainer);
 
         // Instance vars:
@@ -141,32 +140,12 @@ class Modal {
      * @param n
      */
     _removeModalFromStack(n) {
-        var t = Modal._modalInstances.indexOf(n), self = this;
+        const t = Modal._modalInstances.indexOf(n);
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
-            if (Modal._modalInstances.length === 0) {
-                // restore scrollPosition:
-                if (self.dataMainPageContainer) {
-                    setTimeout(function () {
-                        if (self.options.fixedContainer) {
-                            self.dataMainPageContainer.style.position = "static";
-                            self.dataMainPageContainer.style.top = "0px";
-                            // reset scrollTop
-                            document.documentElement.scrollTop = self.currentScrollTop;
-                            document.body.scrollTop = self.currentScrollTop;
-                        }
-                        Settings.get().scrollbarUpdateNodes.forEach(function (node) {
-                            if (node instanceof Array) {
-                                const [whatNode, property] = node;
-                                whatNode.style[property] = '';
-                            } else {
-                                node.style.paddingRight = '';
-                            }
-                        });
-                        HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-                    }, 0);
-                }
-            }
+            FixedWindow.getInstance().close().then(() => {
+                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
+            });
         }
     }
 
@@ -185,7 +164,7 @@ class Modal {
      * @returns {*}
      */
     close(e) {
-        var self = this;
+        const self = this;
 
         const options = self.currentOpen ? Util.applyOptionsFromElement(
             self.currentOpen, Util.copy(self.options)) : self.options;
@@ -286,7 +265,7 @@ class Modal {
     switchModals(co, last) {
         co.prevModal = last;
         Modal._modalInstances.push(co);
-
+        FixedWindow.getInstance().open(this);
         if (last) {
             this._finishState(last);
             Util.prefixedAnimateEvent(last, 'AnimationEnd', this._finishAnim);
@@ -323,38 +302,7 @@ class Modal {
     }
 
     handleScrollbar() {
-        var self = this;
         if (Modal._modalInstances.length === 0) {
-            // save current scrollTop:
-            let scrollTop, c;
-            if (self.options.fixedContainer) {
-                scrollTop = global.pageYOffset;
-                c = self.dataMainPageContainer;
-                self.currentScrollTop = scrollTop;
-            }
-            // this causes reflow/paint and should be optimized
-            // At lest we write in a batch later
-            Settings.get().scrollbarUpdateNodes.map(function (n) {
-                let foundProperty = 'paddingRight';
-                let direction = 1;
-                if (n instanceof Array) {
-                    const [whatNode, property, d] = n;
-                    foundProperty = property;
-                    n = whatNode;
-                    direction = d || 1;
-                }
-                return {
-                    n: n, property:foundProperty, value: parseInt(global.getComputedStyle(n)[foundProperty]) +
-                    (Settings.getScrollbarWidth() * direction) + 'px'
-                };
-            }).forEach(function (d) {
-                d.n.style[d.property] = d.value;
-            });
-            if (self.options.fixedContainer) {
-                if (c) {
-                    c.style.cssText += `top:${scrollTop * -1 + 'px'};position:fixed`;
-                }
-            }
             HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
         }
     }
@@ -445,7 +393,7 @@ class Modal {
         }
 
         let loader, doc = global.document, toggleLoader = function (show) {
-                if (show) {
+            if (show) {
                 loader = doc.createElement('div');
                 loader.className = CLS_LOADER_CONTAINER;
                 var loaderLoader = doc.createElement('div');
@@ -455,7 +403,7 @@ class Modal {
             } else {
                 loader.parentNode.removeChild(loader);
             }
-            };
+        };
 
         this.handleScrollbar();
 
@@ -529,7 +477,8 @@ class Modal {
 
     registerEvents(delegate) {
         var delegateContainer = delegate || this.container, self = this;
-
+        // Modals should always be fixed
+        FixedWindow.getInstance().addScreenConstraint(Modal, (width) => true);
         // register modal instance so we can detect multiple registrars
         delegateContainer.flexModalInstance = self;
         self.eventFunction = function () {
@@ -591,7 +540,7 @@ class Modal {
                     }
                 });
             });
-            observer.observe(modalContainer, { childList: true });
+            observer.observe(modalContainer, {childList: true});
         } else {
             modalContainer.addEventListener('DOMNodeRemoved', function (e) {
                 if (e.target !== modalContainer && (modalContainer.childNodes.length - 1) === 0) {

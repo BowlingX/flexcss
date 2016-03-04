@@ -22,7 +22,7 @@
 }
 
 html {
-  &.modal-open {
+  &.modal-open.fixed-window-open {
     body {
       overflow: hidden;
     }
@@ -96,7 +96,7 @@ html {
   transform: translate3d(100%, 0, 0);
   transition: transform $globalMediumEaseTime $globalMenuEasing;
   top: 0;
-  right: 0px;
+  right:0;
   &.open {
     transform: translate3d(0%, 0, 0);
   }
@@ -122,18 +122,8 @@ html {
   z-index: $indexDarkener;
   display: none;
   cursor:pointer;
-  &:not(.init) {
-    @include animate(darkenerFadeOut);
-  }
 }
 
-.toggled-canvas .darkener {
-  display: block;
-}
-
-.toggled-canvas .darkener.init {
-  @include animate(darkenerFadeIn);
-}
 
 // Some flex utility classes:
 

@@ -28,12 +28,11 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 import Util from './util/Util';
 import Settings from './util/Settings';
 import Event from './util/Event';
 import Widget from './Widget';
+import FixedWindow from './lib/FixedWindow';
 
 /**
  * @type {string}
@@ -116,10 +115,7 @@ class Dropdown {
      */
     _delegateFunction(e) {
         const currentOpen = this.currentOpen;
-        const targetHas = e.target.hasAttribute(ATTR_NAME);
-        const parentHas = e.target.parentNode ?
-            e.target.parentNode.hasAttribute(ATTR_NAME) : false;
-        const target = targetHas ? e.target : e.target.parentNode;
+        const target = Util.closestCallback(e.target, n => n instanceof HTMLElement && n.hasAttribute(ATTR_NAME));
         const targetIsCurrent = target === this.currentTarget;
 
         if (currentOpen && !Util.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
@@ -130,7 +126,7 @@ class Dropdown {
             return targetIsCurrent ? false : this._delegateFunction(e);
         }
 
-        if (targetHas || parentHas && !currentOpen) {
+        if (target && !currentOpen) {
             e.preventDefault();
             e.stopImmediatePropagation();
 
@@ -156,6 +152,7 @@ class Dropdown {
      * @returns {Dropdown}
      */
     registerEvents() {
+        FixedWindow.getInstance().addScreenConstraint(Dropdown, (width) => width < Settings.get().smallBreakpoint);
         this.container.addEventListener(Settings.getTabEvent(), this._delegateFunction.bind(this), true);
         return this;
     }
@@ -205,30 +202,32 @@ class Dropdown {
         if (!currentOpen) {
             return false;
         }
-        let future;
         const darkenerInstance = currentOpen.flexDarkenerInstance || this.darkener;
         const thisCurrentOpen = currentOpen;
 
-        future = new Promise((resolve) => {
+        const future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
-                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, () => {
-                    setTimeout(() => {
+                Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function scheduler(e) {
+                    if (e.srcElement !== currentOpen) {
+                        return Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, scheduler.bind(this));
+                    }
+                    requestAnimationFrame(() => {
                         Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
                         // if a new dropdown has been opened in the meantime, do not remove darkener
                         if (this.currentOpen !== null) {
                             return false;
                         }
                         this.toggleDarkenerToggler(darkenerInstance, false);
-                        global.document.documentElement.classList.remove(Settings.get().canvasToggledClass);
                         resolve(true);
-                    }, Settings.get().darkenerFadeDelay);
-                });
+                    });
+                }.bind(this));
             } else {
                 resolve(true);
                 Event.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
             }
         });
 
+        FixedWindow.getInstance().close();
         currentOpen.classList.remove(CLS_OPEN);
 
         if (currentOpen.flexDarkenerInstance) {
@@ -319,13 +318,13 @@ class Dropdown {
                 this.currentOpen = dropdownContent;
                 this.currentTarget = target;
             }
+            FixedWindow.getInstance().open(this);
             if (isAbsolute) {
                 // Check collision:
                 let selfTarget = target.getAttribute(ATTR_DATA_TARGET);
                 selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
                 Util.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
             } else {
-                global.document.documentElement.classList.add(Settings.get().canvasToggledClass);
                 // optionally get custom darkener container for target
                 const d = target.getAttribute(ATTR_DARKENER);
                 if (d) {

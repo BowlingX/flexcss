@@ -29,14 +29,13 @@
 (function poly() {
     if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
         const CustomEvent = function CustomEvent(event, params) {
-            let evt;
             const thisParams = params ||
                 {
                     bubbles: false,
                     cancelable: false,
                     detail: undefined
                 };
-            evt = document.createEvent("CustomEvent");
+            const evt = document.createEvent("CustomEvent");
             evt.initCustomEvent(event, thisParams.bubbles,
                 thisParams.cancelable, thisParams.detail);
             return evt;

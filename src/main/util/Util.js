@@ -100,6 +100,23 @@ class Util {
     }
 
     /**
+     * Finds the closest element including itself matching a callback
+     * @param {Node} el
+     * @param {Function} callback
+     * @returns {Node|boolean}
+     */
+    static closestCallback(el, callback) {
+        let element = el;
+        while (element !== null) {
+            if (callback(element)) {
+                return element;
+            }
+            element = element.parentNode;
+        }
+        return false;
+    }
+
+    /**
      * Walks the tree until func returns true for given argument
      * @param target
      * @param func
@@ -255,8 +272,8 @@ class Util {
      * @param {HTMLElement|ClientRect} target the target container to align to
      * @param {HTMLElement} elementToPosition the element to position
      * @param {HTMLElement} collisionContainer the outer container to prevent collisions
-     * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
-     * @param {bool} [positionTop] flip top, by default element is positioned to the bottom.
+     * @param {boolean} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
+     * @param {boolean} [positionTop] flip top, by default element is positioned to the bottom.
      * @returns {HTMLElement}
      */
     static setupPositionNearby(target, elementToPosition, collisionContainer, centerHorizontal, positionTop) {
@@ -342,7 +359,7 @@ class Util {
                 thisOffset = optionalOffset();
             }
             if (thisOffset > 0) {
-                const scrolledY = window.scrollY || window.pageYOffset;
+                const scrolledY = window.pageYOffset;
                 if (scrolledY) {
                     window.scroll(0, scrolledY - thisOffset);
                 }

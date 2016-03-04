@@ -47,6 +47,9 @@
 * Mixin to create a multine ellipsis
 */
 /**
+* Tooltips
+*/
+/**
 * Global Animations
 */
 @-webkit-keyframes progress-bar-stripes {
@@ -1693,9 +1696,6 @@ th {
 }
 
 /* '' */
-/**
-* Tooltips
-*/
 .tooltip-container {
   z-index: 31;
   pointer-events: none;

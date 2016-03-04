@@ -31,6 +31,7 @@
 import Settings from './util/Settings';
 import Util from './util/Util';
 import Event from './util/Event';
+import FixedWindow from './lib/FixedWindow';
 
 /**
  * @type {string}
@@ -74,18 +75,13 @@ class OffCanvas {
      */
     constructor(NavigationId, Darkener, factor, disableTouch) {
         const doc = global.document;
-        let touched = 0;
+        let touchedX = 0;
         const navigationContainer = NavigationId instanceof HTMLElement ?
             NavigationId : doc.getElementById(NavigationId);
         const darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener);
         const DARKENER_CLASS_TOGGLE = `toggle-${darkener.id}` || 'darkener';
         const DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`;
-        const resetStyles = (s) => {
-            s.transform = '';
-            s.transition = '';
-            s.webkitTransform = '';
-            s.webkitTransition = '';
-        };
+
         const shouldNotTouch = () => {
             return window.innerWidth >= Settings.get().smallBreakpoint;
         };
@@ -110,80 +106,88 @@ class OffCanvas {
 
         if (!disableTouch) {
             navigationContainer.addEventListener('touchstart', (e) => {
-                requestAnimationFrame(() => {
-                    if (shouldNotTouch()) {
-                        return;
-                    }
-                    touched = e.touches[0].clientX;
-                    const target = navigationContainer;
-                    const style = target.style;
-                    target.mustHide = false;
-                    style.transition = 'transform 0s ease';
-                    style.webkitTransition = '-webkit-transform 0s ease';
-                });
+                if (shouldNotTouch()) {
+                    return;
+                }
+                touchedX = e.touches[0].clientX;
+                navigationContainer.mustHide = false;
             });
             navigationContainer.addEventListener('touchmove', (e) => {
                 if (shouldNotTouch()) {
                     return;
                 }
-                const x = e.touches[0].clientX;
+                const { clientX } = e.touches[0];
                 const target = navigationContainer;
                 const style = target.style;
-                const calc = touched - x;
+                const calcX = touchedX - clientX;
                 const bounds = target.getBoundingClientRect();
-                const compare = factor > 0 ? calc <= 0 : calc >= 0;
+                const compare = factor > 0 ? calcX <= 0 : calcX >= 0;
                 if (compare) {
-                    target.mustHide = factor > 0 ? calc * -1 >
-                    bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-                    const transform = `translate3d(${calc * -1}px,0,0)`;
+                    style.transition = 'transform 0s ease';
+                    style.webkitTransition = '-webkit-transform 0s ease';
+                    target.mustHide = factor > 0 ? calcX * -1 >
+                    bounds.width / HIDE_FACTOR : calcX > bounds.width / HIDE_FACTOR;
+                    const transform = `translate3d(${calcX * -1}px,0,0)`;
                     style.transform = transform;
                     style.webkitTransform = transform;
                 }
             });
             navigationContainer.addEventListener('touchend', () => {
-                requestAnimationFrame(() => {
-                    if (shouldNotTouch()) {
-                        return;
-                    }
-                    const target = navigationContainer;
-                    const style = target.style;
-                    if (target.mustHide) {
-                        const width = target.getBoundingClientRect().width * factor;
-                        style.transition = 'transform .2s ease';
-                        style.webkitTransition = '-webkit-transform .2s ease';
-                        const transform = `translate3d(${width}px,0,0)`;
-                        style.transform = transform;
-                        style.webkitTransform = transform;
-                        this._remove(() => {
-                            resetStyles(style);
-                        });
-                        this._removeInstant();
-                    } else {
-                        resetStyles(style);
-                    }
-                });
+                if (shouldNotTouch()) {
+                    return;
+                }
+                const target = navigationContainer;
+                const style = target.style;
+                if (target.mustHide) {
+                    const width = target.getBoundingClientRect().width * factor;
+                    style.transition = 'transform .2s ease';
+                    style.webkitTransition = '-webkit-transform .2s ease';
+                    const transform = `translate3d(${width}px,0,0)`;
+                    style.transform = transform;
+                    style.webkitTransform = transform;
+                    this._remove().then(() => {
+                        this.resetTransform(style);
+                    });
+                    this._removeInstant();
+                } else {
+                    this.resetTransform(style);
+                }
             });
         }
     }
 
     /**
+     * @param {Object} s
+     */
+    resetTransform(s) {
+        s.transform = '';
+        s.transition = '';
+        s.webkitTransform = '';
+        s.webkitTransition = '';
+    }
+
+    /**
+     * @param {Object} [event]
      * @private
      */
-    _remove(callback) {
-        Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
-            // add timeout because transition event fires a little to early
-            setTimeout(() => {
+    _remove(event) {
+        return new Promise((resolve) => {
+            Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, function scheduler(e) {
+                if (e.target !== this.navigationContainer) {
+                    return Util.addEventOnce(Settings.getTransitionEvent(),
+                        this.navigationContainer, scheduler.bind(this));
+                }
                 requestAnimationFrame(() => {
-                    const body = global.document.body;
                     OffCanvas.currentOpen = null;
-                    body.classList.remove(this.darkenerClassToggle);
-                    global.document.documentElement.classList.remove(this.globalToggleClass);
-                    Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
-                    if (callback) {
-                        callback();
+                    const docCls = global.document.documentElement.classList;
+                    docCls.remove(this.darkenerClassToggle);
+                    docCls.remove(this.globalToggleClass);
+                    if (!!event) {
+                        Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
                     }
+                    resolve();
                 });
-            }, Settings.get().darkenerFadeDelay);
+            }.bind(this));
         });
     }
 
@@ -192,36 +196,51 @@ class OffCanvas {
      */
     _removeInstant() {
         this.navigationContainer.classList.remove(OPEN_CLASS);
-        global.document.body.classList.remove(this.darkenerClassToggleInstant);
+        global.document.documentElement.classList.remove(this.darkenerClassToggleInstant);
         this.darkener.classList.remove(INIT_CLASS);
+        FixedWindow.getInstance().close();
     }
 
     /**
      * Toggles a an off-canvas element
-     * @param e
+     * @param [e]
      * @private
      */
-    _toggle(e) {
-        e.preventDefault();
-        const bodyClass = global.document.body.classList;
+    toggle(e) {
+        if (e) {
+            e.preventDefault();
+        }
+        this.resetTransform(this.navigationContainer.style);
         const darkenerClass = this.darkener.classList;
         const DARKENER_CLASS_TOGGLE = this.darkenerClassToggle;
         const DARKENER_CLASS_INSTANT_TOGGLE = this.darkenerClassToggleInstant;
         const navigationControllerClassList = this.navigationContainer.classList;
-        if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
-            this._remove();
-            this._removeInstant(navigationControllerClassList);
-        } else if (!OffCanvas.currentOpen) {
+        if (!OffCanvas.currentOpen) {
             Util.addEventOnce(Settings.getTransitionEvent(), this.navigationContainer, () => {
-                Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
+                if (!!e) {
+                    Event.dispatchAndFire(this.navigationContainer, EVENT_TOGGLE);
+                }
             });
             OffCanvas.currentOpen = this;
-            global.document.documentElement.classList.add(this.globalToggleClass);
-            bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-            bodyClass.add(DARKENER_CLASS_TOGGLE);
+            FixedWindow.getInstance().open(this);
+            const docElementCls = global.document.documentElement.classList;
+            docElementCls.add(this.globalToggleClass);
+            docElementCls.add(DARKENER_CLASS_INSTANT_TOGGLE);
+            docElementCls.add(DARKENER_CLASS_TOGGLE);
             darkenerClass.add(INIT_CLASS);
             navigationControllerClassList.add(OPEN_CLASS);
+        } else {
+            return this.close(e);
         }
+    }
+
+    close(event) {
+        if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
+            const promise = this._remove(event);
+            this._removeInstant();
+            return promise;
+        }
+        return new Promise(r => r());
     }
 
     /**
@@ -230,6 +249,7 @@ class OffCanvas {
      */
     registerEvents(delegate) {
         const thisDelegate = delegate || global.document;
+        FixedWindow.getInstance().addScreenConstraint(OffCanvas, (width) => width < Settings.get().smallBreakpoint);
         thisDelegate.addEventListener(Settings.getTabEvent(), (e) => {
             if (OffCanvas.currentOpen && OffCanvas.currentOpen !== this) {
                 return;
@@ -238,11 +258,11 @@ class OffCanvas {
             const validTarget = e.target.getAttribute(ATTR_TARGET) === id;
             if (!Util.isPartOfNode(e.target, this.navigationContainer)) {
                 if (validTarget || (OffCanvas.currentOpen === this && e.target === this.darkener)) {
-                    this._toggle(e);
+                    this.toggle(e);
                 }
             } else {
                 if (e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
-                    this._toggle(e);
+                    this.toggle(e);
                 }
             }
         });

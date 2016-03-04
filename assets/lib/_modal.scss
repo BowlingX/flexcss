@@ -17,14 +17,12 @@
   left: 0;
   height: 100%;
   width: 100%;
-  overflow-x:hidden;
-  background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
-  @include animate(backgroundFadeIn, .25s);
+  overflow-x: hidden;
   z-index: $indexModalContainer;
   &.front {
     z-index: $indexModalContainer +1;
   }
-  display:none;
+  display: none;
   &.open {
     display: block;
   }
@@ -46,11 +44,23 @@
   &.loading {
     cursor: wait;
   }
-}
 
-.modal-open {
-  body {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    opacity: 0;
+    will-change: opacity;
+    background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
+  }
+
+  &.open {
+    &:after {
+      @include animate(fadeIn);
+    }
   }
 }
 
@@ -74,7 +84,7 @@
   box-shadow: $modalBoxShadow;
 
   &.modal-anim-end {
-    animation-name:none !important;
+    animation-name: none !important;
   }
 }
 
@@ -136,7 +146,7 @@
     top: 0;
 
     &.open {
-      display:flex;
+      display: flex;
       justify-content: center;
     }
   }

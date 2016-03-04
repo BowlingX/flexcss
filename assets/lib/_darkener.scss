@@ -1,0 +1,23 @@
+
+// A Darkener that spans the complete screen
+.darkener {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: opacity;
+  opacity: $darkenerFadeOpacity;
+  background: $darkenerColor;
+  z-index: $indexDarkener;
+  &:not(.init) {
+    @include animate(darkenerFadeOut, .35s);
+  }
+  display:none;
+  cursor:pointer;
+}
+
+
+.fixed-window-open .darkener.init {
+  @include animate(darkenerFadeIn, .35s);
+}

@@ -93,19 +93,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
 	
-	var _Toggleable = __webpack_require__(17);
+	var _Toggleable = __webpack_require__(19);
 	
 	var _Toggleable2 = _interopRequireDefault(_Toggleable);
 	
-	var _OffCanvas = __webpack_require__(18);
+	var _OffCanvas = __webpack_require__(20);
 	
 	var _OffCanvas2 = _interopRequireDefault(_OffCanvas);
 	
-	var _Dropdown = __webpack_require__(19);
+	var _Dropdown = __webpack_require__(21);
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _LightBox = __webpack_require__(20);
+	var _LightBox = __webpack_require__(22);
 	
 	var _LightBox2 = _interopRequireDefault(_LightBox);
 	
@@ -130,7 +130,46 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_FORM_AJAX_COMPLETED = exports.EVENT_FORM_AFTER_AJAX_SUBMIT = exports.EVENT_FORM_SUBMIT = exports.EVENT_FORM_READY = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _Tooltip = __webpack_require__(8);
+	
+	var _Tooltip2 = _interopRequireDefault(_Tooltip);
+	
+	__webpack_require__(12);
+	
+	var _Event = __webpack_require__(14);
+	
+	var _Event2 = _interopRequireDefault(_Event);
+	
+	var _Util = __webpack_require__(9);
+	
+	var _Util2 = _interopRequireDefault(_Util);
+	
+	var _Settings = __webpack_require__(11);
+	
+	var _Settings2 = _interopRequireDefault(_Settings);
+	
+	var _DestroyableWidget2 = __webpack_require__(10);
+	
+	var _DestroyableWidget3 = _interopRequireDefault(_DestroyableWidget2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*global HTMLFormElement, fetch, FormData, clearTimeout, NodeList*/
 	
 	/*
 	 * The MIT License (MIT)
@@ -161,47 +200,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Licensed under the MIT License (MIT)
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
-	
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_FORM_AJAX_COMPLETED = exports.EVENT_FORM_AFTER_AJAX_SUBMIT = exports.EVENT_FORM_SUBMIT = exports.EVENT_FORM_READY = undefined;
-	
-	var _Tooltip = __webpack_require__(8);
-	
-	var _Tooltip2 = _interopRequireDefault(_Tooltip);
-	
-	__webpack_require__(12);
-	
-	var _Event = __webpack_require__(14);
-	
-	var _Event2 = _interopRequireDefault(_Event);
-	
-	var _Util = __webpack_require__(9);
-	
-	var _Util2 = _interopRequireDefault(_Util);
-	
-	var _Settings = __webpack_require__(11);
-	
-	var _Settings2 = _interopRequireDefault(_Settings);
-	
-	var _DestroyableWidget2 = __webpack_require__(10);
-	
-	var _DestroyableWidget3 = _interopRequireDefault(_DestroyableWidget2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var LOADING_CLASS = 'loading';
 	var DATA_ELEMENT_INVALID = 'data-flexcss-invalid';
@@ -825,6 +823,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getForm',
 	
+	
 	        /**
 	         * This form
 	         * @returns {HTMLElement}
@@ -868,6 +867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    }, {
 	        key: 'showAndOrCreateTooltip',
+	
 	
 	        /**
 	         * Creates a tooltip at given element, will only create a new instance if not created
@@ -1347,6 +1347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {Array}
 	 */
 	
+	
 	Form.globalValidators = [];
 	
 	/**
@@ -1375,13 +1376,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
 	var _Util = __webpack_require__(9);
 	
@@ -1509,6 +1510,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Boolean} [removeTitle] removes title element if given
 	     * @param {Node} [positionRelative]
 	     */
+	
 	
 	    _createClass(Tooltip, [{
 	        key: 'createTooltip',
@@ -1643,11 +1645,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -1694,6 +1696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _createClass(Util, null, [{
 	        key: "prefixedAnimateEvent",
+	
 	
 	        /**
 	         * Will register the right animation event based on browser
@@ -1763,6 +1766,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	                now = now.parentNode;
 	            }
 	            return now !== null;
+	        }
+	
+	        /**
+	         * Finds the closest element including itself matching a callback
+	         * @param {Node} el
+	         * @param {Function} callback
+	         * @returns {Node|boolean}
+	         */
+	
+	    }, {
+	        key: "closestCallback",
+	        value: function closestCallback(el, callback) {
+	            var element = el;
+	            while (element !== null) {
+	                if (callback(element)) {
+	                    return element;
+	                }
+	                element = element.parentNode;
+	            }
+	            return false;
 	        }
 	
 	        /**
@@ -1942,8 +1965,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {HTMLElement|ClientRect} target the target container to align to
 	         * @param {HTMLElement} elementToPosition the element to position
 	         * @param {HTMLElement} collisionContainer the outer container to prevent collisions
-	         * @param {bool} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
-	         * @param {bool} [positionTop] flip top, by default element is positioned to the bottom.
+	         * @param {boolean} [centerHorizontal] set true to center element, otherwise it's put on the right border by default
+	         * @param {boolean} [positionTop] flip top, by default element is positioned to the bottom.
 	         * @returns {HTMLElement}
 	         */
 	
@@ -2033,7 +2056,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    thisOffset = optionalOffset();
 	                }
 	                if (thisOffset > 0) {
-	                    var scrolledY = window.scrollY || window.pageYOffset;
+	                    var scrolledY = window.pageYOffset;
 	                    if (scrolledY) {
 	                        window.scroll(0, scrolledY - thisOffset);
 	                    }
@@ -2052,6 +2075,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
 	/*
 	 * The MIT License (MIT)
 	 *
@@ -2076,19 +2109,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * THE SOFTWARE.
 	 */
 	
-	'use strict';
-	
 	/**
 	 * Provides a Basic Widget
 	 */
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var DestroyableWidget = function () {
 	    function DestroyableWidget() {
@@ -2101,8 +2124,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Destroys a Widget
 	     */
 	
+	
 	    _createClass(DestroyableWidget, [{
-	        key: 'destroy',
+	        key: "destroy",
 	        value: function destroy() {
 	            this.listeners.forEach(function (listener) {
 	                listener.element.removeEventListener.apply(listener.element, listener.args);
@@ -2120,7 +2144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	
 	    }, {
-	        key: 'addEventListener',
+	        key: "addEventListener",
 	        value: function addEventListener(element, name, listener, capture) {
 	            this.listeners.push({
 	                element: element,
@@ -2142,6 +2166,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
@@ -2167,9 +2195,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 	
 	var _Util = __webpack_require__(9);
 	
@@ -2202,6 +2227,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        global.FLEXCSS_CONST_TAB_EVENT = 'click';
 	
+	        global.FLEXCSS_IS_SMALL_SCREEN = false;
+	
 	        var init = function init() {
 	            // Measure scrollbar width
 	            global.FLEXCSS_CONST_SCROLLBAR_WIDTH = _Util2.default.getScrollBarWidth();
@@ -2232,6 +2259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _createClass(Settings, null, [{
 	        key: 'setup',
+	
 	
 	        /**
 	         * Setup global settings, overwrite default values
@@ -2265,6 +2293,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            return global.FLEXCSS_CONST_IS_IOS;
+	        }
+	
+	        /**
+	         * @returns {boolean}
+	         */
+	
+	    }, {
+	        key: 'isSmallScreen',
+	        value: function isSmallScreen() {
+	            return window.innerWidth < Settings.get().smallBreakpoint;
 	        }
 	
 	        /**
@@ -2745,11 +2783,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -2784,13 +2822,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function poly() {
 	    if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
 	        var _CustomEvent = function CustomEvent(event, params) {
-	            var evt = undefined;
 	            var thisParams = params || {
 	                bubbles: false,
 	                cancelable: false,
 	                detail: undefined
 	            };
-	            evt = document.createEvent("CustomEvent");
+	            var evt = document.createEvent("CustomEvent");
 	            evt.initCustomEvent(event, thisParams.bubbles, thisParams.cancelable, thisParams.detail);
 	            return evt;
 	        };
@@ -2826,6 +2863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} options
 	     * @returns {EventHandler}
 	     */
+	
 	
 	    _createClass(EventHandler, [{
 	        key: "withOptions",
@@ -2925,29 +2963,36 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/*
-	 * The MIT License (MIT)
-	 *
-	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
-	 *
-	 * Permission is hereby granted, free of charge, to any person obtaining a copy
-	 * of this software and associated documentation files (the "Software"), to deal
-	 * in the Software without restriction, including without limitation the rights
-	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	 * copies of the Software, and to permit persons to whom the Software is
-	 * furnished to do so, subject to the following conditions:
-	 *
-	 * The above copyright notice and this permission notice shall be included in
-	 * all copies or substantial portions of the Software.
-	 *
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	 * THE SOFTWARE.
-	 */
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_MODAL_ASYNC_TARGET_LOADED = exports.EVENT_MODAL_INIT = exports.EVENT_MODAL_OPENED = exports.EVENT_MODAL_BEFORE_CLOSED = exports.EVENT_MODAL_CLOSED = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Permission is hereby granted, free of charge, to any person obtaining a copy
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * of this software and associated documentation files (the "Software"), to deal
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * in the Software without restriction, including without limitation the rights
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * copies of the Software, and to permit persons to whom the Software is
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * furnished to do so, subject to the following conditions:
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The above copyright notice and this permission notice shall be included in
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * all copies or substantial portions of the Software.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
 	/*!
 	 * FlexCss.Modal
@@ -2955,18 +3000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
 	
-	'use strict';
-	
-	/*global KeyboardEvent*/
-	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_MODAL_ASYNC_TARGET_LOADED = exports.EVENT_MODAL_INIT = exports.EVENT_MODAL_OPENED = exports.EVENT_MODAL_BEFORE_CLOSED = exports.EVENT_MODAL_CLOSED = undefined;
+	/* global KeyboardEvent */
 	
 	var _Settings = __webpack_require__(11);
 	
@@ -2983,6 +3017,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Widget = __webpack_require__(16);
 	
 	var _Widget2 = _interopRequireDefault(_Widget);
+	
+	var _FixedWindow = __webpack_require__(17);
+	
+	var _FixedWindow2 = _interopRequireDefault(_FixedWindow);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3044,8 +3082,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Modal(DelegateContainer, options) {
 	        _classCallCheck(this, Modal);
 	
-	        var doc = global.document,
-	            container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer);
+	        var doc = global.document;
+	        var container = DelegateContainer instanceof HTMLElement ? DelegateContainer : doc.getElementById(DelegateContainer);
 	
 	        // Instance vars:
 	        if (!container) {
@@ -3094,40 +3132,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param n
 	     */
 	
+	
 	    _createClass(Modal, [{
 	        key: '_removeModalFromStack',
 	        value: function _removeModalFromStack(n) {
-	            var t = Modal._modalInstances.indexOf(n),
-	                self = this;
+	            var t = Modal._modalInstances.indexOf(n);
 	            if (t > -1) {
 	                Modal._modalInstances.splice(t, 1);
-	                if (Modal._modalInstances.length === 0) {
-	                    // restore scrollPosition:
-	                    if (self.dataMainPageContainer) {
-	                        setTimeout(function () {
-	                            if (self.options.fixedContainer) {
-	                                self.dataMainPageContainer.style.position = "static";
-	                                self.dataMainPageContainer.style.top = "0px";
-	                                // reset scrollTop
-	                                document.documentElement.scrollTop = self.currentScrollTop;
-	                                document.body.scrollTop = self.currentScrollTop;
-	                            }
-	                            _Settings2.default.get().scrollbarUpdateNodes.forEach(function (node) {
-	                                if (node instanceof Array) {
-	                                    var _node = _slicedToArray(node, 2);
-	
-	                                    var whatNode = _node[0];
-	                                    var property = _node[1];
-	
-	                                    whatNode.style[property] = '';
-	                                } else {
-	                                    node.style.paddingRight = '';
-	                                }
-	                            });
-	                            HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-	                        }, 0);
-	                    }
-	                }
+	                _FixedWindow2.default.getInstance().close().then(function () {
+	                    HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
+	                });
 	            }
 	        }
 	
@@ -3258,7 +3272,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function switchModals(co, last) {
 	            co.prevModal = last;
 	            Modal._modalInstances.push(co);
-	
+	            _FixedWindow2.default.getInstance().open(this);
 	            if (last) {
 	                this._finishState(last);
 	                _Util2.default.prefixedAnimateEvent(last, 'AnimationEnd', this._finishAnim);
@@ -3297,45 +3311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'handleScrollbar',
 	        value: function handleScrollbar() {
-	            var self = this;
 	            if (Modal._modalInstances.length === 0) {
-	                // save current scrollTop:
-	                var scrollTop = undefined,
-	                    c = undefined;
-	                if (self.options.fixedContainer) {
-	                    scrollTop = global.pageYOffset;
-	                    c = self.dataMainPageContainer;
-	                    self.currentScrollTop = scrollTop;
-	                }
-	                // this causes reflow/paint and should be optimized
-	                // At lest we write in a batch later
-	                _Settings2.default.get().scrollbarUpdateNodes.map(function (n) {
-	                    var foundProperty = 'paddingRight';
-	                    var direction = 1;
-	                    if (n instanceof Array) {
-	                        var _n = n;
-	
-	                        var _n2 = _slicedToArray(_n, 3);
-	
-	                        var whatNode = _n2[0];
-	                        var property = _n2[1];
-	                        var d = _n2[2];
-	
-	                        foundProperty = property;
-	                        n = whatNode;
-	                        direction = d || 1;
-	                    }
-	                    return {
-	                        n: n, property: foundProperty, value: parseInt(global.getComputedStyle(n)[foundProperty]) + _Settings2.default.getScrollbarWidth() * direction + 'px'
-	                    };
-	                }).forEach(function (d) {
-	                    d.n.style[d.property] = d.value;
-	                });
-	                if (self.options.fixedContainer) {
-	                    if (c) {
-	                        c.style.cssText += 'top:' + (scrollTop * -1 + 'px') + ';position:fixed';
-	                    }
-	                }
 	                HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
 	            }
 	        }
@@ -3520,7 +3496,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function registerEvents(delegate) {
 	            var delegateContainer = delegate || this.container,
 	                self = this;
-	
+	            // Modals should always be fixed
+	            _FixedWindow2.default.getInstance().addScreenConstraint(Modal, function (width) {
+	                return true;
+	            });
 	            // register modal instance so we can detect multiple registrars
 	            delegateContainer.flexModalInstance = self;
 	            self.eventFunction = function () {
@@ -3608,6 +3587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	// Static variable that keeps track of all open modals
 	
+	
 	Modal._modalInstances = [];
 	
 	// Global keydown listener for modal
@@ -3629,13 +3609,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -3723,6 +3703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   *
 	   * @returns {Promise}
 	   */
+	
 	
 	  _createClass(Widget, [{
 	    key: 'getAsync',
@@ -3821,6 +3802,292 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_AFTER_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_ADD = undefined;
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Settings = __webpack_require__(11);
+	
+	var _Settings2 = _interopRequireDefault(_Settings);
+	
+	var _debounce = __webpack_require__(18);
+	
+	var _debounce2 = _interopRequireDefault(_debounce);
+	
+	var _Event = __webpack_require__(14);
+	
+	var _Event2 = _interopRequireDefault(_Event);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var CLS_FIXED_WINDOW = 'fixed-window-open';
+	
+	var EVENT_BEFORE_FIXED_ADD = exports.EVENT_BEFORE_FIXED_ADD = 'flexcss.fixedWindow.beforeAdd';
+	var EVENT_AFTER_FIXED_REMOVE = exports.EVENT_AFTER_FIXED_REMOVE = 'flexcss.fixedWindow.afterRemove';
+	
+	/**
+	 * @type {FixedWindow}
+	 */
+	var fixedWindowInstance = undefined;
+	
+	var FixedWindow = function () {
+	    function FixedWindow() {
+	        _classCallCheck(this, FixedWindow);
+	
+	        this.widgets = [];
+	        this.currentScrollTop = 0;
+	        this.fixedScreenConstraints = [];
+	        this.windowWidth = 0;
+	        this.isFixedWindowActive = false;
+	    }
+	
+	    /**
+	     * Adds a constraint to detect if the window needs to be changed when the screensize changes
+	     *
+	     * @param {Function} widget
+	     * @param {Function} fixedBreakpointFn gets a width argument, return true to open a window
+	     */
+	
+	
+	    _createClass(FixedWindow, [{
+	        key: 'addScreenConstraint',
+	        value: function addScreenConstraint(widget, fixedBreakpointFn) {
+	            this.fixedScreenConstraints[widget] = fixedBreakpointFn;
+	        }
+	
+	        /**
+	         * @returns {null|DestroyableWidget}
+	         */
+	
+	    }, {
+	        key: 'getCurrentWidget',
+	        value: function getCurrentWidget() {
+	            return this.widgets.length > 0 ? this.widgets[this.widgets.length - 1] : null;
+	        }
+	
+	        /**
+	         * @private
+	         */
+	
+	    }, {
+	        key: '_checkFixedNeeded',
+	        value: function _checkFixedNeeded() {
+	            var _this = this;
+	
+	            if (this.widgets.length === 0) {
+	                return;
+	            }
+	            var widgets = new Set(this.widgets);
+	            var widgetsThatRequireFixedWindow = Array.from(widgets).some(function (widget) {
+	                return _this.fixedScreenConstraints[widget] && _this.fixedScreenConstraints[widget](_this.windowWidth);
+	            });
+	            if (!widgetsThatRequireFixedWindow) {
+	                this._removeFixedContainer();
+	            } else {
+	                this._addFixedContainer();
+	            }
+	        }
+	
+	        /**
+	         * @private
+	         */
+	
+	    }, {
+	        key: '_addFixedContainer',
+	        value: function _addFixedContainer() {
+	            if (this.isFixedWindowActive) {
+	                return;
+	            }
+	            _Event2.default.dispatchAndFire(global.document, EVENT_BEFORE_FIXED_ADD, {
+	                detail: this.getCurrentWidget()
+	            });
+	            // this causes layout and should be optimized
+	            // At lest we write in a batch later
+	            this.currentScrollTop = global.pageYOffset;
+	            _Settings2.default.get().scrollbarUpdateNodes.map(function (n) {
+	                var foundProperty = 'paddingRight';
+	                var direction = 1;
+	                var node = n;
+	                if (n instanceof Array) {
+	                    var _n = _slicedToArray(n, 3);
+	
+	                    var whatNode = _n[0];
+	                    var property = _n[1];
+	                    var d = _n[2];
+	
+	                    foundProperty = property;
+	                    node = whatNode;
+	                    direction = d || 1;
+	                }
+	                return {
+	                    node: node,
+	                    property: foundProperty,
+	                    value: parseInt(global.getComputedStyle(node)[foundProperty], 10) + (!node.__fixedWindowMod__ ? _Settings2.default.getScrollbarWidth() * direction : 0) + 'px'
+	                };
+	            }).forEach(function (d) {
+	                d.node.__fixedWindowMod__ = true;
+	                d.node.style[d.property] = d.value;
+	            });
+	
+	            global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
+	            global.document.body.style.cssText += 'top:' + this.currentScrollTop * -1 + 'px;position:fixed';
+	
+	            this.isFixedWindowActive = true;
+	        }
+	
+	        /**
+	         * @private
+	         */
+	
+	    }, {
+	        key: '_removeFixedContainer',
+	        value: function _removeFixedContainer() {
+	            if (this.isFixedWindowActive) {
+	                global.document.body.style.position = "static";
+	                global.document.body.style.top = "0px";
+	                // reset scrollTop
+	                global.document.documentElement.scrollTop = this.currentScrollTop;
+	                global.document.body.scrollTop = this.currentScrollTop;
+	                _Settings2.default.get().scrollbarUpdateNodes.forEach(function (node) {
+	                    if (node instanceof Array) {
+	                        var _node = _slicedToArray(node, 2);
+	
+	                        var whatNode = _node[0];
+	                        var property = _node[1];
+	
+	                        delete whatNode.__fixedWindowMod__;
+	                        whatNode.style[property] = '';
+	                    } else {
+	                        delete node.__fixedWindowMod__;
+	                        node.style.paddingRight = '';
+	                    }
+	                });
+	                global.document.documentElement.classList.remove(CLS_FIXED_WINDOW);
+	                _Event2.default.dispatchAndFire(global.document, EVENT_AFTER_FIXED_REMOVE);
+	                this.isFixedWindowActive = false;
+	            }
+	        }
+	
+	        /**
+	         * Will close a window when no widgets are opened that need one
+	         */
+	
+	    }, {
+	        key: 'resizeListener',
+	        value: function resizeListener() {
+	            this.windowWidth = global.innerWidth;
+	            this._checkFixedNeeded();
+	        }
+	
+	        /**
+	         * @returns {FixedWindow}
+	         */
+	
+	    }, {
+	        key: 'close',
+	
+	
+	        /**
+	         * Request a close of the fixed window
+	         * @returns {Promise}
+	         */
+	        value: function close() {
+	            var _this2 = this;
+	
+	            return new Promise(function (resolve) {
+	                _this2.widgets.pop();
+	                if (_this2.widgets.length === 0) {
+	                    // restore scrollPosition:
+	                    requestAnimationFrame(function () {
+	                        _this2._removeFixedContainer();
+	                        resolve();
+	                    });
+	                }
+	            });
+	        }
+	
+	        /**
+	         * Request to open a fixed windows
+	         * @param {Object|DestroyableWidget} instance
+	         */
+	
+	    }, {
+	        key: 'open',
+	        value: function open(instance) {
+	            var fixed = false;
+	            if ((typeof instance === 'undefined' ? 'undefined' : _typeof(instance)) === 'object') {
+	                var cn = instance.constructor;
+	                var fixedWidget = this.fixedScreenConstraints[instance.constructor];
+	                if (cn && fixedWidget) {
+	                    fixed = fixedWidget(this.windowWidth);
+	                }
+	                var length = this.widgets.length;
+	                this.widgets.push(cn);
+	                // open a new window if there is no window active
+	                if (length === 0) {
+	                    if (fixed) {
+	                        this._addFixedContainer();
+	                    }
+	                }
+	            }
+	        }
+	    }], [{
+	        key: 'getInstance',
+	        value: function getInstance() {
+	            if (!fixedWindowInstance) {
+	                fixedWindowInstance = new FixedWindow();
+	                fixedWindowInstance.windowWidth = global.innerWidth;
+	                var eventHandler = fixedWindowInstance.resizeListener.bind(fixedWindowInstance);
+	                global.addEventListener('resize', (0, _debounce2.default)(eventHandler, 500));
+	                global.addEventListener('orientationchange', eventHandler);
+	            }
+	            return fixedWindowInstance;
+	        }
+	    }]);
+	
+	    return FixedWindow;
+	}();
+
+	exports.default = FixedWindow;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (fn, ms) {
+	    return function () {
+	        clearTimeout(fn.timeout);
+	        fn.timeout = setTimeout(fn, ms);
+	    };
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_TAB_OPENED = exports.EVENT_TAB_CLOSED = undefined;
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
@@ -3850,11 +4117,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Licensed under the MIT License (MIT)
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_TAB_OPENED = exports.EVENT_TAB_CLOSED = undefined;
 	
 	var _Settings = __webpack_require__(11);
 	
@@ -3921,7 +4183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.loading = false;
 	
 	        if (!this.container) {
-	            throw new Error('Toggleable container with id "' + ContainerId + '" not found');
+	            throw new Error('Toggleable container with id ' + ContainerId + ' not found');
 	        }
 	    }
 	
@@ -3930,6 +4192,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Event} e
 	     * @private
 	     */
+	
 	
 	    _createClass(Toggleable, [{
 	        key: '_listener',
@@ -3994,10 +4257,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
 	            }
 	
-	            var maybeToggleNode = undefined;
 	            var future = undefined;
 	            var elClassList = target.classList;
-	            var parentClassList = undefined;
 	            var parent = target.parentNode;
 	            var doc = global.document;
 	
@@ -4025,11 +4286,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	
 	            if (parent) {
-	                maybeToggleNode = _Util2.default.parentsUntil(target, function (node) {
+	                var maybeToggleNode = _Util2.default.parentsUntil(target, function (node) {
 	                    return node && node.hasAttribute && node.hasAttribute(ATTR_TOGGLE_LIST);
 	                });
 	
-	                parentClassList = parent.classList;
+	                var parentClassList = parent.classList;
 	                // Abort if element is already active and if is part of a toggle list
 	                if (maybeToggleNode) {
 	                    if (!parentClassList.contains(ACTIVE_CLASS)) {
@@ -4098,10 +4359,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_TOGGLE = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
@@ -4133,11 +4399,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_TOGGLE = undefined;
-	
 	var _Settings = __webpack_require__(11);
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
@@ -4149,6 +4410,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Event = __webpack_require__(14);
 	
 	var _Event2 = _interopRequireDefault(_Event);
+	
+	var _FixedWindow = __webpack_require__(17);
+	
+	var _FixedWindow2 = _interopRequireDefault(_FixedWindow);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4202,17 +4467,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _classCallCheck(this, OffCanvas);
 	
 	        var doc = global.document;
-	        var touched = 0;
+	        var touchedX = 0;
 	        var navigationContainer = NavigationId instanceof HTMLElement ? NavigationId : doc.getElementById(NavigationId);
 	        var darkener = Darkener instanceof HTMLElement ? Darkener : doc.getElementById(Darkener);
 	        var DARKENER_CLASS_TOGGLE = 'toggle-' + darkener.id || 'darkener';
 	        var DARKENER_CLASS_INSTANT_TOGGLE = DARKENER_CLASS_TOGGLE + '-open';
-	        var resetStyles = function resetStyles(s) {
-	            s.transform = '';
-	            s.transition = '';
-	            s.webkitTransform = '';
-	            s.webkitTransition = '';
-	        };
+	
 	        var shouldNotTouch = function shouldNotTouch() {
 	            return window.innerWidth >= _Settings2.default.get().smallBreakpoint;
 	        };
@@ -4237,84 +4497,98 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        if (!disableTouch) {
 	            navigationContainer.addEventListener('touchstart', function (e) {
-	                requestAnimationFrame(function () {
-	                    if (shouldNotTouch()) {
-	                        return;
-	                    }
-	                    touched = e.touches[0].clientX;
-	                    var target = navigationContainer;
-	                    var style = target.style;
-	                    target.mustHide = false;
-	                    style.transition = 'transform 0s ease';
-	                    style.webkitTransition = '-webkit-transform 0s ease';
-	                });
+	                if (shouldNotTouch()) {
+	                    return;
+	                }
+	                touchedX = e.touches[0].clientX;
+	                navigationContainer.mustHide = false;
 	            });
 	            navigationContainer.addEventListener('touchmove', function (e) {
 	                if (shouldNotTouch()) {
 	                    return;
 	                }
-	                var x = e.touches[0].clientX;
+	                var clientX = e.touches[0].clientX;
+	
 	                var target = navigationContainer;
 	                var style = target.style;
-	                var calc = touched - x;
+	                var calcX = touchedX - clientX;
 	                var bounds = target.getBoundingClientRect();
-	                var compare = factor > 0 ? calc <= 0 : calc >= 0;
+	                var compare = factor > 0 ? calcX <= 0 : calcX >= 0;
 	                if (compare) {
-	                    target.mustHide = factor > 0 ? calc * -1 > bounds.width / HIDE_FACTOR : calc > bounds.width / HIDE_FACTOR;
-	                    var transform = 'translate3d(' + calc * -1 + 'px,0,0)';
+	                    style.transition = 'transform 0s ease';
+	                    style.webkitTransition = '-webkit-transform 0s ease';
+	                    target.mustHide = factor > 0 ? calcX * -1 > bounds.width / HIDE_FACTOR : calcX > bounds.width / HIDE_FACTOR;
+	                    var transform = 'translate3d(' + calcX * -1 + 'px,0,0)';
 	                    style.transform = transform;
 	                    style.webkitTransform = transform;
 	                }
 	            });
 	            navigationContainer.addEventListener('touchend', function () {
-	                requestAnimationFrame(function () {
-	                    if (shouldNotTouch()) {
-	                        return;
-	                    }
-	                    var target = navigationContainer;
-	                    var style = target.style;
-	                    if (target.mustHide) {
-	                        var width = target.getBoundingClientRect().width * factor;
-	                        style.transition = 'transform .2s ease';
-	                        style.webkitTransition = '-webkit-transform .2s ease';
-	                        var transform = 'translate3d(' + width + 'px,0,0)';
-	                        style.transform = transform;
-	                        style.webkitTransform = transform;
-	                        _this._remove(function () {
-	                            resetStyles(style);
-	                        });
-	                        _this._removeInstant();
-	                    } else {
-	                        resetStyles(style);
-	                    }
-	                });
+	                if (shouldNotTouch()) {
+	                    return;
+	                }
+	                var target = navigationContainer;
+	                var style = target.style;
+	                if (target.mustHide) {
+	                    var width = target.getBoundingClientRect().width * factor;
+	                    style.transition = 'transform .2s ease';
+	                    style.webkitTransition = '-webkit-transform .2s ease';
+	                    var transform = 'translate3d(' + width + 'px,0,0)';
+	                    style.transform = transform;
+	                    style.webkitTransform = transform;
+	                    _this._remove().then(function () {
+	                        _this.resetTransform(style);
+	                    });
+	                    _this._removeInstant();
+	                } else {
+	                    _this.resetTransform(style);
+	                }
 	            });
 	        }
 	    }
 	
 	    /**
-	     * @private
+	     * @param {Object} s
 	     */
 	
+	
 	    _createClass(OffCanvas, [{
+	        key: 'resetTransform',
+	        value: function resetTransform(s) {
+	            s.transform = '';
+	            s.transition = '';
+	            s.webkitTransform = '';
+	            s.webkitTransition = '';
+	        }
+	
+	        /**
+	         * @param {Object} [event]
+	         * @private
+	         */
+	
+	    }, {
 	        key: '_remove',
-	        value: function _remove(callback) {
+	        value: function _remove(event) {
 	            var _this2 = this;
 	
-	            _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), this.navigationContainer, function () {
-	                // add timeout because transition event fires a little to early
-	                setTimeout(function () {
+	            return new Promise(function (resolve) {
+	                _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), _this2.navigationContainer, function scheduler(e) {
+	                    var _this3 = this;
+	
+	                    if (e.target !== this.navigationContainer) {
+	                        return _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), this.navigationContainer, scheduler.bind(this));
+	                    }
 	                    requestAnimationFrame(function () {
-	                        var body = global.document.body;
 	                        OffCanvas.currentOpen = null;
-	                        body.classList.remove(_this2.darkenerClassToggle);
-	                        global.document.documentElement.classList.remove(_this2.globalToggleClass);
-	                        _Event2.default.dispatchAndFire(_this2.navigationContainer, EVENT_TOGGLE);
-	                        if (callback) {
-	                            callback();
+	                        var docCls = global.document.documentElement.classList;
+	                        docCls.remove(_this3.darkenerClassToggle);
+	                        docCls.remove(_this3.globalToggleClass);
+	                        if (!!event) {
+	                            _Event2.default.dispatchAndFire(_this3.navigationContainer, EVENT_TOGGLE);
 	                        }
+	                        resolve();
 	                    });
-	                }, _Settings2.default.get().darkenerFadeDelay);
+	                }.bind(_this2));
 	            });
 	        }
 	
@@ -4326,41 +4600,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_removeInstant',
 	        value: function _removeInstant() {
 	            this.navigationContainer.classList.remove(OPEN_CLASS);
-	            global.document.body.classList.remove(this.darkenerClassToggleInstant);
+	            global.document.documentElement.classList.remove(this.darkenerClassToggleInstant);
 	            this.darkener.classList.remove(INIT_CLASS);
+	            _FixedWindow2.default.getInstance().close();
 	        }
 	
 	        /**
 	         * Toggles a an off-canvas element
-	         * @param e
+	         * @param [e]
 	         * @private
 	         */
 	
 	    }, {
-	        key: '_toggle',
-	        value: function _toggle(e) {
-	            var _this3 = this;
+	        key: 'toggle',
+	        value: function toggle(e) {
+	            var _this4 = this;
 	
-	            e.preventDefault();
-	            var bodyClass = global.document.body.classList;
+	            if (e) {
+	                e.preventDefault();
+	            }
+	            this.resetTransform(this.navigationContainer.style);
 	            var darkenerClass = this.darkener.classList;
 	            var DARKENER_CLASS_TOGGLE = this.darkenerClassToggle;
 	            var DARKENER_CLASS_INSTANT_TOGGLE = this.darkenerClassToggleInstant;
 	            var navigationControllerClassList = this.navigationContainer.classList;
-	            if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
-	                this._remove();
-	                this._removeInstant(navigationControllerClassList);
-	            } else if (!OffCanvas.currentOpen) {
+	            if (!OffCanvas.currentOpen) {
 	                _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), this.navigationContainer, function () {
-	                    _Event2.default.dispatchAndFire(_this3.navigationContainer, EVENT_TOGGLE);
+	                    if (!!e) {
+	                        _Event2.default.dispatchAndFire(_this4.navigationContainer, EVENT_TOGGLE);
+	                    }
 	                });
 	                OffCanvas.currentOpen = this;
-	                global.document.documentElement.classList.add(this.globalToggleClass);
-	                bodyClass.add(DARKENER_CLASS_INSTANT_TOGGLE);
-	                bodyClass.add(DARKENER_CLASS_TOGGLE);
+	                _FixedWindow2.default.getInstance().open(this);
+	                var docElementCls = global.document.documentElement.classList;
+	                docElementCls.add(this.globalToggleClass);
+	                docElementCls.add(DARKENER_CLASS_INSTANT_TOGGLE);
+	                docElementCls.add(DARKENER_CLASS_TOGGLE);
 	                darkenerClass.add(INIT_CLASS);
 	                navigationControllerClassList.add(OPEN_CLASS);
+	            } else {
+	                return this.close(e);
 	            }
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close(event) {
+	            if (this.navigationContainer.classList.contains(OPEN_CLASS)) {
+	                var promise = this._remove(event);
+	                this._removeInstant();
+	                return promise;
+	            }
+	            return new Promise(function (r) {
+	                return r();
+	            });
 	        }
 	
 	        /**
@@ -4371,22 +4663,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'registerEvents',
 	        value: function registerEvents(delegate) {
-	            var _this4 = this;
+	            var _this5 = this;
 	
 	            var thisDelegate = delegate || global.document;
+	            _FixedWindow2.default.getInstance().addScreenConstraint(OffCanvas, function (width) {
+	                return width < _Settings2.default.get().smallBreakpoint;
+	            });
 	            thisDelegate.addEventListener(_Settings2.default.getTabEvent(), function (e) {
-	                if (OffCanvas.currentOpen && OffCanvas.currentOpen !== _this4) {
+	                if (OffCanvas.currentOpen && OffCanvas.currentOpen !== _this5) {
 	                    return;
 	                }
-	                var id = _this4.navigationContainerId;
+	                var id = _this5.navigationContainerId;
 	                var validTarget = e.target.getAttribute(ATTR_TARGET) === id;
-	                if (!_Util2.default.isPartOfNode(e.target, _this4.navigationContainer)) {
-	                    if (validTarget || OffCanvas.currentOpen === _this4 && e.target === _this4.darkener) {
-	                        _this4._toggle(e);
+	                if (!_Util2.default.isPartOfNode(e.target, _this5.navigationContainer)) {
+	                    if (validTarget || OffCanvas.currentOpen === _this5 && e.target === _this5.darkener) {
+	                        _this5.toggle(e);
 	                    }
 	                } else {
 	                    if (e.target.hasAttribute(ATTR_CLOSE_SIDEBAR)) {
-	                        _this4._toggle(e);
+	                        _this5.toggle(e);
 	                    }
 	                }
 	            });
@@ -4402,47 +4697,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/*
-	 * The MIT License (MIT)
-	 *
-	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
-	 *
-	 * Permission is hereby granted, free of charge, to any person obtaining a copy
-	 * of this software and associated documentation files (the "Software"), to deal
-	 * in the Software without restriction, including without limitation the rights
-	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	 * copies of the Software, and to permit persons to whom the Software is
-	 * furnished to do so, subject to the following conditions:
-	 *
-	 * The above copyright notice and this permission notice shall be included in
-	 * all copies or substantial portions of the Software.
-	 *
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	 * THE SOFTWARE.
-	 */
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.EVENT_DROPDOWN_CLOSED = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Permission is hereby granted, free of charge, to any person obtaining a copy
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * of this software and associated documentation files (the "Software"), to deal
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * in the Software without restriction, including without limitation the rights
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * copies of the Software, and to permit persons to whom the Software is
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * furnished to do so, subject to the following conditions:
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The above copyright notice and this permission notice shall be included in
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * all copies or substantial portions of the Software.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
 	/*!
 	 * FlexCss.Dropdown
 	 * Licensed under the MIT License (MIT)
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
-	
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.EVENT_DROPDOWN_CLOSED = undefined;
 	
 	var _Util = __webpack_require__(9);
 	
@@ -4459,6 +4752,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Widget = __webpack_require__(16);
 	
 	var _Widget2 = _interopRequireDefault(_Widget);
+	
+	var _FixedWindow = __webpack_require__(17);
+	
+	var _FixedWindow2 = _interopRequireDefault(_FixedWindow);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4546,13 +4843,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @private
 	     */
 	
+	
 	    _createClass(Dropdown, [{
 	        key: '_delegateFunction',
 	        value: function _delegateFunction(e) {
 	            var currentOpen = this.currentOpen;
-	            var targetHas = e.target.hasAttribute(ATTR_NAME);
-	            var parentHas = e.target.parentNode ? e.target.parentNode.hasAttribute(ATTR_NAME) : false;
-	            var target = targetHas ? e.target : e.target.parentNode;
+	            var target = _Util2.default.closestCallback(e.target, function (n) {
+	                return n instanceof HTMLElement && n.hasAttribute(ATTR_NAME);
+	            });
 	            var targetIsCurrent = target === this.currentTarget;
 	
 	            if (currentOpen && !_Util2.default.isPartOfNode(e.target, currentOpen) || targetIsCurrent) {
@@ -4563,7 +4861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return targetIsCurrent ? false : this._delegateFunction(e);
 	            }
 	
-	            if (targetHas || parentHas && !currentOpen) {
+	            if (target && !currentOpen) {
 	                e.preventDefault();
 	                e.stopImmediatePropagation();
 	
@@ -4592,6 +4890,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'registerEvents',
 	        value: function registerEvents() {
+	            _FixedWindow2.default.getInstance().addScreenConstraint(Dropdown, function (width) {
+	                return width < _Settings2.default.get().smallBreakpoint;
+	            });
 	            this.container.addEventListener(_Settings2.default.getTabEvent(), this._delegateFunction.bind(this), true);
 	            return this;
 	        }
@@ -4647,36 +4948,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'close',
 	        value: function close() {
-	            var _this = this;
+	            var _this2 = this;
 	
 	            var currentOpen = this.currentOpen;
 	            if (!currentOpen) {
 	                return false;
 	            }
-	            var future = undefined;
 	            var darkenerInstance = currentOpen.flexDarkenerInstance || this.darkener;
 	            var thisCurrentOpen = currentOpen;
 	
-	            future = new Promise(function (resolve) {
+	            var future = new Promise(function (resolve) {
 	                if (window.getComputedStyle(currentOpen).position === 'fixed') {
-	                    _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), currentOpen, function () {
-	                        setTimeout(function () {
+	                    _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), currentOpen, function scheduler(e) {
+	                        var _this = this;
+	
+	                        if (e.srcElement !== currentOpen) {
+	                            return _Util2.default.addEventOnce(_Settings2.default.getTransitionEvent(), currentOpen, scheduler.bind(this));
+	                        }
+	                        requestAnimationFrame(function () {
 	                            _Event2.default.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
 	                            // if a new dropdown has been opened in the meantime, do not remove darkener
 	                            if (_this.currentOpen !== null) {
 	                                return false;
 	                            }
 	                            _this.toggleDarkenerToggler(darkenerInstance, false);
-	                            global.document.documentElement.classList.remove(_Settings2.default.get().canvasToggledClass);
 	                            resolve(true);
-	                        }, _Settings2.default.get().darkenerFadeDelay);
-	                    });
+	                        });
+	                    }.bind(_this2));
 	                } else {
 	                    resolve(true);
 	                    _Event2.default.dispatchAndFire(thisCurrentOpen, EVENT_DROPDOWN_CLOSED);
 	                }
 	            });
 	
+	            _FixedWindow2.default.getInstance().close();
 	            currentOpen.classList.remove(CLS_OPEN);
 	
 	            if (currentOpen.flexDarkenerInstance) {
@@ -4705,7 +5010,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'createDropdown',
 	        value: function createDropdown(target, thisWidget) {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            var doc = global.document;
 	
@@ -4736,7 +5041,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    element.id = _Util2.default.guid();
 	                    // Cache target for later use:
 	                    target.setAttribute(ATTR_NAME, element.id);
-	                    _this2.container.appendChild(element);
+	                    _this3.container.appendChild(element);
 	                    return element;
 	                }).then(function (r) {
 	                    target.isLoading = false;
@@ -4753,13 +5058,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            future.then(function (dropdownContent) {
-	                if (_this2.currentOpen) {
-	                    _this2.close();
+	                if (_this3.currentOpen) {
+	                    _this3.close();
 	                }
 	                // Skip one frame to show animation
 	                target.dropdownContent = dropdownContent;
 	                var isAbsolute = global.getComputedStyle(dropdownContent).position === 'absolute';
-	                dropdownContent.hfWidgetInstance = _this2;
+	                dropdownContent.hfWidgetInstance = _this3;
 	
 	                if (!target.flexCollisionContainer) {
 	                    var collisionC = target.getAttribute(ATTR_CC);
@@ -4768,25 +5073,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                dropdownContent.classList.toggle(CLS_OPEN);
 	                if (dropdownContent.classList.contains(CLS_OPEN)) {
-	                    _this2.currentOpen = dropdownContent;
-	                    _this2.currentTarget = target;
+	                    _this3.currentOpen = dropdownContent;
+	                    _this3.currentTarget = target;
 	                }
+	                _FixedWindow2.default.getInstance().open(_this3);
 	                if (isAbsolute) {
 	                    // Check collision:
 	                    var selfTarget = target.getAttribute(ATTR_DATA_TARGET);
 	                    selfTarget = selfTarget ? doc.getElementById(selfTarget) : target;
 	                    _Util2.default.setupPositionNearby(selfTarget, dropdownContent, target.flexCollisionContainer);
 	                } else {
-	                    global.document.documentElement.classList.add(_Settings2.default.get().canvasToggledClass);
 	                    // optionally get custom darkener container for target
 	                    var d = target.getAttribute(ATTR_DARKENER);
 	                    if (d) {
 	                        dropdownContent.flexDarkenerInstance = doc.getElementById(d);
-	                        (dropdownContent.flexDarkenerInstance || _this2.darkener).classList.toggle(DARKENER_INIT);
+	                        (dropdownContent.flexDarkenerInstance || _this3.darkener).classList.toggle(DARKENER_INIT);
 	                    } else {
-	                        _this2.darkener.classList.toggle(DARKENER_INIT);
+	                        _this3.darkener.classList.toggle(DARKENER_INIT);
 	                    }
-	                    _this2.toggleDarkenerToggler(dropdownContent.flexDarkenerInstance || _this2.darkener, true);
+	                    _this3.toggleDarkenerToggler(dropdownContent.flexDarkenerInstance || _this3.darkener, true);
 	
 	                    dropdownContent.style.left = '0';
 	                    dropdownContent.style.top = 'auto';
@@ -4802,32 +5107,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/*
-	 * The MIT License (MIT)
-	 *
-	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
-	 *
-	 * Permission is hereby granted, free of charge, to any person obtaining a copy
-	 * of this software and associated documentation files (the "Software"), to deal
-	 * in the Software without restriction, including without limitation the rights
-	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	 * copies of the Software, and to permit persons to whom the Software is
-	 * furnished to do so, subject to the following conditions:
-	 *
-	 * The above copyright notice and this permission notice shall be included in
-	 * all copies or substantial portions of the Software.
-	 *
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	 * THE SOFTWARE.
-	 */
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Permission is hereby granted, free of charge, to any person obtaining a copy
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * of this software and associated documentation files (the "Software"), to deal
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * in the Software without restriction, including without limitation the rights
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * copies of the Software, and to permit persons to whom the Software is
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * furnished to do so, subject to the following conditions:
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The above copyright notice and this permission notice shall be included in
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * all copies or substantial portions of the Software.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * THE SOFTWARE.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
 	/*!
 	 * FlexCss.LightBox
@@ -4835,17 +5148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
 	 */
 	
-	'use strict';
-	
 	/* global Image, TouchEvent*/
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 	
 	var _Modal = __webpack_require__(15);
 	
@@ -4986,6 +5289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {HTMLElement|null}
 	     */
 	
+	
 	    _createClass(LightBox, [{
 	        key: 'findImmediateNextTarget',
 	        value: function findImmediateNextTarget(node) {
@@ -5075,6 +5379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    }, {
 	        key: 'switchImageByDirection',
+	
 	
 	        /**
 	         * Switches to the next image

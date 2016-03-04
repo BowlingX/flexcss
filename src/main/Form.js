@@ -30,8 +30,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 import Tooltip from './Tooltip';
 import 'isomorphic-fetch';
 import Event from './util/Event';

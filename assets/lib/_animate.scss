@@ -168,7 +168,7 @@
 
     border-right: $loaderBorder solid $loaderColor;
     border-top: $loaderBorder solid $loaderColor;
-    border-left: $loaderBorder solid #fff;
+    border-left: $loaderBorder solid $loaderColorBackground;
     border-bottom: $loaderBorder solid $loaderColor;
 
     @if $loaderAlternate {

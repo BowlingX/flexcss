@@ -28,8 +28,6 @@
  * Copyright (c) 2015 David Heidrich, BowlingX <me@bowlingx.com>
  */
 
-'use strict';
-
 /* global Image, TouchEvent*/
 
 import Modal, { EVENT_MODAL_CLOSED } from './Modal';

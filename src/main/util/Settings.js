@@ -45,6 +45,8 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
 
     global.FLEXCSS_CONST_TAB_EVENT = 'click';
 
+    global.FLEXCSS_IS_SMALL_SCREEN = false;
+
     const init = () => {
         // Measure scrollbar width
         global.FLEXCSS_CONST_SCROLLBAR_WIDTH = Util.getScrollBarWidth();
@@ -94,6 +96,13 @@ class Settings {
         }
 
         return global.FLEXCSS_CONST_IS_IOS;
+    }
+
+    /**
+     * @returns {boolean}
+     */
+    static isSmallScreen() {
+        return window.innerWidth < Settings.get().smallBreakpoint;
     }
 
     /**
