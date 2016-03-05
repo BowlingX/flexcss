@@ -23,6 +23,7 @@
   "author": "hellofellow KG, David Heidrich",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^6.3.3",
     "babel": "^6.1.18",
     "babel-core": "^6.1.21",
     "babel-eslint": "^5.0.0-beta6",
