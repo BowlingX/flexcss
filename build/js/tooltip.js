@@ -419,7 +419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "whichTransitionEndEvent",
 	        value: function whichTransitionEndEvent() {
-	            var t = undefined;
+	            var t = void 0;
 	            var el = document.createElement('fake');
 	
 	            var transitions = {
@@ -698,8 +698,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classList.remove(COL_LEFT_CLASS);
 	            classList.remove(COL_BOTTOM_CLASS);
 	
-	            var calcTop = undefined;
-	            var calcLeft = undefined;
+	            var calcTop = void 0;
+	            var calcLeft = void 0;
 	            if (isCollisionLeft && !isCollisionRight) {
 	                // put element to left if collision with left
 	                calcLeft = targetPosition.left - colRect.left - amountLeft + "px";
