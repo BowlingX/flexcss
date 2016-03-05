@@ -143,9 +143,8 @@ class Modal {
         const t = Modal._modalInstances.indexOf(n);
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
-            FixedWindow.getInstance().close().then(() => {
-                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-            });
+            FixedWindow.getInstance().close();
+            HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
         }
     }
 

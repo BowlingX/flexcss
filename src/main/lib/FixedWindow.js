@@ -2,7 +2,6 @@ import Settings from '../util/Settings';
 import debounce from './debounce';
 import Event from '../util/Event';
 import Util from '../util/Util';
-import scrollLoop from '../lib/scrollLoop';
 
 const CLS_FIXED_WINDOW = 'fixed-window-open';
 
@@ -23,7 +22,6 @@ export default class FixedWindow {
         this.windowWidth = 0;
         this.isFixedWindowActive = false;
         this.touchListener = null;
-        this.scrollLoop = scrollLoop();
     }
 
     /**
@@ -112,7 +110,7 @@ export default class FixedWindow {
             }
         };
 
-        global.addEventListener('touchmove', this.touchListener, false);
+        global.addEventListener('touchmove', this.touchListener);
         global.document.body.addEventListener('touchstart', this.touchStartListener);
 
         this.touchMoveListener = (e) => {
@@ -136,7 +134,7 @@ export default class FixedWindow {
     _removeFixedContainer() {
         if (this.isFixedWindowActive) {
             // cleanup event listeners
-            global.removeEventListener('touchmove', this.touchListener, false);
+            global.removeEventListener('touchmove', this.touchListener);
             global.document.body.removeEventListener('touchstart', this.touchStartListener);
             global.document.body.removeEventListener('touchmove', this.touchMoveListener);
 
@@ -184,19 +182,13 @@ export default class FixedWindow {
 
     /**
      * Request a close of the fixed window
-     * @returns {Promise}
      */
     close() {
-        return new Promise((resolve) => {
-            this.widgets.pop();
-            if (this.widgets.length === 0) {
-                // restore scrollPosition:
-                requestAnimationFrame(() => {
-                    this._removeFixedContainer();
-                    resolve();
-                });
-            }
-        });
+        this.widgets.pop();
+        if (this.widgets.length === 0) {
+            this._removeFixedContainer();
+            resolve();
+        }
     }
 
     /**

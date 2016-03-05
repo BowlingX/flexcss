@@ -93,19 +93,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
 	
-	var _Toggleable = __webpack_require__(20);
+	var _Toggleable = __webpack_require__(19);
 	
 	var _Toggleable2 = _interopRequireDefault(_Toggleable);
 	
-	var _OffCanvas = __webpack_require__(21);
+	var _OffCanvas = __webpack_require__(20);
 	
 	var _OffCanvas2 = _interopRequireDefault(_OffCanvas);
 	
-	var _Dropdown = __webpack_require__(22);
+	var _Dropdown = __webpack_require__(21);
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _LightBox = __webpack_require__(23);
+	var _LightBox = __webpack_require__(22);
 	
 	var _LightBox2 = _interopRequireDefault(_LightBox);
 	
@@ -3139,9 +3139,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var t = Modal._modalInstances.indexOf(n);
 	            if (t > -1) {
 	                Modal._modalInstances.splice(t, 1);
-	                _FixedWindow2.default.getInstance().close().then(function () {
-	                    HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
-	                });
+	                _FixedWindow2.default.getInstance().close();
+	                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
 	            }
 	        }
 	
@@ -3829,10 +3828,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Util2 = _interopRequireDefault(_Util);
 	
-	var _scrollLoop = __webpack_require__(19);
-	
-	var _scrollLoop2 = _interopRequireDefault(_scrollLoop);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3857,7 +3852,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.windowWidth = 0;
 	        this.isFixedWindowActive = false;
 	        this.touchListener = null;
-	        this.scrollLoop = (0, _scrollLoop2.default)();
 	    }
 	
 	    /**
@@ -3972,7 +3966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            };
 	
-	            global.addEventListener('touchmove', this.touchListener, false);
+	            global.addEventListener('touchmove', this.touchListener);
 	            global.document.body.addEventListener('touchstart', this.touchStartListener);
 	
 	            this.touchMoveListener = function (e) {
@@ -4002,7 +3996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _removeFixedContainer() {
 	            if (this.isFixedWindowActive) {
 	                // cleanup event listeners
-	                global.removeEventListener('touchmove', this.touchListener, false);
+	                global.removeEventListener('touchmove', this.touchListener);
 	                global.document.body.removeEventListener('touchstart', this.touchStartListener);
 	                global.document.body.removeEventListener('touchmove', this.touchMoveListener);
 	
@@ -4048,21 +4042,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        /**
 	         * Request a close of the fixed window
-	         * @returns {Promise}
 	         */
 	        value: function close() {
-	            var _this3 = this;
-	
-	            return new Promise(function (resolve) {
-	                _this3.widgets.pop();
-	                if (_this3.widgets.length === 0) {
-	                    // restore scrollPosition:
-	                    requestAnimationFrame(function () {
-	                        _this3._removeFixedContainer();
-	                        resolve();
-	                    });
-	                }
-	            });
+	            this.widgets.pop();
+	            if (this.widgets.length === 0) {
+	                this._removeFixedContainer();
+	                resolve();
+	            }
 	        }
 	
 	        /**
@@ -4133,83 +4119,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 19 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var DIRECTION_DOWN = exports.DIRECTION_DOWN = 'down';
-	var DIRECTION_UP = exports.DIRECTION_UP = 'up';
-	
-	/**
-	 * Runs 60fps and executes callback only if window is scrolling currently
-	 * @returns {Object}
-	 */
-	
-	exports.default = function () {
-	    var lastPosition = void 0;
-	    var destroyed = true;
-	    var initialCallback = void 0;
-	
-	    function scrollLoop(callback) {
-	        // Avoid calculations if not needed
-	        var pos = global.pageYOffset;
-	        if (pos < 0) {
-	            pos = 0;
-	        }
-	        if (destroyed) {
-	            return false;
-	        }
-	
-	        if (lastPosition === pos) {
-	            requestAnimationFrame(function () {
-	                return scrollLoop(callback);
-	            });
-	            return false;
-	        }
-	
-	        var direction = lastPosition < pos ? DIRECTION_DOWN : DIRECTION_UP;
-	        lastPosition = pos;
-	        callback(lastPosition, direction);
-	
-	        requestAnimationFrame(function () {
-	            return scrollLoop(callback);
-	        });
-	    }
-	
-	    return {
-	        run: function run(cb) {
-	            lastPosition = global.pageYOffset;
-	            destroyed = false;
-	            initialCallback = cb;
-	            scrollLoop(cb);
-	        },
-	        isInitilized: function isInitilized() {
-	            return typeof initialCallback === 'function';
-	        },
-	        isDestroyed: function isDestroyed() {
-	            return destroyed;
-	        },
-	        destroy: function destroy() {
-	            destroyed = true;
-	        },
-	        resume: function resume() {
-	            if (initialCallback && destroyed) {
-	                requestAnimationFrame(function () {
-	                    destroyed = false;
-	                    lastPosition = global.pageYOffset;
-	                    scrollLoop(initialCallback);
-	                });
-	            }
-	        }
-	    };
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -4490,7 +4399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -4828,7 +4737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -5238,7 +5147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
