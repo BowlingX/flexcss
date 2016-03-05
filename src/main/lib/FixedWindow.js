@@ -1,6 +1,8 @@
 import Settings from '../util/Settings';
 import debounce from './debounce';
 import Event from '../util/Event';
+import Util from '../util/Util';
+import scrollLoop from '../lib/scrollLoop';
 
 const CLS_FIXED_WINDOW = 'fixed-window-open';
 
@@ -20,6 +22,8 @@ export default class FixedWindow {
         this.fixedScreenConstraints = [];
         this.windowWidth = 0;
         this.isFixedWindowActive = false;
+        this.touchListener = null;
+        this.scrollLoop = scrollLoop();
     }
 
     /**
@@ -47,7 +51,7 @@ export default class FixedWindow {
             return;
         }
         const widgets = new Set(this.widgets);
-        const widgetsThatRequireFixedWindow = Array.from(widgets).some((widget) => {
+        const widgetsThatRequireFixedWindow = Array.from(widgets).some(({ widget }) => {
             return this.fixedScreenConstraints[widget] && this.fixedScreenConstraints[widget](this.windowWidth);
         });
         if (!widgetsThatRequireFixedWindow) {
@@ -69,7 +73,6 @@ export default class FixedWindow {
         });
         // this causes layout and should be optimized
         // At lest we write in a batch later
-        this.currentScrollTop = global.pageYOffset;
         Settings.get().scrollbarUpdateNodes.map((n) => {
             let foundProperty = 'paddingRight';
             let direction = 1;
@@ -91,9 +94,39 @@ export default class FixedWindow {
             d.node.style[d.property] = d.value;
         });
 
-        global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
-        global.document.body.style.cssText += `top:${this.currentScrollTop * -1}px;position:fixed`;
+        this.touchListener = (e) => {
+            e.preventDefault();
+        };
 
+        let shouldNotMove = false;
+        this.touchStartListener = (e) => {
+            const { element } = this.getCurrentWidget();
+            if (Util.isPartOfNode(e.target, element)) {
+                if (element.scrollTop === 0) {
+                    element.scrollTop = 1;
+                    shouldNotMove = true;
+                } else if (element.scrollHeight === element.scrollTop + element.offsetHeight) {
+                    shouldNotMove = true;
+                    element.scrollTop -= 1;
+                }
+            }
+        };
+
+        global.addEventListener('touchmove', this.touchListener, false);
+        global.document.body.addEventListener('touchstart', this.touchStartListener);
+
+        this.touchMoveListener = (e) => {
+            const { element } = this.getCurrentWidget();
+            if (Util.isPartOfNode(e.target, element)) {
+                if (!shouldNotMove) {
+                    e.stopImmediatePropagation();
+                }
+                shouldNotMove = false;
+            }
+        };
+        global.document.body.addEventListener('touchmove', this.touchMoveListener);
+
+        global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
         this.isFixedWindowActive = true;
     }
 
@@ -102,11 +135,12 @@ export default class FixedWindow {
      */
     _removeFixedContainer() {
         if (this.isFixedWindowActive) {
-            global.document.body.style.position = "static";
-            global.document.body.style.top = "0px";
-            // reset scrollTop
-            global.document.documentElement.scrollTop = this.currentScrollTop;
-            global.document.body.scrollTop = this.currentScrollTop;
+            // cleanup event listeners
+            global.removeEventListener('touchmove', this.touchListener, false);
+            global.document.body.removeEventListener('touchstart', this.touchStartListener);
+            global.document.body.removeEventListener('touchmove', this.touchMoveListener);
+
+            // reset scrollbar nodes
             Settings.get().scrollbarUpdateNodes.forEach((node) => {
                 if (node instanceof Array) {
                     const [whatNode, property] = node;
@@ -168,17 +202,23 @@ export default class FixedWindow {
     /**
      * Request to open a fixed windows
      * @param {Object|DestroyableWidget} instance
+     * @param {HTMLElement} element
      */
-    open(instance) {
+    open(instance, element) {
         let fixed = false;
         if (typeof instance === 'object') {
-            const cn = instance.constructor;
+            const widget = instance.constructor;
             const fixedWidget = this.fixedScreenConstraints[instance.constructor];
-            if (cn && fixedWidget) {
+            if (widget && fixedWidget) {
                 fixed = fixedWidget(this.windowWidth);
             }
             const length = this.widgets.length;
-            this.widgets.push(cn);
+            this.widgets.push(
+                {
+                    widget,
+                    element
+                }
+            );
             // open a new window if there is no window active
             if (length === 0) {
                 if (fixed) {

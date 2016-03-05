@@ -318,7 +318,7 @@ class Dropdown {
                 this.currentOpen = dropdownContent;
                 this.currentTarget = target;
             }
-            FixedWindow.getInstance().open(this);
+            FixedWindow.getInstance().open(this, dropdownContent);
             if (isAbsolute) {
                 // Check collision:
                 let selfTarget = target.getAttribute(ATTR_DATA_TARGET);

@@ -1,4 +1,7 @@
 .fixed-window-open {
+  html, body {
+    overflow:hidden;
+  }
   body {
     width: 100%;
   }

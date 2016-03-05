@@ -265,7 +265,7 @@ class Modal {
     switchModals(co, last) {
         co.prevModal = last;
         Modal._modalInstances.push(co);
-        FixedWindow.getInstance().open(this);
+        FixedWindow.getInstance().open(this, this.modalContainer);
         if (last) {
             this._finishState(last);
             Util.prefixedAnimateEvent(last, 'AnimationEnd', this._finishAnim);

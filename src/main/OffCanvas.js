@@ -222,7 +222,7 @@ class OffCanvas {
                 }
             });
             OffCanvas.currentOpen = this;
-            FixedWindow.getInstance().open(this);
+            FixedWindow.getInstance().open(this, this.navigationContainer);
             const docElementCls = global.document.documentElement.classList;
             docElementCls.add(this.globalToggleClass);
             docElementCls.add(DARKENER_CLASS_INSTANT_TOGGLE);

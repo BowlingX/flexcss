@@ -21,14 +21,6 @@
   margin: $topbarHeight auto 0 auto;
 }
 
-html {
-  &.modal-open.fixed-window-open {
-    body {
-      overflow: hidden;
-    }
-  }
-}
-
 // Wrapper where all Content goes
 .content-wrapper {
   display: flex;

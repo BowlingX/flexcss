@@ -1,5 +1,6 @@
 /* Main Navigation Container, Off-Screen Navigation*/
 .navbar-main {
+  @include interface();
   position: fixed;
   height: 100%;
   overflow-y: auto;

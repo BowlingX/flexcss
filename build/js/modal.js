@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(25);
 
 
 /***/ },
@@ -1204,7 +1204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function switchModals(co, last) {
 	            co.prevModal = last;
 	            Modal._modalInstances.push(co);
-	            _FixedWindow2.default.getInstance().open(this);
+	            _FixedWindow2.default.getInstance().open(this, this.modalContainer);
 	            if (last) {
 	                this._finishState(last);
 	                _Util2.default.prefixedAnimateEvent(last, 'AnimationEnd', this._finishAnim);
@@ -1757,6 +1757,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
+	var _Util = __webpack_require__(9);
+	
+	var _Util2 = _interopRequireDefault(_Util);
+	
+	var _scrollLoop = __webpack_require__(19);
+	
+	var _scrollLoop2 = _interopRequireDefault(_scrollLoop);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1780,6 +1788,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.fixedScreenConstraints = [];
 	        this.windowWidth = 0;
 	        this.isFixedWindowActive = false;
+	        this.touchListener = null;
+	        this.scrollLoop = (0, _scrollLoop2.default)();
 	    }
 	
 	    /**
@@ -1819,7 +1829,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	            var widgets = new Set(this.widgets);
-	            var widgetsThatRequireFixedWindow = Array.from(widgets).some(function (widget) {
+	            var widgetsThatRequireFixedWindow = Array.from(widgets).some(function (_ref) {
+	                var widget = _ref.widget;
+	
 	                return _this.fixedScreenConstraints[widget] && _this.fixedScreenConstraints[widget](_this.windowWidth);
 	            });
 	            if (!widgetsThatRequireFixedWindow) {
@@ -1836,6 +1848,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_addFixedContainer',
 	        value: function _addFixedContainer() {
+	            var _this2 = this;
+	
 	            if (this.isFixedWindowActive) {
 	                return;
 	            }
@@ -1844,7 +1858,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	            // this causes layout and should be optimized
 	            // At lest we write in a batch later
-	            this.currentScrollTop = global.pageYOffset;
 	            _Settings2.default.get().scrollbarUpdateNodes.map(function (n) {
 	                var foundProperty = 'paddingRight';
 	                var direction = 1;
@@ -1870,9 +1883,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	                d.node.style[d.property] = d.value;
 	            });
 	
-	            global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
-	            global.document.body.style.cssText += 'top:' + this.currentScrollTop * -1 + 'px;position:fixed';
+	            this.touchListener = function (e) {
+	                e.preventDefault();
+	            };
 	
+	            var shouldNotMove = false;
+	            this.touchStartListener = function (e) {
+	                var _getCurrentWidget = _this2.getCurrentWidget();
+	
+	                var element = _getCurrentWidget.element;
+	
+	                if (_Util2.default.isPartOfNode(e.target, element)) {
+	                    if (element.scrollTop === 0) {
+	                        element.scrollTop = 1;
+	                        shouldNotMove = true;
+	                    } else if (element.scrollHeight === element.scrollTop + element.offsetHeight) {
+	                        shouldNotMove = true;
+	                        element.scrollTop -= 1;
+	                    }
+	                }
+	            };
+	
+	            global.addEventListener('touchmove', this.touchListener, false);
+	            global.document.body.addEventListener('touchstart', this.touchStartListener);
+	
+	            this.touchMoveListener = function (e) {
+	                var _getCurrentWidget2 = _this2.getCurrentWidget();
+	
+	                var element = _getCurrentWidget2.element;
+	
+	                if (_Util2.default.isPartOfNode(e.target, element)) {
+	                    if (!shouldNotMove) {
+	                        e.stopImmediatePropagation();
+	                    }
+	                    shouldNotMove = false;
+	                }
+	            };
+	            global.document.body.addEventListener('touchmove', this.touchMoveListener);
+	
+	            global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
 	            this.isFixedWindowActive = true;
 	        }
 	
@@ -1884,11 +1933,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_removeFixedContainer',
 	        value: function _removeFixedContainer() {
 	            if (this.isFixedWindowActive) {
-	                global.document.body.style.position = "static";
-	                global.document.body.style.top = "0px";
-	                // reset scrollTop
-	                global.document.documentElement.scrollTop = this.currentScrollTop;
-	                global.document.body.scrollTop = this.currentScrollTop;
+	                // cleanup event listeners
+	                global.removeEventListener('touchmove', this.touchListener, false);
+	                global.document.body.removeEventListener('touchstart', this.touchStartListener);
+	                global.document.body.removeEventListener('touchmove', this.touchMoveListener);
+	
+	                // reset scrollbar nodes
 	                _Settings2.default.get().scrollbarUpdateNodes.forEach(function (node) {
 	                    if (node instanceof Array) {
 	                        var _node = _slicedToArray(node, 2);
@@ -1933,14 +1983,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @returns {Promise}
 	         */
 	        value: function close() {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            return new Promise(function (resolve) {
-	                _this2.widgets.pop();
-	                if (_this2.widgets.length === 0) {
+	                _this3.widgets.pop();
+	                if (_this3.widgets.length === 0) {
 	                    // restore scrollPosition:
 	                    requestAnimationFrame(function () {
-	                        _this2._removeFixedContainer();
+	                        _this3._removeFixedContainer();
 	                        resolve();
 	                    });
 	                }
@@ -1950,20 +2000,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	         * Request to open a fixed windows
 	         * @param {Object|DestroyableWidget} instance
+	         * @param {HTMLElement} element
 	         */
 	
 	    }, {
 	        key: 'open',
-	        value: function open(instance) {
+	        value: function open(instance, element) {
 	            var fixed = false;
 	            if ((typeof instance === 'undefined' ? 'undefined' : _typeof(instance)) === 'object') {
-	                var cn = instance.constructor;
+	                var widget = instance.constructor;
 	                var fixedWidget = this.fixedScreenConstraints[instance.constructor];
-	                if (cn && fixedWidget) {
+	                if (widget && fixedWidget) {
 	                    fixed = fixedWidget(this.windowWidth);
 	                }
 	                var length = this.widgets.length;
-	                this.widgets.push(cn);
+	                this.widgets.push({
+	                    widget: widget,
+	                    element: element
+	                });
 	                // open a new window if there is no window active
 	                if (length === 0) {
 	                    if (fixed) {
@@ -2010,12 +2064,89 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */,
+/* 19 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var DIRECTION_DOWN = exports.DIRECTION_DOWN = 'down';
+	var DIRECTION_UP = exports.DIRECTION_UP = 'up';
+	
+	/**
+	 * Runs 60fps and executes callback only if window is scrolling currently
+	 * @returns {Object}
+	 */
+	
+	exports.default = function () {
+	    var lastPosition = undefined;
+	    var destroyed = true;
+	    var initialCallback = undefined;
+	
+	    function scrollLoop(callback) {
+	        // Avoid calculations if not needed
+	        var pos = global.pageYOffset;
+	        if (pos < 0) {
+	            pos = 0;
+	        }
+	        if (destroyed) {
+	            return false;
+	        }
+	
+	        if (lastPosition === pos) {
+	            requestAnimationFrame(function () {
+	                return scrollLoop(callback);
+	            });
+	            return false;
+	        }
+	
+	        var direction = lastPosition < pos ? DIRECTION_DOWN : DIRECTION_UP;
+	        lastPosition = pos;
+	        callback(lastPosition, direction);
+	
+	        requestAnimationFrame(function () {
+	            return scrollLoop(callback);
+	        });
+	    }
+	
+	    return {
+	        run: function run(cb) {
+	            lastPosition = global.pageYOffset;
+	            destroyed = false;
+	            initialCallback = cb;
+	            scrollLoop(cb);
+	        },
+	        isInitilized: function isInitilized() {
+	            return typeof initialCallback === 'function';
+	        },
+	        isDestroyed: function isDestroyed() {
+	            return destroyed;
+	        },
+	        destroy: function destroy() {
+	            destroyed = true;
+	        },
+	        resume: function resume() {
+	            if (initialCallback && destroyed) {
+	                requestAnimationFrame(function () {
+	                    destroyed = false;
+	                    lastPosition = global.pageYOffset;
+	                    scrollLoop(initialCallback);
+	                });
+	            }
+	        }
+	    };
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

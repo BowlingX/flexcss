@@ -23,7 +23,6 @@
   "author": "hellofellow KG, David Heidrich",
   "license": "MIT",
   "devDependencies": {
-    "autoprefixer-loader": "git@github.com:BowlingX/autoprefixer-loader.git#master",
     "babel": "^6.1.18",
     "babel-core": "^6.1.21",
     "babel-eslint": "^5.0.0-beta6",
@@ -61,7 +60,8 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.4",
-    "semantic-release": "^4.3.5"
+    "semantic-release": "^4.3.5",
+    "postcss-loader": "^0.8.1"
   },
   "release": {
     "debug": false,
