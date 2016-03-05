@@ -27,6 +27,7 @@ var webpack = require("webpack"), fs = require('fs');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var isProduction = "production" === process.env.NODE_ENV;
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     watch: false,
@@ -45,7 +46,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract(
                     // activate source maps via loader query
                     'css?sourceMap!' +
-                    'autoprefixer?browsers=last 2 versions&remove=false!' +
+                    'postcss-loader!' +
                     'sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
                 )
             },
@@ -75,15 +76,18 @@ module.exports = {
         'flexcss': ['modules/All'],
         'base': ['packages/base.scss'],
         'doc': ['packages/doc.scss'],
-        'tooltip': ['modules/Tooltip','packages/tooltip.scss']
+        'tooltip': ['modules/Tooltip', 'packages/tooltip.scss']
     },
     output: {
-        publicPath:'../',
+        publicPath: '../',
         path: __dirname + "/build",
         filename: isProduction ? 'js/[name].min.js' : 'js/[name].js',
         libraryTarget: 'umd',
         library: 'FlexCss',
         sourceMapFilename: isProduction ? 'maps/[name].min.map' : 'maps/[name].map'
+    },
+    postcss: function () {
+        return [autoprefixer({browsers: ['last 2 versions']})];
     },
     plugins: [
         new webpack.EnvironmentPlugin(['NODE_ENV']),

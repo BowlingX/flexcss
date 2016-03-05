@@ -98,7 +98,7 @@
 <script src="//cdn.polyfill.io/v1/polyfill.min.js" async defer></script>
 <script type="application/javascript" src="{{ site.baseurl }}/build/js/flexcss.min.js"></script>
 <script type="application/javascript">
-    (function (document, window) {
+    (function (document) {
         document.addEventListener('DOMContentLoaded', function () {
             // init all forms on this page
             FlexCss.Form.init('form', {scrollToElementDiff:50});
@@ -123,7 +123,7 @@
 
             new FlexCss.LightBox(document.body, 'data-thumb', document.body).registerEvents();
         });
-    })(document, window);
+    })(document);
 </script>
 <div class="modal" id="impressum">
     <i data-close-modal class="modal-close icon-cancel-1"></i>
