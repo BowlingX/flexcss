@@ -787,8 +787,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            // if validates a single field we need to check the linked fields to a label:
 	            if (fields.length === 1) {
-	                var field = fields[0];
-	                var id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
+	                var _field = fields[0];
+	                var id = _field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || _field.id;
 	                if (id) {
 	                    var linkedFields = Array.from(this.getForm().querySelectorAll('[' + ATTR_DATA_CUSTOM_LABEL + '="' + id + '"], #' + id));
 	                    linkedFields.forEach(function (thisField) {
@@ -1728,7 +1728,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "whichTransitionEndEvent",
 	        value: function whichTransitionEndEvent() {
-	            var t = undefined;
+	            var t = void 0;
 	            var el = document.createElement('fake');
 	
 	            var transitions = {
@@ -2007,8 +2007,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classList.remove(COL_LEFT_CLASS);
 	            classList.remove(COL_BOTTOM_CLASS);
 	
-	            var calcTop = undefined;
-	            var calcLeft = undefined;
+	            var calcTop = void 0;
+	            var calcLeft = void 0;
 	            if (isCollisionLeft && !isCollisionRight) {
 	                // put element to left if collision with left
 	                calcLeft = targetPosition.left - colRect.left - amountLeft + "px";
@@ -3407,7 +3407,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                modalContainerClasses.add(CLS_OPEN);
 	            }
 	
-	            var loader = undefined,
+	            var loader = void 0,
 	                doc = global.document,
 	                toggleLoader = function toggleLoader(show) {
 	                if (show) {
@@ -3845,7 +3845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @type {FixedWindow}
 	 */
-	var fixedWindowInstance = undefined;
+	var fixedWindowInstance = void 0;
 	
 	var FixedWindow = function () {
 	    function FixedWindow() {
@@ -4149,9 +4149,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	
 	exports.default = function () {
-	    var lastPosition = undefined;
+	    var lastPosition = void 0;
 	    var destroyed = true;
-	    var initialCallback = undefined;
+	    var initialCallback = void 0;
 	
 	    function scrollLoop(callback) {
 	        // Avoid calculations if not needed
@@ -4388,7 +4388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                target = document.querySelector('[' + ATTR_NAME + '="' + ref.id + '"]');
 	            }
 	
-	            var future = undefined;
+	            var future = void 0;
 	            var elClassList = target.classList;
 	            var parent = target.parentNode;
 	            var doc = global.document;
@@ -5150,7 +5150,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            var widget = thisWidget || _Widget2.default.findWidget(target);
-	            var future = undefined;
+	            var future = void 0;
 	            var data = target.getAttribute(ATTR_NAME);
 	            var dropdownContainerElement = doc.getElementById(data);
 	            var async = !dropdownContainerElement && _Widget2.default.isWidget(widget) ? widget.getAsync() : false;
@@ -5614,7 +5614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        if (!nextSource) {
 	                            reject(next);
 	                            return {
-	                                v: undefined
+	                                v: void 0
 	                            };
 	                        }
 	                        // set new target to next element

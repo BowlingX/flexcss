@@ -154,7 +154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "whichTransitionEndEvent",
 	        value: function whichTransitionEndEvent() {
-	            var t = undefined;
+	            var t = void 0;
 	            var el = document.createElement('fake');
 	
 	            var transitions = {
@@ -433,8 +433,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classList.remove(COL_LEFT_CLASS);
 	            classList.remove(COL_BOTTOM_CLASS);
 	
-	            var calcTop = undefined;
-	            var calcLeft = undefined;
+	            var calcTop = void 0;
+	            var calcLeft = void 0;
 	            if (isCollisionLeft && !isCollisionRight) {
 	                // put element to left if collision with left
 	                calcLeft = targetPosition.left - colRect.left - amountLeft + "px";
@@ -1339,7 +1339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                modalContainerClasses.add(CLS_OPEN);
 	            }
 	
-	            var loader = undefined,
+	            var loader = void 0,
 	                doc = global.document,
 	                toggleLoader = function toggleLoader(show) {
 	                if (show) {
@@ -1777,7 +1777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @type {FixedWindow}
 	 */
-	var fixedWindowInstance = undefined;
+	var fixedWindowInstance = void 0;
 	
 	var FixedWindow = function () {
 	    function FixedWindow() {
@@ -2081,9 +2081,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	
 	exports.default = function () {
-	    var lastPosition = undefined;
+	    var lastPosition = void 0;
 	    var destroyed = true;
-	    var initialCallback = undefined;
+	    var initialCallback = void 0;
 	
 	    function scrollLoop(callback) {
 	        // Avoid calculations if not needed

@@ -6018,12 +6018,12 @@ html:not(.touch) .fade-listing:not(:hover) .fade-out {
   margin-left: -50px;
 }
 
-.fixed-window-open html, .fixed-window-open body {
+.fixed-window-open {
   overflow: hidden;
 }
 
 .fixed-window-open body {
-  width: 100%;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=../maps/base.map*/
