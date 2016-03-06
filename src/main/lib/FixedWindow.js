@@ -101,7 +101,10 @@ export default class FixedWindow {
             e.preventDefault();
         };
 
-        let shouldNotMove = false;
+        let shouldNotMoveUp = false;
+        let shouldNotMoveDown = false;
+        let neverScroll = false;
+        let lastClientY = 0;
         this.touchStartListener = (e) => {
             let { element } = this.getCurrentWidget();
             const closestOverflow = Util.closestCallback(e.target,
@@ -111,11 +114,17 @@ export default class FixedWindow {
                 element = closestOverflow;
             }
             if (Util.isPartOfNode(e.target, element)) {
+                neverScroll = element.scrollHeight === element.offsetHeight;
+                lastClientY = e.touches[0].clientY;
+                // never allow scrolling when there is nothing to scroll
+                if (neverScroll) {
+                    return false;
+                }
                 if (element.scrollTop === 0) {
                     element.scrollTop = 1;
-                    shouldNotMove = true;
+                    shouldNotMoveUp = true;
                 } else if (element.scrollHeight === element.scrollTop + element.offsetHeight) {
-                    shouldNotMove = true;
+                    shouldNotMoveDown = true;
                     element.scrollTop -= 1;
                 }
             }
@@ -127,10 +136,29 @@ export default class FixedWindow {
         this.touchMoveListener = (e) => {
             const { element } = this.getCurrentWidget();
             if (Util.isPartOfNode(e.target, element)) {
-                if (!shouldNotMove) {
+                const { clientY } = e.touches[0];
+                const isScrollingDown = (lastClientY - clientY) > 0;
+                lastClientY = clientY;
+
+                if (neverScroll) {
+                    neverScroll = false;
+                    return false;
+                }
+
+                if (!shouldNotMoveDown && isScrollingDown) {
                     e.stopImmediatePropagation();
                 }
-                shouldNotMove = false;
+
+                if (shouldNotMoveDown && !isScrollingDown) {
+                    e.stopImmediatePropagation();
+                }
+
+                if (!shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown) {
+                    e.stopImmediatePropagation();
+                }
+
+                shouldNotMoveUp = false;
+                shouldNotMoveDown = false;
             }
         };
         global.document.body.addEventListener('touchmove', this.touchMoveListener);

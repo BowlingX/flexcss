@@ -1898,7 +1898,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                e.preventDefault();
 	            };
 	
-	            var shouldNotMove = false;
+	            var shouldNotMoveUp = false;
+	            var shouldNotMoveDown = false;
+	            var neverScroll = false;
+	            var lastClientY = 0;
 	            this.touchStartListener = function (e) {
 	                var _getCurrentWidget = _this2.getCurrentWidget();
 	
@@ -1911,11 +1914,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    element = closestOverflow;
 	                }
 	                if (_Util2.default.isPartOfNode(e.target, element)) {
+	                    neverScroll = element.scrollHeight === element.offsetHeight;
+	                    lastClientY = e.touches[0].clientY;
+	                    // never allow scrolling when there is nothing to scroll
+	                    if (neverScroll) {
+	                        return false;
+	                    }
 	                    if (element.scrollTop === 0) {
 	                        element.scrollTop = 1;
-	                        shouldNotMove = true;
+	                        shouldNotMoveUp = true;
 	                    } else if (element.scrollHeight === element.scrollTop + element.offsetHeight) {
-	                        shouldNotMove = true;
+	                        shouldNotMoveDown = true;
 	                        element.scrollTop -= 1;
 	                    }
 	                }
@@ -1930,10 +1939,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var element = _getCurrentWidget2.element;
 	
 	                if (_Util2.default.isPartOfNode(e.target, element)) {
-	                    if (!shouldNotMove) {
+	                    var clientY = e.touches[0].clientY;
+	
+	                    var isScrollingDown = lastClientY - clientY > 0;
+	                    lastClientY = clientY;
+	
+	                    if (neverScroll) {
+	                        neverScroll = false;
+	                        return false;
+	                    }
+	
+	                    if (!shouldNotMoveDown && isScrollingDown) {
 	                        e.stopImmediatePropagation();
 	                    }
-	                    shouldNotMove = false;
+	
+	                    if (shouldNotMoveDown && !isScrollingDown) {
+	                        e.stopImmediatePropagation();
+	                    }
+	
+	                    if (!shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown) {
+	                        e.stopImmediatePropagation();
+	                    }
+	
+	                    shouldNotMoveUp = false;
+	                    shouldNotMoveDown = false;
 	                }
 	            };
 	            global.document.body.addEventListener('touchmove', this.touchMoveListener);
