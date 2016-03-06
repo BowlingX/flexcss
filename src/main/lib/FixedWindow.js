@@ -110,7 +110,7 @@ export default class FixedWindow {
             const closestOverflow = Util.closestCallback(e.target,
                 (el) => el instanceof HTMLTextAreaElement ||
                 (el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH)));
-            if (closestOverflow) {
+            if (closestOverflow && closestOverflow.scrollHeight !== closestOverflow.offsetHeight) {
                 element = closestOverflow;
             }
             if (Util.isPartOfNode(e.target, element)) {

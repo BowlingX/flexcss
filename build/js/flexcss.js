@@ -3978,7 +3978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var closestOverflow = _Util2.default.closestCallback(e.target, function (el) {
 	                    return el instanceof HTMLTextAreaElement || el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH);
 	                });
-	                if (closestOverflow) {
+	                if (closestOverflow && closestOverflow.scrollHeight !== closestOverflow.offsetHeight) {
 	                    element = closestOverflow;
 	                }
 	                if (_Util2.default.isPartOfNode(e.target, element)) {
