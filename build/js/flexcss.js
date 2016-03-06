@@ -2970,6 +2970,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.EVENT_MODAL_ASYNC_TARGET_LOADED = exports.EVENT_MODAL_INIT = exports.EVENT_MODAL_OPENED = exports.EVENT_MODAL_BEFORE_CLOSED = exports.EVENT_MODAL_CLOSED = undefined;
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The MIT License (MIT)
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
@@ -3026,7 +3028,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var HTML_ELEMENT = global.document.documentElement;
 	var KEY_ESC = 27;
 	/* Attribute Names */
 	var ATTR_CREATE_NEW = 'data-new-instance';
@@ -3038,11 +3039,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CLS_OPEN = 'open';
 	var CLS_CURRENT = 'current';
 	var CLS_PART_OF_STACK = 'part-of-stack';
-	var CLS_MODAL_OPEN = 'modal-open';
 	var CLS_MODAL_CONTAINER = 'modal-container';
 	var CLS_ANIM_END = 'modal-anim-end';
 	var CLS_LOADER_CONTAINER = 'loader-container';
 	var CLS_LOADER = 'loader';
+	var CLS_BACKDROP = 'backdrop';
 	
 	/* Events */
 	
@@ -3140,7 +3141,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (t > -1) {
 	                Modal._modalInstances.splice(t, 1);
 	                _FixedWindow2.default.getInstance().close();
-	                HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
 	            }
 	        }
 	
@@ -3210,14 +3210,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            self.currentOpen = null;
 	            if (self.modalContainer) {
 	                // setup next open
-	                var lastContainer = Modal._modalInstances[Modal._modalInstances.length - 1],
-	                    classList = self.modalContainer.classList;
+	                var lastContainer = Modal._modalInstances[Modal._modalInstances.length - 1];
+	                var classList = self.modalContainer.classList;
 	                classList.remove(CLS_CONTAINER_CURRENT);
+	                classList.remove(CLS_BACKDROP);
 	                classList.remove(CLS_OPEN);
 	                // Remove all current classes from child-nodes
 	                for (var i = 0; i < self.modalContainer.childNodes.length; i++) {
-	                    var node = self.modalContainer.childNodes[i],
-	                        cl = node.classList;
+	                    var node = self.modalContainer.childNodes[i];
+	                    var cl = node.classList;
 	                    // remove applied styles
 	                    self._finishState(node);
 	                    cl.remove(CLS_CURRENT);
@@ -3292,8 +3293,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Util2.default.prefixedAnimateEvent(co, 'AnimationEnd', this._finishAnim);
 	
 	            for (var i = 0; i < this.modalContainer.childNodes.length; i++) {
-	                var n = this.modalContainer.childNodes[i],
-	                    isCurrent = n.classList.contains(CLS_CURRENT);
+	                var n = this.modalContainer.childNodes[i];
+	                var isCurrent = n.classList.contains(CLS_CURRENT);
 	                if (n === co) {
 	                    co.classList.add(CLS_CURRENT);
 	                    co.classList.remove(CLS_PART_OF_STACK);
@@ -3307,13 +3308,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	        }
-	    }, {
-	        key: 'handleScrollbar',
-	        value: function handleScrollbar() {
-	            if (Modal._modalInstances.length === 0) {
-	                HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
-	            }
-	        }
 	
 	        /**
 	         * Creates a Modal and opens it (later)
@@ -3324,6 +3318,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'createWidget',
 	        value: function createWidget(e) {
+	            var _this = this;
+	
 	            var self = this;
 	            if (this.loading) {
 	                return false;
@@ -3340,13 +3336,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return false;
 	                }
 	            }
-	            var targetContent,
-	                future,
-	                widget,
-	                target,
-	                hasTarget = true,
-	                isHtmlElement = e instanceof HTMLElement,
-	                isWidget = _Widget2.default.isWidget(e);
+	            var targetContent = void 0;
+	            var future = void 0;
+	            var widget = void 0;
+	            var target = void 0;
+	            var hasTarget = true;
+	            var isHtmlElement = e instanceof HTMLElement;
+	            var isWidget = _Widget2.default.isWidget(e);
 	            if (isHtmlElement || isWidget) {
 	                if (isHtmlElement) {
 	                    targetContent = e;
@@ -3357,18 +3353,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                target = e.target;
 	                if (!target) {
-	                    throw 'Could not find target, did you pass an event, a HTMLElement or an Widget?';
+	                    throw new Error('Could not find target, did you pass an event, a HTMLElement or an Widget?');
 	                }
 	                hasTarget = target.hasAttribute(ATTR_NAME);
 	                targetContent = target.getAttribute(ATTR_NAME);
 	                widget = _Widget2.default.findWidget(target);
 	                if (target.hasAttribute(ATTR_CREATE_NEW) && !e.newInstance) {
-	                    var newInstance = new Modal(this.container).setDestroyOnFinish(true);
-	                    e.newInstance = true;
-	                    newInstance.fromEvent(e).then(function () {
-	                        newInstance.registerEvents(newInstance.getModalContainer());
-	                    });
-	                    return false;
+	                    var _ret = function () {
+	                        var newInstance = new Modal(_this.container).setDestroyOnFinish(true);
+	                        e.newInstance = true;
+	                        newInstance.fromEvent(e).then(function () {
+	                            newInstance.registerEvents(newInstance.getModalContainer());
+	                        });
+	                        return {
+	                            v: false
+	                        };
+	                    }();
+	
+	                    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	                }
 	                if (hasTarget) {
 	                    e.stopImmediatePropagation();
@@ -3387,15 +3389,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.modalContainer = global.document.createElement('div');
 	                this.modalContainer.className = CLS_MODAL_CONTAINER + ' ' + this.options.containerClassNames + ' ' + CLS_OPEN;
 	                var closeModalFunction = function closeModalFunction(ce) {
-	                    if (self.loading) {
+	                    if (_this.loading) {
 	                        return false;
 	                    }
-	                    if (_Util2.default.isPartOfNode(ce.target, self.currentOpen)) {
+	                    if (_Util2.default.isPartOfNode(ce.target, _this.currentOpen)) {
 	                        if (!ce.target.hasAttribute(ATTR_CLOSE)) {
 	                            return false;
 	                        }
 	                    }
-	                    self.close(ce);
+	                    _this.close(ce);
 	                };
 	
 	                this.modalContainer.addEventListener(_Settings2.default.getTabEvent(), closeModalFunction, false);
@@ -3406,31 +3408,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	                modalContainerClasses.add(CLS_OPEN);
 	            }
 	
-	            var loader = void 0,
-	                doc = global.document,
-	                toggleLoader = function toggleLoader(show) {
+	            var loader = void 0;
+	            var doc = global.document;
+	            var toggleLoader = function toggleLoader(show) {
 	                if (show) {
 	                    loader = doc.createElement('div');
 	                    loader.className = CLS_LOADER_CONTAINER;
 	                    var loaderLoader = doc.createElement('div');
 	                    loaderLoader.className = CLS_LOADER;
 	                    loader.appendChild(loaderLoader);
-	                    self.modalContainer.appendChild(loader);
+	                    _this.modalContainer.appendChild(loader);
 	                } else {
 	                    loader.parentNode.removeChild(loader);
 	                }
 	            };
-	
-	            this.handleScrollbar();
-	
-	            modalContainerClasses.add(CLS_CONTAINER_CURRENT);
 	            modalContainerClasses.add('loading');
+	            modalContainerClasses.add(CLS_CONTAINER_CURRENT);
+	
+	            requestAnimationFrame(function () {
+	                requestAnimationFrame(function () {
+	                    modalContainerClasses.add(CLS_BACKDROP);
+	                });
+	            });
+	
 	            this.loading = true;
 	            toggleLoader(true);
 	            var async = widget ? widget.getAsync() : null;
 	            if (_Widget2.default.isWidget(widget) && async) {
 	                future = async.then(function (r) {
-	                    var result;
+	                    var result = void 0;
 	                    if (r instanceof HTMLElement || r instanceof DocumentFragment) {
 	                        result = r;
 	                    } else {
@@ -3446,27 +3452,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return result;
 	                });
 	            } else {
-	                var el = targetContent instanceof HTMLElement || targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
-	                if (el) {
-	                    future = new Promise(function (resolve) {
-	                        resolve(el);
-	                    });
-	                } else {
-	                    throw 'Could not found given modal element (content) with ID: ' + targetContent;
-	                }
+	                (function () {
+	                    var el = targetContent instanceof HTMLElement || targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
+	                    if (el) {
+	                        future = new Promise(function (resolve) {
+	                            resolve(el);
+	                        });
+	                    } else {
+	                        throw new Error('Could not found given modal element (content) with ID: ' + targetContent);
+	                    }
+	                })();
 	            }
 	
 	            _Event2.default.dispatchAndFire(target, EVENT_MODAL_INIT);
 	
 	            return future.then(function (thisEl) {
-	                thisEl.hfWidgetInstance = self;
-	                self.modalContainer.appendChild(thisEl);
+	                thisEl.hfWidgetInstance = _this;
+	                _this.modalContainer.appendChild(thisEl);
 	                modalContainerClasses.remove('loading');
-	                self.loading = false;
+	                _this.loading = false;
 	                toggleLoader(false);
-	
-	                self.open(thisEl, true, e);
-	
+	                _this.open(thisEl, true, e);
 	                return thisEl;
 	            });
 	        }
@@ -3481,10 +3487,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'open',
 	        value: function open(modal, internal, maybeEvent) {
-	
 	            if (!internal) {
 	                this.modalContainer.classList.add('open');
-	                this.handleScrollbar();
 	            }
 	            this.switchModals(modal, this.currentOpen);
 	
@@ -3493,21 +3497,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'registerEvents',
 	        value: function registerEvents(delegate) {
-	            var delegateContainer = delegate || this.container,
-	                self = this;
+	            var _this2 = this;
+	
+	            var delegateContainer = delegate || this.container;
 	            // Modals should always be fixed
-	            _FixedWindow2.default.getInstance().addScreenConstraint(Modal, function (width) {
+	            _FixedWindow2.default.getInstance().addScreenConstraint(Modal, function () {
 	                return true;
 	            });
 	            // register modal instance so we can detect multiple registrars
-	            delegateContainer.flexModalInstance = self;
-	            self.eventFunction = function () {
-	                self.createWidget.apply(self, arguments);
-	            };
-	            delegateContainer.addEventListener(_Settings2.default.getTabEvent(), self.eventFunction, false);
+	            delegateContainer.flexModalInstance = this;
+	            this.eventFunction = function () {
+	                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                    args[_key] = arguments[_key];
+	                }
 	
-	            self.eventContainer = delegateContainer;
-	            return self;
+	                _this2.createWidget.apply(_this2, args);
+	            };
+	            delegateContainer.addEventListener(_Settings2.default.getTabEvent(), this.eventFunction, false);
+	
+	            this.eventContainer = delegateContainer;
+	            return this;
 	        }
 	
 	        /**
@@ -3548,12 +3557,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroy',
 	        value: function destroy() {
-	            var self = this,
-	                modalContainer = this.modalContainer;
+	            var modalContainer = this.modalContainer;
 	            var isEmptyContainer = modalContainer.childNodes.length === 0;
 	            // Remove event listener on destroy, do not remove DOM node
-	            if (self.eventContainer) {
-	                self.eventContainer.removeEventListener(_Settings2.default.getTabEvent(), self.eventFunction, true);
+	            if (this.eventContainer) {
+	                this.eventContainer.removeEventListener(_Settings2.default.getTabEvent(), this.eventFunction, true);
 	            }
 	
 	            if (isEmptyContainer) {
@@ -3562,15 +3570,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            if (global.MutationObserver) {
-	                var observer = new MutationObserver(function (mutations) {
-	                    mutations.forEach(function () {
-	                        if (isEmptyContainer) {
-	                            modalContainer.parentNode.removeChild(modalContainer);
-	                            observer.disconnect();
-	                        }
+	                (function () {
+	                    var observer = new MutationObserver(function (mutations) {
+	                        mutations.forEach(function () {
+	                            if (modalContainer.childNodes.length === 0) {
+	                                modalContainer.parentNode.removeChild(modalContainer);
+	                                observer.disconnect();
+	                            }
+	                        });
 	                    });
-	                });
-	                observer.observe(modalContainer, { childList: true });
+	                    observer.observe(modalContainer, {
+	                        childList: true
+	                    });
+	                })();
 	            } else {
 	                modalContainer.addEventListener('DOMNodeRemoved', function (e) {
 	                    if (e.target !== modalContainer && modalContainer.childNodes.length - 1 === 0) {
@@ -3804,7 +3816,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.EVENT_AFTER_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_ADD = undefined;
+	exports.ALLOW_ELEMENT_OVERFLOW_TOUCH = exports.EVENT_AFTER_FIXED_REMOVE = exports.EVENT_BEFORE_FIXED_ADD = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
@@ -3836,6 +3848,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var EVENT_BEFORE_FIXED_ADD = exports.EVENT_BEFORE_FIXED_ADD = 'flexcss.fixedWindow.beforeAdd';
 	var EVENT_AFTER_FIXED_REMOVE = exports.EVENT_AFTER_FIXED_REMOVE = 'flexcss.fixedWindow.afterRemove';
+	
+	/**
+	 * @type {string}
+	 */
+	var ALLOW_ELEMENT_OVERFLOW_TOUCH = exports.ALLOW_ELEMENT_OVERFLOW_TOUCH = 'data-overflow';
 	
 	/**
 	 * @type {FixedWindow}
@@ -3955,6 +3972,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                var element = _getCurrentWidget.element;
 	
+	                var closestOverflow = _Util2.default.closestCallback(e.target, function (el) {
+	                    return el instanceof HTMLTextAreaElement || el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH);
+	                });
+	                if (closestOverflow) {
+	                    element = closestOverflow;
+	                }
 	                if (_Util2.default.isPartOfNode(e.target, element)) {
 	                    if (element.scrollTop === 0) {
 	                        element.scrollTop = 1;

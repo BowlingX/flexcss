@@ -35,8 +35,6 @@ import Event from './util/Event';
 import Util from './util/Util';
 import Widget from './Widget';
 import FixedWindow from './lib/FixedWindow';
-
-const HTML_ELEMENT = global.document.documentElement;
 const KEY_ESC = 27;
 /* Attribute Names */
 const ATTR_CREATE_NEW = 'data-new-instance';
@@ -48,11 +46,11 @@ const CLS_CONTAINER_CURRENT = 'front';
 const CLS_OPEN = 'open';
 const CLS_CURRENT = 'current';
 const CLS_PART_OF_STACK = 'part-of-stack';
-const CLS_MODAL_OPEN = 'modal-open';
 const CLS_MODAL_CONTAINER = 'modal-container';
 const CLS_ANIM_END = 'modal-anim-end';
 const CLS_LOADER_CONTAINER = 'loader-container';
 const CLS_LOADER = 'loader';
+const CLS_BACKDROP = 'backdrop';
 
 /* Events */
 
@@ -144,7 +142,6 @@ class Modal {
         if (t > -1) {
             Modal._modalInstances.splice(t, 1);
             FixedWindow.getInstance().close();
-            HTML_ELEMENT.classList.remove(CLS_MODAL_OPEN);
         }
     }
 
@@ -190,7 +187,7 @@ class Modal {
 
         if (self.currentOpen) {
             // dispatch beforeClose event, if prevented prevent modal from closing
-            var ev = Event.dispatchAndFire(self.currentOpen, EVENT_MODAL_BEFORE_CLOSED);
+            const ev = Event.dispatchAndFire(self.currentOpen, EVENT_MODAL_BEFORE_CLOSED);
             if (ev.defaultPrevented) {
                 return false;
             }
@@ -205,7 +202,6 @@ class Modal {
 
             // finally trigger closed event
             Event.dispatch(self.currentOpen, EVENT_MODAL_CLOSED).withOriginal(e).fire();
-
         }
         self._removeModalFromStack(self.currentOpen);
 
@@ -213,13 +209,15 @@ class Modal {
         self.currentOpen = null;
         if (self.modalContainer) {
             // setup next open
-            var lastContainer = Modal._modalInstances[Modal._modalInstances.length - 1],
-                classList = self.modalContainer.classList;
+            const lastContainer = Modal._modalInstances[Modal._modalInstances.length - 1];
+            const classList = self.modalContainer.classList;
             classList.remove(CLS_CONTAINER_CURRENT);
+            classList.remove(CLS_BACKDROP);
             classList.remove(CLS_OPEN);
             // Remove all current classes from child-nodes
-            for (var i = 0; i < self.modalContainer.childNodes.length; i++) {
-                var node = self.modalContainer.childNodes[i], cl = node.classList;
+            for (let i = 0; i < self.modalContainer.childNodes.length; i++) {
+                const node = self.modalContainer.childNodes[i];
+                const cl = node.classList;
                 // remove applied styles
                 self._finishState(node);
                 cl.remove(CLS_CURRENT);
@@ -274,9 +272,9 @@ class Modal {
         this.currentOpen = co;
 
         // bring current container to the front
-        var instances = Modal._modalInstances;
+        const instances = Modal._modalInstances;
 
-        for (var m = 0; m < instances.length; m++) {
+        for (let m = 0; m < instances.length; m++) {
             instances[m].parentNode.classList.remove(CLS_CONTAINER_CURRENT);
         }
         this.modalContainer.classList.add(CLS_CONTAINER_CURRENT);
@@ -284,8 +282,9 @@ class Modal {
         // - fixes nested scrolling element issue in iOS Browsers / Mobile-Safari
         Util.prefixedAnimateEvent(co, 'AnimationEnd', this._finishAnim);
 
-        for (var i = 0; i < this.modalContainer.childNodes.length; i++) {
-            var n = this.modalContainer.childNodes[i], isCurrent = n.classList.contains(CLS_CURRENT);
+        for (let i = 0; i < this.modalContainer.childNodes.length; i++) {
+            const n = this.modalContainer.childNodes[i];
+            const isCurrent = n.classList.contains(CLS_CURRENT);
             if (n === co) {
                 co.classList.add(CLS_CURRENT);
                 co.classList.remove(CLS_PART_OF_STACK);
@@ -300,26 +299,20 @@ class Modal {
         }
     }
 
-    handleScrollbar() {
-        if (Modal._modalInstances.length === 0) {
-            HTML_ELEMENT.classList.add(CLS_MODAL_OPEN);
-        }
-    }
-
     /**
      * Creates a Modal and opens it (later)
      * @param e
      * @returns {Promise|boolean}
      */
     createWidget(e) {
-        var self = this;
+        const self = this;
         if (this.loading) {
             return false;
         }
 
         // check if another modal has registered events on this dom path:
         if (e && e.target) {
-            var foundInstance = Util.parentsUntil(e.target, function (node) {
+            const foundInstance = Util.parentsUntil(e.target, (node) => {
                 return node && node.flexModalInstance;
             });
 
@@ -328,8 +321,13 @@ class Modal {
                 return false;
             }
         }
-        var targetContent, future, widget, target, hasTarget = true,
-            isHtmlElement = e instanceof HTMLElement, isWidget = Widget.isWidget(e);
+        let targetContent;
+        let future;
+        let widget;
+        let target;
+        let hasTarget = true;
+        const isHtmlElement = e instanceof HTMLElement;
+        const isWidget = Widget.isWidget(e);
         if (isHtmlElement || isWidget) {
             if (isHtmlElement) {
                 targetContent = e;
@@ -340,16 +338,16 @@ class Modal {
         } else {
             target = e.target;
             if (!target) {
-                throw 'Could not find target, did you pass an event, a HTMLElement or an Widget?';
+                throw new Error('Could not find target, did you pass an event, a HTMLElement or an Widget?');
             }
             hasTarget = target.hasAttribute(ATTR_NAME);
             targetContent = target.getAttribute(ATTR_NAME);
             widget = Widget.findWidget(target);
             if (target.hasAttribute(ATTR_CREATE_NEW) && !e.newInstance) {
-                var newInstance = new Modal(this.container)
+                const newInstance = new Modal(this.container)
                     .setDestroyOnFinish(true);
                 e.newInstance = true;
-                newInstance.fromEvent(e).then(function () {
+                newInstance.fromEvent(e).then(() => {
                     newInstance.registerEvents(newInstance.getModalContainer());
                 });
                 return false;
@@ -370,55 +368,60 @@ class Modal {
         if (!this.modalContainer) {
             this.modalContainer = global.document.createElement('div');
             this.modalContainer.className = `${CLS_MODAL_CONTAINER} ${this.options.containerClassNames} ${CLS_OPEN}`;
-            const closeModalFunction = function (ce) {
-                if (self.loading) {
+            const closeModalFunction = (ce) => {
+                if (this.loading) {
                     return false;
                 }
-                if (Util.isPartOfNode(ce.target, self.currentOpen)) {
+                if (Util.isPartOfNode(ce.target, this.currentOpen)) {
                     if (!ce.target.hasAttribute(ATTR_CLOSE)) {
                         return false;
                     }
                 }
-                self.close(ce);
+                this.close(ce);
             };
 
             this.modalContainer.addEventListener(Settings.getTabEvent(), closeModalFunction, false);
 
             modalContainerClasses = this.modalContainer.classList;
             this.container.appendChild(this.modalContainer);
-
         } else {
             modalContainerClasses.add(CLS_OPEN);
         }
 
-        let loader, doc = global.document, toggleLoader = function (show) {
+        let loader;
+        const doc = global.document;
+        const toggleLoader = (show) => {
             if (show) {
                 loader = doc.createElement('div');
                 loader.className = CLS_LOADER_CONTAINER;
-                var loaderLoader = doc.createElement('div');
+                const loaderLoader = doc.createElement('div');
                 loaderLoader.className = CLS_LOADER;
                 loader.appendChild(loaderLoader);
-                self.modalContainer.appendChild(loader);
+                this.modalContainer.appendChild(loader);
             } else {
                 loader.parentNode.removeChild(loader);
             }
         };
-
-        this.handleScrollbar();
-
-        modalContainerClasses.add(CLS_CONTAINER_CURRENT);
         modalContainerClasses.add('loading');
+        modalContainerClasses.add(CLS_CONTAINER_CURRENT);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                modalContainerClasses.add(CLS_BACKDROP);
+            });
+        });
+
         this.loading = true;
         toggleLoader(true);
-        var async = widget ? widget.getAsync() : null;
+        const async = widget ? widget.getAsync() : null;
         if (Widget.isWidget(widget) && async) {
-            future = async.then(function (r) {
-                var result;
+            future = async.then((r) => {
+                let result;
                 if (r instanceof HTMLElement || r instanceof DocumentFragment) {
                     result = r;
                 } else {
                     // Create container Element:
-                    var element = doc.createElement('div');
+                    const element = doc.createElement('div');
                     element.className = self.options.classNames;
                     element.innerHTML = r;
                     element.id = Util.guid();
@@ -429,28 +432,26 @@ class Modal {
                 return result;
             });
         } else {
-            var el = targetContent instanceof HTMLElement ||
+            const el = targetContent instanceof HTMLElement ||
             targetContent instanceof DocumentFragment ? targetContent : doc.getElementById(targetContent);
             if (el) {
                 future = new Promise((resolve) => {
                     resolve(el);
                 });
             } else {
-                throw 'Could not found given modal element (content) with ID: ' + targetContent;
+                throw new Error(`Could not found given modal element (content) with ID: ${targetContent}`);
             }
         }
 
         Event.dispatchAndFire(target, EVENT_MODAL_INIT);
 
         return future.then((thisEl) => {
-            thisEl.hfWidgetInstance = self;
-            self.modalContainer.appendChild(thisEl);
+            thisEl.hfWidgetInstance = this;
+            this.modalContainer.appendChild(thisEl);
             modalContainerClasses.remove('loading');
-            self.loading = false;
+            this.loading = false;
             toggleLoader(false);
-
-            self.open(thisEl, true, e);
-
+            this.open(thisEl, true, e);
             return thisEl;
         });
     }
@@ -462,11 +463,8 @@ class Modal {
      * @param {Boolean} [maybeEvent], optional event-object that triggered open
      */
     open(modal, internal, maybeEvent) {
-
-
         if (!internal) {
             this.modalContainer.classList.add('open');
-            this.handleScrollbar();
         }
         this.switchModals(modal, this.currentOpen);
 
@@ -475,18 +473,18 @@ class Modal {
 
 
     registerEvents(delegate) {
-        var delegateContainer = delegate || this.container, self = this;
+        const delegateContainer = delegate || this.container;
         // Modals should always be fixed
-        FixedWindow.getInstance().addScreenConstraint(Modal, (width) => true);
+        FixedWindow.getInstance().addScreenConstraint(Modal, () => true);
         // register modal instance so we can detect multiple registrars
-        delegateContainer.flexModalInstance = self;
-        self.eventFunction = function () {
-            self.createWidget.apply(self, arguments);
+        delegateContainer.flexModalInstance = this;
+        this.eventFunction = (...args) => {
+            this.createWidget.apply(this, args);
         };
-        delegateContainer.addEventListener(Settings.getTabEvent(), self.eventFunction, false);
+        delegateContainer.addEventListener(Settings.getTabEvent(), this.eventFunction, false);
 
-        self.eventContainer = delegateContainer;
-        return self;
+        this.eventContainer = delegateContainer;
+        return this;
     }
 
 
@@ -518,11 +516,11 @@ class Modal {
      * Will use fast MutationObserver if available, otherwise falls back to DOMNodeRemoved event
      */
     destroy() {
-        let self = this, modalContainer = this.modalContainer;
+        const modalContainer = this.modalContainer;
         const isEmptyContainer = modalContainer.childNodes.length === 0;
         // Remove event listener on destroy, do not remove DOM node
-        if (self.eventContainer) {
-            self.eventContainer.removeEventListener(Settings.getTabEvent(), self.eventFunction, true);
+        if (this.eventContainer) {
+            this.eventContainer.removeEventListener(Settings.getTabEvent(), this.eventFunction, true);
         }
 
         if (isEmptyContainer) {
@@ -531,17 +529,21 @@ class Modal {
             }
         }
         if (global.MutationObserver) {
-            var observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function () {
-                    if (isEmptyContainer) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach(() => {
+                    if (modalContainer.childNodes.length === 0) {
                         modalContainer.parentNode.removeChild(modalContainer);
                         observer.disconnect();
                     }
                 });
             });
-            observer.observe(modalContainer, {childList: true});
+            observer.observe(modalContainer,
+                {
+                    childList: true
+                }
+            );
         } else {
-            modalContainer.addEventListener('DOMNodeRemoved', function (e) {
+            modalContainer.addEventListener('DOMNodeRemoved', (e) => {
                 if (e.target !== modalContainer && (modalContainer.childNodes.length - 1) === 0) {
                     modalContainer.parentNode.removeChild(modalContainer);
                 }
@@ -555,9 +557,9 @@ class Modal {
 Modal._modalInstances = [];
 
 // Global keydown listener for modal
-global.addEventListener('keydown', function (e) {
+global.addEventListener('keydown', (e) => {
     if (e.keyCode === KEY_ESC) {
-        var lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
+        const lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
         if (lastModal) {
             Widget.findWidget(lastModal).close(e);
         }

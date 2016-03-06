@@ -9,6 +9,11 @@ export const EVENT_BEFORE_FIXED_ADD = 'flexcss.fixedWindow.beforeAdd';
 export const EVENT_AFTER_FIXED_REMOVE = 'flexcss.fixedWindow.afterRemove';
 
 /**
+ * @type {string}
+ */
+export const ALLOW_ELEMENT_OVERFLOW_TOUCH = 'data-overflow';
+
+/**
  * @type {FixedWindow}
  */
 let fixedWindowInstance;
@@ -98,7 +103,13 @@ export default class FixedWindow {
 
         let shouldNotMove = false;
         this.touchStartListener = (e) => {
-            const { element } = this.getCurrentWidget();
+            let { element } = this.getCurrentWidget();
+            const closestOverflow = Util.closestCallback(e.target,
+                (el) => el instanceof HTMLTextAreaElement ||
+                (el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH)));
+            if (closestOverflow) {
+                element = closestOverflow;
+            }
             if (Util.isPartOfNode(e.target, element)) {
                 if (element.scrollTop === 0) {
                     element.scrollTop = 1;

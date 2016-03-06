@@ -1,5 +1,3 @@
-'use strict';
-
 import Form from '../Form';
 import Tooltip from '../Tooltip';
 import Settings from '../util/Settings';

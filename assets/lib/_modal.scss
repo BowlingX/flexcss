@@ -4,8 +4,6 @@
 
 // ios/webkit has problems with animations when this is prefixed and enabled
 .modal-container {
-  /* autoprefixer: off */
-  @include perspective();
   backface-visibility: hidden;
 }
 
@@ -46,6 +44,7 @@
   }
 
   &:after {
+    pointer-events:none;
     content: '';
     position: fixed;
     top: 0;
@@ -53,19 +52,22 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    will-change: opacity;
     background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
+    transition: opacity .5s ease;
+    backface-visibility: hidden;
   }
 
-  &.open {
+  &.backdrop {
     &:after {
-      @include animate(fadeIn);
+      opacity:1;
     }
   }
 }
 
 // The Modal itself
 .modal {
+  @include perspective();
+  backface-visibility: hidden;
   @include interface(text);
   width: 100%;
   position: relative;

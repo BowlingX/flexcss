@@ -1,5 +1,3 @@
-'use strict';
-
 import Modal from '../Modal';
 import Settings from '../util/Settings';
 import Widget from '../Widget';
