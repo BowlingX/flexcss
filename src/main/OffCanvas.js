@@ -123,7 +123,6 @@ class OffCanvas {
                 const bounds = target.getBoundingClientRect();
                 const compare = factor > 0 ? calcX <= 0 : calcX >= 0;
                 if (compare) {
-                    e.preventDefault();
                     style.transition = 'transform 0s ease';
                     style.webkitTransition = '-webkit-transform 0s ease';
                     target.mustHide = factor > 0 ? calcX * -1 >
