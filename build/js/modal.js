@@ -1949,15 +1949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        return false;
 	                    }
 	
-	                    if (!shouldNotMoveDown && isScrollingDown) {
-	                        e.stopImmediatePropagation();
-	                    }
-	
-	                    if (shouldNotMoveDown && !isScrollingDown) {
-	                        e.stopImmediatePropagation();
-	                    }
-	
-	                    if (!shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown) {
+	                    if (!shouldNotMoveDown && isScrollingDown || shouldNotMoveDown && !isScrollingDown || !shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown || shouldNotMoveDown && shouldNotMoveUp && isScrollingDown) {
 	                        e.stopImmediatePropagation();
 	                    }
 	

@@ -4017,15 +4017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        return false;
 	                    }
 	
-	                    if (!shouldNotMoveDown && isScrollingDown) {
-	                        e.stopImmediatePropagation();
-	                    }
-	
-	                    if (shouldNotMoveDown && !isScrollingDown) {
-	                        e.stopImmediatePropagation();
-	                    }
-	
-	                    if (!shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown) {
+	                    if (!shouldNotMoveDown && isScrollingDown || shouldNotMoveDown && !isScrollingDown || !shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown || shouldNotMoveDown && shouldNotMoveUp && isScrollingDown) {
 	                        e.stopImmediatePropagation();
 	                    }
 	
@@ -4606,6 +4598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var bounds = target.getBoundingClientRect();
 	                var compare = factor > 0 ? calcX <= 0 : calcX >= 0;
 	                if (compare) {
+	                    e.preventDefault();
 	                    style.transition = 'transform 0s ease';
 	                    style.webkitTransition = '-webkit-transform 0s ease';
 	                    target.mustHide = factor > 0 ? calcX * -1 > bounds.width / HIDE_FACTOR : calcX > bounds.width / HIDE_FACTOR;
