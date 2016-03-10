@@ -29,6 +29,8 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
     global.FLEXCSS_GLOBAL_SETTINGS = {
         // defined breakpoint for small devices < n
         smallBreakpoint: 768,
+        // breakpoint when touchmove should be available
+        touchMoveBreakpointOffCanvas: 768,
         // nodes that should be updated when no scrollbar is expected
         scrollbarUpdateNodes: global.document.body !== null ? [global.document.body] : [],
         // additional Delay until darkener is fully hidden
