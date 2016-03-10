@@ -144,6 +144,7 @@ class Form extends DestroyableWidget {
             tooltipOptions: {
                 containerClass: 'error-tooltip'
             },
+            shouldScrollToElement: true,
             // if you have a fixed header, either set a number or function here
             scrollToElementDiff: 0
         };
@@ -947,7 +948,9 @@ class Form extends DestroyableWidget {
 
     _focusElement(el) {
         el.focus();
-        Util.scrollToElement(el, this.options.scrollToElementDiff);
+        if(this.options.shouldScrollToElement) {
+            Util.scrollToElement(el, this.options.scrollToElementDiff);
+        }
     }
 
     /**
