@@ -238,7 +238,6 @@ export default class FixedWindow {
             if (widget && fixedWidget) {
                 fixed = fixedWidget(this.windowWidth);
             }
-            const length = this.widgets.length;
             this.widgets.push(
                 {
                     widget,
@@ -246,10 +245,8 @@ export default class FixedWindow {
                 }
             );
             // open a new window if there is no window active
-            if (length === 0) {
-                if (fixed) {
-                    this._addFixedContainer();
-                }
+            if (!this.isFixedWindowActive && fixed) {
+                this._addFixedContainer();
             }
         }
     }
