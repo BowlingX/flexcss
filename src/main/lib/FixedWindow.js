@@ -220,6 +220,7 @@ export default class FixedWindow {
      */
     close() {
         this.widgets.pop();
+        this._checkFixedNeeded();
         if (this.widgets.length === 0) {
             this._removeFixedContainer();
         }
