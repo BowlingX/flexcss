@@ -53,13 +53,13 @@
     height: 100%;
     opacity: 0;
     background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
-    transition: opacity .5s ease;
+    will-change: opacity;
     backface-visibility: hidden;
   }
 
   &.backdrop {
     &:after {
-      opacity:1;
+      @include animate(fadeIn);
     }
   }
 }
