@@ -43,6 +43,8 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
 
     global.FLEXCSS_CONST_IS_TOUCH = null;
 
+    global.FLEXCSS_CONST_IS_SAFARI = null;
+
     global.FLEXCSS_CONST_IS_IE = null;
 
     global.FLEXCSS_CONST_TAB_EVENT = 'click';
@@ -98,6 +100,17 @@ class Settings {
         }
 
         return global.FLEXCSS_CONST_IS_IOS;
+    }
+
+    /**
+     * Detects a safari browser
+     * @returns {boolean}
+     */
+    static isSafari() {
+        if(!global.FLEXCSS_CONST_IS_SAFARI) {
+            global.FLEXCSS_CONST_IS_SAFARI = !!/^((?!chrome|android).)*safari/i.test(global.navigator.userAgent);
+        }
+        return global.FLEXCSS_CONST_IS_SAFARI;
     }
 
     /**

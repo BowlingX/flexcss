@@ -77,7 +77,7 @@
   align-self: flex-start;
   &.current {
     display: block;
-    @include animate($modalAnimateName, $modalAnimateDuration, 1, linear);
+    @include animate($modalAnimateName, $modalAnimateDuration);
   }
 
   &.current ~ .loader-container {
