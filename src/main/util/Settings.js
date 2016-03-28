@@ -107,7 +107,7 @@ class Settings {
      * @returns {boolean}
      */
     static isSafari() {
-        if(!global.FLEXCSS_CONST_IS_SAFARI) {
+        if (!global.FLEXCSS_CONST_IS_SAFARI) {
             global.FLEXCSS_CONST_IS_SAFARI = !!/^((?!chrome|android).)*safari/i.test(global.navigator.userAgent);
         }
         return global.FLEXCSS_CONST_IS_SAFARI;
