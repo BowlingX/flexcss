@@ -40,11 +40,24 @@
   display: none;
 }
 
+.subnav-content {
+  overflow: hidden;
+  @include overflowContainer($subnavBg, $subnavHeight);
+}
+
 @media #{$mediaDesktop} {
   .navbar-sub {
     margin: $topbarHeightDesktop 0 0;
     height: $subnavHeightDesktop;
     background:$subnavBgDesktop;
+  }
+
+  .subnav-content {
+    @include overflowContainer($subnavBgDesktop, $subnavHeightDesktop);
+  }
+
+  .subnav li a {
+    line-height:$subnavHeightDesktop !important;
   }
 }
 
