@@ -104,7 +104,7 @@
 
 @media #{$mediaInBetween} {
   .visible-between {
-    display: block;
+    display: block !important;
   }
 
   td, th {
