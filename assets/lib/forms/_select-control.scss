@@ -8,7 +8,7 @@
   &:after {
     @include icon;
     // important: requires fontello or another icon-font to be included
-    @extend .icon-down-open:before;
+    @extend .icon-down-open:before !optional;
     position: absolute;
     top: 1px;
     right: 1px;
