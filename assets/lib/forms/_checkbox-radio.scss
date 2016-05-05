@@ -78,7 +78,7 @@
     background: $inputBackground;
     border: $inputBorder;
     transition: background .5s ease;
-    top:0px;
+    top:0;
   }
 
   .checkbox-container::after {
@@ -92,7 +92,7 @@
     text-align: center;
     color: $checkRadioColor !important;
     transition: transform .3s ease;
-    top:0px;
+    top:0;
   }
 
   &:active {
@@ -116,7 +116,7 @@
   }
   input[type="checkbox"] + .checkbox-container::after {
     @include icon();
-    @extend .icon-ok:before;
+    @extend .icon-ok:before !optional;
     transform: scale3d(0, 0, 0) rotate3d(0,0,1,90deg);
   }
 
