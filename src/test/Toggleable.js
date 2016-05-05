@@ -1,5 +1,3 @@
-'use strict';
-
 import setup from 'setup_jasmine';
 import Toggleable from 'Toggleable';
 

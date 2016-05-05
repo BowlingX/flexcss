@@ -267,14 +267,14 @@
   @for $i from 1 to $gridSize {
     $class: nth($columns, $i);
     &.#{$class} {
-      width: #{$i/$gridSize *100}%;
+      width: #{$i/$gridSize * 100%};
     }
   }
   @media #{$mediaSmall} {
     @for $i from 1 to $gridSize {
       $class: nth($columns, $i);
       &.small-#{$class} {
-        width: #{$i/$gridSize *100}%;
+        width: #{$i/$gridSize * 100%};
       }
     }
   }

@@ -1,5 +1,3 @@
-'use strict';
-
 import Dropdown from 'Dropdown';
 import setup from 'setup_jasmine';
 setup();

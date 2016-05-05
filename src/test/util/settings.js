@@ -1,5 +1,3 @@
-'use strict';
-
 import Settings from 'util/Settings';
 
 describe("Global Settings", function () {
