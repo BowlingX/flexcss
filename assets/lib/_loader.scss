@@ -1,0 +1,55 @@
+@mixin loader() {
+  display: block;
+  margin: 0 auto;
+  width: $loaderSize;
+  height: $loaderSize;
+  border-radius: 50%;
+  border: $loaderBorder solid transparent;
+  position: relative;
+  animation: spin 1s infinite cubic-bezier(.37, .73, .62, .28);
+
+  &:before {
+    content: '';
+    width: $loaderSize;
+    height: $loaderSize;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    left: $loaderBorder*-1;
+    top: $loaderBorder*-1;
+
+    border-right: $loaderBorder solid $loaderColor;
+    border-top: $loaderBorder solid $loaderColor;
+    border-left: $loaderBorder solid $loaderColorBackground;
+    border-bottom: $loaderBorder solid $loaderColor;
+
+    @if $loaderAlternate {
+      border-right: none;
+      border-bottom: none;
+      border-top: $loaderBorder solid $loaderColor;
+      border-left: $loaderBorder solid $loaderAlternateColor;
+    }
+  }
+
+  &.small {
+    width: $smallLoaderSize;
+    height: $smallLoaderSize;
+    border-width: $smallLoaderBorder;
+    &:before {
+      width: $smallLoaderSize;
+      height: $smallLoaderSize;
+      left: $smallLoaderBorder*-1;
+      top: $smallLoaderBorder*-1;
+      border-right-width: $smallLoaderBorder;
+      border-top-width: $smallLoaderBorder;
+      border-left-width: $smallLoaderBorder;
+      border-bottom-width: $smallLoaderBorder;
+    }
+  }
+}
+
+@if $executeDefaultMixins {
+  .loader {
+    @include loader();
+  }
+}
