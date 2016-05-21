@@ -32,7 +32,7 @@
   }
 
   .visible-inline-flex-small {
-    display:inline-flex !important;
+    display: inline-flex !important;
   }
 
   .visible-inline-small,
@@ -103,6 +103,11 @@
 }
 
 @media #{$mediaInBetween} {
+
+  .hide-between {
+    display: none;
+  }
+
   .visible-between {
     display: block !important;
   }
