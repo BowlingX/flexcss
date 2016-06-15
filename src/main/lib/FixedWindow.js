@@ -55,7 +55,8 @@ export default class FixedWindow {
         }
         const widgets = new Set(this.widgets);
         const widgetsThatRequireFixedWindow = Array.from(widgets).some(({ widget }) => {
-            return this.fixedScreenConstraints[widget] && this.fixedScreenConstraints[widget](this.windowWidth);
+            return this.fixedScreenConstraints[widget] &&
+              this.fixedScreenConstraints[widget](this.windowWidth, this.getCurrentWidget());
         });
         if (!widgetsThatRequireFixedWindow) {
             this._removeFixedContainer();
