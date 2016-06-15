@@ -237,7 +237,7 @@ export default class FixedWindow {
             const widget = instance.constructor;
             const fixedWidget = this.fixedScreenConstraints[instance.constructor];
             if (widget && fixedWidget) {
-                fixed = fixedWidget(this.windowWidth);
+                fixed = fixedWidget(this.windowWidth, instance);
             }
             const length = this.widgets.length;
             this.widgets.push(
