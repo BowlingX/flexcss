@@ -122,11 +122,9 @@ export default class FixedWindow {
                     return false;
                 }
                 if (element.scrollTop === 0) {
-                    element.scrollTop = 1;
                     shouldNotMoveUp = true;
                 } else if (element.scrollHeight === element.scrollTop + element.offsetHeight) {
                     shouldNotMoveDown = true;
-                    element.scrollTop -= 1;
                 }
             }
         };
@@ -140,12 +138,9 @@ export default class FixedWindow {
                 const { clientY } = e.touches[0];
                 const isScrollingDown = (lastClientY - clientY) > 0;
                 lastClientY = clientY;
-
                 if (neverScroll) {
-                    neverScroll = false;
                     return false;
                 }
-
                 if ((!shouldNotMoveDown && isScrollingDown) ||
                     (shouldNotMoveDown && !isScrollingDown) ||
                     (!shouldNotMoveDown && !shouldNotMoveUp && !isScrollingDown) ||
@@ -153,13 +148,18 @@ export default class FixedWindow {
                 ) {
                     e.stopImmediatePropagation();
                 }
-
-                shouldNotMoveUp = false;
-                shouldNotMoveDown = false;
             }
         };
-        global.document.body.addEventListener('touchmove', this.touchMoveListener);
 
+        this.touchEndListener = () => {
+            neverScroll = false;
+            shouldNotMoveUp = false;
+            shouldNotMoveDown = false;
+            lastClientY = 0;
+        };
+
+        global.document.body.addEventListener('touchmove', this.touchMoveListener);
+        global.document.body.addEventListener('touchend', this.touchEndListener);
         global.document.documentElement.classList.add(CLS_FIXED_WINDOW);
         this.isFixedWindowActive = true;
     }
@@ -173,6 +173,7 @@ export default class FixedWindow {
             global.removeEventListener('touchmove', this.touchListener);
             global.document.body.removeEventListener('touchstart', this.touchStartListener);
             global.document.body.removeEventListener('touchmove', this.touchMoveListener);
+            global.document.body.removeEventListener('touchend', this.touchEndListener);
 
             // reset scrollbar nodes
             Settings.get().scrollbarUpdateNodes.forEach((node) => {
@@ -221,6 +222,7 @@ export default class FixedWindow {
      */
     close() {
         this.widgets.pop();
+        this._checkFixedNeeded();
         if (this.widgets.length === 0) {
             this._removeFixedContainer();
         }
@@ -239,7 +241,6 @@ export default class FixedWindow {
             if (widget && fixedWidget) {
                 fixed = fixedWidget(this.windowWidth, instance);
             }
-            const length = this.widgets.length;
             this.widgets.push(
                 {
                     widget,
@@ -247,10 +248,8 @@ export default class FixedWindow {
                 }
             );
             // open a new window if there is no window active
-            if (length === 0) {
-                if (fixed) {
-                    this._addFixedContainer();
-                }
+            if (!this.isFixedWindowActive && fixed) {
+                this._addFixedContainer();
             }
         }
     }

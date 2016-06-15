@@ -29,6 +29,8 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
     global.FLEXCSS_GLOBAL_SETTINGS = {
         // defined breakpoint for small devices < n
         smallBreakpoint: 768,
+        // breakpoint when touchmove should be available
+        touchMoveBreakpointOffCanvas: 768,
         // nodes that should be updated when no scrollbar is expected
         scrollbarUpdateNodes: global.document.body !== null ? [global.document.body] : [],
         // additional Delay until darkener is fully hidden
@@ -40,6 +42,8 @@ if (!global.FLEXCSS_GLOBAL_SETTINGS) {
     global.FLEXCSS_CONST_IS_IOS = null;
 
     global.FLEXCSS_CONST_IS_TOUCH = null;
+
+    global.FLEXCSS_CONST_IS_SAFARI = null;
 
     global.FLEXCSS_CONST_IS_IE = null;
 
@@ -96,6 +100,17 @@ class Settings {
         }
 
         return global.FLEXCSS_CONST_IS_IOS;
+    }
+
+    /**
+     * Detects a safari browser
+     * @returns {boolean}
+     */
+    static isSafari() {
+        if (!global.FLEXCSS_CONST_IS_SAFARI) {
+            global.FLEXCSS_CONST_IS_SAFARI = !!/^((?!chrome|android).)*safari/i.test(global.navigator.userAgent);
+        }
+        return global.FLEXCSS_CONST_IS_SAFARI;
     }
 
     /**

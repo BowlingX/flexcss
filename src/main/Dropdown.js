@@ -208,7 +208,7 @@ class Dropdown {
         const future = new Promise((resolve) => {
             if (window.getComputedStyle(currentOpen).position === 'fixed') {
                 Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, function scheduler(e) {
-                    if (e.srcElement !== currentOpen) {
+                    if (e.target !== currentOpen) {
                         return Util.addEventOnce(Settings.getTransitionEvent(), currentOpen, scheduler.bind(this));
                     }
                     requestAnimationFrame(() => {

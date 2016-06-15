@@ -1,6 +1,4 @@
 /* global loadFixtures */
-'use strict';
-
 import Form, {EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT} from 'Form';
 import setup from 'setup_jasmine';
 import $ from 'jquery';

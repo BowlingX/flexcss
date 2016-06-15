@@ -2,6 +2,7 @@
 * Utility mixins
 */
 
+
 // interface
 @mixin interface($case: none) {
   user-select: $case;
@@ -13,7 +14,7 @@
 }
 
 // Creates an arrow at the bottom
-@mixin arrow-bottom($color: black, $left: 50%) {
+@mixin arrow-bottom($color: black, $left: 50%, $size:$defaultTooltipArrowSize) {
 
   &:after {
     top: 100%;
@@ -28,9 +29,9 @@
   &:after {
     border-color: transparent;
     border-top-color: $color;
-    border-width: 5px;
+    border-width: $size;
     left: $left;
-    margin-left: -5px;
+    margin-left: $size*-1;
   }
 }
 
@@ -62,7 +63,7 @@
 }
 
 // creates an arrow at top
-@mixin arrow-top($color: #fff, $left: 50%) {
+@mixin arrow-top($color: #fff, $left: 50%, $size:$defaultTooltipArrowSize) {
 
   &:after, &:before {
     bottom: 100%;
@@ -78,8 +79,8 @@
   &:after {
     border-color: transparent;
     border-bottom-color: $color;
-    border-width: 5px;
-    margin-left: -5px;
+    border-width: $size;
+    margin-left: $size*-1;
   }
 }
 
@@ -266,14 +267,14 @@
   @for $i from 1 to $gridSize {
     $class: nth($columns, $i);
     &.#{$class} {
-      width: #{$i/$gridSize *100}%;
+      width: #{$i/$gridSize * 100%};
     }
   }
   @media #{$mediaSmall} {
     @for $i from 1 to $gridSize {
       $class: nth($columns, $i);
       &.small-#{$class} {
-        width: #{$i/$gridSize *100}%;
+        width: #{$i/$gridSize * 100%};
       }
     }
   }

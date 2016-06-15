@@ -1,0 +1,145 @@
+/**
+* A general overflow container to visual
+*/
+.overflow-container {
+  @include overflowContainer(#fff);
+}
+
+/**
+* Subnavigation and tabs
+*/
+.subnav, .tabs {
+  background: $subnavBg;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  white-space: nowrap;
+  transform: translateZ(0px);
+  li {
+    display: inline-block;
+
+    margin-right: 0;
+    a, .tab-item {
+      padding: 0 $overallPadding;
+      color: $subnavColor;
+      font-weight: normal;
+      line-height: $subnavHeight;
+      display: block;
+      &:not(span):hover {
+        color: $subnavHoverColor;
+      }
+    }
+
+    &.active a {
+      font-weight: $subnavActiveFontWeight;
+      color:$subnavActiveColor;
+    }
+
+    &:last-of-type:not(.trigger) {
+      margin-right: 40px;
+    }
+  }
+
+  input {
+    background: transparent !important;
+  }
+}
+
+.tabs {
+  background: transparent;
+  position: relative;
+  border-bottom: 1px solid $lightGrayColor;
+  z-index: 0;
+  li {
+    border-top-left-radius: $globalRadius;
+    border-top-right-radius: $globalRadius;
+    position: relative;
+
+    a, .tab-item {
+      line-height: $tabHeight;
+    }
+
+    &.loading {
+      a {
+        cursor: wait;
+      }
+      &:after {
+        @include animate(tabWobbleLine, .4s, infinite, alternate);
+      }
+    }
+
+    &:not(.no-hover) {
+
+      @include borderWobble();
+    }
+
+    &.disabled {
+      a {
+        color: lighten($grayColor, 20%) !important;
+        cursor: not-allowed;
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+
+    &.link {
+      &:after {
+        display: none;
+      }
+    }
+
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Tabs
+.tabs-small {
+  li {
+    a, .tab-item {
+      line-height: 1 !important;
+      padding-bottom: $tabsSmallPadding !important;
+      padding-left: 0 !important;
+    }
+
+    &:not(.no-hover) {
+
+      &:hover, &.active {
+        &:after {
+          width: calc(100% - (#{$tabsSmallPadding*2}));
+        }
+      }
+      &:after {
+        left: calc(50% - #{$overallPadding});
+        margin: 0 $overallPadding 0 0;
+        height: $tabsSmallLineHeight;
+      }
+    }
+
+    &.loading {
+      &:after {
+        @include animate(tabWobbleLineSmall, .4s, infinite, alternate);
+      }
+    }
+  }
+}
+
+// Content of a toggleable element
+.toggle-content {
+  padding: $overallPadding 0 0 $overallPadding;
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.toggle-content-small {
+  padding-left: 0;
+}

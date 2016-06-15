@@ -1,5 +1,3 @@
-'use strict';
-
 import Tooltip from 'Tooltip';
 
 describe("Construct a Tooltip Element", () => {

@@ -243,7 +243,7 @@ form:not(.wide) {
 .multi-form {
   display: flex;
   &.center {
-    @extend .flex-align-items-center;
+    @extend .flex-align-items-center !optional;
   }
   > * {
     margin-left: $inputMultiFormSpacing;

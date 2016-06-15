@@ -83,7 +83,7 @@ class OffCanvas {
         const DARKENER_CLASS_INSTANT_TOGGLE = `${DARKENER_CLASS_TOGGLE}-open`;
 
         const shouldNotTouch = () => {
-            return window.innerWidth >= Settings.get().smallBreakpoint;
+            return window.innerWidth >= Settings.get().touchMoveBreakpointOffCanvas;
         };
 
         if (!darkener || !navigationContainer) {

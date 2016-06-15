@@ -38,6 +38,16 @@
             const evt = document.createEvent("CustomEvent");
             evt.initCustomEvent(event, thisParams.bubbles,
                 thisParams.cancelable, thisParams.detail);
+            evt.superPreventDefault = evt.preventDefault;
+            evt.preventDefault = () => {
+                // Due a bug in IE11, we need to set defaultPrevented manually
+                Object.defineProperty(evt, "defaultPrevented", {
+                    get: () => {
+                        return true;
+                    }
+                });
+                evt.superPreventDefault();
+            };
             return evt;
         };
         CustomEvent.prototype = global.Event.prototype;

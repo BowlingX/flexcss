@@ -1,5 +1,3 @@
-'use strict';
-
 import Modal, {EVENT_MODAL_OPENED} from 'Modal';
 import setup from 'setup_jasmine';
 import Widget from 'Widget';

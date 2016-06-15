@@ -53,13 +53,13 @@
     height: 100%;
     opacity: 0;
     background: rgba($backgroundDarkenerColor, $backgroundDarkenerFadeOpacity);
-    transition: opacity .5s ease;
+    will-change: opacity;
     backface-visibility: hidden;
   }
 
   &.backdrop {
     &:after {
-      opacity:1;
+      @include animate(fadeIn);
     }
   }
 }
@@ -77,7 +77,7 @@
   align-self: flex-start;
   &.current {
     display: block;
-    @include animate($modalAnimateName, $modalAnimateDuration, 1, linear);
+    @include animate($modalAnimateName, $modalAnimateDuration);
   }
 
   &.current ~ .loader-container {
