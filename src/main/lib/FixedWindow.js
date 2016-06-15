@@ -46,6 +46,20 @@ export default class FixedWindow {
         return this.widgets.length > 0 ? this.widgets[this.widgets.length - 1] : null;
     }
 
+    getLastFixedWidget() {
+        let length = this.widgets.length;
+        let widget = null;
+        while (length > 0) {
+            const thisWidget = this.widgets[length - 1];
+            if (thisWidget.fixed) {
+                widget = thisWidget;
+                break;
+            }
+            length--;
+        }
+        return widget;
+    }
+
     /**
      * @private
      */
@@ -107,10 +121,10 @@ export default class FixedWindow {
         let neverScroll = false;
         let lastClientY = 0;
         this.touchStartListener = (e) => {
-            let { element } = this.getCurrentWidget();
+            let { element } = this.getLastFixedWidget();
             const closestOverflow = Util.closestCallback(e.target,
-                (el) => el instanceof HTMLTextAreaElement ||
-                (el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH)));
+              (el) => el instanceof HTMLTextAreaElement ||
+              (el.hasAttribute && el.hasAttribute(ALLOW_ELEMENT_OVERFLOW_TOUCH)));
             if (closestOverflow && closestOverflow.scrollHeight !== closestOverflow.offsetHeight) {
                 element = closestOverflow;
             }
@@ -133,7 +147,7 @@ export default class FixedWindow {
         global.document.body.addEventListener('touchstart', this.touchStartListener);
 
         this.touchMoveListener = (e) => {
-            const { element } = this.getCurrentWidget();
+            const { element } = this.getLastFixedWidget();
             if (Util.isPartOfNode(e.target, element)) {
                 const { clientY } = e.touches[0];
                 const isScrollingDown = (lastClientY - clientY) > 0;
@@ -244,7 +258,8 @@ export default class FixedWindow {
             this.widgets.push(
                 {
                     widget,
-                    element
+                    element,
+                    fixed
                 }
             );
             // open a new window if there is no window active
