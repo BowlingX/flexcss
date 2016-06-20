@@ -45,6 +45,10 @@ const ATTR_DARKENER = 'data-darkener-container';
 /**
  * @type {string}
  */
+const ATTR_ENABLE_EVENT_BUBBLE = 'data-enable-event-bubble';
+/**
+ * @type {string}
+ */
 const DARKENER_INIT = 'init';
 /**
  * @type {string}
@@ -127,8 +131,11 @@ class Dropdown {
         }
 
         if (target && !currentOpen) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+
+            if (!target.getAttribute(ATTR_ENABLE_EVENT_BUBBLE)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
 
             if (target.isLoading) {
                 return false;
