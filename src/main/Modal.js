@@ -556,14 +556,16 @@ class Modal {
 // Static variable that keeps track of all open modals
 Modal._modalInstances = [];
 
+if(global.addEventListener) {
 // Global keydown listener for modal
-global.addEventListener('keydown', (e) => {
-    if (e.keyCode === KEY_ESC) {
-        const lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
-        if (lastModal) {
-            Widget.findWidget(lastModal).close(e);
+    global.addEventListener('keydown', (e) => {
+        if (e.keyCode === KEY_ESC) {
+            const lastModal = Modal._modalInstances[Modal._modalInstances.length - 1];
+            if (lastModal) {
+                Widget.findWidget(lastModal).close(e);
+            }
         }
-    }
-});
+    });
+}
 
 export default Modal;

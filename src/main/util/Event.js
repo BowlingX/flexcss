@@ -27,7 +27,7 @@
 // polyfill for custom events to make thinks work in IE
 // The needed polyfill is so small that I embedded it here
 (function poly() {
-    if (!global.CustomEvent || typeof global.CustomEvent !== 'function') {
+    if (global.document && (!global.CustomEvent || typeof global.CustomEvent !== 'function')) {
         const CustomEvent = function CustomEvent(event, params) {
             const thisParams = params ||
                 {
