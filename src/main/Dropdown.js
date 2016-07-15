@@ -144,7 +144,9 @@ class Dropdown {
         } else {
             if (currentOpen) {
                 if (e.target.hasAttribute(ATTR_CLOSE_DROPDOWN)) {
-                    e.preventDefault();
+                    if (!e.target.getAttribute(ATTR_ENABLE_EVENT_BUBBLE)) {
+                        e.preventDefault();
+                    }
                     this.close();
                 }
                 if (!Util.isPartOfNode(e.target, currentOpen)) {
