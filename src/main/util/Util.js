@@ -359,9 +359,7 @@ class Util {
                 thisOffset = optionalOffset();
             }
             const scrolledY = window.pageYOffset;
-            if (scrolledY) {
-                window.scroll(0, scrolledY - thisOffset);
-            }
+            window.scroll(0, scrolledY - thisOffset);
         }
     }
 }
