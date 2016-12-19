@@ -69,7 +69,7 @@ void function (document, window, $) {
         // Forms are very different to classical widgets,
         // we will not use our base widget class for this but just self
         self.hfWidgetInstance = self;
-
+        form.widgetInstance = self;
         /**
          * Submits this form, either via ajax or just classical (default)
          * @param {HTMLElement} thisForm
