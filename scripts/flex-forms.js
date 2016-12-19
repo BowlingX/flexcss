@@ -516,7 +516,10 @@ void function (document, window, $) {
                     form.addEventListener("submit", submitListener);
                 }
             };
+
             form.addEventListener("submit", submitListener);
+            self.triggerSubmit = submitListener;
+
         }
 
         initFormValidation();
