@@ -62,7 +62,6 @@ class Util {
      * @private
      */
     static whichTransitionEndEvent() {
-        let t;
         const el = document.createElement('fake');
 
         const transitions = {
@@ -72,11 +71,11 @@ class Util {
             WebkitTransition: 'webkitTransitionEnd'
         };
 
-        for (t in transitions) {
+        Object.keys(transitions).forEach(t => {
             if (el.style[t] !== undefined) {
                 return transitions[t];
             }
-        }
+        });
     }
 
     /**

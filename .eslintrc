@@ -28,6 +28,7 @@
       2,
       "never"
     ],
+    "prefer-const": 0,
     "no-undef": 2,
     "no-underscore-dangle": 0,
     "no-use-before-define": 0,
