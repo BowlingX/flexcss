@@ -192,13 +192,13 @@ class Form extends DestroyableWidget {
      */
     _submitFunction(thisForm, e) {
         const self = this;
-        let shouldUseAjax = thisForm.getAttribute(REMOTE);
-        let ajaxPostUrl = thisForm.getAttribute(REMOTE_ACTION) ||
+        const shouldUseAjax = thisForm.getAttribute(REMOTE);
+        const ajaxPostUrl = thisForm.getAttribute(REMOTE_ACTION) ||
                 thisForm.getAttribute('action') || window.location.href;
 
-        let useJson = CONST_USE_JSON === shouldUseAjax;
+        const useJson = CONST_USE_JSON === shouldUseAjax;
 
-        let ev = Event.dispatch(thisForm, EVENT_FORM_SUBMIT).withOriginal(e).fire();
+        const ev = Event.dispatch(thisForm, EVENT_FORM_SUBMIT).withOriginal(e).fire();
 
         // abort execution is event was prevented
         if (ev.defaultPrevented) {
@@ -224,13 +224,13 @@ class Form extends DestroyableWidget {
                 'Content-Type': this.options.ajaxJsonContentType
             });
         }
-        let defaultOptions = Object.assign(this.options.fetchOptions, {
+        const defaultOptions = Object.assign(this.options.fetchOptions, {
             headers: defaultHeaders,
             method: this.options.ajaxSubmitType
         });
 
         // support either JSON request payload or normal payload submission
-        let serverCall = useJson ? fetch(ajaxPostUrl, Object.assign(defaultOptions, {
+        const serverCall = useJson ? fetch(ajaxPostUrl, Object.assign(defaultOptions, {
             body: JSON.stringify(this.serialize())
         })) : fetch(ajaxPostUrl, Object.assign(defaultOptions, {
             body: new FormData(thisForm)
@@ -258,12 +258,12 @@ class Form extends DestroyableWidget {
             'select[name]:enabled',
             'textarea[name]:enabled'
         ];
-        let inputs = this.form.querySelectorAll(selectors.join(','));
-        let result = {};
+        const inputs = this.form.querySelectorAll(selectors.join(','));
+        const result = {};
 
         Array.prototype.forEach.call(inputs, (input) => {
-            let exists = result[input.name];
-            let value = input.value;
+            const exists = result[input.name];
+            const value = input.value;
             if (exists instanceof Array) {
                 exists.push(value);
             } else if (exists) {
@@ -284,7 +284,7 @@ class Form extends DestroyableWidget {
      * @returns {Promise}
      */
     handleValidation(field, focus) {
-        let fields = (field instanceof Array || field instanceof NodeList) ? field : [field];
+        const fields = (field instanceof Array || field instanceof NodeList) ? field : [field];
         return this._handleValidation(fields, focus, true).then((r) => {
             if (!r.foundAnyError) {
                 // remove tooltips
@@ -306,15 +306,15 @@ class Form extends DestroyableWidget {
      */
     _handleValidation(toValidateFields, focus, scoped) {
         const self = this;
-        let arr = Form._createArrayFromInvalidFieldList(toValidateFields);
-        let isLocalInvalid = arr.length > 0;
+        const arr = Form._createArrayFromInvalidFieldList(toValidateFields);
+        const isLocalInvalid = arr.length > 0;
 
         // focus must appear in the same frame for iOS devices
         if (isLocalInvalid && focus) {
             self._focusElement(arr[0]);
         }
 
-        let validation = scoped
+        const validation = scoped
             ? this._customValidationsForElements(toValidateFields)
             : self.validateCustomFields();
         return validation.then((r) => {
@@ -324,11 +324,12 @@ class Form extends DestroyableWidget {
             }
             // get a unique field list of all fields that need to be checked and rendered
             // it's possible that we have duplicates in non scoped mode
-            let thisToValidateFields = scoped ? toValidateFields :
-                Array.from(arr).concat(r.checkedFields);
+            const thisToValidateFields = scoped
+                ? toValidateFields
+                : Array.from(arr).concat(r.checkedFields);
             r.checkedFields = thisToValidateFields;
-            let foundInvalidFields = self.prepareErrors(thisToValidateFields, false);
-            let firstInvalidField = foundInvalidFields[0];
+            const foundInvalidFields = self.prepareErrors(thisToValidateFields, false);
+            const firstInvalidField = foundInvalidFields[0];
             if (firstInvalidField) {
                 if (focus) {
                     self._focusElement(firstInvalidField);
@@ -364,11 +365,11 @@ class Form extends DestroyableWidget {
      */
     _handleLabels(fields) {
         Object.keys(fields).forEach((id) => {
-            let labels = this.getForm().querySelectorAll(`[for="${id}"]`);
-            let invalid = fields[id];
+            const labels = this.getForm().querySelectorAll(`[for="${id}"]`);
+            const invalid = fields[id];
             if (labels.length) {
                 for (let labelsIndex = 0; labelsIndex < labels.length; labelsIndex++) {
-                    let labelEl = labels[labelsIndex];
+                    const labelEl = labels[labelsIndex];
                     // we can't use toggle attribute, not supported in IE
                     if (invalid) {
                         this._markElementInvalid(labelEl);
@@ -414,13 +415,13 @@ class Form extends DestroyableWidget {
      * @private
      */
     _removeElementErrors(thisParent) {
-        let errors = thisParent.querySelectorAll(`.${this.options.containerErrorClass}`);
-        let inputsWithErrorClasses = thisParent.querySelectorAll(`[${DATA_ELEMENT_INVALID}]`);
+        const errors = thisParent.querySelectorAll(`.${this.options.containerErrorClass}`);
+        const inputsWithErrorClasses = thisParent.querySelectorAll(`[${DATA_ELEMENT_INVALID}]`);
         for (let elementErrorIndex = 0; elementErrorIndex < errors.length; elementErrorIndex++) {
             errors[elementErrorIndex].parentNode.removeChild(errors[elementErrorIndex]);
         }
         for (let inputErrorIndex = 0; inputErrorIndex < inputsWithErrorClasses.length; inputErrorIndex++) {
-            let el = inputsWithErrorClasses[inputErrorIndex];
+            const el = inputsWithErrorClasses[inputErrorIndex];
             this._markElementValid(el);
         }
     }
@@ -450,8 +451,8 @@ class Form extends DestroyableWidget {
         if (!this._validators[validationRef]) {
             throw new Error(`Could not found validator: ${validationRef}`);
         }
-        let cl = field.classList;
-        let future = this._validators[validationRef].apply(this, [field, this.form]);
+        const cl = field.classList;
+        const future = this._validators[validationRef].apply(this, [field, this.form]);
         cl.add(LOADING_CLASS);
         future.then(() => {
             cl.remove(LOADING_CLASS);
@@ -468,13 +469,13 @@ class Form extends DestroyableWidget {
      * @private
      */
     _customValidationsForElements(fields) {
-        let futures = [];
-        let fieldsLength = fields.length;
-        let checkedFields = [];
+        const futures = [];
+        const fieldsLength = fields.length;
+        const checkedFields = [];
         for (let iVal = 0; iVal < fieldsLength; iVal++) {
-            let field = fields[iVal];
-            let validationRef = field.getAttribute(ATTR_VALIDATOR);
-            let validity = field.validity;
+            const field = fields[iVal];
+            const validationRef = field.getAttribute(ATTR_VALIDATOR);
+            const validity = field.validity;
             if (this._validators[validationRef]) {
                 // use local validation first and then continue with custom validations
                 if (Form._shouldNotValidateField(field) || (validity && !validity.customError && !validity.valid)) {
@@ -489,8 +490,8 @@ class Form extends DestroyableWidget {
             }
         }
         return Promise.all(futures).then((allFutures) => {
-            let l = allFutures.length;
-            let result = {
+            const l = allFutures.length;
+            const result = {
                 checkedFields,
                 foundAnyError: false
             };
@@ -525,11 +526,11 @@ class Form extends DestroyableWidget {
         if (removeAllErrors) {
             this.removeErrors();
         }
-        let labelGroups = {};
-        let invalidFields = [];
+        const labelGroups = {};
+        const invalidFields = [];
 
         function handleAdditionalLabels(isInvalid, thisLabelGroup, field) {
-            let additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
+            const additionalLabels = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
             let group = thisLabelGroup[additionalLabels];
             if (additionalLabels) {
                 // check additionally if field is currently marked as invalid
@@ -542,11 +543,11 @@ class Form extends DestroyableWidget {
         // We save all validations in an extra property because we need to reset the validity due some
         // implementation errors in other browsers then chrome
         for (let i = 0; i < fields.length; i++) {
-            let field = fields[i];
-            let errorTarget = Form._findErrorTarget(field);
-            let parent = errorTarget.parentNode;
-            let validity = field.validity;
-            let isInvalid = validity && !validity.valid;
+            const field = fields[i];
+            const errorTarget = Form._findErrorTarget(field);
+            const parent = errorTarget.parentNode;
+            const validity = field.validity;
+            const isInvalid = validity && !validity.valid;
             if (Form._shouldNotValidateField(field)) {
                 continue;
             }
@@ -559,7 +560,7 @@ class Form extends DestroyableWidget {
                 }
                 // setup custom error messages:
                 this._setupErrorMessages(field, validity);
-                let msg = field.validationMessage;
+                const msg = field.validationMessage;
 
                 // mark fields as invalid
                 this._markElementInvalid(errorTarget);
@@ -587,14 +588,14 @@ class Form extends DestroyableWidget {
         }
         // if validates a single field we need to check the linked fields to a label:
         if (fields.length === 1) {
-            let field = fields[0];
-            let id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
+            const field = fields[0];
+            const id = field.getAttribute(ATTR_DATA_CUSTOM_LABEL) || field.id;
             if (id) {
-                let linkedFields = Array.from(
+                const linkedFields = Array.from(
                     this.getForm().querySelectorAll(`[${ATTR_DATA_CUSTOM_LABEL}="${id}"], #${id}`));
                 linkedFields.forEach((thisField) => {
-                    let validity = thisField.validity;
-                    let isInvalid = validity && !validity.valid && this._isElementInvalidElement(thisField);
+                    const validity = thisField.validity;
+                    const isInvalid = validity && !validity.valid && this._isElementInvalidElement(thisField);
                     handleAdditionalLabels(isInvalid, labelGroups, thisField);
                 }).bind(this);
             }
@@ -619,7 +620,7 @@ class Form extends DestroyableWidget {
      * @private
      */
     static _shouldNotValidateField(field) {
-        let target = Form._findErrorTarget(field);
+        const target = Form._findErrorTarget(field);
         return target instanceof HTMLFieldSetElement || field.validity === undefined ||
             (target.hasAttribute(ATTR_VALIDATE_VISIBILITY) && !Util.isVisible(target));
     }
@@ -632,9 +633,9 @@ class Form extends DestroyableWidget {
      * @private
      */
     static _createArrayFromInvalidFieldList(list) {
-        let arr = [];
+        const arr = [];
         for (let i = 0; i < list.length; ++i) {
-            let n = list[i];
+            const n = list[i];
             if (n.validity && !n.validity.valid) {
                 if (!Form._shouldNotValidateField(n)) {
                     arr.push(n);
@@ -681,8 +682,8 @@ class Form extends DestroyableWidget {
      * @private
      */
     static _findErrorTarget(target) {
-        let el = target.getAttribute(ATTR_ERROR_TARGET_ID) || target;
-        let foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
+        const el = target.getAttribute(ATTR_ERROR_TARGET_ID) || target;
+        const foundTarget = el instanceof HTMLElement ? el : global.document.getElementById(el);
         if (!foundTarget) {
             throw new Error(`Given error target did not exists: ${target}`);
         }
@@ -706,7 +707,7 @@ class Form extends DestroyableWidget {
         if (!target.flexFormsSavedValidity) {
             return false;
         }
-        let errorTarget = Form._findErrorTarget(target);
+        const errorTarget = Form._findErrorTarget(target);
         let result = false;
         if (!target.flexFormsSavedValidity.valid && self._isElementInvalidElement(errorTarget)) {
             self.tooltips.createTooltip(
@@ -740,7 +741,7 @@ class Form extends DestroyableWidget {
      */
     _checkIsInvalid(e) {
         e.preventDefault();
-        let invalidFields = this.getForm().querySelectorAll(":invalid");
+        const invalidFields = this.getForm().querySelectorAll(":invalid");
         return this._handleValidation(invalidFields, true, false);
     }
 
@@ -751,8 +752,8 @@ class Form extends DestroyableWidget {
      * @private
      */
     _getDependentFields(field) {
-        let fieldSelector = field.getAttribute(ATTR_DEPENDS);
-        let base = [field];
+        const fieldSelector = field.getAttribute(ATTR_DEPENDS);
+        const base = [field];
         if (fieldSelector) {
             base.push.apply(base, Array.prototype.slice.apply(
                 this.getForm().querySelectorAll(fieldSelector)));
@@ -776,8 +777,8 @@ class Form extends DestroyableWidget {
     initFormValidation() {
         // Suppress the default bubbles
         const self = this;
-        let form = this.getForm();
-        let invalidEvent = 'invalid';
+        const form = this.getForm();
+        const invalidEvent = 'invalid';
 
         /**
          * Validates if is valid realtime element
@@ -795,7 +796,7 @@ class Form extends DestroyableWidget {
 
         Util.addEventOnce(invalidEvent, form, function handleInvalid(e) {
             self._formLoading();
-            let result = self._checkIsInvalid(e);
+            const result = self._checkIsInvalid(e);
             if (result) {
                 self.currentValidationFuture = new Promise((resolve) => {
                     result.then((r) => {
@@ -833,13 +834,13 @@ class Form extends DestroyableWidget {
                 if (self._formIsLoading()) {
                     return;
                 }
-                let target = e.target;
+                const target = e.target;
                 clearTimeout(TIMEOUT_KEYDOWN);
                 if (KEYDOWN_RUNNING) {
                     return;
                 }
                 TIMEOUT_KEYDOWN = setTimeout(() => {
-                    let isStillTarget = document.activeElement === e.target;
+                    const isStillTarget = document.activeElement === e.target;
                     if (!_checkIsValidRealtimeElement(target)) {
                         return;
                     }
@@ -847,7 +848,7 @@ class Form extends DestroyableWidget {
                         self._handleTooltipInline();
                     }
                     KEYDOWN_RUNNING = true;
-                    let dependentFields = self._getDependentFields(target);
+                    const dependentFields = self._getDependentFields(target);
                     self._customValidationsForElements(dependentFields).then(() => {
                         self.prepareErrors(dependentFields, false);
                         if (isStillTarget) {
@@ -868,7 +869,7 @@ class Form extends DestroyableWidget {
          * @private
          */
         function _checkIsValidBlurFocusElement(target) {
-            let attr = target.getAttribute("type");
+            const attr = target.getAttribute("type");
             return (attr !== "radio" && attr !== "checkbox" && attr !== "submit");
         }
 
@@ -1002,12 +1003,12 @@ class Form extends DestroyableWidget {
             form.addEventListener(submitEvent, submitListener);
             // It's possible that the form is valid but the custom validations need to be checked again:
             self.currentValidationFuture = new Promise((resolve) => {
-                let validation = self.validateCustomFields();
+                const validation = self.validateCustomFields();
                 validation.then((r) => {
                     // because custom validators may mark multiple fields as invalid, we get all of them in the form
-                    let fields = self._getInvalidElements();
-                    let errors = self.prepareErrors(fields, false);
-                    let firstError = errors[0];
+                    const fields = self._getInvalidElements();
+                    const errors = self.prepareErrors(fields, false);
+                    const firstError = errors[0];
                     if (firstError) {
                         self._focusElement(firstError);
                         self.showAndOrCreateTooltip(firstError, true);
@@ -1055,9 +1056,9 @@ class Form extends DestroyableWidget {
      * @return {array.<Form>}
      */
     static init(selector, options) {
-        let forms = selector instanceof HTMLElement ? selector.querySelectorAll('form') :
+        const forms = selector instanceof HTMLElement ? selector.querySelectorAll('form') :
             document.querySelectorAll(selector);
-        let instances = [];
+        const instances = [];
         for (let i = 0; i < forms.length; i++) {
             instances.push(new Form(forms[i], options));
         }
