@@ -29,12 +29,11 @@
 (function poly() {
     if (global.document && (!global.CustomEvent || typeof global.CustomEvent !== 'function')) {
         const CustomEvent = function CustomEvent(event, params) {
-            const thisParams = params ||
-                {
-                    bubbles: false,
-                    cancelable: false,
-                    detail: undefined
-                };
+            const thisParams = params || {
+                bubbles: false,
+                cancelable: false,
+                detail: undefined
+            };
             const evt = document.createEvent("CustomEvent");
             evt.initCustomEvent(event, thisParams.bubbles,
                 thisParams.cancelable, thisParams.detail);
@@ -53,7 +52,7 @@
         CustomEvent.prototype = global.Event.prototype;
         global.CustomEvent = CustomEvent;
     }
-})();
+}());
 /**
  * Simpler Event dispatching
  */

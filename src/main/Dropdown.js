@@ -131,7 +131,6 @@ class Dropdown {
         }
 
         if (target && !currentOpen) {
-
             if (!target.getAttribute(ATTR_ENABLE_EVENT_BUBBLE)) {
                 e.preventDefault();
                 e.stopImmediatePropagation();

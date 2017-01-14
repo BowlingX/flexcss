@@ -1,17 +1,17 @@
 /* global loadFixtures */
-import Form, {EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT} from 'Form';
+import Form, { EVENT_FORM_SUBMIT, EVENT_FORM_AFTER_AJAX_SUBMIT } from 'Form';
 import setup from 'setup_jasmine';
 import $ from 'jquery';
 setup();
 
 describe("Construct a Form Element", () => {
     it("A valid form object without options needs to be constructed", () => {
-        let form = new Form(document.createElement('form'));
+        const form = new Form(document.createElement('form'));
         expect(form instanceof Form).toBe(true);
     });
 
     it("A valid form object with overwritten default options needs to be constructed", () => {
-        let form = new Form(document.createElement('form'), {createTooltips: false, appendError: true});
+        const form = new Form(document.createElement('form'), { createTooltips: false, appendError: true });
         expect(form instanceof Form).toBe(true);
 
         // check created options
@@ -26,8 +26,9 @@ describe("Submit a simple Form", () => {
     });
 
     it("submit an empty form (no validation)", () => {
-        let $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
-        let form = new Form(htmlForm);
+        const $htmlForm = $('#test-form');
+        const htmlForm = $htmlForm[0];
+        const form = new Form(htmlForm);
         expect(form instanceof Form).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);
     });
@@ -39,21 +40,23 @@ describe("Submit a form with validation", () => {
     });
 
     it("submit a form with browser-validation (invalid)", () => {
-        let $htmlForm = $('#test-form'), htmlForm = $htmlForm[0];
-        let form = new Form(htmlForm);
+        const $htmlForm = $('#test-form');
+        const htmlForm = $htmlForm[0];
+        const form = new Form(htmlForm);
         expect(form instanceof Form).toBe(true);
         expect(htmlForm.checkValidity()).toBe(false);
     });
 });
 
 
-describe('Create a form with custom validations', function () {
-
-    let form, submitted, htmlForm;
+describe('Create a form with custom validations', () => {
+    let form;
+    let submitted;
+    let htmlForm;
 
     beforeEach((done) => {
         loadFixtures('form-with-custom-validator.html');
-        let $htmlForm = $('#test-form');
+        const $htmlForm = $('#test-form');
         htmlForm = $htmlForm[0];
         form = new Form(htmlForm);
         // set a value
@@ -77,18 +80,20 @@ describe('Create a form with custom validations', function () {
         });
     });
 
-    it("submit the form", function () {
+    it("submit the form", () => {
         expect(form instanceof Form).toBe(true);
         expect(submitted).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);
     });
 });
 
-describe('Create a form with remote validations', function () {
-    let form, submitted, htmlForm;
+describe('Create a form with remote validations', () => {
+    let form;
+    let submitted;
+    let htmlForm;
     beforeEach((done) => {
         loadFixtures('form-with-remote-validation.html');
-        let $htmlForm = $('#test-form');
+        const $htmlForm = $('#test-form');
         htmlForm = $htmlForm[0];
         form = new Form(htmlForm);
         // set a value
@@ -102,7 +107,7 @@ describe('Create a form with remote validations', function () {
             done();
         });
     });
-    it("submit the form", function () {
+    it("submit the form", () => {
         expect(form instanceof Form).toBe(true);
         expect(submitted).toBe(true);
         expect(htmlForm.checkValidity()).toBe(true);

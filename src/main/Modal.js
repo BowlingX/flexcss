@@ -556,7 +556,7 @@ class Modal {
 // Static variable that keeps track of all open modals
 Modal._modalInstances = [];
 
-if(global.addEventListener) {
+if (global.addEventListener) {
 // Global keydown listener for modal
     global.addEventListener('keydown', (e) => {
         if (e.keyCode === KEY_ESC) {
