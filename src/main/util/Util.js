@@ -71,11 +71,11 @@ class Util {
             WebkitTransition: 'webkitTransitionEnd'
         };
 
-        Object.keys(transitions).forEach(t => {
-            if (el.style[t] !== undefined) {
-                return transitions[t];
+        for (const [key, value] of Object.entries(transitions)) {
+            if (el.style[key] !== undefined) {
+                return value;
             }
-        });
+        }
     }
 
     /**
