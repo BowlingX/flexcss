@@ -597,7 +597,7 @@ class Form extends DestroyableWidget {
                     const validity = thisField.validity;
                     const isInvalid = validity && !validity.valid && this._isElementInvalidElement(thisField);
                     handleAdditionalLabels(isInvalid, labelGroups, thisField);
-                }).bind(this);
+                });
             }
         }
         this._handleLabels(labelGroups);
