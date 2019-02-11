@@ -188,7 +188,7 @@ class Form extends DestroyableWidget {
      * @param {HTMLFormElement} thisForm
      * @param {Event} e
      * @private
-     * @returns {Promise|boolean} returns false if submit is cancled
+     * @returns {Promise|boolean} returns false if submit is canceled
      */
     _submitFunction(thisForm, e) {
         const self = this;
@@ -208,7 +208,11 @@ class Form extends DestroyableWidget {
 
         if (shouldUseAjax === null) {
             // submit
-            return thisForm.submit();
+            requestAnimationFrame(() => {
+                // FIXME: Safari requires to submit the form in the next frame, otherwise it's invalid
+                thisForm.submit();
+            });
+            return true;
         }
         // prevent form from submit normally
         e.preventDefault();
